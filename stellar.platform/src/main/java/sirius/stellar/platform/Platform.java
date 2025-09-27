@@ -340,7 +340,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 *
 	 * @since 1u1
 	 */
-	@Contract("null -> fail; !null -> new")
+	@Contract("_ -> new")
 	public Duration uptime(Temporal temporal) {
 		return Duration.between(temporal, this.startup);
 	}
