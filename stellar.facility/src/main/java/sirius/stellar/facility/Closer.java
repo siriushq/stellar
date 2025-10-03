@@ -1,7 +1,5 @@
 package sirius.stellar.facility;
 
-import org.jspecify.annotations.Nullable;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -56,7 +54,7 @@ public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 	 * @return The provided object, allowing fluent usage.
 	 * @since 1.0
 	 */
-	public <T extends AutoCloseable> T manage(@Nullable T closeable) {
+	public <T extends AutoCloseable> T manage(T closeable) {
 		this.stack.addFirst(closeable);
 		return closeable;
 	}
@@ -68,7 +66,6 @@ public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 		while (!this.stack.isEmpty() && !Thread.currentThread().isInterrupted()) {
 			try {
 				AutoCloseable current = this.stack.pollFirst();
-				if (current == null) continue;
 				current.close();
 			} catch (Throwable current) {
 				if (exception != null) {
