@@ -1,6 +1,13 @@
+import org.jspecify.annotations.NullMarked;
+import io.avaje.inject.InjectModule;
+import sirius.stellar.platform.Platform;
+
+@NullMarked
+@InjectModule(provides = Platform.class)
 module sirius.stellar.platform {
 
-	requires static org.jetbrains.annotations;
+	requires transitive org.jetbrains.annotations;
+	requires transitive org.jspecify;
 
 	requires transitive sirius.stellar.facility;
 	requires transitive sirius.stellar.logging;

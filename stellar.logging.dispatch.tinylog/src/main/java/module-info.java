@@ -1,5 +1,9 @@
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 module sirius.stellar.logging.tinylog {
 
+	requires org.jspecify;
 	requires sirius.stellar.facility;
 	requires sirius.stellar.logging;
 

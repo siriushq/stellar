@@ -1,6 +1,10 @@
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 module sirius.stellar.logging {
 
 	requires static org.jetbrains.annotations;
+	requires org.jspecify;
 
 	requires sirius.stellar.facility;
 

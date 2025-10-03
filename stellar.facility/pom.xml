@@ -17,14 +17,6 @@
 		<project.root>${project.basedir}/../</project.root>
 	</properties>
 
-    <dependencies>
-		<dependency>
-			<groupId>sirius.stellar</groupId>
-			<artifactId>stellar-jsr305</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>

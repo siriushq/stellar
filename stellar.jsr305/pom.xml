@@ -8,6 +8,16 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+	<distributionManagement>
+		<relocation>
+			<message>JSR305-esque annotations are no longer the best option.</message>
+
+			<groupId>org.jspecify</groupId>
+			<artifactId>jspecify</artifactId>
+			<version>1.0.0</version>
+		</relocation>
+	</distributionManagement>
+
     <packaging>jar</packaging>
     <artifactId>stellar-jsr305</artifactId>
     <name>Stellar :: JSR305</name>

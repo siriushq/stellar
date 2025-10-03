@@ -1,6 +1,7 @@
 package sirius.stellar.logging;
 
 import org.jetbrains.annotations.Contract;
+import org.jspecify.annotations.NullUnmarked;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.Throwables;
 import sirius.stellar.facility.doctation.Internal;
@@ -50,6 +51,7 @@ import static sirius.stellar.facility.Strings.*;
  * @since 1u1
  * @author Mechite
  */
+@NullUnmarked
 public final class Logger {
 
 	private static final List<Collector> collectors = new ArrayList<>();

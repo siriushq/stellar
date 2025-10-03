@@ -19,7 +19,4 @@
  * @see sirius.stellar.facility
  * @since 1u1
  */
-@Conforms
 package sirius.stellar.facility.tuple;
-
-import sirius.stellar.facility.doctation.Conforms;

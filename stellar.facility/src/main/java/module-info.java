@@ -1,7 +1,10 @@
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 module sirius.stellar.facility {
 
 	requires static org.jetbrains.annotations;
-	requires sirius.stellar.jsr305x;
+	requires org.jspecify;
 
 	exports sirius.stellar.facility.concurrent;
 	exports sirius.stellar.facility.doctation;

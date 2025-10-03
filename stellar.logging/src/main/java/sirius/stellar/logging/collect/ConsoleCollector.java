@@ -1,5 +1,6 @@
 package sirius.stellar.logging.collect;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.doctation.Internal;
 import sirius.stellar.logging.Logger;
@@ -150,12 +151,12 @@ final class DelegatePrintStream extends PrintStream implements Serializable {
 	}
 
 	@Override
-	public void println(String text) {
+	public void println(@Nullable String text) {
 		this.print(text);
 	}
 
 	@Override
-	public void println(Object object) {
+	public void println(@Nullable Object object) {
 		this.print(object);
 	}
 	//#endregion
@@ -167,26 +168,26 @@ final class DelegatePrintStream extends PrintStream implements Serializable {
 	}
 
 	@Override
-	public PrintStream append(CharSequence sequence) {
+	public PrintStream append(@Nullable CharSequence sequence) {
 		this.print(sequence);
 		return this;
 	}
 
 	@Override
-	public PrintStream append(CharSequence sequence, int start, int end) {
+	public PrintStream append(@Nullable CharSequence sequence, int start, int end) {
 		this.print(sequence == null ? "null" : sequence.subSequence(start, end));
 		return this;
 	}
 	//#endregion
-	//#region format* [delegates to printf*]
+	//#region format*
 	@Override
-	public PrintStream format(String text, Object... arguments) {
+	public PrintStream format(@Nullable String text, Object... arguments) {
 		this.dispatcher.accept(Strings.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
-	public PrintStream format(Locale locale, String text, Object... arguments) {
+	public PrintStream format(Locale locale, @Nullable String text, Object... arguments) {
 		this.dispatcher.accept(Strings.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
@@ -194,13 +195,13 @@ final class DelegatePrintStream extends PrintStream implements Serializable {
 
 	//#region printf*
 	@Override
-	public PrintStream printf(String text, Object... arguments) {
+	public PrintStream printf(@Nullable String text, Object... arguments) {
 		this.dispatcher.accept(Strings.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
-	public PrintStream printf(Locale locale, String text, Object... arguments) {
+	public PrintStream printf(Locale locale, @Nullable String text, Object... arguments) {
 		this.dispatcher.accept(Strings.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
@@ -242,12 +243,12 @@ final class DelegatePrintStream extends PrintStream implements Serializable {
 	}
 
 	@Override
-	public void print(String text) {
+	public void print(@Nullable String text) {
 		this.dispatcher.accept(String.valueOf(text));
 	}
 
 	@Override
-	public void print(Object object) {
+	public void print(@Nullable Object object) {
 		this.dispatcher.accept(String.valueOf(object));
 	}
 	//#endregion

@@ -1,7 +1,10 @@
+import org.jspecify.annotations.NullMarked;
 import sirius.stellar.logging.dispatch.log4j2x.Log4j2ContextFactory;
 
+@NullMarked
 module sirius.stellar.logging.log4j2x {
 
+	requires org.jspecify;
 	requires sirius.stellar.facility;
 	requires sirius.stellar.logging;
 

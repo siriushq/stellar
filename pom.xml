@@ -51,17 +51,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <java.version>21</java.version>
-		<groovy.version>4.0.21</groovy.version>
+
+		<groovy.version>4.0.28</groovy.version>
         <spock.version>2.3-groovy-4.0</spock.version>
-		<bytebuddy.version>1.14.17</bytebuddy.version>
+
         <avaje-inject.version>11.4</avaje-inject.version>
         <avaje-jsonb.version>3.3-RC1</avaje-jsonb.version>
-
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.jspecify</groupId>
+			<artifactId>jspecify</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jetbrains</groupId>
 			<artifactId>annotations</artifactId>
@@ -79,12 +83,6 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
             <version>${spock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>${bytebuddy.version}</version>
             <scope>test</scope>
         </dependency>
 	</dependencies>
@@ -113,53 +111,27 @@
 				<plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.3.0</version>
-
-                    <configuration>
-                        <forceCreation>true</forceCreation>
-                        <skipIfEmpty>true</skipIfEmpty>
-                    </configuration>
+                    <version>3.4.2</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.11.0</version>
+                    <version>3.14.1</version>
 
                     <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                     </configuration>
-
-					<executions>
-						<execution>
-							<phase>compile</phase>
-							<goals>
-								<goal>compile</goal>
-							</goals>
-						</execution>
-					</executions>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.0</version>
-
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
+                    <version>3.3.1</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.5.0</version>
+                    <version>3.12.0</version>
 
                     <configuration>
                         <quiet>true</quiet>
@@ -167,22 +139,25 @@
                         <failOnError>true</failOnError>
 						<doclint>all,-missing</doclint>
                     </configuration>
+                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>3.2.8</version>
 
 					<executions>
 						<execution>
 							<phase>package</phase>
 							<goals>
-								<goal>javadoc</goal>
-								<goal>jar</goal>
+								<goal>sign</goal>
 							</goals>
 						</execution>
 					</executions>
-                </plugin>
-
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.1.2</version>
+					<version>3.5.4</version>
 
 					<configuration>
 						<includes>
@@ -191,27 +166,14 @@
 						</includes>
 					</configuration>
 				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-gpg-plugin</artifactId>
-					<version>3.1.0</version>
-
-					<executions>
-						<execution>
-							<phase>package</phase>
-
-							<goals>
-								<goal>sign</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-
 				<plugin>
 					<groupId>org.codehaus.gmavenplus</groupId>
 					<artifactId>gmavenplus-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>4.2.1</version>
+
+					<configuration>
+						<skipBytecodeCheck>true</skipBytecodeCheck>
+					</configuration>
 
 					<executions>
 						<execution>
@@ -221,31 +183,24 @@
 							</goals>
 						</execution>
 					</executions>
-
-					<configuration>
-						<skipBytecodeCheck>true</skipBytecodeCheck>
-					</configuration>
 				</plugin>
-
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>3.4.0</version>
+					<version>3.6.1</version>
+
+					<configuration>
+						<sources>
+							<source>src/test/groovy</source>
+						</sources>
+					</configuration>
 
 					<executions>
 						<execution>
-							<id>add-test-source</id>
 							<phase>generate-test-sources</phase>
-
 							<goals>
 								<goal>add-test-source</goal>
 							</goals>
-
-							<configuration>
-								<sources>
-									<source>src/test/groovy</source>
-								</sources>
-							</configuration>
 						</execution>
 					</executions>
 				</plugin>

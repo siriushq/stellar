@@ -3,9 +3,9 @@ package sirius.stellar.platform;
 import io.avaje.inject.BeanScope;
 import io.avaje.jsonb.Json;
 import org.jetbrains.annotations.Contract;
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.concurrent.Latched;
 import sirius.stellar.facility.doctation.Internal;
-import sirius.stellar.facility.doctation.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.collect.Collector;
 

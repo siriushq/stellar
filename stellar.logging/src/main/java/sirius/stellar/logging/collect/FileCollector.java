@@ -1,5 +1,6 @@
 package sirius.stellar.logging.collect;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.doctation.Internal;
 import sirius.stellar.logging.LoggerMessage;
 
@@ -33,7 +34,10 @@ final class FileCollector implements Collector {
 	private final AtomicBoolean closing;
 	private final AtomicBoolean writing;
 
+	@Nullable
 	private FileChannel channel;
+
+	@Nullable
 	private Instant rolled;
 
 	FileCollector(Path path, Duration duration) {
@@ -52,6 +56,7 @@ final class FileCollector implements Collector {
 			if (this.closing.get()) return;
 			this.writing.set(true);
 
+			assert this.rolled != null;
 			if (this.rolled.plus(this.duration).isBefore(Instant.now())) this.roll();
 
 			byte[] text = ("\"" +
@@ -67,6 +72,7 @@ final class FileCollector implements Collector {
 							.collect(Collectors.joining()) +
 			"\"\n").getBytes(StandardCharsets.UTF_8);
 
+			assert this.channel != null;
 			int written = this.channel.write(ByteBuffer.wrap(text));
 			if (written != text.length) throw new IllegalStateException("Failed to append to file (written length does not match expected length)");
 
@@ -80,6 +86,8 @@ final class FileCollector implements Collector {
 	public void close() throws IOException {
 		this.closing.set(true);
 		while (this.writing.get()) Thread.onSpinWait();
+
+		assert this.channel != null;
 		this.channel.close();
 	}
 

@@ -69,7 +69,8 @@ public interface Collector extends AutoCloseable, Serializable {
 	 * Runs when this collector is closed.
 	 * <p>
 	 * This method is implemented by default to allow for simple collectors to
-	 * be defined by implementing only one abstract method, i.e., with a lambda.
+	 * be defined by implementing only one abstract method, i.e., with a lambda,
+	 * if they do not maintain any closeable resources.
 	 *
 	 * @since 1u1
 	 */

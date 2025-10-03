@@ -1,6 +1,6 @@
 package sirius.stellar.facility;
 
-import sirius.stellar.facility.doctation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

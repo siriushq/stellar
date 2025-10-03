@@ -1,4 +1,9 @@
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 module sirius.stellar.platform.generator {
+
+	requires org.jspecify;
 
 	requires java.compiler;
 	requires sirius.stellar.platform;
