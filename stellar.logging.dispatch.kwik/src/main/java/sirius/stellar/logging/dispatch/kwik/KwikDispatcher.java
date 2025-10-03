@@ -13,7 +13,7 @@ import static sirius.stellar.facility.Throwables.*;
 /**
  * Implementation of {@link tech.kwik.core.log.Logger} which delegates to {@link Logger}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {

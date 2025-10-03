@@ -20,7 +20,7 @@ import static sirius.stellar.facility.Strings.*;
  *
  * @see java.util.function.Supplier
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @FunctionalInterface

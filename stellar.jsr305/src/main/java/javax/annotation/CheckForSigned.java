@@ -13,7 +13,7 @@ import javax.annotation.meta.When;
  * in a way that requires the value to be nonnegative, and check for it being
  * nonnegative before using it in a way that requires it to be negative.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

@@ -20,7 +20,7 @@ import static java.lang.annotation.ElementType.*;
  *     <li>class-name.class : The Class object for the specified class should be used as the lock object.
  * </ul>
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

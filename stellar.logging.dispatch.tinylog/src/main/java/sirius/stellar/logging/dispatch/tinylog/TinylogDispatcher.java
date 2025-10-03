@@ -12,7 +12,7 @@ import static sirius.stellar.facility.Throwables.*;
 /**
  * Implementation of {@link org.tinylog.provider.LoggingProvider} which dispatches to {@link Logger}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class TinylogDispatcher implements org.tinylog.provider.LoggingProvider {

@@ -14,7 +14,7 @@ import javax.annotation.meta.When;
  * should a refactoring that renames method {@code x()} to {@code y()} update the String constant
  * {@code "x()"}).
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

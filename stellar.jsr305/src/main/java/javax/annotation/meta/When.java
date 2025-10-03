@@ -8,7 +8,7 @@ package javax.annotation.meta;
  * used where a NEVER value is required, or if a NEVER or MAYBE value is used
  * where an ALWAYS value is required.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

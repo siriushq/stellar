@@ -3,6 +3,6 @@
  * specifically {@linkplain java.lang.FunctionalInterface functional interfaces}.
  *
  * @see sirius.stellar.facility
- * @since 1u1
+ * @since 1.0
  */
 package sirius.stellar.facility.functional;

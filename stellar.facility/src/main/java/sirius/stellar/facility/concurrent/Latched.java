@@ -30,7 +30,7 @@ import static sirius.stellar.facility.Strings.*;
  * qualifies the lack of equality. This is checked with {@link Latched#locked()}, which in turn
  * invokes {@link CountDownLatch#getCount()} which may not be desirable behaviour.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public class Latched<T> {
@@ -42,7 +42,7 @@ public class Latched<T> {
 	 * Constructor that instantiates without setting an initial value.
 	 *
 	 * @see Latched#Latched(Object)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public Latched() {
 		this.latch = new CountDownLatch(1);
@@ -56,7 +56,7 @@ public class Latched<T> {
 	 * try and use this as a monadic type).
 	 *
 	 * @see Latched#Latched(Object)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public Latched(T object) {
 		this.latch = new CountDownLatch(1);
@@ -70,7 +70,7 @@ public class Latched<T> {
 	 * @throws RuntimeException Thrown given that an {@link InterruptedException}
 	 * is thrown while attempting to run {@link CountDownLatch#await()} to await
 	 * the release of the latch.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public T get() {
 		try {
@@ -85,7 +85,7 @@ public class Latched<T> {
 	 * Sets the locked object to a new value.
 	 * This method is entirely thread-safe and can be called from anywhere.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public void set(T object) {
 		this.reference.set(object);
@@ -95,7 +95,7 @@ public class Latched<T> {
 	 * Releases the lock and allows the object to be retrieved.
 	 * This method is entirely thread-safe and can be called from anywhere.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public void release() {
 		this.latch.countDown();
@@ -113,7 +113,7 @@ public class Latched<T> {
 	 * or primitive, or other different synchronization strategy.
 	 *
 	 * @see CountDownLatch
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public boolean locked() {
 		return this.latch.getCount() != 0;

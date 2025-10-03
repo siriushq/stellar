@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
  * Interface for validating whether a constant value is a member
  * of a set of values denoted by a type qualifier annotation.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

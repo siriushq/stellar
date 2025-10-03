@@ -21,7 +21,7 @@ import javax.annotation.meta.TypeQualifierDefault;
  * at an outer scope.
  *
  * @see Nullable
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

@@ -23,7 +23,7 @@ import java.util.Map;
  *     <tr> <th>SEVERE</th><th>ERROR</th> </tr>
  * </table>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class JulDispatcher extends java.util.logging.Handler implements Dispatcher {

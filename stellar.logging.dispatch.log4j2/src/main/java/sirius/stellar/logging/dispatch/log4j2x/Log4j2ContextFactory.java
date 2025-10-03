@@ -5,7 +5,7 @@ import java.net.URI;
 /**
  * Implementation of {@link org.apache.logging.log4j.spi.LoggerContextFactory} used for obtaining instances of {@link Log4j2Context}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Log4j2ContextFactory implements org.apache.logging.log4j.spi.LoggerContextFactory {

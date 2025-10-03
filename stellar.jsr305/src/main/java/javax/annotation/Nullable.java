@@ -22,7 +22,7 @@ import javax.annotation.meta.When;
  * <p>
  * When this annotation is applied to a method, it applies to the method return value.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

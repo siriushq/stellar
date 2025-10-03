@@ -86,7 +86,7 @@ import static sirius.stellar.platform.PlatformConfiguration.*;
  *     </li>
  * </ul>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @Json
@@ -239,7 +239,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * the application entrypoint.
 	 *
 	 * @see Platform#Platform(String[], Instant)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void main(String... arguments) throws IOException {
 		Instant startup = Instant.ofEpochMilli(getRuntimeMXBean().getStartTime());
@@ -258,7 +258,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * Returns the command line arguments associated with the current process, if
 	 * any, or simply returns an empty array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public String[] arguments() {
 		return arguments;
@@ -271,7 +271,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * within a large cluster. The identifier that is used is almost guaranteed to
 	 * be unique, as it is a timestamp prefixed {@link UUID}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public String identifier() {
 		return this.identifier;
@@ -284,7 +284,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * was started, so that {@link RuntimeMXBean#getStartTime()} does not have to
 	 * be used, relieving the direct dependency on {@code java.lang.management}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public Instant startup() {
 		return this.startup;
@@ -294,7 +294,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * Returns a {@link Properties} object that represents the configuration that
 	 * is held by this platform bean. This method is not computationally expensive.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public Properties configuration() {
 		return this.configuration;
@@ -305,7 +305,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * record of, which should all be alive. Instances are eventually removed from the
 	 * underlying set whenever they are not returning their heartbeat.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public Set<Platform> instances() {
 		return this.instances;
@@ -318,7 +318,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * has been alive for so that {@link RuntimeMXBean#getUptime()} does not have to be
 	 * used, relieving the direct dependency on {@code java.lang.management}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Json.Property("upt")
 	public Duration uptime() {
@@ -338,7 +338,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * use {@link RuntimeMXBean} at the invocation level for calculation, while that
 	 * method retrieves the {@link RuntimeMXBean} and invokes {@code getUptime()}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public Duration uptime(Temporal temporal) {
@@ -359,7 +359,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 *     });
 	 * }</pre>
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "_ -> this")
 	public Platform shutdownHook(Consumer<BeanScope> hook) {
@@ -395,7 +395,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * closed through this method unless required, as a shutdown hook is always already
 	 * registered for it.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static BeanScope scope() {
 		return scope.get();
@@ -409,7 +409,7 @@ public final class Platform implements AutoCloseable, Serializable {
 	 * available (more information available in the {@link Platform#scope()} method).
 	 *
 	 * @see Platform#scope()
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static Platform platform() {
 		return scope().get(Platform.class);

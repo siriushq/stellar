@@ -12,7 +12,7 @@ import java.lang.annotation.Documented;
  *
  * @author Brian Goetz
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 @Documented
 @TypeQualifier

@@ -6,7 +6,7 @@ package sirius.stellar.facility.terminal;
  * These codes are used to control styling and formatting of text output to terminal
  * or console environments that support ANSI escape sequences.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public enum TerminalStyle {
@@ -109,7 +109,7 @@ public enum TerminalStyle {
 	 * However, {@link TerminalStyle#toString()} should be preferred.
  	 *
 	 * @see TerminalConstant
-	 * @since 1u1
+	 * @since 1.0
      */
 	public TerminalConstant get() {
 		return new TerminalConstant(this.code);

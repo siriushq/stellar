@@ -19,7 +19,7 @@ import java.io.Serializable;
  * dispatchers given they are attempting to retrofit an unknown/proprietary logging system
  * that may be called across many internal packages.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public interface Dispatcher extends Serializable {
@@ -32,7 +32,7 @@ public interface Dispatcher extends Serializable {
 	 * and permanent changes can be made in this method to register dispatchers.
 	 * However, it is expected that it is reversible with a full program restart.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	void wire() throws Throwable;
 
@@ -44,7 +44,7 @@ public interface Dispatcher extends Serializable {
 	 * logging is supported with whatever technique is preferred for registration
 	 * instead.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 * @author Mechite
 	 */
 	interface Provider {

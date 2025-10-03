@@ -24,7 +24,7 @@ import static sirius.stellar.facility.stream.TerminatingStream.*;
  * issues, this generator must not be used. {@code META-INF/STELLAR/CONFIGURATION_TEMPLATES.LIST} must be defined
  * manually if template configurations are desired. Extension of every file listed inside is also checked at runtime.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @SupportedAnnotationTypes("*")

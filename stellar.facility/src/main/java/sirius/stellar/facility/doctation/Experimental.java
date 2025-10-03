@@ -15,7 +15,7 @@ import static java.lang.annotation.ElementType.*;
  * development to take place on that particular element - perhaps it could be a
  * performance-related enhancement that could be done, etc.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @Documented @Inherited

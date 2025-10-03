@@ -32,7 +32,7 @@ package sirius.stellar.facility.terminal;
  *
  * @see TerminalColorScoped
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public enum TerminalColor {
@@ -105,7 +105,7 @@ public enum TerminalColor {
 
 	/**
 	 * Returns this color as a foreground (text) color.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public TerminalColorScoped foreground() {
 		return this.foreground;
@@ -113,7 +113,7 @@ public enum TerminalColor {
 
 	/**
 	 * Returns this color as a background color.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public TerminalColorScoped background() {
 		return this.background;
@@ -123,7 +123,7 @@ public enum TerminalColor {
 	 * Represents either a foreground (text) or background color (not abstract).
 	 *
 	 * @see TerminalColor
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static class TerminalColorScoped {
 
@@ -140,7 +140,7 @@ public enum TerminalColor {
 		 * This can then be output to any supported environment using {@link TerminalConstant#toString()}.
 		 *
 		 * @see TerminalConstant
-		 * @since 1u1
+		 * @since 1.0
 		 */
 		public TerminalConstant dark() {
 			return new TerminalConstant(this.dark);
@@ -151,7 +151,7 @@ public enum TerminalColor {
 		 * This can then be output to any supported environment using {@link TerminalConstant#toString()}.
 		 *
 		 * @see TerminalConstant
-		 * @since 1u1
+		 * @since 1.0
 		 */
 		public TerminalConstant bright() {
 			return new TerminalConstant(this.bright);

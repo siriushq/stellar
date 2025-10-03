@@ -17,6 +17,6 @@
  * @see sirius.stellar.facility.tuple.Octet Octet, holding eight elements.
  *
  * @see sirius.stellar.facility
- * @since 1u1
+ * @since 1.0
  */
 package sirius.stellar.facility.tuple;

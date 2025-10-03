@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
  * Shadow class for {@code org.apache.log4j.spi.LoggerFactory}.
  *
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 public interface LoggerFactory {
 	Logger makeNewLoggerInstance(String name);

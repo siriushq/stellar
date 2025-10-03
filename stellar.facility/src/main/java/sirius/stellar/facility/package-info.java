@@ -17,6 +17,6 @@
  *     <li>{@link sirius.stellar.facility.tuple}</li>
  * </ul>
  *
- * @since 1u1
+ * @since 1.0
  */
 package sirius.stellar.facility;

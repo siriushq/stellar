@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * Immutable objects are inherently thread-safe; they may be passed between
  * threads or published without synchronization.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

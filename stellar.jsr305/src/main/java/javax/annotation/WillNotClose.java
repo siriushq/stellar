@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  * @see WillClose
  * @see WillCloseWhenClosed
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

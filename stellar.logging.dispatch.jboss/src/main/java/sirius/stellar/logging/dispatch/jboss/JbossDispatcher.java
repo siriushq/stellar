@@ -11,7 +11,7 @@ import static sirius.stellar.facility.Throwables.*;
 /**
  * Implementation of {@link org.jboss.logging.Logger} which delegates to {@link Logger}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class JbossDispatcher extends org.jboss.logging.Logger {

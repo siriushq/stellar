@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * This qualifier is applied to an annotation to denote that the annotation
  * should be treated as a type qualifier.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

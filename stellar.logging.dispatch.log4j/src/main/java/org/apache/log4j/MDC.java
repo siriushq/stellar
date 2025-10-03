@@ -6,7 +6,7 @@ import java.util.Hashtable;
  * Shadow class for {@code org.apache.log4j.MDC}.
  *
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 public final class MDC {
 

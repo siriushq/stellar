@@ -15,7 +15,7 @@ import static java.lang.annotation.ElementType.*;
  * <p>
  * An example of such method is {@link Object#finalize()}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

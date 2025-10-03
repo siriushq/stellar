@@ -19,7 +19,7 @@ import javax.annotation.meta.TypeQualifierDefault;
  * </ul>
  *
  * @see Nonnull
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * Provides a facility for modifying and examining {@link Throwable}s.
  * This class is entirely {@code null} safe and no operations should cause a {@link NullPointerException}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Throwables {
@@ -28,7 +28,7 @@ public final class Throwables {
 	 *
 	 * @see Throwables#causes(Throwable)
 	 * @see Throwables#stream(Throwable)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void forEach(Throwable throwable, Consumer<Throwable> consumer) {
 		if (throwable == null || consumer == null) return;
@@ -44,7 +44,7 @@ public final class Throwables {
 	 * @return An unmodifiable list of causes, or empty if the provided throwable is null.
 	 * @see Throwables#forEach(Throwable, Consumer)
 	 * @see Throwables#stream(Throwable)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "_ -> new", pure = true)
 	public static List<Throwable> causes(Throwable throwable) {
@@ -61,7 +61,7 @@ public final class Throwables {
 	 * @return A stream for the causes, or empty if the provided throwable is null.
 	 * @see Throwables#forEach(Throwable, Consumer)
 	 * @see Throwables#causes(Throwable)
-	 * @since 1u1
+	 * @since 1.0
  	 */
 	@Contract(value = "_ -> new", pure = true)
 	public static Stream<Throwable> stream(Throwable throwable) {
@@ -97,7 +97,7 @@ public final class Throwables {
 	 *
 	 * @return The stacktrace or the string {@code "null"} if the provided throwable is null.
 	 * @see Throwable#printStackTrace() Read the Throwable#printStackTrace() method for insight.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "_ -> new", pure = true)
 	public static String stacktrace(Throwable throwable) {

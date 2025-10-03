@@ -10,7 +10,7 @@ import java.io.Serial;
  * to this one and {@link UnsupportedOperationException} may be directly caught in edge cases. This is
  * only done for convenience.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public class ImmutableModificationException extends UnsupportedOperationException {
@@ -23,7 +23,7 @@ public class ImmutableModificationException extends UnsupportedOperationExceptio
 	 * The default message is {@code "Cannot modify an immutable object"}.
 	 *
 	 * @see ImmutableModificationException#ImmutableModificationException(String)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public ImmutableModificationException() {
 		super("Cannot modify an immutable object");
@@ -33,7 +33,7 @@ public class ImmutableModificationException extends UnsupportedOperationExceptio
 	 * Constructor for an immutable modification exception with the specified detail message.
 	 *
 	 * @see ImmutableModificationException#ImmutableModificationException()
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public ImmutableModificationException(String message) {
 		super(message);
@@ -44,7 +44,7 @@ public class ImmutableModificationException extends UnsupportedOperationExceptio
 	 *
 	 * @param cause The provided cause, accessible with the {@link Throwable#getCause()} method.
 	 * @see ImmutableModificationException#ImmutableModificationException(String, Throwable)
-	 * @since 1u1
+	 * @since 1.0
  	 */
 	public ImmutableModificationException(Throwable cause) {
 		super(cause);
@@ -56,7 +56,7 @@ public class ImmutableModificationException extends UnsupportedOperationExceptio
 	 *
 	 * @param cause The provided cause, accessible with the {@link Throwable#getCause()} method.
 	 * @see ImmutableModificationException#ImmutableModificationException(Throwable)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public ImmutableModificationException(String message, Throwable cause) {
 		super(message, cause);

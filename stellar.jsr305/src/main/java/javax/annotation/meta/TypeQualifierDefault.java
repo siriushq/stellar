@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * defines a default type qualifier that is visible within the scope of the
  * element it is applied to.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

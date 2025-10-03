@@ -48,7 +48,7 @@ import static sirius.stellar.facility.Strings.*;
  * elsewhere, they will complement each other when any heavy IO takes place and free up the carrier threads for more work to be
  * performed, while also allowing for a low amount of memory to be consumed due to the lack of actual platform threads.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @NullUnmarked
@@ -74,7 +74,7 @@ public final class Logger {
 	 * If the severity of a message is above this value, it will not be emitted.
 	 *
 	 * @see LoggerLevel
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void severity(int value) {
 		if (value < 0) throw new UnsupportedOperationException("Logger severity must be between 0 and Integer#MAX_VALUE");
@@ -83,7 +83,7 @@ public final class Logger {
 
 	/**
 	 * Set the {@link ExecutorService} used by the logger to the provided value.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void executor(ExecutorService value) {
 		if (value == null) throw new NullPointerException("Attempted to set executor to null");
@@ -103,7 +103,7 @@ public final class Logger {
 	 * application to hang/"wait"; there are no non-daemon threads, or any threads for that matter,
 	 * created by the logger as a result of this call.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void synchronous() {
 		executor(new SynchronousExecutorService());
@@ -178,7 +178,7 @@ public final class Logger {
 	 * Returns whether the severity of the logger allows for the provided level to be logged.
 	 *
 	 * @see Logger#enabled(int)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("null -> fail")
 	public static boolean enabled(LoggerLevel level) {
@@ -191,7 +191,7 @@ public final class Logger {
 	 *
 	 * @see Logger#enabled(LoggerLevel)
 	 * @see LoggerLevel#severity()
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static boolean enabled(int level) {
 		return level < severity;
@@ -201,7 +201,7 @@ public final class Logger {
 	//#region collector*
 	/**
 	 * Registers the provided collector to run when things are being logged.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void collector(Collector collector) {
 		if (collectors.contains(collector)) throw new UnsupportedOperationException("Cannot register the same collector twice");
@@ -217,7 +217,7 @@ public final class Logger {
 	 * to have a separate implementation of {@link Collector} only with dependencies on what is needed
 	 * for the collection, allowing for collectors to be safely tested.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void collectors(Iterable<Collector> collectors) {
 		collectors.forEach(Logger::collector);
@@ -229,7 +229,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -240,7 +240,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(Object object) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -252,7 +252,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, Object argument) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -264,7 +264,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -276,7 +276,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -287,7 +287,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -302,7 +302,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -319,7 +319,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -336,7 +336,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -353,7 +353,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -369,7 +369,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void information(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
@@ -383,7 +383,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -394,7 +394,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(Object object) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -406,7 +406,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, Object argument) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -418,7 +418,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -430,7 +430,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -441,7 +441,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -456,7 +456,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -473,7 +473,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -490,7 +490,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -507,7 +507,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -523,7 +523,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void warning(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.WARNING)) return;
@@ -537,7 +537,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -548,7 +548,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(Object object) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -560,7 +560,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, Object argument) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -572,7 +572,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -584,7 +584,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -595,7 +595,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -610,7 +610,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -627,7 +627,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -644,7 +644,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -661,7 +661,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -677,7 +677,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void error(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.ERROR)) return;
@@ -691,7 +691,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -702,7 +702,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -714,7 +714,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -726,7 +726,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -738,7 +738,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -749,7 +749,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -762,7 +762,7 @@ public final class Logger {
 	 * The stacktrace for the provided {@link Throwable} is printed
 	 * out only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -774,7 +774,7 @@ public final class Logger {
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -787,7 +787,7 @@ public final class Logger {
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -801,7 +801,7 @@ public final class Logger {
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -815,7 +815,7 @@ public final class Logger {
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -829,7 +829,7 @@ public final class Logger {
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -842,7 +842,7 @@ public final class Logger {
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(Throwable throwable, String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -858,7 +858,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -875,7 +875,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -892,7 +892,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -909,7 +909,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -925,7 +925,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -947,7 +947,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -967,7 +967,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -988,7 +988,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -1010,7 +1010,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -1032,7 +1032,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -1054,7 +1054,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -1075,7 +1075,7 @@ public final class Logger {
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
@@ -1089,7 +1089,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1100,7 +1100,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(Object object) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1112,7 +1112,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, Object argument) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1124,7 +1124,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1136,7 +1136,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1147,7 +1147,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1162,7 +1162,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1179,7 +1179,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1196,7 +1196,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1213,7 +1213,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1229,7 +1229,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void debugging(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
@@ -1243,7 +1243,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * This accepts no objects for formatting to prevent the creation of an array.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1254,7 +1254,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * This uses {@link String#valueOf(Object)} only if the logger is enabled at this level.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(Object object) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1266,7 +1266,7 @@ public final class Logger {
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, Object argument) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1278,7 +1278,7 @@ public final class Logger {
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1290,7 +1290,7 @@ public final class Logger {
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1301,7 +1301,7 @@ public final class Logger {
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1316,7 +1316,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1333,7 +1333,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1350,7 +1350,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, ObjectSupplier argument1, ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1367,7 +1367,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, ObjectSupplier argument1, ObjectSupplier argument2, ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
@@ -1383,7 +1383,7 @@ public final class Logger {
 	 * <p>
 	 * Formatting is performed with {@link Strings#format(String, Object...)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static void configuration(String text, ObjectSupplier... arguments) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;

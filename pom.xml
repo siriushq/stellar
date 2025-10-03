@@ -3,7 +3,7 @@
 
     <groupId>sirius.stellar</groupId>
     <artifactId>stellar-aggregator</artifactId>
-    <version>1u1</version>
+    <version>1.0</version>
 
     <packaging>pom</packaging>
     <name>Stellar</name>
@@ -18,8 +18,8 @@
     </licenses>
 
     <organization>
-        <name>Sirius Industries</name>
-        <url>https://sirius.cam</url>
+        <name>siriushq</name>
+        <url>https://www.sirius.cam</url>
     </organization>
 
     <modules>

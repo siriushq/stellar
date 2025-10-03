@@ -15,7 +15,7 @@ import static sirius.stellar.facility.Strings.*;
  *
  * @see java.lang.Runnable
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @FunctionalInterface

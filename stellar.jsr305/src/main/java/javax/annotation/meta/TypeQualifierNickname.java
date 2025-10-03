@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
  * &#064;interface SocialSecurityNumber {}
  * </pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

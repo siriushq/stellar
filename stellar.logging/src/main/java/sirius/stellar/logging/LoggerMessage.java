@@ -21,7 +21,7 @@ import static sirius.stellar.facility.Strings.*;
  * @param name The name of the logger.
  * @param text The text content of the message.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public record LoggerMessage(Instant time, LoggerLevel level, String thread, String name, String text) implements Serializable, Orderable<LoggerMessage> {

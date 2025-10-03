@@ -11,7 +11,7 @@ import static sirius.stellar.facility.Throwables.*;
 /**
  * Implementation of {@link org.apache.logging.log4j.spi.AbstractLogger} which dispatches to {@link Logger}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.AbstractLogger {

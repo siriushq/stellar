@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /**
  * Implementation of {@link org.jboss.logging.LoggerProvider} used for obtaining instances of {@link JbossDispatcher}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class JbossProvider implements org.jboss.logging.LoggerProvider {

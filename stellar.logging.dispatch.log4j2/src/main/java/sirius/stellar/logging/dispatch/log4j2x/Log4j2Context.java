@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Implementation of {@link org.apache.logging.log4j.spi.LoggerContext} used for obtaining instances of {@link Log4j2Dispatcher}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Log4j2Context implements org.apache.logging.log4j.spi.LoggerContext {

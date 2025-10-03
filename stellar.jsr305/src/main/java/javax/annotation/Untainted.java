@@ -17,7 +17,7 @@ import javax.annotation.meta.When;
  * When this annotation is applied to a method, it applies to the method return value.
  *
  * @see Tainted
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

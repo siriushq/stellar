@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Implementation of {@link System.LoggerFinder} used for obtaining instances of {@link Jsr379Dispatcher}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Jsr379Finder extends System.LoggerFinder {

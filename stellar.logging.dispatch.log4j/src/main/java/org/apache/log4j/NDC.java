@@ -8,7 +8,7 @@ import java.util.Stack;
  * Shadow class for {@code org.apache.log4j.NDC}.
  *
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 public final class NDC {
 

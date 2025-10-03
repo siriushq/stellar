@@ -7,7 +7,7 @@ import sirius.stellar.logging.dispatch.Dispatcher;
  * Implementation of {@link Dispatcher.Provider} used for obtaining instances of {@link MinlogDispatcher}.
  * This is run with {@link java.util.ServiceLoader}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @Internal

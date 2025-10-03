@@ -19,7 +19,7 @@ import java.util.random.RandomGenerator;
  * formatters and {@link String#format} uses the null-safe {@link String#valueOf(Object)} method to replace
  * arguments into the string, instead of attempting to invoke {@link Object#toString()} on a null argument.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class Strings {
@@ -32,7 +32,7 @@ public final class Strings {
 	 * string is indeed empty and not, e.g., a special whitespace character.
 	 *
 	 * @see Strings#SPACE
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static final String EMPTY = "";
 
@@ -45,7 +45,7 @@ public final class Strings {
 	 * non-standard whitespace character.
 	 *
 	 * @see Strings#EMPTY
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static final String SPACE = " ";
 
@@ -59,7 +59,7 @@ public final class Strings {
 	 * @return The provided string, formatted, or null if the provided string is null,
 	 * or the provided string if the argument array is null.
 	 * @see Strings#format(Locale, String, Object...)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "null, _ -> null; _, null -> param1; !null, !null -> new", pure = true)
 	public static String format(String string, Object... arguments) {
@@ -86,7 +86,7 @@ public final class Strings {
 	 * @return The provided string, formatted, or null if the provided string is null,
 	 * or the provided string if the argument array is null.
 	 * @see Strings#format(String, Object...)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new", pure = true)
 	public static String format(Locale locale, String string, Object... arguments) {
@@ -113,7 +113,7 @@ public final class Strings {
 	 * is used (how often this shuffle method is called), degrading quality/randomness.
 	 *
 	 * @see Strings#shuffle(RandomGenerator, char[])
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "!null, !null -> new; null, !null -> param2; _, null -> null", pure = true)
 	public static String shuffle(RandomGenerator random, String string) {
@@ -135,7 +135,7 @@ public final class Strings {
 	 * is used (how often this shuffle method is called), degrading quality/randomness.
 	 *
 	 * @see Strings#shuffle(RandomGenerator, String)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract(value = "!null, _ -> new; null, _ -> param2;", pure = true)
 	public static char[] shuffle(RandomGenerator random, char[] characters) {

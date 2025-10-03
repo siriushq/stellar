@@ -56,7 +56,7 @@ import java.util.stream.*;
  *             .forEach(path -> ...); // This invocation will close the stream.
  * }</pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class TerminatingStream<T> implements Stream<T> {
@@ -71,7 +71,7 @@ public final class TerminatingStream<T> implements Stream<T> {
 	 * Creates an auto terminating stream that wraps the provided stream.
 	 * This will close the stream when a terminal operation is performed.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public static <T> TerminatingStream<T> terminalStream(Stream<T> stream) {

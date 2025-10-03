@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
  * if it does any heavy I/O operations that could affect general performance of your
  * application.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @FunctionalInterface
@@ -61,7 +61,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 * may affect the performance of the application should instead be scheduled
 	 * with {@link Collector#task(Callable)}
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	void collect(LoggerMessage message);
 
@@ -72,7 +72,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 * be defined by implementing only one abstract method, i.e., with a lambda,
 	 * if they do not maintain any closeable resources.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Override
 	default void close() throws Exception {
@@ -97,7 +97,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 * is that the task will end, and {@link Logger#close} will block until it does if it is
 	 * invoked.
  	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	default Future<Void> task(Callable<Void> callable) {
 		return executor.submit(callable);
@@ -113,7 +113,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 * logs to {@code stdout}, but also it sets a dispatcher so that any later calls
 	 * to try and output to {@code stdout} will be redirected to logging.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	static Collector console() {
 		return ConsoleCollector.get();
@@ -126,7 +126,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 *
 	 * @see Collector#file(Path)
 	 * @see Collector#file(Path, Duration)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	static Collector file() {
 		return file(Path.of("logging"));
@@ -140,7 +140,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 *
 	 * @see Collector#file()
 	 * @see Collector#file(Path, Duration)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("null -> fail; !null -> new")
 	static Collector file(Path path) {
@@ -155,7 +155,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	 *
 	 * @see Collector#file()
 	 * @see Collector#file(Path)
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("null, null -> fail; !null, null -> fail; null, !null -> fail; !null, !null -> new")
 	static Collector file(Path path, Duration duration) {

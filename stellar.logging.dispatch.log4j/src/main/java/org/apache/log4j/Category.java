@@ -15,7 +15,7 @@ import static sirius.stellar.facility.Throwables.*;
  * Shadow class for {@code org.apache.log4j.Category}.
  *
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 public class Category {
 

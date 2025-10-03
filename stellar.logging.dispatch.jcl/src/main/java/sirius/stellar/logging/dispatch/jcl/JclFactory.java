@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * Implementation of {@link org.apache.commons.logging.LogFactory} used for obtaining instances of {@link JclDispatcher}.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class JclFactory extends org.apache.commons.logging.LogFactory {

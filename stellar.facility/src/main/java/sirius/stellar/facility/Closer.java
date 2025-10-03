@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
  * to it as suppressed exceptions, preserving the full closure context.
  *
  * @author Mechite
- * @since 1u1
+ * @since 1.0
  */
 public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 
@@ -29,7 +29,7 @@ public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 	 * Creates a new {@link Closer} with an empty stack of resources.
 	 * This method of instantiation does not use a thread-safe stack structure.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static Closer create() {
 		return new Closer(new ArrayDeque<>());
@@ -39,7 +39,7 @@ public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 	 * Creates a new {@link Closer} with an empty stack of resources.
 	 * This method of instantiation enforces a thread-safe stack structure.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static Closer createConcurrent() {
 		return new Closer(new ConcurrentLinkedDeque<>());
@@ -54,7 +54,7 @@ public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 	 *
 	 * @param <T> Any object implementing {@link AutoCloseable}.
 	 * @return The provided object, allowing fluent usage.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public <T extends AutoCloseable> T manage(@Nullable T closeable) {
 		this.stack.addFirst(closeable);

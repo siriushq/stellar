@@ -19,7 +19,7 @@ import sirius.stellar.facility.Strings;
  *     );
  * }</pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public final class TerminalConstant {
@@ -41,7 +41,7 @@ public final class TerminalConstant {
 	 * are usually used for console messages and such - where concatenation implicitly
 	 * calls this method through {@link String#valueOf(Object)}.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Override
 	public String toString() {

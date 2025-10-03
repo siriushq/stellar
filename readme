@@ -1,69 +1,59 @@
-Sirius/Stellar
-==============
+siriushq/stellar
+================
 
 	There are many available sources of documentation for users and contributors.
 	Rendered source documentation is available in the "target" directory for any
 	given module after building. https://stellar.sirius.cam houses the handbook.
 
-	<!> PLEASE NOTE <!>
-	===================
+	<!> The handbook is currently not public.
+	<!> Release 1.0 is not published yet.
 
-		-	The handbook is currently not public
-		-	Release 1u1 is NOT READY YET!
+	<ⓘ> stellar.logging & stellar.facility are usable & stable.
+	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
 
-	<!> HOWEVER <!>
-	===============
-
-		-	You can build this project and use stellar.logging & stellar.facility,
-		in production, without too much worry about API changes. Functionality is
-		stable and it is already being used at Sirius.
-		-	You can use `stellarfeedbackdelegate@mechite.com` for support. More
-		information about emails is below, read onwards...
-
-Building
+building
 ========
-
-	More in-depth instructions are available in the handbook.
-	However, the basic requirements are simple.
 
 	The preferred environment includes Oracle GraalVM for Java 21 and the Apache
 	Maven Daemon (mvnd), or any suitable distribution of Maven.
 
-	Then, either the `package` or `install` goals (depending on if the library is
-	to be used somewhere else, or just artifacts produced) can be used.
+	Then, either the `package` or `install` goals can be used.
+	`git clone git@github.com:siriushq/stellar.git && cd stellar && mvnd package`
 
-	For example, with `mvnd`, `mvnd install` can be used to install the produced
-	packages into the local repository for use as a dependency, elsewhere, later.
-
-Contributing
+contributing
 ============
 
 	Currently, in general, contributions are not accepted.
-	However, you can submit patches to `stellarpatchdelegate@mechite.com`.
-	Issues, bugs, etc can be submitted to `stellarfeedbackdelegate@mechite.com`.
+	However, you can submit patches [1], or report issues/bugs to `stellar@mechite.com`.
+	A response will always eventually be provided to anything delivered to this address.
 
-	A response will always be provided to anything submitted to these addresses.
+	[1] - https://www.kernel.org/doc/html/latest/process/submitting-patches.html
 
-Licensing
+licensing
 =========
 
 	While the project is licensed and will be licensed with CC BY-NC 4.0 for the
 	foreseeable future, licenses may eventually be available for the general public.
 
 	Special access can be granted to users and organizations by request.
-	Responses will always be attempted within 24 hours, so licenses can be obtained fast.
+	Responses will always be attempted within 24 hours — licenses can be obtained fast.
+	Given tolerable grounds, licenses will be offered free of charge to a majority of users.
 
-	This can be obtained by emailing `stellarlegaldelegate@mechite.com` with the following
-	information (* for required; please fill all fields using "N/A" for empty optionals):
+	This can be obtained by emailing `stellar@mechite.com` with the following message
+	(* for required; please fill all fields using "N/A" for empty optionals):
 
-		Name *
-		Organization
-		Role
+	example.eml ========================================================================
+	To: <stellar@mechite.com>
+	Subject: siriushq/stellar license request
+	Content-Type: text/plain; charset="UTF-8"
 
-		Description of use *
-		Commercial use? (y/n) *
+	Name *
+	Organization
+	Role
 
-		Minimum license duration required (or N/A)
-		Earliest required start date (or N/A)
+	Description of use *
+	Commercial use? (y/n) *
 
-	Given tolerable grounds, licenses will be offered free of charge to the majority of users.
+	Minimum license duration required (or N/A)
+	Earliest required start date (or N/A)
+	====================================================================================

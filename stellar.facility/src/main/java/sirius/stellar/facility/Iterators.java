@@ -11,7 +11,7 @@ import static sirius.stellar.facility.Strings.*;
 /**
  * Provides a facility for creating {@link Iterator}s.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public class Iterators {
@@ -32,7 +32,7 @@ public class Iterators {
 	 * no more elements left to iterate over.
 	 *
 	 * @see Iterators#from(int, int, Object[])
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <T> Iterators.Resettable<T> from(T... values) {
@@ -55,7 +55,7 @@ public class Iterators {
 	 * no more elements left to iterate over.
 	 *
 	 * @see Iterators#from(Object[])
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@SafeVarargs
 	public static <T> Iterators.Resettable<T> from(int start, int end, T... values) {
@@ -77,7 +77,7 @@ public class Iterators {
 	 * values remaining - it should return null whenever the values have been exhausted. The seed element is
 	 * always preserved, meaning it is possible to reset back to the beginning of the iterator.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public static <T> Iterators.Resettable<T> from(T seed, UnaryOperator<T> next) {
 		return new TraversalIterator<>(seed, next);
@@ -87,7 +87,7 @@ public class Iterators {
 	 * Represents any iterator that can be brought back to an initial state, allowing for reuse.
 	 * This should be repeatable, i.e. {@link Resettable#reset()} should never throw an exception.
 	 *
-	 * @since 1u1
+	 * @since 1.0
 	 * @author Mechite
 	 */
 	public interface Resettable<T> extends Iterator<T> {

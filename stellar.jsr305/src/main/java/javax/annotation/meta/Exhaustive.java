@@ -23,7 +23,7 @@ import java.lang.annotation.Documented;
  * }
  * </pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

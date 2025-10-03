@@ -14,7 +14,7 @@ import static java.lang.annotation.ElementType.*;
  * This annotation is used to denote a method whose return value should always
  * be checked after invoking the method.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

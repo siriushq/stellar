@@ -10,7 +10,7 @@ package sirius.stellar.facility;
  * abstraction - this is simply a helper abstraction and the {@link Comparable#compareTo(Object)}
  * method provides all the information that a method would ever need).
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 @FunctionalInterface

@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * methods do not clash with each other.
  *
  * @see ThrowableSupplier
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public interface ObjectSupplier extends Supplier<Object> {

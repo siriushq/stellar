@@ -37,7 +37,7 @@ import static sirius.stellar.facility.Strings.*;
  *     couple.getValue() == 16;
  * }</pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<A, B>>, Iterable<Object>, Serializable {
@@ -48,7 +48,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	//#region Factory Methods
 	/**
 	 * Creates an immutable couple for two objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _ -> new")
 	public static <A, B> Couple<A, B> immutableCouple(A first, B second) {
@@ -57,7 +57,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 
 	/**
 	 * Creates an immutable couple based on the provided {@link Map.Entry}.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public static <A, B> Couple<A, B> immutableCouple(Map.Entry<A, B> entry) {
@@ -66,7 +66,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 
 	/**
 	 * Creates a mutable couple for two objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _ -> new")
 	public static <A, B> Couple<A, B> mutableCouple(A first, B second) {
@@ -75,7 +75,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 
 	/**
 	 * Creates a mutable couple based on the provided {@link Map.Entry}.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public static <A, B> Couple<A, B> mutableCouple(Map.Entry<A, B> entry) {
@@ -86,13 +86,13 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	//#region Abstract Methods
 	/**
 	 * Gets the first element in this couple.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract A first();
 
 	/**
 	 * Gets the second element in this couple.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract B second();
 
@@ -101,7 +101,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	 * If the couple is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the first element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract A first(A first);
@@ -111,7 +111,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	 * If the couple is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the second element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract B second(B second);

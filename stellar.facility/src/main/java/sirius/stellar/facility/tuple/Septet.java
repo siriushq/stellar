@@ -24,7 +24,7 @@ import static sirius.stellar.facility.Strings.*;
  * Usage exemplars are available for tuples with &le;4 elements for brevity.
  * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A, B, C, D, E, F, G>>, Iterable<Object>, Serializable {
@@ -35,7 +35,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	//#region Factory Methods
 	/**
 	 * Creates an immutable septet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G> Septet<A, B, C, D, E, F, G> immutableSeptet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh) {
@@ -44,7 +44,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 
 	/**
 	 * Creates a mutable septet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G> Septet<A, B, C, D, E, F, G> mutableSeptet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh) {
@@ -55,43 +55,43 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	//#region Abstract Methods
 	/**
 	 * Gets the first element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract A first();
 
 	/**
 	 * Gets the second element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract B second();
 
 	/**
 	 * Gets the third element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract C third();
 
 	/**
 	 * Gets the fourth element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract D fourth();
 
 	/**
 	 * Gets the fifth element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract E fifth();
 
 	/**
 	 * Gets the sixth element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract F sixth();
 
 	/**
 	 * Gets the seventh element in this septet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract G seventh();
 
@@ -100,7 +100,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the first element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract A first(A first);
@@ -110,7 +110,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the second element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract B second(B second);
@@ -120,7 +120,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the third element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract C third(C third);
@@ -130,7 +130,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the fourth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
@@ -140,7 +140,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the fifth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract E fifth(E fifth);
@@ -150,7 +150,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the sixth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract F sixth(F sixth);
@@ -160,7 +160,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	 * If the septet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the seventh element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract G seventh(G seventh);

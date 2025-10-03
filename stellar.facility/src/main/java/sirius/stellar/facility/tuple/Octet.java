@@ -24,7 +24,7 @@ import static sirius.stellar.facility.Strings.*;
  * Usage exemplars are available for tuples with &le;4 elements for brevity.
  * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A, B, C, D, E, F, G, H>>, Iterable<Object>, Serializable {
@@ -35,7 +35,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	//#region Factory Methods
 	/**
 	 * Creates an immutable octet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G, H> Octet<A, B, C, D, E, F, G, H> immutableOctet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh, H eighth) {
@@ -44,7 +44,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 
 	/**
 	 * Creates a mutable octet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G, H> Octet<A, B, C, D, E, F, G, H> mutableOctet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh, H eighth) {
@@ -55,49 +55,49 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	//#region Abstract Methods
 	/**
 	 * Gets the first element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract A first();
 
 	/**
 	 * Gets the second element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract B second();
 
 	/**
 	 * Gets the third element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract C third();
 
 	/**
 	 * Gets the fourth element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract D fourth();
 
 	/**
 	 * Gets the fifth element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract E fifth();
 
 	/**
 	 * Gets the sixth element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract F sixth();
 
 	/**
 	 * Gets the seventh element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract G seventh();
 
 	/**
 	 * Gets the eighth element in this octet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract H eighth();
 
@@ -106,7 +106,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the first element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract A first(A first);
@@ -116,7 +116,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the second element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract B second(B second);
@@ -126,7 +126,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the third element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract C third(C third);
@@ -136,7 +136,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the fourth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
@@ -146,7 +146,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the fifth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract E fifth(E fifth);
@@ -156,7 +156,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the sixth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract F sixth(F sixth);
@@ -166,7 +166,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the seventh element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract G seventh(G seventh);
@@ -176,7 +176,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the eighth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract H eighth(H eighth);

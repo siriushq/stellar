@@ -10,7 +10,7 @@ import javax.annotation.meta.When;
 /**
  * Used to annotate a value of unknown sign.
  *
- * @since 1u1
+ * @since 1.0
  * @author Brian Goetz
  * @author Mechite
  */

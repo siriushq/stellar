@@ -38,7 +38,7 @@ import static sirius.stellar.facility.Strings.*;
  *     quartet.fourth() == 175;
  * }</pre>
  *
- * @since 1u1
+ * @since 1.0
  * @author Mechite
  */
 public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, D>>, Iterable<Object>, Serializable {
@@ -49,7 +49,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	//#region Factory Methods
 	/**
 	 * Creates an immutable quartet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _ -> new")
 	public static <A, B, C, D> Quartet<A, B, C, D> immutableQuartet(A first, B second, C third, D fourth) {
@@ -58,7 +58,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 
 	/**
 	 * Creates a mutable quartet for four objects.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_, _, _, _ -> new")
 	public static <A, B, C, D> Quartet<A, B, C, D> mutableQuartet(A first, B second, C third, D fourth) {
@@ -69,25 +69,25 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	//#region Abstract Methods
 	/**
 	 * Gets the first element in this quartet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract A first();
 
 	/**
 	 * Gets the second element in this quartet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract B second();
 
 	/**
 	 * Gets the third element in this quartet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract C third();
 
 	/**
 	 * Gets the fourth element in this quartet.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	public abstract D fourth();
 
@@ -96,7 +96,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the first element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract A first(A first);
@@ -106,7 +106,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the second element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract B second(B second);
@@ -116,7 +116,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the third element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract C third(C third);
@@ -126,7 +126,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
 	 *
 	 * @return The old value of the fourth element.
-	 * @since 1u1
+	 * @since 1.0
 	 */
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
