@@ -36,10 +36,6 @@
 		</license>
     </licenses>
 
-	<properties>
-		<project.root>${project.basedir}/../</project.root>
-	</properties>
-
     <build>
         <plugins>
 			<plugin>

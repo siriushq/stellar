@@ -13,10 +13,6 @@
     <name>Stellar :: Logging :: tinylog Dispatcher</name>
 	<description>tinylog dispatcher for the logging system.</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>

@@ -13,10 +13,6 @@
     <name>Stellar :: Logging :: Jakarta/Apache Commons Logging Dispatcher</name>
 	<description>JCL (Apache Commons Logging) dispatcher for the logging system.</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>

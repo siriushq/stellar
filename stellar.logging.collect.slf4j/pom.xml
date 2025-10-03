@@ -19,10 +19,6 @@
 		It would lead to an infinite logging loop being created.
 	</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>

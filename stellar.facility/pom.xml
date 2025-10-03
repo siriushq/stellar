@@ -13,10 +13,6 @@
     <name>Stellar :: Facility</name>
 	<description>Provides many facilities to conventionalize code and improve developer productivity - fills the gap that the Java standard library is missing; a much more convention-enforcing system than similar ones such as Apache Commons or Guava, providing improved security, declarativity &amp; productivity.</description>
 
-	<properties>
-		<project.root>${project.basedir}/../</project.root>
-	</properties>
-
     <build>
         <plugins>
             <plugin>

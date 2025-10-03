@@ -13,10 +13,6 @@
     <name>Stellar :: Logging</name>
 	<description>Flexible logging system with a transparent interface and support for many facades and logging backends such as JCL, JUL, SLF4J, etc.</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>

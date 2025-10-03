@@ -23,10 +23,6 @@
 		to be registered.
 	</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>

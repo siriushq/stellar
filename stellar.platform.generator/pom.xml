@@ -16,10 +16,6 @@
 		and metadata for use of the application development framework.
 	</description>
 
-	<properties>
-		<project.root>${project.basedir}/../</project.root>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>sirius.stellar</groupId>

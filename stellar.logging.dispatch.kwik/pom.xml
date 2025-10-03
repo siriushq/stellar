@@ -13,10 +13,6 @@
     <name>Stellar :: Logging :: Kwik! Dispatcher</name>
 	<description>Kwik (QUIC client) dispatcher for the logging system.</description>
 
-    <properties>
-		<project.root>${project.basedir}/../</project.root>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>sirius.stellar</groupId>
