@@ -24,7 +24,6 @@
 
     <modules>
 		<module>stellar.facility</module>
-		<module>stellar.jsr305</module>
 
         <module>stellar.logging</module>
 		<module>stellar.logging.bundle</module>
@@ -42,6 +41,10 @@
 		<module>stellar.logging.dispatch.slf4j</module>
 		<module>stellar.logging.dispatch.tinylog</module>
 
+		<module>stellar.jsr305</module>
+
+		<module>stellar.esthree</module>
+
 		<module>stellar.platform</module>
 		<module>stellar.platform.generator</module>
     </modules>
@@ -53,8 +56,9 @@
 		<groovy.version>4.0.28</groovy.version>
         <spock.version>2.3-groovy-4.0</spock.version>
 
-        <avaje-inject.version>11.4</avaje-inject.version>
-        <avaje-jsonb.version>3.3-RC1</avaje-jsonb.version>
+        <avaje-inject.version>11.6</avaje-inject.version>
+        <avaje-jsonb.version>3.7</avaje-jsonb.version>
+		<avaje-http.version>3.4</avaje-http.version>
     </properties>
 
 	<dependencies>

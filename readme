@@ -9,6 +9,10 @@ siriushq/stellar
 	<!> Release 1.0 is not published yet.
 
 	<ⓘ> stellar.logging & stellar.facility are usable & stable.
+	<ⓘ> stellar.esthree is usable but not feature-complete yet.
+	<ⓘ> stellar.platform* is to be deleted.
+	<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
+	    stellar.throttle, stellar.serialization, stellar.metrics
 	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
 
 building

@@ -1,5 +1,6 @@
 package sirius.stellar.logging.dispatch.kwik;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
 
@@ -12,6 +13,11 @@ import static sirius.stellar.facility.Throwables.*;
 
 /**
  * Implementation of {@link tech.kwik.core.log.Logger} which delegates to {@link Logger}.
+ * This should be instantiated manually for use and provided to these methods or similar:
+ * <ul>
+ *     <li>{@link tech.kwik.core.QuicClientConnection.Builder#logger(tech.kwik.core.log.Logger)}</li>
+ *     <li>{@link tech.kwik.core.server.ServerConnector.Builder#withLogger(tech.kwik.core.log.Logger)}</li>
+ * </ul>
  *
  * @since 1.0
  * @author Mechite
@@ -25,7 +31,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	}
 
 	@Override
-	protected void log(String text) {
+	protected void log(@Nullable String text) {
 		try {
 			this.lock.lock();
 			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "tech.kwik", text);
@@ -35,7 +41,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	}
 
 	@Override
-	protected void log(String text, Throwable throwable) {
+	protected void log(@Nullable String text, @Nullable Throwable throwable) {
 		try {
 			this.lock.lock();
 			if (throwable != null) text += "\n" + stacktrace(throwable);
@@ -46,7 +52,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	}
 
 	@Override
-	protected void logWithHexDump(String text, byte[] data, int length) {
+	protected void logWithHexDump(@Nullable String text, byte[] data, int length) {
 		try {
 			this.lock.lock();
 			text += "\n" + this.byteToHexBlock(data, length);
@@ -58,7 +64,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	}
 
 	@Override
-	protected void logWithHexDump(String text, ByteBuffer data, int offset, int length) {
+	protected void logWithHexDump(@Nullable String text, @Nullable ByteBuffer data, int offset, int length) {
 		try {
 			this.lock.lock();
 			text += "\n" + this.byteToHexBlock(data, offset, length);

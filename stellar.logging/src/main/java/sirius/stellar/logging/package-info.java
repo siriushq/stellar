@@ -1,0 +1,53 @@
+/**
+ * Flexible logging system with a transparent interface and support for
+ * many facades and logging backends such as JCL, JUL, SLF4J, etc.
+ * <p>
+ * For most users, the "best default" configuration would be to provide
+ * the {@link sirius.stellar.logging.collect.Collector#console} collector,
+ * a severity of {@code 3}, and use the default virtual thread executor.
+ * <p>
+ * The below example displays common usage patterns:
+ * <pre>{@code
+ * public class Main {
+ *
+ *     public static void main(String[] arguments) {
+ *         Logger.collector(Collector.console());
+ *         // Logger.collector(new Slf4jCollector()); - send logs to SLF4J instead
+ *         Logger.severity(3);
+ *
+ *         // use the statically accessible methods for logging
+ *
+ *         Logger.information("Hello, world!");
+ *         Logger.stacktrace(throwable, "Failed to reticulate splines");
+ *
+ *         // add any dispatchers to your classpath, to use other API, as follows:
+ *
+ *         var slf4j = org.slf4j.LoggerFactory.getLogger(Main.class);
+ *         slf4j.info("Hello from SLF4j!");
+ *
+ *         var log4j = org.apache.log4j.Logger.getLogger(Main.class);
+ *         log4j.info("Hello from Log4J!");
+ *
+ *         var log4j2 = org.apache.logging.log4j.LogManager.getLogger(Main.class);
+ *         log4j2.info("Hello from Log4J2!");
+ *
+ *         var jul = java.util.logging.Logger.getLogger(Main.class);
+ *         jul.info("Hello from java.util.logging!");
+ *
+ *         var jcl = org.apache.commons.logging.LogFactory.getLog(Main.class);
+ *         jcl.info("Hello from Jakarta/Apache Commons Logging!");
+ *
+ *         var jboss = org.jboss.logging.Logger.getLogger(Main.class);
+ *         jboss.info("Hello from JBoss!");
+ *
+ *         var jsr379 = System.getLogger(Main.class);
+ *         jsr379.log(System.Logger.Level.INFO, "Hello from System.Logger!");
+ *
+ *         org.tinylog.Logger.info("Hello from tinylog!");
+ *
+ *         com.esotericsoftware.minlog.Log.info("Hello from minlog!");
+ *     }
+ * }
+ * }</pre>
+ */
+package sirius.stellar.logging;

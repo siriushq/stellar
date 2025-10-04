@@ -1,6 +1,7 @@
 package sirius.stellar.facility;
 
 import org.jetbrains.annotations.Contract;
+import org.jspecify.annotations.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -30,7 +31,7 @@ public final class Throwables {
 	 * @see Throwables#stream(Throwable)
 	 * @since 1.0
 	 */
-	public static void forEach(Throwable throwable, Consumer<Throwable> consumer) {
+	public static void forEach(@Nullable Throwable throwable, @Nullable Consumer<Throwable> consumer) {
 		if (throwable == null || consumer == null) return;
 		stream(throwable).forEach(consumer);
 	}
@@ -47,7 +48,7 @@ public final class Throwables {
 	 * @since 1.0
 	 */
 	@Contract(value = "_ -> new", pure = true)
-	public static List<Throwable> causes(Throwable throwable) {
+	public static List<Throwable> causes(@Nullable Throwable throwable) {
 		if (throwable == null) return Collections.emptyList();
 		return stream(throwable).toList();
 	}
@@ -64,7 +65,7 @@ public final class Throwables {
 	 * @since 1.0
  	 */
 	@Contract(value = "_ -> new", pure = true)
-	public static Stream<Throwable> stream(Throwable throwable) {
+	public static Stream<Throwable> stream(@Nullable Throwable throwable) {
 		if (throwable == null) return Stream.empty();
 
 		Set<Throwable> processed = new HashSet<>();
@@ -100,7 +101,7 @@ public final class Throwables {
 	 * @since 1.0
 	 */
 	@Contract(value = "_ -> new", pure = true)
-	public static String stacktrace(Throwable throwable) {
+	public static String stacktrace(@Nullable Throwable throwable) {
 		if (throwable == null) return "null";
 		StringWriter writer = new StringWriter();
 		try (PrintWriter printWriter = new PrintWriter(writer)) {
