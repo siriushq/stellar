@@ -9,7 +9,7 @@ siriushq/stellar
 	<!> Release 1.0 is not published yet.
 
 	<ⓘ> stellar.logging & stellar.facility are usable & stable.
-	<ⓘ> stellar.esthree is usable but not feature-complete yet.
+	<ⓘ> stellar.esthree is not feature-complete yet.
 	<ⓘ> stellar.platform* is to be deleted.
 	<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
 	    stellar.throttle, stellar.serialization, stellar.metrics
@@ -19,10 +19,14 @@ building
 ========
 
 	The preferred environment includes Oracle GraalVM for Java 21 and the Apache
-	Maven Daemon (mvnd), or any suitable distribution of Maven.
+	Maven Daemon (mvnd), or any other suitable distribution of Maven.
 
-	Then, either the `package` or `install` goals can be used.
-	`git clone git@github.com:siriushq/stellar.git && cd stellar && mvnd package`
+	$ git clone --recursive git@github.com:siriushq/stellar.git
+	$ cd stellar
+
+	$ mvnd package
+	or...
+	$ mvnd install
 
 contributing
 ============
@@ -33,31 +37,24 @@ contributing
 
 	[1] - https://www.kernel.org/doc/html/latest/process/submitting-patches.html
 
-licensing
-=========
+support
+=======
 
-	While the project is licensed and will be licensed with CC BY-NC 4.0 for the
-	foreseeable future, licenses may eventually be available for the general public.
-
-	Special access can be granted to users and organizations by request.
-	Responses will always be attempted within 24 hours — licenses can be obtained fast.
-	Given tolerable grounds, licenses will be offered free of charge to a majority of users.
+	If commercial support is required, it can be granted for users/organizations by
+	request. Responses will be provided within 24 hours.
 
 	This can be obtained by emailing `stellar@mechite.com` with the following message
 	(* for required; please fill all fields using "N/A" for empty optionals):
 
 	example.eml ========================================================================
 	To: <stellar@mechite.com>
-	Subject: siriushq/stellar license request
+	Subject: siriushq/stellar commercial support
 	Content-Type: text/plain; charset="UTF-8"
 
 	Name *
 	Organization
 	Role
 
-	Description of use *
-	Commercial use? (y/n) *
-
-	Minimum license duration required (or N/A)
+	Minimum duration commitment required (or N/A)
 	Earliest required start date (or N/A)
 	====================================================================================

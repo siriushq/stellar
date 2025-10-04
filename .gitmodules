@@ -1,0 +1,3 @@
+[submodule "msgpack-java"]
+	path = stellar.serialization.msgpack/msgpack-java
+	url = https://github.com/msgpack/msgpack-java

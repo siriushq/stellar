@@ -1,0 +1,218 @@
+package sirius.stellar.esthree;
+
+import io.avaje.http.client.HttpClient;
+
+import java.net.URI;
+import java.time.Instant;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.stream.Stream;
+
+/**
+ * Service client for accessing S3. This can be created using the static {@link #builder()}
+ * method, and is {@link AutoCloseable}.
+ * <p>
+ * It is recommended that one instance is shared across an application, as the client is fully
+ * thread-safe (and virtual threads are used to support multithreaded execution on JVM >21, or
+ * {@link CompletableFuture}-based methods can be used if virtual threads are unavailable).
+ * <p>
+ * <pre>{@code
+ * Esthree esthree = Esthree.builder()
+ *         .region(US_EAST_1)               // either set region (for AWS)
+ *         .endpoint("https://s3.acme.com") // or set endpoint (if not)
+ *         .credentials(                    // authenticate (required!)
+ *             "AKIAIOSFODNN7EXAMPLE",
+ *             "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+ *         .build();
+ *
+ * esthree.buckets()
+ *         .forEach(bucket -> System.out.println(bucket.name()));
+ * }</pre>
+ * @see sirius.stellar.esthree
+ */
+public interface Esthree extends AutoCloseable {
+
+	/**
+	 * Returns a {@link Stream} of {@link Bucket}s, which iterates pages when a terminal
+	 * operation is executed. This will lazily load the listing recursively using AWS pagination.
+	 * <p>
+	 * A {@link Stream} is used to prevent extraneous requests being made, as a contract to
+	 * define that the {@link Bucket}s should only be consumed once, and if such iterating view
+	 * is unsuitable, {@link Stream#collect}/{@link Stream#toList()} can be used to obtain a
+	 * persistent view.
+	 */
+	Stream<Bucket> buckets();
+
+	/** {@link Future}-based variant of {@link #buckets()}. */
+	CompletableFuture<Stream<Bucket>> bucketsFuture();
+
+	/** Access the underlying {@link HttpClient}. Most people should never use this method. */
+	HttpClient httpClient();
+
+	/** Return the current aggregate metrics, collected for all requests by {@link HttpClient}. */
+	default HttpClient.Metrics metrics() {
+		return this.httpClient().metrics();
+	}
+
+	/** Return & reset the current aggregate metrics, collected for all requests by {@link HttpClient}. */
+	default HttpClient.Metrics metrics(boolean reset) {
+		return this.httpClient().metrics(reset);
+	}
+
+	/** Return a builder to construct {@link Esthree} instances with. */
+	static Builder builder() {
+		return new DEsthreeBuilder();
+	}
+
+	/** @see Esthree */
+	interface Builder {
+
+		/**
+		 * Configure the endpoint with which the client should communicate.
+		 * <p>
+		 * The default endpoint is {@code s3.<region>.amazonaws.com}.
+		 * @see #region
+		 */
+		Builder endpoint(String endpoint);
+
+		/** @see #endpoint(String) */
+		default Builder endpoint(URI endpoint) {
+			return this.endpoint(endpoint.normalize().toString());
+		}
+
+		/**
+		 * Configure the region with which the client should communicate.
+		 * <p>
+		 * If this is not specified, the client will attempt to identify the endpoint automatically using
+		 * the {@code aws.region} Java property and {@code AWS_REGION} environment variable.
+		 * <p>
+		 * Otherwise, a default of {@link Region#US_EAST_1} is chosen.
+		 */
+		Builder region(String region);
+
+		/** @see #region(String) */
+		default Builder region(Region region) {
+			return this.region(region.toString());
+		}
+
+		/**
+		 * Configure the credentials with which the client should authenticate.
+		 * <p>
+		 * If this is not specified, the client will attempt to identify the endpoint automatically using the
+		 * {@code aws.accessKeyId/aws.secretAccessKey} Java properties, and {@code AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY}
+		 * environment variables.
+		 */
+		Builder credentials(String accessKey, String secretKey);
+
+		/**
+		 * Access the builder for the underlying {@link HttpClient}, for any
+		 * further configuration. Most people should never use this method.
+		 */
+		HttpClient.Builder httpClientBuilder();
+
+		/**
+		 * Build and return the client (which is an {@link AutoCloseable}).
+		 * @throws IllegalStateException Method fails if no credentials were provided.
+		 */
+		Esthree build();
+	}
+
+	/**
+	 * Enumerator for valid AWS regions that can be provided to {@link Builder#region}.
+	 * This is provided only for convenience.
+	 */
+	enum Region {
+		AF_SOUTH_1("af-south-1"),
+		AP_EAST_1("ap-east-1"),
+		AP_EAST_2("ap-east-2"),
+		AP_NORTHEAST_1("ap-northeast-1"),
+		AP_NORTHEAST_2("ap-northeast-2"),
+		AP_NORTHEAST_3("ap-northeast-3"),
+		AP_SOUTH_1("ap-south-1"),
+		AP_SOUTH_2("ap-south-2"),
+		AP_SOUTHEAST_1("ap-southeast-1"),
+		AP_SOUTHEAST_2("ap-southeast-2"),
+		AP_SOUTHEAST_3("ap-southeast-3"),
+		AP_SOUTHEAST_4("ap-southeast-4"),
+		AP_SOUTHEAST_5("ap-southeast-5"),
+		AP_SOUTHEAST_6("ap-southeast-6"),
+		AP_SOUTHEAST_7("ap-southeast-7"),
+
+		CA_CENTRAL_1("ca-central-1"),
+		CA_WEST_1("ca-west-1"),
+
+		CN_NORTH_1("cn-north-1"),
+		CN_NORTHWEST_1("cn-northwest-1"),
+
+		EU_CENTRAL_1("eu-central-1"),
+		EU_CENTRAL_2("eu-central-2"),
+		EU_ISOE_WEST_1("eu-isoe-west-1"),
+		EU_NORTH_1("eu-north-1"),
+		EU_SOUTH_1("eu-south-1"),
+		EU_SOUTH_2("eu-south-2"),
+		EU_WEST_1("eu-west-1"),
+		EU_WEST_2("eu-west-2"),
+		EU_WEST_3("eu-west-3"),
+
+		EUSC_DE_EAST_1("eusc-de-east-1"),
+
+		IL_CENTRAL_1("il-central-1"),
+
+		ME_CENTRAL_1("me-central-1"),
+		ME_SOUTH_1("me-south-1"),
+
+		MX_CENTRAL_1("mx-central-1"),
+
+		SA_EAST_1("sa-east-1"),
+
+		US_EAST_1("us-east-1"),
+		US_EAST_2("us-east-2"),
+		US_WEST_1("us-west-1"),
+		US_WEST_2("us-west-2"),
+
+		US_GOV_EAST_1("us-gov-east-1"),
+		US_GOV_WEST_1("us-gov-west-1"),
+
+		US_ISO_EAST_1("us-iso-east-1"),
+		US_ISO_WEST_1("us-iso-west-1"),
+
+		US_ISOB_EAST_1("us-isob-east-1"),
+		US_ISOF_EAST_1("us-isof-east-1"),
+		US_ISOF_SOUTH_1("us-isof-south-1"),
+
+		AWS_CN_GLOBAL("aws-cn-global"),
+		AWS_GLOBAL("aws-global"),
+		AWS_ISO_B_GLOBAL("aws-iso-b-global"),
+		AWS_ISO_E_GLOBAL("aws-iso-e-global"),
+		AWS_ISO_F_GLOBAL("aws-iso-f-global"),
+		AWS_ISO_GLOBAL("aws-iso-global"),
+		AWS_US_GOV_GLOBAL("aws-us-gov-global");
+
+		private final String identifier;
+
+		Region(String identifier) {
+			this.identifier = identifier;
+		}
+
+		@Override
+		public String toString() {
+			return this.identifier;
+		}
+	}
+
+	/** Represents an S3 bucket, as returned by e.g. {@code ListBuckets}. */
+	interface Bucket {
+
+		/** The Amazon Resource Name (ARN) of the S3 bucket. */
+		String arn();
+
+		/** The AWS region where the bucket is located. */
+		String region();
+
+		/** Date the bucket was created (some bucket changes can update this). */
+		Instant creation();
+
+		/** The name of the bucket. */
+		String name();
+	}
+}

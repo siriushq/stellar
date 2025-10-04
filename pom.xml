@@ -12,13 +12,13 @@
 
     <licenses>
         <license>
-            <name>CC BY-NC 4.0</name>
-            <url>https://creativecommons.org/licenses/by-nc/4.0/</url>
+            <name>BSD 3-Clause License</name>
+            <url>https://opensource.org/license/bsd-3-clause</url>
         </license>
     </licenses>
 
     <organization>
-        <name>siriushq</name>
+        <name>@siriushq</name>
         <url>https://www.sirius.cam</url>
     </organization>
 
@@ -42,8 +42,9 @@
 		<module>stellar.logging.dispatch.tinylog</module>
 
 		<module>stellar.jsr305</module>
-
 		<module>stellar.esthree</module>
+
+		<module>stellar.serialization.msgpack</module>
 
 		<module>stellar.platform</module>
 		<module>stellar.platform.generator</module>
