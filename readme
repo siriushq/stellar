@@ -15,10 +15,13 @@ siriushq/stellar
 	    stellar.throttle, stellar.serialization, stellar.metrics
 	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
 
+	TODO - markdown-ify JavaDoc in sirius.stellar.facility.tuple.*
+	TODO - markdown-ify JavaDoc in sirius.stellar.logging.*
+
 building
 ========
 
-	The preferred environment includes Oracle GraalVM for Java 21 and the Apache
+	The preferred environment includes Oracle GraalVM for Java 25 and the Apache
 	Maven Daemon (mvnd), or any other suitable distribution of Maven.
 
 	$ git clone --recursive git@github.com:siriushq/stellar.git

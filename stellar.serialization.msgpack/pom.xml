@@ -52,6 +52,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
 
 				<configuration>
+					<excludePackageNames>org.msgpack.*</excludePackageNames>
 					<additionalOptions>
 						<additionalOption>--add-exports</additionalOption>
 						<additionalOption>java.base/sun.nio.ch=sirius.stellar.serialization.msgpack</additionalOption>

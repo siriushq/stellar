@@ -7,15 +7,13 @@ import java.util.List;
 import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Executes all submitted tasks directly in the same thread as the caller.
- * <p>
- * Running {@link #shutdown()} does not prevent new tasks from being submitted.
- * This allows for this implementation to trivially remain thread-safe (no shared state).
- *
- * @since 1.0
- * @author Mechite
- */
+/// Executes all submitted tasks directly in the same thread as the caller.
+///
+/// Running [#shutdown()] does not prevent new tasks from being submitted.
+/// This allows for this implementation to trivially remain thread-safe (no shared state).
+///
+/// @since 1.0
+/// @author Mechite
 public final class SynchronousExecutorService extends AbstractExecutorService implements Serializable {
 
 	@Serial

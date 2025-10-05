@@ -6,30 +6,26 @@ import java.util.function.Supplier;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * Represents a supplier of results.
- * There is no requirement that a new or distinct result be returned each
- * time the supplier is invoked.
- * <p>
- * This supplier may throw a {@link Throwable} which is automatically caught
- * and rethrown, providing a temporary {@link Thread.UncaughtExceptionHandler} for
- * if the rethrown exception is unhandled, preventing any traceability issues.
- * <p>
- * This is a {@linkplain java.util.function functional interface} whose
- * functional method is {@link #getRethrowing()}.
- *
- * @see java.util.function.Supplier
- *
- * @since 1.0
- * @author Mechite
- */
+/// Represents a supplier of results.
+/// There is no requirement that a new or distinct result be returned each
+/// time the supplier is invoked.
+///
+/// This supplier may throw a [Throwable] which is automatically caught
+/// and rethrown, providing a temporary [Thread.UncaughtExceptionHandler] for
+/// if the rethrown exception is unhandled, preventing any traceability issues.
+///
+/// This is a {@linkplain java.util.function functional interface} whose
+/// functional method is [#getRethrowing()].
+///
+/// @see java.util.function.Supplier
+///
+/// @since 1.0
+/// @author Mechite
 @FunctionalInterface
 public interface RethrowingSupplier<T> extends Supplier<T> {
 
-	/**
-	 * Gets a result.
-	 * Implement this, rather than {@link Supplier#get()}.
-	 */
+	/// Gets a result.
+	/// Implement this, rather than [#get()].
 	T getRethrowing() throws Throwable;
 
 	@Override
@@ -50,13 +46,11 @@ public interface RethrowingSupplier<T> extends Supplier<T> {
 		}
 	}
 
-	/**
-	 * Provides a {@link Supplier} for the provided {@link RethrowingSupplier}.
-	 * <p>
-	 * This method performs no operation except allow the use of lambda syntax to
-	 * construct a {@link RethrowingSupplier} for any method that normally accepts a
-	 * {@link Supplier}.
-	 */
+	/// Provides a [Supplier] for the provided [RethrowingSupplier].
+	///
+	/// This method performs no operation except allow the use of lambda syntax to
+	/// construct a [RethrowingSupplier] for any method that normally accepts a
+	/// [Supplier].
 	@Contract("_ -> param1")
 	static <T> Supplier<T> rethrowing(RethrowingSupplier<T> supplier) {
 		return supplier;

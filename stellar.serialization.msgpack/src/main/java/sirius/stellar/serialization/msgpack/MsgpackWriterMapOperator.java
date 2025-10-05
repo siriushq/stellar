@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 
-/**
- * Implementation of {@link MsgpackWriterOperator} that writes a map.
- */
+/// Implementation of [MsgpackWriterOperator] that writes a map.
 final class MsgpackWriterMapOperator implements MsgpackWriterOperator {
 
 	private final MsgpackWriterOperator parent;

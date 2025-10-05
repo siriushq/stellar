@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 
-/**
- * Implementation of {@link MsgpackWriterOperator} that writes an array.
- */
+/// Implementation of [MsgpackWriterOperator] that writes an array.
 final class MsgpackWriterArrayOperator implements MsgpackWriterOperator {
 
 	private final MsgpackWriterOperator parent;

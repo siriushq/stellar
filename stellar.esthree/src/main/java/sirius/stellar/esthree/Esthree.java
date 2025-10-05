@@ -8,119 +8,103 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
-/**
- * Service client for accessing S3. This can be created using the static {@link #builder()}
- * method, and is {@link AutoCloseable}.
- * <p>
- * It is recommended that one instance is shared across an application, as the client is fully
- * thread-safe (and virtual threads are used to support multithreaded execution on JVM >21, or
- * {@link CompletableFuture}-based methods can be used if virtual threads are unavailable).
- * <p>
- * <pre>{@code
- * Esthree esthree = Esthree.builder()
- *         .region(US_EAST_1)               // either set region (for AWS)
- *         .endpoint("https://s3.acme.com") // or set endpoint (if not)
- *         .credentials(                    // authenticate (required!)
- *             "AKIAIOSFODNN7EXAMPLE",
- *             "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
- *         .build();
- *
- * esthree.buckets()
- *         .forEach(bucket -> System.out.println(bucket.name()));
- * }</pre>
- * @see sirius.stellar.esthree
- */
+/// Service client for accessing S3. \
+/// This can be created using the static [#builder()] method, and is [AutoCloseable].
+///
+/// It is recommended that one instance is shared across an application, as the client is fully
+/// thread-safe (and virtual threads are used to support multithreaded execution on JVM >21, or
+/// [CompletableFuture]-based methods can be used if virtual threads are unavailable).
+///
+/// ```
+/// Esthree esthree = Esthree.builder()
+///         .region(US_EAST_1)               // either set region (for AWS)
+///         .endpoint("https://s3.acme.com") // or set endpoint (if not)
+///         .credentials(                    // authenticate (required!)
+///             "AKIAIOSFODNN7EXAMPLE",
+///             "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY")
+///         .build();
+///
+/// esthree.buckets()
+///         .forEach(bucket -> System.out.println(bucket.name()));
+/// }
+/// ```
+/// @see sirius.stellar.esthree
 public interface Esthree extends AutoCloseable {
 
-	/**
-	 * Returns a {@link Stream} of {@link Bucket}s, which iterates pages when a terminal
-	 * operation is executed. This will lazily load the listing recursively using AWS pagination.
-	 * <p>
-	 * A {@link Stream} is used to prevent extraneous requests being made, as a contract to
-	 * define that the {@link Bucket}s should only be consumed once, and if such iterating view
-	 * is unsuitable, {@link Stream#collect}/{@link Stream#toList()} can be used to obtain a
-	 * persistent view.
-	 */
+
+	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal operation is executed.
+	/// This will lazily load the listing recursively using AWS pagination.
+	/// <p>
+	/// A [Stream] is used to prevent extraneous requests being made, as a contract to define that
+	/// the [Bucket]s should only be consumed once. If such iterating view is unsuitable,
+	/// [Stream#collect] or `Stream#toList` (Java >16) can be used to obtain a persistent view.
 	Stream<Bucket> buckets();
 
-	/** {@link Future}-based variant of {@link #buckets()}. */
+	/// [Future]-based variant of [#buckets()].
 	CompletableFuture<Stream<Bucket>> bucketsFuture();
 
-	/** Access the underlying {@link HttpClient}. Most people should never use this method. */
+	/// Access the underlying [HttpClient]. Most people should never use this method.
 	HttpClient httpClient();
 
-	/** Return the current aggregate metrics, collected for all requests by {@link HttpClient}. */
+	/// Return the current aggregate metrics, collected for all requests by [HttpClient].
 	default HttpClient.Metrics metrics() {
 		return this.httpClient().metrics();
 	}
 
-	/** Return & reset the current aggregate metrics, collected for all requests by {@link HttpClient}. */
+	/// Return and reset the current aggregate metrics, collected for all requests by [HttpClient].
 	default HttpClient.Metrics metrics(boolean reset) {
 		return this.httpClient().metrics(reset);
 	}
 
-	/** Return a builder to construct {@link Esthree} instances with. */
+	/// Return a builder to construct [Esthree] instances with.
 	static Builder builder() {
 		return new DEsthreeBuilder();
 	}
 
-	/** @see Esthree */
+	/// @see Esthree
 	interface Builder {
 
-		/**
-		 * Configure the endpoint with which the client should communicate.
-		 * <p>
-		 * The default endpoint is {@code s3.<region>.amazonaws.com}.
-		 * @see #region
-		 */
+		/// Configure the endpoint with which the client should communicate. \
+		/// The default endpoint is `s3.<region>.amazonaws.com`.
+		/// @see #region
 		Builder endpoint(String endpoint);
 
-		/** @see #endpoint(String) */
+		/// @see #endpoint(String)
 		default Builder endpoint(URI endpoint) {
 			return this.endpoint(endpoint.normalize().toString());
 		}
 
-		/**
-		 * Configure the region with which the client should communicate.
-		 * <p>
-		 * If this is not specified, the client will attempt to identify the endpoint automatically using
-		 * the {@code aws.region} Java property and {@code AWS_REGION} environment variable.
-		 * <p>
-		 * Otherwise, a default of {@link Region#US_EAST_1} is chosen.
-		 */
+		/// Configure the region with which the client should communicate.
+		///
+		/// If this is not specified, the client will attempt to identify the endpoint automatically
+		/// using the `aws.region` Java property and `AWS_REGION` environment variable.
+		///
+		/// Otherwise, a default of {@link Region#US_EAST_1} is chosen.
 		Builder region(String region);
 
-		/** @see #region(String) */
+		/// @see #region(String)
 		default Builder region(Region region) {
 			return this.region(region.toString());
 		}
 
-		/**
-		 * Configure the credentials with which the client should authenticate.
-		 * <p>
-		 * If this is not specified, the client will attempt to identify the endpoint automatically using the
-		 * {@code aws.accessKeyId/aws.secretAccessKey} Java properties, and {@code AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY}
-		 * environment variables.
-		 */
+		/// Configure the credentials with which the client should authenticate.
+		///
+		/// If this is not specified, the client will attempt to identify the endpoint automatically using the
+		/// `aws.accessKeyId/aws.secretAccessKey` Java properties, and `AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY`
+		/// environment variables.
 		Builder credentials(String accessKey, String secretKey);
 
-		/**
-		 * Access the builder for the underlying {@link HttpClient}, for any
-		 * further configuration. Most people should never use this method.
-		 */
+		/// Access the builder for the underlying [HttpClient], for any
+		/// further configuration. Most people should never use this method.
 		HttpClient.Builder httpClientBuilder();
 
-		/**
-		 * Build and return the client (which is an {@link AutoCloseable}).
-		 * @throws IllegalStateException Method fails if no credentials were provided.
-		 */
+		/// Build and return the client (which is an [AutoCloseable]).
+		/// @throws IllegalStateException Method fails if no credentials were provided.
 		Esthree build();
 	}
 
-	/**
-	 * Enumerator for valid AWS regions that can be provided to {@link Builder#region}.
-	 * This is provided only for convenience.
-	 */
+	/// Enumerator for valid AWS regions that can be provided to [#region].
+	/// This is provided only for convenience.
 	enum Region {
 		AF_SOUTH_1("af-south-1"),
 		AP_EAST_1("ap-east-1"),
@@ -200,19 +184,19 @@ public interface Esthree extends AutoCloseable {
 		}
 	}
 
-	/** Represents an S3 bucket, as returned by e.g. {@code ListBuckets}. */
+	/// Represents an S3 bucket, as returned by e.g. `ListBuckets`.
 	interface Bucket {
 
-		/** The Amazon Resource Name (ARN) of the S3 bucket. */
+		/// The Amazon Resource Name (ARN) of the S3 bucket.
 		String arn();
 
-		/** The AWS region where the bucket is located. */
+		/// The AWS region where the bucket is located.
 		String region();
 
-		/** Date the bucket was created (some bucket changes can update this). */
+		/// Date the bucket was created (some bucket changes can update this).
 		Instant creation();
 
-		/** The name of the bucket. */
+		/// The name of the bucket.
 		String name();
 	}
 }

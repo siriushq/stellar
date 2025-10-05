@@ -18,7 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.nio.charset.StandardCharsets.*;
 import static java.time.ZoneOffset.*;
 
-/** Default/domain implementation of {@link EsthreeSigner}. */
+/// Default/domain implementation of [EsthreeSigner].
 final class DEsthreeSigner implements EsthreeSigner {
 
 	private final String accessKey;

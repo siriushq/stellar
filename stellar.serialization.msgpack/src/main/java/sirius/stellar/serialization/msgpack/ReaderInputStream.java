@@ -26,10 +26,8 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 import java.util.Objects;
 
-/**
- * Implementation of {@link InputStream} wrapping a {@link Reader}.
- * This is adapted from {@code org.apache.commons.io.input.ReaderInputStream} (to relieve the large dependency).
- */
+/// Implementation of [InputStream] wrapping a [Reader].
+/// This is adapted from `org.apache.commons.io.input.ReaderInputStream` (to relieve the large dependency).
 final class ReaderInputStream extends InputStream {
 
     private final Reader reader;

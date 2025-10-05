@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-/**
- * Implementation of {@link JsonReader} for MessagePack.
- */
+/// Implementation of [JsonReader] for MessagePack.
 final class MsgpackReader implements JsonReader {
 
 	private final MessageUnpacker unpacker;

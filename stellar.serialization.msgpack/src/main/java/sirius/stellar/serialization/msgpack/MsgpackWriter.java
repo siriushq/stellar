@@ -12,12 +12,10 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * Implementation of {@link JsonWriter} for MessagePack.
- * <p>
- * When using {@link JsonWriter#unwrap(Class)}, {@link MessagePacker MessagePacker.class}
- * should be the provided argument in order to retrieve the correct object.
- */
+/// Implementation of [JsonWriter] for MessagePack.
+///
+/// When using [JsonWriter#unwrap(Class)], [MessagePacker.class][MessagePacker]
+/// should be the provided argument in order to retrieve the correct object.
 sealed class MsgpackWriter implements JsonWriter permits MsgpackBufferedWriter, MsgpackBytesWriter {
 
 	protected MessagePacker packer;
@@ -369,10 +367,8 @@ sealed class MsgpackWriter implements JsonWriter permits MsgpackBufferedWriter, 
 		});
 	}
 
-	/**
-	 * Writes the next property name.
-	 * This method assumes that {@link MsgpackWriter#current} is available.
-	 */
+	/// Writes the next property name.
+	/// This method assumes that [#current] is available.
 	private void writeNextPropertyName() {
 		if (this.nextPropertyName == null) return;
 		String nextPropertyName = this.nextPropertyName;
@@ -383,9 +379,7 @@ sealed class MsgpackWriter implements JsonWriter permits MsgpackBufferedWriter, 
 		this.nextPropertyName = null;
 	}
 
-	/**
-	 * Writes everything to the stream.
-	 */
+	/// Writes everything to the stream.
 	private void assertAndWrite() {
 		if (this.base == null) throw new UnsupportedOperationException("Attempted to call assertAndWrite() with no registered operation");
 		if (this.current != null) return;

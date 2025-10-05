@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import static sirius.stellar.esthree.Esthree.Region.*;
 import static javax.xml.XMLConstants.*;
 
-/** Default/domain implementation of {@link Esthree}. */
+/// Default/domain implementation of [Esthree].
 final class DEsthree implements Esthree {
 
 	private final EsthreeSigner signer;
@@ -46,7 +46,7 @@ final class DEsthree implements Esthree {
 	}
 }
 
-/** Default/domain implementation of {@link Esthree.Builder}. */
+/// Default/domain implementation of [Esthree.Builder].
 final class DEsthreeBuilder implements Esthree.Builder {
 
 	private final HttpClient.Builder httpClientBuilder;

@@ -19,8 +19,7 @@ module sirius.stellar.platform {
 	requires java.management;
 
 	exports sirius.stellar.platform;
-	exports sirius.stellar.platform.jsonb;
 
 	provides io.avaje.inject.spi.InjectExtension with sirius.stellar.platform.PlatformModule;
-	provides io.avaje.jsonb.spi.JsonbExtension with sirius.stellar.platform.jsonb.GeneratedJsonComponent;
+	provides io.avaje.jsonb.spi.JsonbExtension with sirius.stellar.platform.PlatformJsonComponent;
 }

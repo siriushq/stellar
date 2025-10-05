@@ -6,10 +6,9 @@ import java.util.StringJoiner;
 
 import static java.nio.charset.StandardCharsets.*;
 
-/**
- * Wraps an InputStream and signs it chunk by chunk using AWS Signature V4.
- * @see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-streaming.html">AWS docs</a>
- */
+
+/// Wraps an InputStream and signs it chunk by chunk using AWS Signature V4.
+/// @see [AWS Docs](https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-streaming.html)
 final class DEsthreeSignedStream extends InputStream {
 
 	private final InputStream source;

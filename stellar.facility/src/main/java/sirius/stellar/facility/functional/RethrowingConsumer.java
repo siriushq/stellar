@@ -6,27 +6,23 @@ import java.util.function.Consumer;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * Represents an operation that accepts a single input argument and returns no result,
- * but may throw a {@link Throwable} which is automatically caught and rethrown,
- * providing a temporary {@link Thread.UncaughtExceptionHandler} for if the rethrown
- * exception is unhandled, preventing any traceability issues.
- * <p>
- * This is a {@linkplain java.util.function functional interface} whose
- * functional method is {@link #acceptRethrowing(T)}.
- *
- * @see java.util.function.Consumer
- *
- * @since 1.0
- * @author Mechite
- */
+/// Represents an operation that accepts a single input argument and returns no result,
+/// but may throw a [Throwable] which is automatically caught and rethrown,
+/// providing a temporary [Thread.UncaughtExceptionHandler] for if the rethrown
+/// exception is unhandled, preventing any traceability issues.
+///
+/// This is a {@linkplain java.util.function functional interface} whose
+/// functional method is [#acceptRethrowing(T)].
+///
+/// @see java.util.function.Consumer
+///
+/// @since 1.0
+/// @author Mechite
 @FunctionalInterface
 public interface RethrowingConsumer<T> extends Consumer<T> {
 
-	/**
-     * Performs this operation on the provided argument.
-	 * Implement this, rather than {@link Consumer#accept}.
-     */
+	/// Performs this operation on the provided argument.
+	/// Implement this, rather than [#accept].
 	void acceptRethrowing(T t) throws Throwable;
 
 	@Override
@@ -47,13 +43,11 @@ public interface RethrowingConsumer<T> extends Consumer<T> {
 		}
 	}
 
-	/**
-	 * Provides a {@link Consumer} for the provided {@link RethrowingConsumer}.
-	 * <p>
-	 * This method performs no operation except allow the use of lambda syntax to
-	 * construct a {@link RethrowingConsumer} for any method that normally accepts a
-	 * {@link Consumer}.
-	 */
+	/// Provides a [Consumer] for the provided [RethrowingConsumer].
+	///
+	/// This method performs no operation except allow the use of lambda syntax to
+	/// construct a [RethrowingConsumer] for any method that normally accepts a
+	/// [Consumer].
 	@Contract("_ -> param1")
 	static <T> Consumer<T> rethrowing(RethrowingConsumer<T> consumer) {
 		return consumer;

@@ -5,9 +5,7 @@ import org.msgpack.core.annotations.Nullable;
 
 import java.util.Arrays;
 
-/**
- * Implementation of {@link PropertyNames} for MessagePack.
- */
+/// Implementation of [PropertyNames] for MessagePack.
 record MsgspackPropertyNames(String... names) implements PropertyNames {
 
 	@Nullable

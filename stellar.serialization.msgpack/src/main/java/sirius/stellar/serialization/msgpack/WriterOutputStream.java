@@ -8,12 +8,9 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
-import java.nio.charset.StandardCharsets;
 
-/**
- * Implementation of {@link OutputStream} wrapping a {@link Writer}.
- * This is adapted from {@code org.apache.commons.io.input.WriterOutputStream} (to relieve the large dependency).
- */
+/// Implementation of [OutputStream] wrapping a [Writer].
+/// This is adapted from `org.apache.commons.io.input.WriterOutputStream` (to relieve the large dependency).
 final class WriterOutputStream extends OutputStream {
 
     private final Writer writer;

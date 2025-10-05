@@ -10,55 +10,51 @@ import java.util.function.*;
 import java.util.regex.Pattern;
 import java.util.stream.*;
 
-/**
- * Implementation of {@link Stream} which will automatically close when a terminal
- * operation is executed. While the majority of {@link Stream}s do not have to be
- * (and should not be) explicitly closed, the following methods provide IO streams
- * (and several third party libraries may contain similar IO streams) which need to
- * be closed explicitly:
- * <ul>
- *     <li>{@link java.nio.file.Files#list(Path)}</li>
- *     <li>{@link java.nio.file.Files#walk(Path, FileVisitOption...)}</li>
- *     <li>{@link java.nio.file.Files#walk(Path, int, FileVisitOption...)}</li>
- *     <li>{@link java.nio.file.Files#find(Path, int, BiPredicate, FileVisitOption...)}</li>
- *     <li>{@link java.nio.file.Files#lines(Path)}</li>
- *     <li>{@link java.nio.file.Files#lines(Path, Charset)}</li>
- *     <li>{@link java.util.Scanner#tokens()}</li>
- *     <li>{@link java.util.Scanner#findAll(Pattern)}</li>
- *     <li>{@link java.util.Scanner#findAll(String)}</li>
- * </ul>
- * There may be more standard methods that have not been mentioned here, as well as
- * new methods introduced in the future. However, these are the most commonly used.
- * <p>
- * The motivation for creating such a utility is that the use of try-with-resources
- * in this situation is not the best choice.
- * <p>
- * While with try-with-resources, we get the simplest implementation as of now, if
- * we were to close the stream without it, one would not pick try-finally. Instead,
- * one would store the stream, perform the terminal operation, and close it right
- * afterward. It is more pragmatic to close on a terminal operation, as the stream
- * is still entirely useless, however, the IO lock remains.
- * <p>
- * With the use of this utility, one is able to completely avoid storing the stream
- * explicitly, as well as avoid creating a new scope with try-with-resources. This
- * can provide a major concision.
- * <p>
- * The factory method {@link TerminatingStream#terminalStream(Stream)} is available,
- * designed to be imported statically for a fluent interface. A usage exemplar is
- * as follows:
- * <pre>{@code
- *     List<String> lines = terminalStream(Files.lines(...))
- *             .filter(...)
- *             .toList(); // This invocation will close the stream.
- *
- *     terminalStream(Files.list(...))
- *             .filter(...)
- *             .forEach(path -> ...); // This invocation will close the stream.
- * }</pre>
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [Stream] which will automatically close when a terminal operation
+/// is executed. While the majority of [Stream]s do not have to be (and should not be)
+/// explicitly closed, the following methods provide IO streams (and several third-party
+/// libraries may contain similar IO streams) which need to be closed explicitly:
+///
+///   - [java.nio.file.Files#list(Path)]
+///   - [java.nio.file.Files#walk(Path,FileVisitOption...)]
+///   - [java.nio.file.Files#walk(Path,int,FileVisitOption...)]
+///   - [java.nio.file.Files#find(Path,int,BiPredicate,FileVisitOption...)]
+///   - [java.nio.file.Files#lines(Path)]
+///   - [java.nio.file.Files#lines(Path,Charset)]
+///   - [java.util.Scanner#tokens()]
+///   - [java.util.Scanner#findAll(Pattern)]
+///   - [java.util.Scanner#findAll(String)]
+///
+/// There may be more standard methods that have not been mentioned here, as well as
+/// new methods introduced in the future. However, these are the most commonly used.
+///
+/// The motivation for creating such a utility is that the use of try-with-resources
+/// in this situation is not the best choice.
+///
+/// While with try-with-resources, we get the simplest implementation as of now, if
+/// we were to close the stream without it, one would not pick try-finally. Instead,
+/// one would store the stream, perform the terminal operation, and close it right
+/// afterward. It is more pragmatic to close on a terminal operation, as the stream
+/// is still entirely useless, however, the IO lock remains.
+///
+/// With the use of this utility, one is able to completely avoid storing the stream
+/// explicitly, as well as avoid creating a new scope with try-with-resources. This
+/// can provide a major concision.
+///
+/// The factory method [#terminalStream(Stream)] is available, designed to be imported
+/// statically for a fluent interface. A usage exemplar is as follows:
+/// ```
+/// List<String> lines = terminalStream(Files.lines(...))
+///     .filter(...)
+///     .toList(); // This invocation will close the stream.
+///
+/// terminalStream(Files.list(...))
+///     .filter(...)
+///     .forEach(path -> ...); // This invocation will close the stream.
+/// ```
+///
+/// @since 1.0
+/// @author Mechite
 public final class TerminatingStream<T> implements Stream<T> {
 
 	private final Stream<T> stream;
@@ -67,12 +63,10 @@ public final class TerminatingStream<T> implements Stream<T> {
 		this.stream = stream;
 	}
 
-	/**
-	 * Creates an auto terminating stream that wraps the provided stream.
-	 * This will close the stream when a terminal operation is performed.
-	 *
-	 * @since 1.0
-	 */
+	/// Creates an auto terminating stream that wraps the provided stream.
+	/// This will close the stream when a terminal operation is performed.
+	///
+	/// @since 1.0
 	@Contract("_ -> new")
 	public static <T> TerminatingStream<T> terminalStream(Stream<T> stream) {
 		return new TerminatingStream<>(stream);

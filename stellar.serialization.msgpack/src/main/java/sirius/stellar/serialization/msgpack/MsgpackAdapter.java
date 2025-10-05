@@ -14,59 +14,52 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-/**
- * Implementation of {@link JsonStream} for MessagePack.
- * A usage exemplar for explicit usage is as follows:
- * <pre>{@code
- *     Jsonb jsonb = Jsonb.builder()
- *             .adapter(new MsgpackAdapter())
- *             .build();
- * }</pre>
- *
- * <h3>Service loading initialise</h3>
- * Including the {@code stellar-serialization-msgpack} dependency in the class-path or
- * module-path will, by default, cause this adapter to be automatically selected via
- * service loading.
- * <p>
- * Should this be undesirable, e.g., if the default constructor options for the
- * serialization of null values, empty arrays, etc. is undesirable, explicitly using
- * the adapter as demonstrated above would allow this to be configured as desired.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Implementation of [JsonStream] for MessagePack.
+/// A usage exemplar for explicit usage is as follows:
+/// ```
+/// Jsonb jsonb = Jsonb.builder()
+///     .adapter(new MsgpackAdapter())
+///     .build();
+/// ```
+///
+/// ### Service loading initialise
+/// Including the `stellar-serialization-msgpack` dependency in the class-path
+/// or module-path will, by default, cause this adapter to be automatically selected via
+/// service loading.
+///
+/// Should this be undesirable, e.g., if the default constructor options for the
+/// serialization of null values, empty arrays, etc. is undesirable, explicitly using
+/// the adapter as demonstrated above would allow this to be configured as desired.
+///
+/// @author Mechite
+/// @since 1.0
 public class MsgpackAdapter implements JsonStream {
 
 	private final boolean serializeNulls;
 	private final boolean serializeEmpty;
 	private final boolean failOnUnknown;
 
-	/**
-	 * No-argument constructor that creates an adapter with default settings
-	 * as outlined below:
-	 * <ul>
-	 *     <li>serializeNulls true</li>
-	 *     <li>serializeEmpty true</li>
-	 *     <li>failOnUnknown false</li>
-	 * </ul>
-	 *
-	 * @see MsgpackAdapter#MsgpackAdapter(boolean, boolean, boolean)
-	 * @since 1.0
-	 */
+	/// No-argument constructor that creates an adapter with default settings
+	/// as outlined below:
+	///
+	/// - serializeNulls true
+	/// - serializeEmpty true
+	/// - failOnUnknown false
+	///
+	/// @see MsgpackAdapter#MsgpackAdapter(boolean, boolean, boolean)
+	/// @since 1.0
 	public MsgpackAdapter() {
 		this(true, true, false);
 	}
 
-	/**
-	 * Constructor that creates an adapter with the provided settings.
-	 *
-	 * @param serializeNulls Whether to enable the serialization of {@code null} values.
-	 * @param serializeEmpty Whether to enable the serialization of empty <i>arrays</i>.
-	 * @param failOnUnknown Whether to fail when deserializing unknown properties.
-	 *
-	 * @see MsgpackAdapter#MsgpackAdapter()
-	 * @since 1.0
-	 */
+	/// Constructor that creates an adapter with the provided settings.
+	///
+	/// @param serializeNulls Whether to enable the serialization of `null` values.
+	/// @param serializeEmpty Whether to enable the serialization of empty _arrays_.
+	/// @param failOnUnknown Whether to fail when deserializing unknown properties.
+	///
+	/// @see MsgpackAdapter#MsgpackAdapter()
+	/// @since 1.0
 	public MsgpackAdapter(boolean serializeNulls, boolean serializeEmpty, boolean failOnUnknown) {
 		this.serializeNulls = serializeNulls;
 		this.serializeEmpty = serializeEmpty;

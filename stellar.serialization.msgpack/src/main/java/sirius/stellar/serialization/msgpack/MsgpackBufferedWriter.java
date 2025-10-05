@@ -4,9 +4,7 @@ import io.avaje.json.stream.BufferedJsonWriter;
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 
-/**
- * Implementation of {@link BufferedJsonWriter} for MessagePack.
- */
+/// Implementation of [BufferedJsonWriter] for MessagePack.
 final class MsgpackBufferedWriter extends MsgpackWriter implements BufferedJsonWriter {
 
 	MsgpackBufferedWriter(boolean serializeNulls, boolean serializeEmpty) {

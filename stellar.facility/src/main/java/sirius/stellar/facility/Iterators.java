@@ -8,100 +8,86 @@ import java.util.stream.Stream;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * Provides a facility for creating {@link Iterator}s.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Provides a facility for creating [Iterator]s.
+///
+/// @since 1.0
+/// @author Mechite
 public class Iterators {
 
-	/**
-	 * Returns an iterator for the provided values.
-	 * <p>
-	 * This method should be preferred from using {@link Stream#of(Object[])} or {@link List#of(Object[])}
-	 * and then running {@link Stream#iterator()} or {@link List#iterator()} to get an iterator for any
-	 * given array, as it provides a minor performance advantage by not creating an intermediate object
-	 * representation and providing an iterator implementation that is made specifically for arrays.
-	 * <p>
-	 * The iterator provided only supports {@link Iterator#hasNext()} {@link Iterator#next()}, as well as
-	 * {@link Object#hashCode()} and {@link Object#toString()}. As it is an instance of {@link Resettable},
-	 * it can be reset to the initial starting position with {@link Resettable#reset()}.
-	 * <p>
-	 * When running {@link Iterator#next()}, {@link NoSuchElementException} will be thrown if there are
-	 * no more elements left to iterate over.
-	 *
-	 * @see Iterators#from(int, int, Object[])
-	 * @since 1.0
-	 */
+	/// Returns an iterator for the provided values.
+	///
+	/// This method should be preferred over using [Stream#of(Object[])] or [List#of(Object[])]
+	/// and then running [Stream#iterator()] or [List#iterator()] to get an iterator for any given
+	/// array, as it provides a minor performance advantage by not creating an intermediate object
+	/// representation and providing an iterator implementation that is made specifically for arrays.
+	///
+	/// The iterator provided only supports [Iterator#hasNext()] and [Iterator#next()], as well
+	/// as [Object#hashCode()] and [Object#toString()]. As it is an instance of [Resettable],
+	/// it can be reset to the initial starting position with [Resettable#reset()].
+	///
+	/// When running [Iterator#next()], [NoSuchElementException] will be thrown if there are
+	/// no more elements left to iterate over.
+	///
+	/// @see Iterators#from(int, int, Object[])
+	/// @since 1.0
 	@SafeVarargs
 	public static <T> Iterators.Resettable<T> from(T... values) {
 		return new ArrayIterator<>(0, values.length, values);
 	}
 
-	/**
-	 * Returns an iterator for the provided values.
-	 * <p>
-	 * This method should be preferred from using {@link Stream#of(Object[])} or {@link List#of(Object[])}
-	 * and then running {@link Stream#iterator()} or {@link List#iterator()} to get an iterator for any
-	 * given array, as it provides a minor performance advantage by not creating an intermediate object
-	 * representation and providing an iterator implementation that is made specifically for arrays.
-	 * <p>
-	 * The iterator provided only supports {@link Iterator#hasNext()} {@link Iterator#next()}, as well as
-	 * {@link Object#hashCode()} and {@link Object#toString()}. As it is an instance of {@link Resettable},
-	 * it can be reset to the initial starting position with {@link Resettable#reset()}.
-	 * <p>
-	 * When running {@link Iterator#next()}, {@link NoSuchElementException} will be thrown if there are
-	 * no more elements left to iterate over.
-	 *
-	 * @see Iterators#from(Object[])
-	 * @since 1.0
-	 */
+	/// Returns an iterator for the provided values.
+	///
+	/// This method should be preferred over using [Stream#of(Object[])] or [List#of(Object[])]
+	/// and then running [Stream#iterator()] or [List#iterator()] to get an iterator for any given
+	/// array, as it provides a minor performance advantage by not creating an intermediate object
+	/// representation and providing an iterator implementation that is made specifically for arrays.
+	///
+	/// The iterator provided only supports [Iterator#hasNext()] and [Iterator#next()], as well
+	/// as [Object#hashCode()] and [Object#toString()]. As it is an instance of [Resettable],
+	/// it can be reset to the initial starting position with [Resettable#reset()].
+	///
+	/// When running [Iterator#next()], [NoSuchElementException] will be thrown if there are
+	/// no more elements left to iterate over.
+	///
+	/// @see [Iterators#from(Object[])]
+	/// @since 1.0
 	@SafeVarargs
 	public static <T> Iterators.Resettable<T> from(int start, int end, T... values) {
 		return new ArrayIterator<>(start, end, values);
 	}
 
-	/**
-	 * Returns a traversal iterator starting with the provided seed.
-	 * <p>
-	 * The iterator provided only supports {@link Iterator#hasNext()} {@link Iterator#next()}, as well as
-	 * {@link Object#hashCode()} and {@link Object#toString()}. As it is an instance of {@link Resettable},
-	 * it can be reset to the initial starting position with {@link Resettable#reset()}.
-	 * <p>
-	 * It will always begin from the seed element, then continue to execute the unary operator to obtain
-	 * the next value when it is required. When {@link Iterator#hasNext()} is run, the stored previous value
-	 * is not changed, but the unary operator is executed; if the return value is not null, it returns true.
-	 * <p>
-	 * This behavior means that the provided unary operator must be executable, even when there are no more
-	 * values remaining - it should return null whenever the values have been exhausted. The seed element is
-	 * always preserved, meaning it is possible to reset back to the beginning of the iterator.
-	 *
-	 * @since 1.0
-	 */
+	/// Returns a traversal iterator starting with the provided seed.
+	///
+	/// The iterator provided only supports [Iterator#hasNext()] and [Iterator#next()], as well
+	/// as [Object#hashCode()] and [Object#toString()]. As it is an instance of [Resettable],
+	/// it can be reset to the initial starting position with [Resettable#reset()].
+	///
+	/// It will always begin from the seed element, then continue to execute the unary operator to obtain
+	/// the next value when it is required. When [Iterator#hasNext()] is run, the stored previous value
+	/// is not changed, but the unary operator is executed; if the return value is not null, it returns true.
+	///
+	/// This behavior means that the provided unary operator must be executable, even when there are no more
+	/// values remaining — it should return null whenever the values have been exhausted. The seed element is
+	/// always preserved, meaning it is possible to reset back to the beginning of the iterator.
+	///
+	/// @since 1.0
 	public static <T> Iterators.Resettable<T> from(T seed, UnaryOperator<T> next) {
 		return new TraversalIterator<>(seed, next);
 	}
 
-	/**
-	 * Represents any iterator that can be brought back to an initial state, allowing for reuse.
-	 * This should be repeatable, i.e. {@link Resettable#reset()} should never throw an exception.
-	 *
-	 * @since 1.0
-	 * @author Mechite
-	 */
+	/// Represents any iterator that can be brought back to an initial state, allowing for reuse.
+	/// This should be repeatable, i.e. [#reset()] should never throw an exception.
+	///
+	/// @since 1.0
+	/// @author Mechite
 	public interface Resettable<T> extends Iterator<T> {
 
-		/**
-		 * Resets the iterator back to the starting position.
-		 */
+		/// Resets the iterator back to the starting position.
 		void reset();
 	}
 }
 
-/**
- * An implementation of {@link Iterator} that is constructed from an array.
- */
+/// An implementation of [Iterator] that is constructed from an array.
 @Internal
 final class ArrayIterator<T> implements Iterators.Resettable<T> {
 
@@ -147,9 +133,7 @@ final class ArrayIterator<T> implements Iterators.Resettable<T> {
 	}
 }
 
-/**
- * An implementation of {@link Iterator} that obtains the next value dynamically.
- */
+/// An implementation of [Iterator] that obtains the next value dynamically.
 @Internal
 final class TraversalIterator<T> implements Iterators.Resettable<T> {
 
