@@ -25,7 +25,6 @@ jobs:
                 uses: ./.github/actions/install-mvnd
                 with:
                     version: '1.0.3'
-                    file-version-suffix: '-m40'
                     cache: 'true'
 
             -   name: Build with Maven (package goal)
