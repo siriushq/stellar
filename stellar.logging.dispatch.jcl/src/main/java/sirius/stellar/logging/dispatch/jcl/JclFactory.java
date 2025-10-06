@@ -3,12 +3,10 @@ package sirius.stellar.logging.dispatch.jcl;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * Implementation of {@link org.apache.commons.logging.LogFactory} used for obtaining instances of {@link JclDispatcher}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.apache.commons.logging.LogFactory] used for obtaining instances of [JclDispatcher].
+///
+/// @since 1.0
+/// @author Mechite
 public final class JclFactory extends org.apache.commons.logging.LogFactory {
 
 	private static final JclFactory instance = new JclFactory();

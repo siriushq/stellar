@@ -7,12 +7,10 @@ import java.time.Instant;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Shadow class for {@code org.apache.log4j.Logger}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.Logger`.
+///
+/// @author Mechite
+/// @since 1.0
 public class Logger extends Category {
 
 	private static final boolean MINIMUM_LEVEL_COVERS_TRACE = sirius.stellar.logging.Logger.enabled(LoggerLevel.STACKTRACE);

@@ -9,17 +9,15 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
-/**
- * Implementation of {@link org.slf4j.Logger} which dispatches to {@link Logger}.
- * <p>
- * There is suboptimal handling of {@link org.slf4j.Marker}s in this implementation;
- * all the marker-related methods simply call {@link org.slf4j.Marker#getName()} and
- * prefix the message with {@code MARKER_NAME: This is an example message}.
- *
- * @param name The name of the logger.
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.slf4j.Logger] which dispatches to [Logger].
+///
+/// There is suboptimal handling of [org.slf4j.Marker]s in this implementation;
+/// all the marker-related methods simply call [org.slf4j.Marker#getName()] and
+/// prefix the message with `MARKER_NAME: This is an example message`.
+///
+/// @param name The name of the logger.
+/// @since 1.0
+/// @author Mechite
 public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializable {
 
 	@Serial

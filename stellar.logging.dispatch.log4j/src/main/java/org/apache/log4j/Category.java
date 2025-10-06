@@ -11,12 +11,10 @@ import java.util.ResourceBundle;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Shadow class for {@code org.apache.log4j.Category}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.Category`.
+///
+/// @author Mechite
+/// @since 1.0
 public class Category {
 
 	protected static final int STACKTRACE_DEPTH = 2;
@@ -261,9 +259,7 @@ public class Category {
 		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(Level.WARN), Thread.currentThread().getName(), this.name, message);
 	}
 
-	/**
-	 * Converts the provided level or priority to a {@link LoggerLevel}.
-	 */
+	/// Converts the provided level or priority to a [LoggerLevel].
 	private static LoggerLevel convert(Priority priority) {
 		return switch (priority.toInt()) {
 			case Priority.ALL_INT -> LoggerLevel.ALL;
@@ -276,9 +272,7 @@ public class Category {
 		};
 	}
 
-	/**
-	 * Converts the provided level to a {@link Level}.
-	 */
+	/// Converts the provided level to a [Level].
 	private static Level convert(LoggerLevel level) {
 		return switch (level) {
 			case ALL -> Level.ALL;

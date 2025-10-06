@@ -11,17 +11,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link tech.kwik.core.log.Logger} which delegates to {@link Logger}.
- * This should be instantiated manually for use and provided to these methods or similar:
- * <ul>
- *     <li>{@link tech.kwik.core.QuicClientConnection.Builder#logger(tech.kwik.core.log.Logger)}</li>
- *     <li>{@link tech.kwik.core.server.ServerConnector.Builder#withLogger(tech.kwik.core.log.Logger)}</li>
- * </ul>
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [tech.kwik.core.log.Logger] which delegates to [Logger].
+/// This should be instantiated manually for use and provided to these methods or similar:
+///
+/// - [tech.kwik.core.QuicClientConnection.Builder#logger(tech.kwik.core.log.Logger)]
+/// - [tech.kwik.core.server.ServerConnector.Builder#withLogger(tech.kwik.core.log.Logger)]
+///
+/// @since 1.0
+/// @author Mechite
 public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	private final Lock lock;

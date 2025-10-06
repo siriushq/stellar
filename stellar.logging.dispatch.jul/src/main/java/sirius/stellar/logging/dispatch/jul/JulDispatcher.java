@@ -9,23 +9,22 @@ import java.io.Serial;
 import java.text.MessageFormat;
 import java.util.Map;
 
-/**
- * Implementation of {@link java.util.logging.Handler} which dispatches to {@link Logger}.
- *
- * <table>
- *     <caption>Level Mapping</caption>
- *     <tr> <th>FINEST</th><th>STACKTRACE</th> </tr>
- *     <tr> <th>FINER</th><th>DEBUGGING</th> </tr>
- *     <tr> <th>FINE</th><th>DEBUGGING</th> </tr>
- *     <tr> <th>CONFIG</th><th>CONFIGURATION</th> </tr>
- *     <tr> <th>INFO</th><th>INFORMATION</th> </tr>
- *     <tr> <th>WARNING</th><th>WARNING</th> </tr>
- *     <tr> <th>SEVERE</th><th>ERROR</th> </tr>
- * </table>
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [java.util.logging.Handler] which dispatches to [Logger].
+///
+/// -------------------------------
+/// | `j.u.l`   | [LoggerLevel]   |
+/// |-----------|-----------------|
+/// | `FINEST`  | `STACKTRACE`    |
+/// | `FINER`   | `DEBUGGING`     |
+/// | `FINE`    | `DEBUGGING`     |
+/// | `CONFIG`  | `CONFIGURATION` |
+/// | `INFO`    | `INFORMATION`   |
+/// | `WARNING` | `WARNING`       |
+/// | `SEVERE`  | `ERROR`         |
+/// -------------------------------
+///
+/// @since 1.0
+/// @author Mechite
 public final class JulDispatcher extends java.util.logging.Handler implements Dispatcher {
 
 	@Serial

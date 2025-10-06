@@ -2,9 +2,7 @@ package sirius.stellar.logging.dispatch.jboss;
 
 import sirius.stellar.facility.doctation.Internal;
 
-/**
- * Represents an entry in the NDC provided by {@link JbossProvider}.
- */
+/// Represents an entry in the NDC provided by [JbossProvider].
 @Internal
 final class JbossNdcEntry {
 

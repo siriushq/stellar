@@ -12,14 +12,12 @@ import java.util.ResourceBundle;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link System.Logger} which dispatches to {@link Logger}.
- * There is a lack of handling for {@link ResourceBundle}s in this implementation.
- *
- * @param name The name of the logger.
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [System.Logger] which dispatches to [Logger].
+/// There is a lack of handling for [ResourceBundle]s in this implementation.
+///
+/// @param name The name of the logger.
+/// @since 1.0
+/// @author Mechite
 public record Jsr379Dispatcher(String name) implements System.Logger, Serializable {
 
 	@Serial
@@ -48,9 +46,7 @@ public record Jsr379Dispatcher(String name) implements System.Logger, Serializab
 		Logger.dispatch(Instant.now(), convert(level), Thread.currentThread().getName(), this.name, format(text, arguments));
 	}
 
-	/**
-	 * Converts the provided level to a {@link LoggerLevel}.
-	 */
+	/// Converts the provided level to a [LoggerLevel].
 	private static LoggerLevel convert(Level level) {
 		return switch (level) {
 			case ALL -> LoggerLevel.ALL;

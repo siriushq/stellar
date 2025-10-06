@@ -9,12 +9,10 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
-/**
- * Implementation of {@link org.apache.commons.logging.Log} which dispatches to {@link Logger}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.apache.commons.logging.Log] which dispatches to [Logger].
+///
+/// @since 1.0
+/// @author Mechite
 public final class JclDispatcher implements org.apache.commons.logging.Log, Serializable {
 
 	@Serial

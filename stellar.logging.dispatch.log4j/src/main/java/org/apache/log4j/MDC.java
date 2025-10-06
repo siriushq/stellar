@@ -2,12 +2,10 @@ package org.apache.log4j;
 
 import java.util.Hashtable;
 
-/**
- * Shadow class for {@code org.apache.log4j.MDC}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.MDC`.
+///
+/// @author Mechite
+/// @since 1.0
 public final class MDC {
 
 	private static final Hashtable<String, Object> mdc = new Hashtable<>();

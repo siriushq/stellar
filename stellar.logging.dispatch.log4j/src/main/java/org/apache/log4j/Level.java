@@ -3,12 +3,10 @@ package org.apache.log4j;
 import java.io.*;
 import java.util.Locale;
 
-/**
- * Shadow class for {@code org.apache.log4j.Level}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.Level`.
+///
+/// @author Mechite
+/// @since 1.0
 public class Level extends Priority implements Serializable {
 
 	@Serial

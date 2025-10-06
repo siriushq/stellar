@@ -4,12 +4,10 @@ import sirius.stellar.facility.Strings;
 
 import java.util.Stack;
 
-/**
- * Shadow class for {@code org.apache.log4j.NDC}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.NDC`.
+///
+/// @author Mechite
+/// @since 1.0
 public final class NDC {
 
 	private static final Stack<String> ndc = new Stack<>();

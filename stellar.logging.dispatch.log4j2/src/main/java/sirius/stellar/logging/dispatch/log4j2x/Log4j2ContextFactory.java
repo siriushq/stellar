@@ -2,12 +2,10 @@ package sirius.stellar.logging.dispatch.log4j2x;
 
 import java.net.URI;
 
-/**
- * Implementation of {@link org.apache.logging.log4j.spi.LoggerContextFactory} used for obtaining instances of {@link Log4j2Context}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.apache.logging.log4j.spi.LoggerContextFactory] used for obtaining instances of [Log4j2Context].
+///
+/// @since 1.0
+/// @author Mechite
 public final class Log4j2ContextFactory implements org.apache.logging.log4j.spi.LoggerContextFactory {
 
 	@Override

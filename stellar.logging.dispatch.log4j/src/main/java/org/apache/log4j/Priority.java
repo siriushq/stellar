@@ -1,11 +1,9 @@
 package org.apache.log4j;
 
-/**
- * Shadow class for {@code org.apache.log4j.Priority}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.Priority`.
+///
+/// @author Mechite
+/// @since 1.0
 public class Priority {
 
 	public static final int OFF_INT = Integer.MAX_VALUE;

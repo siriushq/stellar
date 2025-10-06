@@ -8,12 +8,10 @@ import java.time.Instant;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link org.apache.logging.log4j.spi.AbstractLogger} which dispatches to {@link Logger}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.apache.logging.log4j.spi.AbstractLogger] which dispatches to [Logger].
+///
+/// @since 1.0
+/// @author Mechite
 public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.AbstractLogger {
 
 	@Serial
@@ -27,9 +25,7 @@ public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.Abstrac
 		super(name, factory);
 	}
 
-	/**
-	 * Converts the provided level to a {@link LoggerLevel}.
-	 */
+	/// Converts the provided level to a [LoggerLevel].
 	private static LoggerLevel convert(org.apache.logging.log4j.Level level) {
 		if (level == org.apache.logging.log4j.Level.ALL) return LoggerLevel.ALL;
 

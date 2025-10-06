@@ -5,9 +5,7 @@ import sirius.stellar.facility.doctation.Internal;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Implementation of {@link org.tinylog.provider.ContextProvider} used by {@link TinylogDispatcher}.
- */
+/// Implementation of [org.tinylog.provider.ContextProvider] used by [TinylogDispatcher].
 @Internal
 final class TinylogContextProvider implements org.tinylog.provider.ContextProvider {
 

@@ -10,12 +10,10 @@ import java.time.Instant;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link com.esotericsoftware.minlog.Log.Logger} which dispatches to {@link Logger}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [com.esotericsoftware.minlog.Log.Logger] which dispatches to [Logger].
+///
+/// @since 1.0
+/// @author Mechite
 public final class MinlogDispatcher extends com.esotericsoftware.minlog.Log.Logger implements Dispatcher {
 
 	@Serial

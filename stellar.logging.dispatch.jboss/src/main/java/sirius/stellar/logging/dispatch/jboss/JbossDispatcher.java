@@ -8,12 +8,10 @@ import java.time.Instant;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link org.jboss.logging.Logger} which delegates to {@link Logger}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.jboss.logging.Logger] which delegates to [Logger].
+///
+/// @since 1.0
+/// @author Mechite
 public final class JbossDispatcher extends org.jboss.logging.Logger {
 
 	JbossDispatcher(String name) {
@@ -40,9 +38,7 @@ public final class JbossDispatcher extends org.jboss.logging.Logger {
 		return Logger.enabled(convert(level));
 	}
 
-	/**
-	 * Converts the provided level to a {@link LoggerLevel}.
-	 */
+	/// Converts the provided level to a [LoggerLevel].
 	private LoggerLevel convert(org.jboss.logging.Logger.Level level) {
 		return switch (level) {
 			case FATAL, ERROR -> LoggerLevel.ERROR;

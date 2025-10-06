@@ -8,12 +8,10 @@ import java.util.Map;
 
 import org.apache.log4j.spi.LoggerFactory;
 
-/**
- * Shadow class for {@code org.apache.log4j.LogManager}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.LogManager`.
+///
+/// @author Mechite
+/// @since 1.0
 public class LogManager {
 
 	private static final Logger root = new Logger(null, "root");

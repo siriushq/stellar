@@ -4,12 +4,10 @@ import java.util.Enumeration;
 
 import org.apache.log4j.Appender;
 
-/**
- * Shadow class for {@code org.apache.log4j.spi.AppenderAttachable}.
- *
- * @author Mechite
- * @since 1.0
- */
+/// Shadow class for `org.apache.log4j.spi.AppenderAttachable`.
+///
+/// @author Mechite
+/// @since 1.0
 public interface AppenderAttachable {
 	void addAppender(Appender newAppender);
 	Enumeration getAllAppenders();

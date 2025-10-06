@@ -9,12 +9,10 @@ import java.util.Locale;
 
 import static sirius.stellar.facility.Throwables.*;
 
-/**
- * Implementation of {@link org.tinylog.provider.LoggingProvider} which dispatches to {@link Logger}.
- *
- * @since 1.0
- * @author Mechite
- */
+/// Implementation of [org.tinylog.provider.LoggingProvider] which dispatches to [Logger].
+///
+/// @since 1.0
+/// @author Mechite
 public final class TinylogDispatcher implements org.tinylog.provider.LoggingProvider {
 
 	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
@@ -63,9 +61,7 @@ public final class TinylogDispatcher implements org.tinylog.provider.LoggingProv
 		Logger.dispatch(Instant.now(), this.convert(level), Thread.currentThread().getName(), caller, message);
 	}
 
-	/**
-	 * Converts the provided level to a {@link LoggerLevel}.
-	 */
+	/// Converts the provided level to a [LoggerLevel].
 	private LoggerLevel convert(org.tinylog.Level level) {
 		return switch (level) {
 			case INFO -> LoggerLevel.INFORMATION;
