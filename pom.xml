@@ -91,7 +91,7 @@
 
     <repositories>
         <repository>
-            <id>google-central</id>
+            <id>central</id>
             <url>https://maven-central.storage.googleapis.com/</url>
         </repository>
 		<repository>
@@ -171,7 +171,7 @@
 
 					<executions>
 						<execution>
-							<phase>package</phase>
+							<phase>verify</phase>
 							<goals>
 								<goal>sign</goal>
 							</goals>
