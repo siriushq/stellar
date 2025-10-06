@@ -6,14 +6,12 @@ import javax.annotation.meta.When;
 import java.lang.annotation.Documented;
 import java.util.regex.Pattern;
 
-/**
- * This annotation is used to denote String values that should always match given pattern.
- * When this annotation is applied to a method, it applies to the method return value.
- *
- * @since 1.0
- * @author Brian Goetz
- * @author Mechite
- */
+/// This annotation is used to denote String values that should always match given pattern.
+/// When this annotation is applied to a method, it applies to the method return value.
+///
+/// @since 1.0
+/// @author Brian Goetz
+/// @author Mechite
 @Documented
 @TypeQualifier(applicableTo = String.class)
 public @interface MatchesPattern {

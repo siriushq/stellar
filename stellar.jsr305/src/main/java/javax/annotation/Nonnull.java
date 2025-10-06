@@ -5,15 +5,13 @@ import javax.annotation.meta.TypeQualifierValidator;
 import javax.annotation.meta.When;
 import java.lang.annotation.Documented;
 
-/**
- * The annotated element must not be null.
- * Annotated fields must not be null after construction has completed.
- * When this annotation is applied to a method, it applies to the method return value.
- *
- * @author Brian Goetz
- * @author Mechite
- * @since 1.0
- */
+/// The annotated element must not be null.
+/// Annotated fields must not be null after construction has completed.
+/// When this annotation is applied to a method, it applies to the method return value.
+///
+/// @author Brian Goetz
+/// @author Mechite
+/// @since 1.0
 @Documented
 @TypeQualifier
 public @interface Nonnull {

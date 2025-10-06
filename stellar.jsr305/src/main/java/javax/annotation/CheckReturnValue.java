@@ -10,14 +10,12 @@ import javax.annotation.meta.When;
 
 import static java.lang.annotation.ElementType.*;
 
-/**
- * This annotation is used to denote a method whose return value should always
- * be checked after invoking the method.
- *
- * @since 1.0
- * @author Brian Goetz
- * @author Mechite
- */
+/// This annotation is used to denote a method whose return value should always
+/// be checked after invoking the method.
+///
+/// @since 1.0
+/// @author Brian Goetz
+/// @author Mechite
 @Documented
 @Target({
 		METHOD,
