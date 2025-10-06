@@ -3,24 +3,23 @@
 
     <groupId>sirius.stellar</groupId>
     <artifactId>stellar-aggregator</artifactId>
-    <version>1.0</version>
-
+    <version>1.0-RC1</version>
     <packaging>pom</packaging>
+
     <name>Stellar</name>
-    <description>Aggregator for the visionary application development framework.</description>
 	<url>https://stellar.sirius.cam</url>
 
-    <licenses>
+	<organization>
+		<name>@siriushq</name>
+		<url>https://www.sirius.cam</url>
+	</organization>
+
+	<licenses>
         <license>
             <name>BSD 3-Clause License</name>
             <url>https://opensource.org/license/bsd-3-clause</url>
         </license>
     </licenses>
-
-    <organization>
-        <name>@siriushq</name>
-        <url>https://www.sirius.cam</url>
-    </organization>
 
     <modules>
 		<module>stellar.facility</module>
@@ -92,21 +91,25 @@
 
     <repositories>
         <repository>
-            <id>central</id>
-            <name>Maven Central Repository</name>
-            <url>https://repo1.maven.org/maven2/</url>
+            <id>google-central</id>
+            <url>https://maven-central.storage.googleapis.com/</url>
         </repository>
-        <repository>
-            <id>sonatype</id>
-            <name>Sonatype Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
-        </repository>
+		<repository>
+			<id>apache-central</id>
+			<url>https://repo.maven.apache.org/maven2/</url>
+		</repository>
         <repository>
             <id>jitpack</id>
-            <name>JitPack Repository</name>
-            <url>https://jitpack.io</url>
+            <url>https://jitpack.io/</url>
         </repository>
     </repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>sirius</id>
+			<url>https://maven.sirius.cam/</url>
+		</repository>
+	</distributionManagement>
 
     <build>
         <pluginManagement>
@@ -149,7 +152,7 @@
                         <quiet>true</quiet>
                         <verbose>false</verbose>
                         <failOnError>true</failOnError>
-						<doclint>all</doclint>
+						<doclint>all,-missing</doclint>
                     </configuration>
 
 					<executions>

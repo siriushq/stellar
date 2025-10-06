@@ -4,7 +4,7 @@
     <parent>
         <groupId>sirius.stellar</groupId>
         <artifactId>stellar-aggregator</artifactId>
-        <version>1.0</version>
+        <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
