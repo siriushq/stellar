@@ -19,13 +19,11 @@ import java.util.function.Consumer;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.terminal.TerminalColor.*;
 
-/**
- * Implementation of {@link Collector} that prints to {@link System#out}.
- * <p>
- * Only one instance of this class should ever be created as when creating
- * an instance, the {@link System#setOut(PrintStream)} method as well as
- * the {@link System#setErr(PrintStream)} method should be called.
- */
+/// Implementation of [Collector] that prints to [System#out].
+///
+/// Only one instance of this class should ever be created as when creating
+/// an instance, the [System#setOut(PrintStream)] method as well as
+/// the [System#setErr(PrintStream)] method should be called.
 @Internal
 final class ConsoleCollector implements Collector {
 
@@ -38,14 +36,11 @@ final class ConsoleCollector implements Collector {
 		this.stream = stream;
 	}
 
-	/**
-	 * Returns an instance of this collector. This can only be called once across
-	 * the application lifecycle as {@link System#out} and {@link System#err} are
-	 * overridden statically.
-	 * <p>
-	 * Overrides {@link System#out} and {@link System#err} with implementations
-	 * that will pass messages through to the logger at appropriate levels.
-	 */
+	/// Returns an instance of this collector. This can only be called once across
+	/// the application lifecycle as [System#out] and [System#err] are overridden statically.
+	///
+	/// Overrides [System#out] and [System#err] with implementations that will pass messages
+	/// through to the logger at appropriate levels.
 	public static ConsoleCollector get() {
 		ConsoleCollector collector = new ConsoleCollector(System.out);
 		System.setOut(new DelegatePrintStream(text -> Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "stdout", text)));
@@ -81,21 +76,19 @@ final class ConsoleCollector implements Collector {
 	}
 }
 
-/**
- * Implementation of {@link PrintStream} intended to replace {@link System#out}/{@link System#err}.
- * <p>
- * {@link PrintStream#println()} is replaced with a no-op as empty log messages are discarded anyway.
- * {@link PrintStream#print} and {@link PrintStream#append} methods will perform the equivalent of {@code println}.
- * {@link PrintStream#format} methods will perform the equivalent of {@link PrintStream#printf}.
- * {@code PrintStream#write} methods are not implemented at all, and are completely discarded.
- * <p>
- * This implements {@link Serializable} - while it is not a semantic use of a {@link PrintStream} to serialize
- * the stream (and subsequently write a stream inside a stream), it is quite a common scenario for this to be
- * done on accident, and it is perfectly fine to serialize this object. Accidentally serializing this object
- * can be done if, say, a logger object from logging facade that a dispatcher is available for is stored as an
- * instance variable - serializing the logger object could cause {@code System.out} or {@code System.err} to be
- * serialized and, potentially, subsequently, this class serialized.
- */
+/// Implementation of [PrintStream] intended to replace [System#out]/[System#err].
+///
+/// [PrintStream#println()] is replaced with a no-op as empty log messages are discarded anyway.
+/// [PrintStream#print] and [PrintStream#append] methods will perform the equivalent of `println`.
+/// [PrintStream#format] methods will perform the equivalent of [PrintStream#printf].
+/// [PrintStream#write] methods are not implemented at all, and are completely discarded.
+///
+/// This implements [Serializable] - while it is not a semantic use of a [PrintStream] to serialize
+/// the stream (and subsequently write a stream inside a stream), it is quite a common scenario for
+/// this to be done on accident, and it is perfectly fine to serialize this object. Accidentally
+/// serializing this object can be done if, say, a logger object from logging facade that a dispatcher
+/// is available for is stored as an instance variable - serializing the logger object could cause
+/// `System.out` or `System.err` to be serialized and, potentially, subsequently, this class serialized.
 @Internal
 final class DelegatePrintStream extends PrintStream implements Serializable {
 

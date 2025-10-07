@@ -19,9 +19,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-/**
- * Implementation of {@link Collector} that prints to log files.
- */
+/// Implementation of [Collector] that prints to log files.
 @Internal
 final class FileCollector implements Collector {
 
@@ -91,11 +89,9 @@ final class FileCollector implements Collector {
 		this.channel.close();
 	}
 
-	/**
-	 * Rolls the internal file channel for this collector to allow for a new
-	 * file to be used and the old one to serve as an archive for the previous
-	 * duration of logging.
-	 */
+	/// Rolls the internal file channel for this collector to allow for a new
+	/// file to be used and the old one to serve as an archive for the previous
+	/// duration of logging.
 	private void roll() {
 		try {
 			if (this.channel != null && this.channel.isOpen()) this.channel.close();
