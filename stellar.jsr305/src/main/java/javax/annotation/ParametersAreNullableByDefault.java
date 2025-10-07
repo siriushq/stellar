@@ -20,9 +20,10 @@ import javax.annotation.meta.TypeQualifierDefault;
 /// at an outer scope.
 ///
 /// @see Nullable
+///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Nullable
 @TypeQualifierDefault(ElementType.PARAMETER)

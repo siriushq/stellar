@@ -9,8 +9,8 @@ import java.io.Serial;
 /// abstraction to this one and [UnsupportedOperationException] may be directly caught in edge
 /// cases. This is only done for convenience.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public class ImmutableModificationException extends UnsupportedOperationException {
 
 	@Serial

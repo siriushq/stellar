@@ -4,8 +4,8 @@ import java.net.URI;
 
 /// Implementation of [org.apache.logging.log4j.spi.LoggerContextFactory] used for obtaining instances of [Log4j2Context].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Log4j2ContextFactory implements org.apache.logging.log4j.spi.LoggerContextFactory {
 
 	@Override

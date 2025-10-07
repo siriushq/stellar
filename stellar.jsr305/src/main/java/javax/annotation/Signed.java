@@ -9,9 +9,9 @@ import javax.annotation.meta.When;
 
 /// Used to annotate a value of unknown sign.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @TypeQualifierNickname
 @Nonnegative(when = When.UNKNOWN)

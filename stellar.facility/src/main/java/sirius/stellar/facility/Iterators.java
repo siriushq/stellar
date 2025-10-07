@@ -10,8 +10,8 @@ import static sirius.stellar.facility.Strings.*;
 
 /// Provides a facility for creating [Iterator]s.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public class Iterators {
 
 	/// Returns an iterator for the provided values.
@@ -78,8 +78,8 @@ public class Iterators {
 	/// Represents any iterator that can be brought back to an initial state, allowing for reuse.
 	/// This should be repeatable, i.e. [#reset()] should never throw an exception.
 	///
+	/// @author Mahied Maruf (mechite)
 	/// @since 1.0
-	/// @author Mechite
 	public interface Resettable<T> extends Iterator<T> {
 
 		/// Resets the iterator back to the starting position.

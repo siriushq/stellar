@@ -53,8 +53,8 @@ import java.util.stream.*;
 ///     .forEach(path -> ...); // This invocation will close the stream.
 /// ```
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class TerminatingStream<T> implements Stream<T> {
 
 	private final Stream<T> stream;

@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 /// This annotation is used to denote String values that should always match given pattern.
 /// When this annotation is applied to a method, it applies to the method return value.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @TypeQualifier(applicableTo = String.class)
 public @interface MatchesPattern {

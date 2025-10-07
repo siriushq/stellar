@@ -24,8 +24,8 @@ import static sirius.stellar.facility.Strings.*;
  * Usage exemplars are available for tuples with &le;4 elements for brevity.
  * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A, B, C, D, E, F, G, H>>, Iterable<Object>, Serializable {
 

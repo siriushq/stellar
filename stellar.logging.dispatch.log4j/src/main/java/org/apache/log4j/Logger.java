@@ -9,7 +9,7 @@ import static sirius.stellar.facility.Throwables.*;
 
 /// Shadow class for `org.apache.log4j.Logger`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public class Logger extends Category {
 

@@ -30,8 +30,8 @@ package sirius.stellar.facility.terminal;
 ///
 /// @see TerminalColorScoped
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public enum TerminalColor {
 
 	/// <b style="color: #000000">Dark</b>,

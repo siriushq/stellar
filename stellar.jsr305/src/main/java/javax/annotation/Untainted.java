@@ -16,9 +16,10 @@ import javax.annotation.meta.When;
 /// When this annotation is applied to a method, it applies to the method return value.
 ///
 /// @see Tainted
+///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @TypeQualifier
 public @interface Untainted {

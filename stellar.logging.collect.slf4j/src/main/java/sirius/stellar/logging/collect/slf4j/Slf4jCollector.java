@@ -40,8 +40,8 @@ import java.util.HashMap;
 /// | `OFF`           | `DEBUG`     |
 /// ---------------------------------
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public record Slf4jCollector(HashMap<String, org.slf4j.Logger> loggers) implements Collector {
 
 	@Serial

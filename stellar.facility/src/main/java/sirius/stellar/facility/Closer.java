@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 /// a [RuntimeException], preventing unspecific catch blocks), and subsequent exceptions are added
 /// to it as suppressed exceptions, preserving the full closure context.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public record Closer(Deque<AutoCloseable> stack) implements AutoCloseable {
 

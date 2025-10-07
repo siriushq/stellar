@@ -11,8 +11,8 @@ import java.time.Instant;
 
 /// Implementation of [org.apache.commons.logging.Log] which dispatches to [Logger].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class JclDispatcher implements org.apache.commons.logging.Log, Serializable {
 
 	@Serial

@@ -18,9 +18,9 @@ import static java.lang.annotation.ElementType.*;
 /// - method-name() : The lock object is returned by calling the named nil-ary method.
 /// - class-name.class : The Class object for the specified class should be used as the lock object.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Target({
 		FIELD,
 		METHOD

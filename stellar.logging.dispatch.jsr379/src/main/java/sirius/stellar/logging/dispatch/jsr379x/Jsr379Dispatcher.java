@@ -16,8 +16,8 @@ import static sirius.stellar.facility.Throwables.*;
 /// There is a lack of handling for [ResourceBundle]s in this implementation.
 ///
 /// @param name The name of the logger.
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public record Jsr379Dispatcher(String name) implements System.Logger, Serializable {
 
 	@Serial

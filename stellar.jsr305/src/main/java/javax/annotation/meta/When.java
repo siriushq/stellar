@@ -7,9 +7,9 @@ package javax.annotation.meta;
 /// used where a NEVER value is required, or if a NEVER or MAYBE value is used
 /// where an ALWAYS value is required.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 public enum When {
 
     /// S is a subset of T.

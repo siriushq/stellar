@@ -11,8 +11,8 @@ import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.tinylog.provider.LoggingProvider] which dispatches to [Logger].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class TinylogDispatcher implements org.tinylog.provider.LoggingProvider {
 
 	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);

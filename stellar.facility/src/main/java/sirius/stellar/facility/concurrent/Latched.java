@@ -31,9 +31,8 @@ import static sirius.stellar.facility.Strings.*;
 /// This is checked with [#locked()], which in turn invokes [CountDownLatch#getCount()], which may
 /// not be desirable behaviour.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
-
 public class Latched<T> {
 
 	private final CountDownLatch latch;

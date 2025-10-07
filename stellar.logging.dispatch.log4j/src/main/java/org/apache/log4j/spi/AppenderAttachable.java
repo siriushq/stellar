@@ -6,7 +6,7 @@ import org.apache.log4j.Appender;
 
 /// Shadow class for `org.apache.log4j.spi.AppenderAttachable`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public interface AppenderAttachable {
 	void addAppender(Appender newAppender);

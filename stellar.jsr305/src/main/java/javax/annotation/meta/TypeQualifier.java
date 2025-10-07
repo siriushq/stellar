@@ -2,16 +2,14 @@ package javax.annotation.meta;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /// This qualifier is applied to an annotation to denote that the annotation
 /// should be treated as a type qualifier.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface TypeQualifier {

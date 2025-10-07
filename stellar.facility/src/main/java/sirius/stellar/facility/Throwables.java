@@ -15,8 +15,8 @@ import java.util.stream.Stream;
 /// Provides a facility for modifying and examining [Throwable]s.
 /// This class is entirely `null` safe and no operations should cause a [NullPointerException].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Throwables {
 
 	/// Performs an action for each cause of the provided throwable.

@@ -9,8 +9,8 @@ package sirius.stellar.facility;
 /// abstraction - this is simply a helper abstraction and the [Comparable#compareTo(Object)]
 /// method provides all the information that a method would ever need).
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @FunctionalInterface
 public interface Orderable<T> extends Comparable<T> {
 

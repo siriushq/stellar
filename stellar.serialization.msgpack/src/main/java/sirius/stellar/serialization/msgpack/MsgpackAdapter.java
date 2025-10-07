@@ -31,7 +31,7 @@ import java.io.Writer;
 /// serialization of null values, empty arrays, etc. is undesirable, explicitly using
 /// the adapter as demonstrated above would allow this to be configured as desired.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public class MsgpackAdapter implements JsonStream {
 

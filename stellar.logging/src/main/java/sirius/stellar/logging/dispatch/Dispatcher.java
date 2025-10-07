@@ -19,8 +19,8 @@ import java.io.Serializable;
  * dispatchers given they are attempting to retrofit an unknown/proprietary logging system
  * that may be called across many internal packages.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public interface Dispatcher extends Serializable {
 
@@ -44,8 +44,8 @@ public interface Dispatcher extends Serializable {
 	 * logging is supported with whatever technique is preferred for registration
 	 * instead.
 	 *
+	 * @author Mahied Maruf (mechite)
 	 * @since 1.0
-	 * @author Mechite
 	 */
 	interface Provider {
 		Dispatcher create();

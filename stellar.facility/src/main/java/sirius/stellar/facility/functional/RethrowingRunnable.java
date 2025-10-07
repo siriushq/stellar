@@ -14,8 +14,8 @@ import static sirius.stellar.facility.Strings.*;
 ///
 /// @see java.lang.Runnable
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @FunctionalInterface
 public interface RethrowingRunnable extends Runnable {
 

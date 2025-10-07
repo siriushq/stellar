@@ -6,8 +6,8 @@ import sirius.stellar.logging.dispatch.Dispatcher;
 /// Implementation of [Dispatcher.Provider] used for obtaining instances of [MinlogDispatcher].
 /// This is run with [java.util.ServiceLoader].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @Internal
 public final class MinlogFactory implements Dispatcher.Provider {
 

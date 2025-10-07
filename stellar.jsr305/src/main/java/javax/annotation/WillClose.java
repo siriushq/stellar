@@ -10,8 +10,8 @@ import java.lang.annotation.RetentionPolicy;
 /// @see WillCloseWhenClosed
 /// @see WillNotClose
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 public @interface WillClose {}

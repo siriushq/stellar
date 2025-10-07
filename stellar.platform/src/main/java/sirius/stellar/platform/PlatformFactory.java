@@ -16,8 +16,8 @@ import static java.lang.management.ManagementFactory.*;
  * Factory used for wiring most beans provided in the
  * inversion-of-control container provided by {@link Platform}.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 @Factory
 public final class PlatformFactory {

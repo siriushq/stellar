@@ -32,8 +32,8 @@ import java.util.concurrent.Future;
  * if it does any heavy I/O operations that could affect general performance of your
  * application.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 @FunctionalInterface
 public interface Collector extends AutoCloseable, Serializable {

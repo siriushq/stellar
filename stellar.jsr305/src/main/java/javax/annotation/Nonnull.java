@@ -9,8 +9,8 @@ import java.lang.annotation.Documented;
 /// Annotated fields must not be null after construction has completed.
 /// When this annotation is applied to a method, it applies to the method return value.
 ///
-/// @author Brian Goetz
-/// @author Mechite
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 @Documented
 @TypeQualifier

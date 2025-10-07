@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 /// Shadow class for `org.apache.log4j.MDC`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public final class MDC {
 

@@ -17,8 +17,8 @@ import sirius.stellar.facility.Strings;
 /// );
 /// ```
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class TerminalConstant {
 
 	private final String code;

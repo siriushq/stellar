@@ -19,8 +19,8 @@ import java.util.random.RandomGenerator;
 /// formatters and [String#format] uses the null-safe [String#valueOf(Object)] method to replace
 /// arguments into the string, instead of attempting to invoke [#toString()] on a null argument.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Strings {
 
 	/// Represents an empty string.

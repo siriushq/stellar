@@ -12,9 +12,9 @@ import javax.annotation.meta.When;
 /// checking at runtime, and can assist IDEs in deciding how to interpret String constants (e.g.,
 /// should a refactoring that renames method `x()` to `y()` update the String constant `"x()"`).
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @TypeQualifier(applicableTo = CharSequence.class)
 @Retention(RetentionPolicy.RUNTIME)

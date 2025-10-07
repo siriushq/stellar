@@ -10,8 +10,8 @@ import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.apache.logging.log4j.spi.AbstractLogger] which dispatches to [Logger].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.AbstractLogger {
 
 	@Serial

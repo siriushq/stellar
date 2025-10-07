@@ -10,16 +10,16 @@ import java.lang.annotation.Target;
 /// (other than QualifierNickname) to Y.
 ///
 /// Thus, you might define a qualifier SocialSecurityNumber as follows:
-/// 
+///
 /// ```
 /// &#064;Documented
 /// &#064;TypeQualifierNickname &#064;Pattern("[0-9]{3}-[0-9]{2}-[0-9]{4}")
 /// &#064;interface SocialSecurityNumber {}
 /// ```
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface TypeQualifierNickname {}

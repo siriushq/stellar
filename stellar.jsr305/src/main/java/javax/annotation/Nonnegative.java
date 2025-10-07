@@ -8,9 +8,9 @@ import java.lang.annotation.Documented;
 /// This annotation is used to annotate a value that should only contain nonnegative values.
 /// When this annotation is applied to a method, it applies to the method return value.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @TypeQualifier(applicableTo = Number.class)
 public @interface Nonnegative {

@@ -19,9 +19,9 @@ import java.lang.annotation.Target;
 /// Immutable objects are inherently thread-safe; they may be passed between
 /// threads or published without synchronization.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Target(ElementType.TYPE)
 public @interface Immutable {}

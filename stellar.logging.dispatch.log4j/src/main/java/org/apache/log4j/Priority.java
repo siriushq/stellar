@@ -2,7 +2,7 @@ package org.apache.log4j;
 
 /// Shadow class for `org.apache.log4j.Priority`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public class Priority {
 

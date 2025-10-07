@@ -86,8 +86,8 @@ import static sirius.stellar.platform.PlatformConfiguration.*;
  *     </li>
  * </ul>
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 @Json
 public final class Platform implements AutoCloseable, Serializable {

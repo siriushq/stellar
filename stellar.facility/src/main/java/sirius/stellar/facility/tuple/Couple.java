@@ -37,8 +37,8 @@ import static sirius.stellar.facility.Strings.*;
  *     couple.getValue() == 16;
  * }</pre>
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<A, B>>, Iterable<Object>, Serializable {
 

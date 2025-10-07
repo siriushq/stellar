@@ -31,8 +31,8 @@ import static java.lang.annotation.ElementType.*;
 /// that could easily, undesirably, become part of the public API should be
 /// annotated with this in order to prevent this from happening.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @Documented @Inherited
 @Target({
 		TYPE,

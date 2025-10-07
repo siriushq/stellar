@@ -38,8 +38,8 @@ import static sirius.stellar.facility.Strings.*;
  *     quartet.fourth() == 175;
  * }</pre>
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, D>>, Iterable<Object>, Serializable {
 

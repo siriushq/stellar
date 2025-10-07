@@ -9,8 +9,8 @@ import io.avaje.jsonb.spi.JsonStreamFactory;
 /// the classpath via `META-INF/services/io.avaje.jsonb.spi.JsonStreamFactory`).
 ///
 /// @see MsgpackAdapter
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class MsgpackAdapterFactory implements JsonStreamFactory {
 
 	@Override

@@ -17,9 +17,10 @@ import javax.annotation.meta.TypeQualifierDefault;
 ///   applied to a more tightly nested element.
 ///
 /// @see Nonnull
+///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Nonnull
 @TypeQualifierDefault(ElementType.PARAMETER)

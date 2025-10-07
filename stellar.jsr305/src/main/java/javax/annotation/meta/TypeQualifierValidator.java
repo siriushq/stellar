@@ -7,9 +7,9 @@ import javax.annotation.Nonnull;
 /// Interface for validating whether a constant value is a member
 /// of a set of values denoted by a type qualifier annotation.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 public interface TypeQualifierValidator<A extends Annotation> {
 
     /// Given a type qualifier, check to see if a known specific constant value

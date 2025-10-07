@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 /// Running [#shutdown()] does not prevent new tasks from being submitted.
 /// This allows for this implementation to trivially remain thread-safe (no shared state).
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class SynchronousExecutorService extends AbstractExecutorService implements Serializable {
 
 	@Serial

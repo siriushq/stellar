@@ -3,8 +3,8 @@ package sirius.stellar.logging.dispatch.slf4j;
 /// Implementation of [org.slf4j.spi.SLF4JServiceProvider] used for obtaining instances of [Slf4jFactory].
 ///
 /// @version SLF4J 2.0.7 (or any other binary compatible variant).
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Slf4jServiceProvider implements org.slf4j.spi.SLF4JServiceProvider {
 
 	private org.slf4j.ILoggerFactory loggerFactory;

@@ -5,7 +5,7 @@ import java.util.Locale;
 
 /// Shadow class for `org.apache.log4j.Level`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public class Level extends Priority implements Serializable {
 

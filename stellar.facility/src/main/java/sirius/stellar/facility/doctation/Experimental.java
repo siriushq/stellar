@@ -14,8 +14,8 @@ import static java.lang.annotation.ElementType.*;
 /// on that particular element - perhaps it could be a performance-related enhancement
 /// that could be done, etc.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @Documented @Inherited
 @Target({
 		TYPE,

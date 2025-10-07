@@ -17,8 +17,8 @@ import static sirius.stellar.facility.Throwables.*;
 /// - [tech.kwik.core.QuicClientConnection.Builder#logger(tech.kwik.core.log.Logger)]
 /// - [tech.kwik.core.server.ServerConnector.Builder#withLogger(tech.kwik.core.log.Logger)]
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	private final Lock lock;

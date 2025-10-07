@@ -19,8 +19,8 @@ import static sirius.stellar.facility.Strings.*;
 ///
 /// @see java.util.function.Supplier
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @FunctionalInterface
 public interface RethrowingSupplier<T> extends Supplier<T> {
 

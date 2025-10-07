@@ -5,8 +5,8 @@ package sirius.stellar.facility.terminal;
 /// These codes are used to control styling and formatting of text output to terminal
 /// or console environments that support ANSI escape sequences.
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public enum TerminalStyle {
 
 	/// Resets/clears all styles and colors.

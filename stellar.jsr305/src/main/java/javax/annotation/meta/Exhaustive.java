@@ -22,8 +22,8 @@ import java.lang.annotation.Documented;
 /// }
 /// ```
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 public @interface Exhaustive {}

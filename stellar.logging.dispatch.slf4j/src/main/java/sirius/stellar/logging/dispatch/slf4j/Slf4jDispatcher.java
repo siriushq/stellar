@@ -16,8 +16,8 @@ import java.time.Instant;
 /// prefix the message with `MARKER_NAME: This is an example message`.
 ///
 /// @param name The name of the logger.
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializable {
 
 	@Serial

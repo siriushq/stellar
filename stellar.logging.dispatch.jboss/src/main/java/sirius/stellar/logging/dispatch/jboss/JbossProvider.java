@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 /// Implementation of [org.jboss.logging.LoggerProvider] used for obtaining instances of [JbossDispatcher].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class JbossProvider implements org.jboss.logging.LoggerProvider {
 
 	private final Map<String, Object> mdc = new ConcurrentHashMap<>();

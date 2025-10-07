@@ -48,8 +48,8 @@ import static sirius.stellar.facility.Strings.*;
  * elsewhere, they will complement each other when any heavy IO takes place and free up the carrier threads for more work to be
  * performed, while also allowing for a low amount of memory to be consumed due to the lack of actual platform threads.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 @NullUnmarked
 public final class Logger {

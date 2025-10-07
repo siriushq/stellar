@@ -10,7 +10,7 @@ import org.apache.log4j.spi.LoggerFactory;
 
 /// Shadow class for `org.apache.log4j.LogManager`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public class LogManager {
 

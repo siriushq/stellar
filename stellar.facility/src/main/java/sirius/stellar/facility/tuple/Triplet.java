@@ -32,8 +32,8 @@ import static sirius.stellar.facility.Strings.*;
  *     triplet.third() == 2007;
  * }</pre>
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, Iterable<Object>, Serializable {
 

@@ -23,8 +23,8 @@ import java.util.Map;
 /// | `SEVERE`  | `ERROR`         |
 /// -------------------------------
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class JulDispatcher extends java.util.logging.Handler implements Dispatcher {
 
 	@Serial

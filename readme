@@ -24,19 +24,19 @@ including
 	Releases and release-candidates are published to our repository.
 	Start by adding this to your project.
 
-	pom.xml ===================================================
+	pom.xml ====================================
 	<repositories>
 		<repository>
 			<id>sirius</id>
 			<url>https://maven.sirius.cam/</url>
 		</repository>
 	</repositories>
-	===========================================================
+	============================================
 
 	A bill-of-materials is provided to control dependency versions.
 	Add this to your project.
 
-	pom.xml ===================================================
+	pom.xml ========================================
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -48,18 +48,18 @@ including
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	===========================================================
+	================================================
 
 	Finally, register (& require) any dependencies you need.
 	You should exclude the versions when using `dependencyManagement`.
 	For example, to use `stellar-logging`:
 
-	pom.xml ===================================================
+	pom.xml ====================================
 	<dependency>
 		<groupId>sirius.stellar</groupId>
 		<artifactId>stellar-logging</artifactId>
 	</dependency>
-	===========================================================
+	============================================
 
 	module-info.java ===============
 	requires sirius.stellar.logging;
@@ -81,11 +81,23 @@ building
 contributing
 ============
 
-	Currently, in general, contributions are not accepted.
-	However, you can submit patches [1], or report issues/bugs to `stellar@mechite.com`.
-	A response will always eventually be provided to anything delivered to this address.
+	Contributions are accepted as long as they fall within implied project scope.
 
-	[1] - https://www.kernel.org/doc/html/latest/process/submitting-patches.html
+	All commits must contain at least `Signed-off-by` to identify the author of the
+	contribution, and may contain `Co-authored-by` to attach any number of other
+	authors (this can be added automatically with `git commit ... -s ...`).
+
+	(furthermore, commits from people with repository write access are to be signed
+	with a verified GPG, SSH or S/MIME signature attached to your GitHub account).
+
+	Relevant documentation should be updated to include accrediting. For example,
+	JavaDoc comments on type declarations should contain name & GitHub username:
+
+		@author John Doe (jdoe)
+
+	By submitting a contribution, you certify that you and other authors are making
+	your contribution available under the license of the project, and that you have
+	the rights to submit it.
 
 licensing
 =========

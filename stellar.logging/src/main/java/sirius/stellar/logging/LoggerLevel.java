@@ -15,8 +15,8 @@ package sirius.stellar.logging;
  * never be logged out directly, and the {@link LoggerLevel#severity()} method never
  * called for them (they serve for routing dispatchers' levels).
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public enum LoggerLevel {
 

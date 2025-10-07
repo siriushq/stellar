@@ -24,8 +24,8 @@ import static sirius.stellar.facility.Strings.*;
  * Usage exemplars are available for tuples with &le;4 elements for brevity.
  * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
  *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A, B, C, D, E, F, G>>, Iterable<Object>, Serializable {
 

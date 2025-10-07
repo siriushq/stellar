@@ -5,8 +5,8 @@ import java.util.List;
 
 /// Implementation of [org.apache.logging.log4j.spi.LoggerContext] used for obtaining instances of [Log4j2Dispatcher].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class Log4j2Context implements org.apache.logging.log4j.spi.LoggerContext {
 
 	private final List<org.apache.logging.log4j.spi.ExtendedLogger> loggers;

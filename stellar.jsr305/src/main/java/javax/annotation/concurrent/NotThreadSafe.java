@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
 ///
 /// @see ThreadSafe
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Target(ElementType.TYPE)
 public @interface NotThreadSafe {}

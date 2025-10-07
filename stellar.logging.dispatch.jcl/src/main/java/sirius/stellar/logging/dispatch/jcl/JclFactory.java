@@ -5,8 +5,8 @@ import java.util.concurrent.ConcurrentMap;
 
 /// Implementation of [org.apache.commons.logging.LogFactory] used for obtaining instances of [JclDispatcher].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class JclFactory extends org.apache.commons.logging.LogFactory {
 
 	private static final JclFactory instance = new JclFactory();

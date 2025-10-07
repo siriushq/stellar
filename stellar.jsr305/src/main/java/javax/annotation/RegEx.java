@@ -10,9 +10,9 @@ import java.util.regex.PatternSyntaxException;
 /// This qualifier is used to denote String values that should be a regular expression.
 /// When this annotation is applied to a method, it applies to the method return value.
 ///
+/// @author Brian Goetz (briangoetz)
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Brian Goetz
-/// @author Mechite
 @Documented
 @Syntax("RegEx")
 @TypeQualifierNickname

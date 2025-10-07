@@ -9,8 +9,9 @@ import java.util.function.Supplier;
  * methods do not clash with each other.
  *
  * @see ObjectSupplier
+ *
+ * @author Mahied Maruf (mechite)
  * @since 1.0
- * @author Mechite
  */
 public interface ThrowableSupplier extends Supplier<Throwable> {
 

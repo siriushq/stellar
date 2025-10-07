@@ -16,8 +16,8 @@ import static sirius.stellar.facility.Strings.*;
 ///
 /// @see java.util.function.Consumer
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 @FunctionalInterface
 public interface RethrowingConsumer<T> extends Consumer<T> {
 

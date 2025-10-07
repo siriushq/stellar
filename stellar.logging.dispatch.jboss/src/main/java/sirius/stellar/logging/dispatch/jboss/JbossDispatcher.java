@@ -10,8 +10,8 @@ import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.jboss.logging.Logger] which delegates to [Logger].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class JbossDispatcher extends org.jboss.logging.Logger {
 
 	JbossDispatcher(String name) {

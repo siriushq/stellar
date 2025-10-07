@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /// Shadow class for `org.apache.log4j.NDC`.
 ///
-/// @author Mechite
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
 public final class NDC {
 

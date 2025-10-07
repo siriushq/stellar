@@ -12,8 +12,8 @@ import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [com.esotericsoftware.minlog.Log.Logger] which dispatches to [Logger].
 ///
+/// @author Mahied Maruf (mechite)
 /// @since 1.0
-/// @author Mechite
 public final class MinlogDispatcher extends com.esotericsoftware.minlog.Log.Logger implements Dispatcher {
 
 	@Serial
