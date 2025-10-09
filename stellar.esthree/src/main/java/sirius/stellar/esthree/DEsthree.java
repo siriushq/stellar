@@ -9,10 +9,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
-import static sirius.stellar.esthree.Esthree.Region.*;
 import static javax.xml.XMLConstants.*;
+import static sirius.stellar.esthree.Esthree.Region.*;
 
-/// Default/domain implementation of [Esthree].
+/// Domain implementation of [Esthree].
 final class DEsthree implements Esthree {
 
 	private final EsthreeSigner signer;
@@ -46,7 +46,7 @@ final class DEsthree implements Esthree {
 	}
 }
 
-/// Default/domain implementation of [Esthree.Builder].
+/// Domain implementation of [Esthree.Builder].
 final class DEsthreeBuilder implements Esthree.Builder {
 
 	private final HttpClient.Builder httpClientBuilder;
