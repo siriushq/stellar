@@ -157,7 +157,7 @@ public final class Logger {
 	/// @see Logger#enabled(int)
 	/// @since 1.0
 	public static boolean enabled(LoggerLevel level) {
-		return level.severity() < severity;
+		return level.severity() <= severity;
 	}
 
 	/// Returns whether the severity of the logger allows for the provided integer value level to be logged.
@@ -167,7 +167,7 @@ public final class Logger {
 	/// @see LoggerLevel#severity()
 	/// @since 1.0
 	public static boolean enabled(int level) {
-		return level < severity;
+		return level <= severity;
 	}
 	//#endregion
 

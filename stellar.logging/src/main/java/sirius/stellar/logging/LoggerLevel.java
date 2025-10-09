@@ -6,8 +6,9 @@ package sirius.stellar.logging;
 /// Essentially, [#severity()] returns an integer value for the severity of a given level.
 /// The higher the number, the more severe the logging is. More levels could be added at
 /// any point in the future, so when debugging, the level should be simply set to
-/// [Integer#MAX_VALUE] to include all messages. In production, the level should
-/// generally be set to `2`.
+/// [Integer#MAX_VALUE] to include all messages.
+///
+/// In production, the level should generally be set to [LoggerLevel#ERROR]`.severity()`.
 ///
 /// [#ALL] and [#OFF] are levels marked with severities of [Integer#MIN_VALUE] and
 /// [Integer#MAX_VALUE] respectively. They should never be logged out directly, and the
@@ -43,15 +44,13 @@ public enum LoggerLevel {
 	}
 
 	/// Returns an integer value for the severity of the level.
-	///
-	/// More levels could be added at any point in the future, so when debugging, the level
-	/// should be simply set to [Integer#MAX_VALUE] to include all messages. In production,
-	/// the level should be set to `2`.
+	/// @see LoggerLevel
 	public int severity() {
 		return this.severity;
 	}
 
 	/// Returns a display name for the level.
+	/// @see LoggerLevel
 	public String display() {
 		return this.display;
 	}

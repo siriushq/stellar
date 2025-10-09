@@ -1,18 +1,23 @@
 /// Flexible logging system with a transparent interface and support for
 /// many facades and logging backends such as JCL, JUL, SLF4J, etc.
 ///
-/// For most users, the "best default" configuration would be to provide
-/// the [sirius.stellar.logging.collect.Collector#console] collector,
-/// a severity of `3`, and use the default virtual thread executor.
+/// For most users, the "best default" configuration would be to provide the
+/// [sirius.stellar.logging.collect.Collector#console] collector, a severity
+/// of [sirius.stellar.logging.LoggerLevel#ERROR]`.severity()`, and use the
+/// default virtual thread executor.
 ///
 /// The below example displays common usage patterns:
 /// ```
+/// import sirius.stellar.logging.Logger;
+/// // import static sirius.stellar.logging.Logger.*;
+/// import static sirius.stellar.logging.LoggerLevel.*;
+///
 /// public class Main {
 ///
 ///     public static void main(String[] arguments) {
 ///         Logger.collector(Collector.console());
-///         // Logger.collector(new Slf4jCollector()); - send logs to SLF4J instead
-///         Logger.severity(3);
+///         // Logger.collector(new Slf4jCollector()); - send logs to SLF4J
+///         Logger.severity(ERROR.severity());
 ///
 ///         // use the statically accessible methods for logging
 ///
