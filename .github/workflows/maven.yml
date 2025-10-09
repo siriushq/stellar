@@ -9,33 +9,33 @@ on: {
 
 jobs: {
 	build: {
-		runs-on: ubuntu-latest,
+		runs-on: "ubuntu-latest",
 		steps: [
 			{
 				name: "checkout repository",
-				uses: actions/checkout@v3
+				uses: "actions/checkout@v3"
 			},
 			{
 				name: "install GraalVM 25 JDK",
-				uses: graalvm/setup-graalvm@v1,
+				uses: "graalvm/setup-graalvm@v1",
 				with: {
-					java-version: 25,
-					distribution: graalvm,
-					cache: maven
+					java-version: "25",
+					distribution: "graalvm",
+					cache: "maven"
 				}
 			},
 			{
 				name: "cache Apache Maven Daemon",
-				uses: actions/cache@v4,
+				uses: "actions/cache@v4",
 				with: {
 					path: "~/.mvnd",
-					key: mvnd-${{ runner.os }}-1.0.3
+					key: "mvnd-${{ runner.os }}-1.0.3"
 				}
 			},
 			{
 				name: "install Apache Maven Daemon",
-				uses: gauthamchandra/mvnd-action@v0.2.1,
-				id: install-mvnd,
+				uses: "gauthamchandra/mvnd-action@v0.2.1",
+				id: "install-mvnd",
 				with: {
 					version: "1.0.3",
 					cache-directory-override: "~/.mvnd"
@@ -43,11 +43,11 @@ jobs: {
 			},
 			{
 				name: "run Apache Maven Daemon (package goal)",
-				run: ${{ steps.install-mvnd.outputs.cached-binary-path }} -B package
+				run: "${{ steps.install-mvnd.outputs.cached-binary-path }} -B package"
 			},
 			{
 				name: "run dependency graph update",
-				uses: advanced-security/maven-dependency-submission-action@v5
+				uses: "advanced-security/maven-dependency-submission-action@v5"
 			}
 		]
 	}
