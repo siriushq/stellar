@@ -73,9 +73,9 @@ public final class Strings {
 	/// of formatting to be applied to the message (as they do not clash with each
 	/// other's syntax).
 	///
-	/// @param locale Locale for [#MessageFormat(String,Locale)] and
+	/// @param locale Locale for [MessageFormat#MessageFormat(String,Locale)] and
 	/// [String#format(Locale,String,Object...)] to accept. If null is provided,
-	/// [#ENGLISH] is used as a fallback.
+	/// [Locale#ENGLISH] is used as a fallback.
 	///
 	/// @return The provided string, formatted, or null if the provided string is null,
 	/// or the provided string if the argument array is null.

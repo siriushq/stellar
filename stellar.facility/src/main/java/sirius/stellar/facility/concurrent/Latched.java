@@ -63,7 +63,7 @@ public class Latched<T> {
 	/// This method is entirely thread-safe and can be called from anywhere.
 	///
 	/// @throws RuntimeException Thrown given that an [InterruptedException]
-	/// is thrown while attempting to run [#await()] to await
+	/// is thrown while attempting to run [CountDownLatch#await()] to await
 	/// the release of the latch.
 	/// @since 1.0
 	public T get() {

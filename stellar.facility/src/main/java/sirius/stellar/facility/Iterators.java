@@ -49,7 +49,7 @@ public class Iterators {
 	/// When running [Iterator#next()], [NoSuchElementException] will be thrown if there are
 	/// no more elements left to iterate over.
 	///
-	/// @see [Iterators#from(Object[])]
+	/// @see Iterators#from(Object[])
 	/// @since 1.0
 	@SafeVarargs
 	public static <T> Iterators.Resettable<T> from(int start, int end, T... values) {
