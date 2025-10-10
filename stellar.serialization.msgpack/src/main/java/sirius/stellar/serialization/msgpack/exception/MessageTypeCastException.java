@@ -1,25 +1,21 @@
 package sirius.stellar.serialization.msgpack.exception;
 
-public class MessageTypeCastException
-        extends MessageTypeException
-{
-    public MessageTypeCastException()
-    {
-        super();
-    }
+/// Thrown when a type mismatch error occurs.
+public class MessageTypeCastException extends MessageTypeException {
 
-    public MessageTypeCastException(String message)
-    {
-        super(message);
-    }
+	public MessageTypeCastException() {
+		super();
+	}
 
-    public MessageTypeCastException(String message, Throwable cause)
-    {
-        super(message, cause);
-    }
+	public MessageTypeCastException(String message) {
+		super(message);
+	}
 
-    public MessageTypeCastException(Throwable cause)
-    {
-        super(cause);
-    }
+	public MessageTypeCastException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public MessageTypeCastException(Throwable cause) {
+		super(cause);
+	}
 }

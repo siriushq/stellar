@@ -1,42 +1,39 @@
 package sirius.stellar.serialization.msgpack.exception;
 
+import sirius.stellar.serialization.msgpack.MessageUnpacker;
+
 import java.math.BigInteger;
 
-/**
- * This error is thrown when the user tries to read an integer value
- * using a smaller types. For example, calling MessageUnpacker.unpackInt() for an integer value
- * that is larger than Integer.MAX_VALUE will cause this exception.
- */
-public class MessageIntegerOverflowException
-        extends MessageTypeException
-{
-    private final BigInteger bigInteger;
+/// This error is thrown when the caller tries to read a numeric value
+/// using a smaller numeric type.
+///
+/// For example, calling [MessageUnpacker#unpackInt()] for a value
+/// that is larger than [Integer#MAX_VALUE] will cause this exception.
+public class MessageIntegerOverflowException extends MessageTypeException {
 
-    public MessageIntegerOverflowException(BigInteger bigInteger)
-    {
-        super();
-        this.bigInteger = bigInteger;
-    }
+	private final BigInteger number;
 
-    public MessageIntegerOverflowException(long value)
-    {
-        this(BigInteger.valueOf(value));
-    }
+	public MessageIntegerOverflowException(BigInteger number) {
+		super();
+		this.number = number;
+	}
 
-    public MessageIntegerOverflowException(String message, BigInteger bigInteger)
-    {
-        super(message);
-        this.bigInteger = bigInteger;
-    }
+	public MessageIntegerOverflowException(long value) {
+		this(BigInteger.valueOf(value));
+	}
 
-    public BigInteger getBigInteger()
-    {
-        return bigInteger;
-    }
+	public MessageIntegerOverflowException(String message, BigInteger number) {
+		super(message);
+		this.number = number;
+	}
 
-    @Override
-    public String getMessage()
-    {
-        return bigInteger.toString();
-    }
+	/// Get the numeric value which caused the overflow as a [BigInteger].
+	public BigInteger number() {
+		return this.number;
+	}
+
+	@Override
+	public String getMessage() {
+		return this.number.toString();
+	}
 }

@@ -1,23 +1,19 @@
 package sirius.stellar.serialization.msgpack.exception;
 
-/**
- * Thrown when the input message pack format is invalid
- */
-public class MessageNeverUsedFormatException
-        extends MessageFormatException
-{
-    public MessageNeverUsedFormatException(Throwable e)
-    {
-        super(e);
-    }
+import sirius.stellar.serialization.msgpack.MessageFormat;
 
-    public MessageNeverUsedFormatException(String message)
-    {
-        super(message);
-    }
+/// Thrown when the input MessagePack format is invalid, specifically containing [MessageFormat#NEVER_USED].
+public class MessageNeverUsedFormatException extends MessageFormatException {
 
-    public MessageNeverUsedFormatException(String message, Throwable cause)
-    {
-        super(message, cause);
-    }
+	public MessageNeverUsedFormatException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public MessageNeverUsedFormatException(String message) {
+		super(message);
+	}
+
+	public MessageNeverUsedFormatException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
