@@ -19,6 +19,8 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+import static java.nio.charset.StandardCharsets.*;
+
 /// Implementation of [Collector] that prints to log files.
 @Internal
 final class FileCollector implements Collector {
@@ -68,7 +70,7 @@ final class FileCollector implements Collector {
 							.split("\n"))
 							.map(string -> "'" + string + "'")
 							.collect(Collectors.joining()) +
-			"\"\n").getBytes(StandardCharsets.UTF_8);
+			"\"\n").getBytes(UTF_8);
 
 			assert this.channel != null;
 			int written = this.channel.write(ByteBuffer.wrap(text));
@@ -102,7 +104,7 @@ final class FileCollector implements Collector {
 			Files.createFile(file);
 			this.channel = FileChannel.open(file, StandardOpenOption.APPEND);
 
-			byte[] header = "\"time\",\"level\",\"thread\",\"name\",\"text\"\n".getBytes(StandardCharsets.UTF_8);
+			byte[] header = "\"time\",\"level\",\"thread\",\"name\",\"text\"\n".getBytes(UTF_8);
 			int written = this.channel.write(ByteBuffer.wrap(header));
 			if (written != header.length) throw new IllegalStateException("Failed to write header to file while rolling collector (written length does not match expected length)");
 		} catch (IOException exception) {

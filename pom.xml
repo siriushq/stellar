@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>sirius.stellar</groupId>
-    <artifactId>stellar-aggregator</artifactId>
+    <artifactId>stellar</artifactId>
     <version>1.0-RC1</version>
     <packaging>pom</packaging>
 
@@ -22,6 +22,8 @@
     </licenses>
 
     <modules>
+		<module>stellar.bom</module>
+
 		<module>stellar.facility</module>
 
         <module>stellar.logging</module>
@@ -44,22 +46,45 @@
 		<module>stellar.esthree</module>
 
 		<module>stellar.serialization.msgpack</module>
+		<module>stellar.serialization.msgpack.jsonb</module>
 
 		<module>stellar.platform</module>
 		<module>stellar.platform.generator</module>
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <java.version>21</java.version>
-		<groovy.version>4.0.28</groovy.version>
-        <spock.version>2.3-groovy-4.0</spock.version>
-
-        <avaje-inject.version>11.6</avaje-inject.version>
-        <avaje-jsonb.version>3.7</avaje-jsonb.version>
-		<avaje-http.version>3.4</avaje-http.version>
+		<java.version>21</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.avaje</groupId>
+				<artifactId>avaje-jex-parent</artifactId>
+				<version>3.3-RC5</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.spockframework</groupId>
+				<artifactId>spock-bom</artifactId>
+				<version>2.4-M6-groovy-4.0</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>sirius.stellar</groupId>
+				<artifactId>stellar-bom</artifactId>
+				<version>${project.version}</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -75,16 +100,9 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.groovy</groupId>
-			<artifactId>groovy</artifactId>
-			<version>${groovy.version}</version>
-			<scope>test</scope>
-		</dependency>
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>${spock.version}</version>
             <scope>test</scope>
         </dependency>
 	</dependencies>
@@ -118,6 +136,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.4.2</version>
+
+                    <configuration>
+                        <forceCreation>true</forceCreation>
+                        <skipIfEmpty>true</skipIfEmpty>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

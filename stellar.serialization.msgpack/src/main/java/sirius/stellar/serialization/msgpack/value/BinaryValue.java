@@ -1,0 +1,13 @@
+package sirius.stellar.serialization.msgpack.value;
+
+/**
+ * Representation of MessagePack's Binary type.
+ *
+ * MessagePack's Binary type can represent a byte array at most 2<sup>64</sup>-1 bytes.
+ *
+ * @see sirius.stellar.serialization.msgpack.value.RawValue
+ */
+public interface BinaryValue
+        extends RawValue
+{
+}

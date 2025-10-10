@@ -3,7 +3,7 @@
 
     <parent>
         <groupId>sirius.stellar</groupId>
-        <artifactId>stellar-aggregator</artifactId>
+        <artifactId>stellar</artifactId>
         <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -21,7 +21,6 @@
 		<dependency>
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-http-client</artifactId>
-			<version>${avaje-http.version}</version>
 		</dependency>
 	</dependencies>
 

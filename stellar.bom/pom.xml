@@ -1,0 +1,125 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+	<groupId>sirius.stellar</groupId>
+	<artifactId>stellar-bom</artifactId>
+	<version>1.0-RC1</version>
+	<packaging>jar</packaging>
+
+    <name>Stellar :: Bill of Materials</name>
+	<description>
+		Bill of materials POM for managed dependency versioning.
+		Use this instead of `sirius.stellar:stellar` to avoid `pluginManagement`.
+	</description>
+
+	<dependencyManagement>
+		<dependencies>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-facility</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-bundle</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-collect-slf4j</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-jboss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-jcl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-jsr379</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-jul</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-kwik</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-log4j</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-log4j2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-minlog</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-slf4j</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-dispatch-tinylog</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-jsr305</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-esthree</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-serialization-msgpack</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-serialization-msgpack-jsonb</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-platform</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-platform-generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

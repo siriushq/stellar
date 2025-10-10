@@ -3,7 +3,7 @@
 
     <parent>
         <groupId>sirius.stellar</groupId>
-        <artifactId>stellar-aggregator</artifactId>
+        <artifactId>stellar</artifactId>
         <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -11,19 +11,23 @@
     <packaging>jar</packaging>
     <artifactId>stellar-serialization-msgpack</artifactId>
     <name>Stellar :: Serialization :: MessagePack</name>
-	<description>Adapter implementing support for the MessagePack binary format to avaje-jsonb.</description>
+	<description>
+		Core serialization streaming/generation for the MessagePack binary format.
+
+		This is a fork of `org.msgpack:msgpack-core`. All original portions are licensed by the
+		authors under Apache 2.0, modifications made here are licensed under the BSD 3-Clause.
+	</description>
+
+	<licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
-
-    <dependencies>
-		<dependency>
-			<groupId>io.avaje</groupId>
-			<artifactId>avaje-jsonb</artifactId>
-			<version>${avaje-jsonb.version}</version>
-		</dependency>
-	</dependencies>
 
     <build>
         <plugins>
@@ -52,13 +56,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
 
 				<configuration>
-					<excludePackageNames>
-						org.msgpack.core;
-						org.msgpack.core.annotations;
-						org.msgpack.core.buffer;
-						org.msgpack.value;
-						org.msgpack.value.impl;
-					</excludePackageNames>
 					<additionalOptions>
 						<additionalOption>--add-exports</additionalOption>
 						<additionalOption>java.base/sun.nio.ch=sirius.stellar.serialization.msgpack</additionalOption>
@@ -68,6 +65,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+						--add-opens java.base/java.nio=sirius.stellar.serialization.msgpack
+						--add-opens java.base/sun.nio.ch=sirius.stellar.serialization.msgpack
+					</argLine>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -81,21 +86,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-
-						<configuration>
-							<sources>
-								<source>${project.basedir}/msgpack-java/msgpack-core/src/main/java</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
         </plugins>
     </build>

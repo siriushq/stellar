@@ -34,14 +34,14 @@ including
 	============================================
 
 	A bill-of-materials is provided to control dependency versions.
-	Add this to your project.
+	Directly add `stellar-bom` or use `stellar` to also use our build lifecycle.
 
 	pom.xml ========================================
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>sirius.stellar</groupId>
-				<artifactId>stellar-bom</artifactId>
+				<artifactId>stellar</artifactId>
 				<version>1.0-RC1</version>
 				<scope>import</scope>
 				<type>pom</type>
