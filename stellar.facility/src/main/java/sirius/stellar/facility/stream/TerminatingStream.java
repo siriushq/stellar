@@ -249,14 +249,12 @@ public class TerminatingStream<T> implements Stream<T> {
 	@Override
 	public Iterator<T> iterator() {
 		Iterator<T> iterator = this.stream.iterator();
-		this.stream.close();
 		return Iterators.closing(iterator, this.stream);
 	}
 
 	@Override
 	public Spliterator<T> spliterator() {
 		Spliterator<T> spliterator = this.stream.spliterator();
-		this.stream.close();
 		return Spliterators.closing(spliterator, this.stream);
 	}
 	//#endregion
