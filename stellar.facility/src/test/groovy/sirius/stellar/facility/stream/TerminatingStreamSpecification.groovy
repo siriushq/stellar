@@ -26,12 +26,11 @@ class TerminatingStreamSpecification extends Specification {
 			def stream = Stream.of("a", "b", "c", "d")
 			def runnable = Mock(Runnable)
 			stream.onClose(runnable)
-
 		when:
-			stream = terminalStream(stream)
-			stream.filter { it != "c" }
-			stream.map { it.toUpperCase() }
-			def values = stream.toList()
+			def values = terminalStream(stream)
+					.filter { it != "c" }
+					.map { it.toUpperCase() }
+					.toList()
 		then:
 			1 * runnable.run()
 			values == ["A", "B", "D"]
