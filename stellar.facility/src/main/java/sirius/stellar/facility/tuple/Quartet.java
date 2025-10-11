@@ -13,53 +13,46 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of four elements.
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Quartet#immutableQuartet} and {@link Quartet#mutableQuartet}
- * are available to create instances of the appropriate subtype. They are designed to
- * be imported statically to achieve a fluent interface.
- * <p>
- * A usage exemplar is as follows:
- * <pre>{@code
- *     // The `var` keyword can be used instead.
- *     // var quartet = immutableQuartet("Random", 16, 2007, 175);
- *     Quartet<String, Integer, Integer, Integer> quartet = immutableQuartet(
- *         "Random",
- *         16,
- *         2007,
- *         175
- *     );
- *
- *     quartet.first().equals("Random")
- *     quartet.second() == 16;
- *     quartet.third() == 2007;
- *     quartet.fourth() == 175;
- * }</pre>
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of four elements.
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableQuartet] and [#mutableQuartet] are available
+/// to create instances of the appropriate subtype. They are designed to
+/// be imported statically to achieve a fluent interface.
+///
+/// A usage exemplar is as follows:
+/// ```
+///     // The `var` keyword can be used instead.
+///     // var quartet = immutableQuartet("Random", 16, 2007, 175);
+///     Quartet<String, Integer, Integer, Integer> quartet = immutableQuartet(
+///         "Random",
+///         16,
+///         2007,
+///         175
+///     );
+///     quartet.first().equals("Random")
+///     quartet.second() == 16;
+///     quartet.third() == 2007;
+///     quartet.fourth() == 175;
+/// ```
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, D>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 267215234138977650L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable quartet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable quartet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _ -> new")
 	public static <A, B, C, D> Quartet<A, B, C, D> immutableQuartet(A first, B second, C third, D fourth) {
 		return new ImmutableQuartet<>(first, second, third, fourth);
 	}
 
-	/**
-	 * Creates a mutable quartet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable quartet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _ -> new")
 	public static <A, B, C, D> Quartet<A, B, C, D> mutableQuartet(A first, B second, C third, D fourth) {
 		return new MutableQuartet<>(first, second, third, fourth);
@@ -67,67 +60,51 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this quartet.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this quartet.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this quartet.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this quartet.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Gets the third element in this quartet.
-	 * @since 1.0
-	 */
+	/// Gets the third element in this quartet.
+	/// @since 1.0
 	public abstract C third();
 
-	/**
-	 * Gets the fourth element in this quartet.
-	 * @since 1.0
-	 */
+	/// Gets the fourth element in this quartet.
+	/// @since 1.0
 	public abstract D fourth();
 
-	/**
-	 * Sets the first element in this quartet.
-	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this quartet.
+	/// If the quartet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this quartet.
-	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this quartet.
+	/// If the quartet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 
-	/**
-	 * Sets the third element in this quartet.
-	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the third element.
-	 * @since 1.0
-	 */
+	/// Sets the third element in this quartet.
+	/// If the quartet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the third element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract C third(C third);
 
-	/**
-	 * Sets the fourth element in this quartet.
-	 * If the quartet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fourth element.
-	 * @since 1.0
-	 */
+	/// Sets the fourth element in this quartet.
+	/// If the quartet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fourth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
 	//#endregion
@@ -165,9 +142,7 @@ public abstract class Quartet<A, B, C, D> implements Orderable<Quartet<A, B, C, 
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Quartet}.
- */
+/// A mutable implementation of [Quartet].
 @Internal
 final class MutableQuartet<A, B, C, D> extends Quartet<A, B, C, D> {
 
@@ -235,9 +210,7 @@ final class MutableQuartet<A, B, C, D> extends Quartet<A, B, C, D> {
 	}
 }
 
-/**
- * An immutable implementation of {@link Quartet}.
- */
+/// An immutable implementation of [Quartet].
 @Internal
 final class ImmutableQuartet<A, B, C, D> extends Quartet<A, B, C, D> {
 

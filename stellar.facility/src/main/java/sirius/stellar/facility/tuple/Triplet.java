@@ -13,47 +13,40 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of three elements.
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Triplet#immutableTriplet} and {@link Triplet#mutableTriplet}
- * are available to create instances of the appropriate subtype. They are designed to
- * be imported statically to achieve a fluent interface.
- * <p>
- * A usage exemplar is as follows:
- * <pre>{@code
- *     // The `var` keyword can be used instead.
- *     // var triplet = immutableTriplet("Random", 16, 2007);
- *     Triplet<String, Integer, Integer> triplet = immutableTriplet("Random", 16, 2007);
- *
- *     triplet.first().equals("Random")
- *     triplet.second() == 16;
- *     triplet.third() == 2007;
- * }</pre>
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of three elements.
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableTriplet] and [#mutableTriplet] are available
+/// to create instances of the appropriate subtype. They are designed to
+/// be imported statically to achieve a fluent interface.
+///
+/// A usage exemplar is as follows:
+/// ```
+///     // The `var` keyword can be used instead.
+///     // var triplet = immutableTriplet("Random", 16, 2007);
+///     Triplet<String, Integer, Integer> triplet = immutableTriplet("Random", 16, 2007);
+///     triplet.first().equals("Random")
+///     triplet.second() == 16;
+///     triplet.third() == 2007;
+/// ```
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 4529072832431752049L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable triplet for three objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable triplet for three objects.
+	/// @since 1.0
 	@Contract("_, _, _ -> new")
 	public static <A, B, C> Triplet<A, B, C> immutableTriplet(A first, B second, C third) {
 		return new ImmutableTriplet<>(first, second, third);
 	}
 
-	/**
-	 * Creates a mutable triplet for three objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable triplet for three objects.
+	/// @since 1.0
 	@Contract("_, _, _ -> new")
 	public static <A, B, C> Triplet<A, B, C> mutableTriplet(A first, B second, C third) {
 		return new MutableTriplet<>(first, second, third);
@@ -61,51 +54,39 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this triplet.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this triplet.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this triplet.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this triplet.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Gets the third element in this triplet.
-	 * @since 1.0
-	 */
+	/// Gets the third element in this triplet.
+	/// @since 1.0
 	public abstract C third();
 
-	/**
-	 * Sets the first element in this triplet.
-	 * If the triplet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this triplet.
+	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this triplet.
-	 * If the triplet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this triplet.
+	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 
-	/**
-	 * Sets the third element in this triplet.
-	 * If the triplet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the third element.
-	 * @since 1.0
-	 */
+	/// Sets the third element in this triplet.
+	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the third element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract C third(C third);
 	//#endregion
@@ -142,9 +123,7 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Triplet}.
- */
+/// A mutable implementation of [Triplet].
 @Internal
 final class MutableTriplet<A, B, C> extends Triplet<A, B, C> {
 
@@ -198,9 +177,7 @@ final class MutableTriplet<A, B, C> extends Triplet<A, B, C> {
 	}
 }
 
-/**
- * An immutable implementation of {@link Triplet}.
- */
+/// An immutable implementation of [Triplet].
 @Internal
 final class ImmutableTriplet<A, B, C> extends Triplet<A, B, C> {
 

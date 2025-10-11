@@ -13,39 +13,33 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of eight elements.
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Octet#immutableOctet} and {@link Octet#mutableOctet}
- * are available to create instances of the appropriate subtype. They are designed to
- * be imported statically to achieve a fluent interface.
- * <p>
- * Usage exemplars are available for tuples with &le;4 elements for brevity.
- * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of eight elements.
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableOctet] and [#mutableOctet] are available to
+/// create instances of the appropriate subtype. They are designed to
+/// be imported statically to achieve a fluent interface.
+///
+/// Usage exemplars are available for tuples with &le;4 elements for brevity.
+/// See [Couple], [Triplet], [Quartet] for example usage.
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A, B, C, D, E, F, G, H>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable octet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable octet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G, H> Octet<A, B, C, D, E, F, G, H> immutableOctet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh, H eighth) {
 		return new ImmutableOctet<>(first, second, third, fourth, fifth, sixth, seventh, eighth);
 	}
 
-	/**
-	 * Creates a mutable octet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable octet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F, G, H> Octet<A, B, C, D, E, F, G, H> mutableOctet(A first, B second, C third, D fourth, E fifth, F sixth, G seventh, H eighth) {
 		return new MutableOctet<>(first, second, third, fourth, fifth, sixth, seventh, eighth);
@@ -53,131 +47,99 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this octet.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this octet.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Gets the third element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the third element in this octet.
+	/// @since 1.0
 	public abstract C third();
 
-	/**
-	 * Gets the fourth element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the fourth element in this octet.
+	/// @since 1.0
 	public abstract D fourth();
 
-	/**
-	 * Gets the fifth element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the fifth element in this octet.
+	/// @since 1.0
 	public abstract E fifth();
 
-	/**
-	 * Gets the sixth element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the sixth element in this octet.
+	/// @since 1.0
 	public abstract F sixth();
 
-	/**
-	 * Gets the seventh element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the seventh element in this octet.
+	/// @since 1.0
 	public abstract G seventh();
 
-	/**
-	 * Gets the eighth element in this octet.
-	 * @since 1.0
-	 */
+	/// Gets the eighth element in this octet.
+	/// @since 1.0
 	public abstract H eighth();
 
-	/**
-	 * Sets the first element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 
-	/**
-	 * Sets the third element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the third element.
-	 * @since 1.0
-	 */
+	/// Sets the third element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the third element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract C third(C third);
 
-	/**
-	 * Sets the fourth element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fourth element.
-	 * @since 1.0
-	 */
+	/// Sets the fourth element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fourth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
 
-	/**
-	 * Sets the fifth element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fifth element.
-	 * @since 1.0
-	 */
+	/// Sets the fifth element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fifth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract E fifth(E fifth);
 
-	/**
-	 * Sets the sixth element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the sixth element.
-	 * @since 1.0
-	 */
+	/// Sets the sixth element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the sixth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract F sixth(F sixth);
 
-	/**
-	 * Sets the seventh element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the seventh element.
-	 * @since 1.0
-	 */
+	/// Sets the seventh element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the seventh element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract G seventh(G seventh);
 
-	/**
-	 * Sets the eighth element in this octet.
-	 * If the octet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the eighth element.
-	 * @since 1.0
-	 */
+	/// Sets the eighth element in this octet.
+	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the eighth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract H eighth(H eighth);
 	//#endregion
@@ -219,9 +181,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Octet}.
- */
+/// A mutable implementation of [Octet].
 @Internal
 final class MutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F, G, H> {
 
@@ -345,9 +305,7 @@ final class MutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F,
 	}
 }
 
-/**
- * An immutable implementation of {@link Octet}.
- */
+/// An immutable implementation of [Octet].
 @Internal
 final class ImmutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F, G, H> {
 

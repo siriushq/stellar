@@ -15,68 +15,56 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of two elements (coupled together).
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Couple#immutableCouple} and {@link Couple#mutableCouple}
- * are available to create instances of the appropriate subtype. They are designed
- * to be imported statically to achieve a fluent interface.
- * <p>
- * A usage exemplar is as follows:
- * <pre>{@code
- *     // The `var` keyword can be used instead.
- *     // var couple = immutableCouple("Random", 16);
- *     Couple<String, Integer> couple = immutableCouple("Random", 16);
- *
- *     couple.first().equals("Random")
- *     couple.second() == 16;
- *
- *     // Couple conveniently implements Map.Entry as it contains just two elements.
- *     couple.getKey().equals("Random");
- *     couple.getValue() == 16;
- * }</pre>
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of two elements (coupled together).
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableCouple] and [#mutableCouple] are available
+/// to create instances of the appropriate subtype. They are designed
+/// to be imported statically to achieve a fluent interface.
+///
+/// A usage exemplar is as follows:
+/// ```
+/// // The `var` keyword can be used instead.
+/// // var couple = immutableCouple("Random", 16);
+/// Couple<String, Integer> couple = immutableCouple("Random", 16);
+/// couple.first().equals("Random")
+/// couple.second() == 16;
+/// // Couple conveniently implements Map.Entry as it contains just two elements.
+/// couple.getKey().equals("Random");
+/// couple.getValue() == 16;
+/// ```
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<A, B>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 2425620414811236114L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable couple for two objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable couple for two objects.
+	/// @since 1.0
 	@Contract("_, _ -> new")
 	public static <A, B> Couple<A, B> immutableCouple(A first, B second) {
 		return new ImmutableCouple<>(first, second);
 	}
 
-	/**
-	 * Creates an immutable couple based on the provided {@link Map.Entry}.
-	 * @since 1.0
-	 */
+	/// Creates an immutable couple based on the provided [Map.Entry].
+	/// @since 1.0
 	@Contract("_ -> new")
 	public static <A, B> Couple<A, B> immutableCouple(Map.Entry<A, B> entry) {
 		return new ImmutableCouple<>(entry.getKey(), entry.getValue());
 	}
 
-	/**
-	 * Creates a mutable couple for two objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable couple for two objects.
+	/// @since 1.0
 	@Contract("_, _ -> new")
 	public static <A, B> Couple<A, B> mutableCouple(A first, B second) {
 		return new MutableCouple<>(first, second);
 	}
 
-	/**
-	 * Creates a mutable couple based on the provided {@link Map.Entry}.
-	 * @since 1.0
-	 */
+	/// Creates a mutable couple based on the provided [Map.Entry].
+	/// @since 1.0
 	@Contract("_ -> new")
 	public static <A, B> Couple<A, B> mutableCouple(Map.Entry<A, B> entry) {
 		return new MutableCouple<>(entry.getKey(), entry.getValue());
@@ -84,87 +72,66 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this couple.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this couple.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this couple.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this couple.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Sets the first element in this couple.
-	 * If the couple is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this couple.
+	/// If the couple is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this couple.
-	 * If the couple is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this couple.
+	/// If the couple is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 	//#endregion
 
 	//#region Map.Entry Implementation
-	/**
-	 * Implementation of {@link Map.Entry#getKey()}.
-	 * <p>
-	 * This should not be preferred over {@link Couple#first()} and instead
-	 * should only be used if compatibility with code using {@link Map.Entry}
-	 * is desired, this is a very common thing to see when people are in need
-	 * of a tuple implementation due to {@link SimpleEntry}'s existence, and
-	 * is a design pitfall due to the unsuitability of that interface as a
-	 * general purpose tuple.
-	 *
-	 * @see Couple#first()
-	 */
+	/// Implementation of [Map.Entry#getKey()].
+	///
+	/// This should not be preferred over [#first()] and instead should only be
+	/// used if compatibility with code using [Map.Entry] is required. This is a
+	/// very common thing to see when people are in need of a tuple implementation
+	/// (due to [SimpleEntry]'s existence).
+	///
+	/// @see Couple#first()
 	@Override
 	public final A getKey() {
 		return this.first();
 	}
 
-	/**
-	 * Implementation of {@link Map.Entry#getValue()}.
-	 * <p>
-	 * This should not be preferred over {@link Couple#second()} and instead
-	 * should only be used if compatibility with code using {@link Map.Entry}
-	 * is desired, this is a very common thing to see when people are in need
-	 * of a tuple implementation due to {@link SimpleEntry}'s existence, and
-	 * is a design pitfall due to the unsuitability of that interface as a
-	 * general purpose tuple.
-	 *
-	 * @see Couple#second()
-	 */
+	/// Implementation of [Map.Entry#getValue()].
+	///
+	/// This should not be preferred over [#second()] and instead should only be
+	/// used if compatibility with code using [Map.Entry] is required. This is a
+	/// very common thing to see when people are in need of a tuple implementation
+	/// (due to [SimpleEntry]'s existence).
+	///
+	/// @see Couple#second()
 	@Override
 	public final B getValue() {
 		return this.second();
 	}
 
-	/**
-	 * Implementation of {@link Map.Entry#setValue(Object)}.
-	 * <p>
-	 * This should not be preferred over {@link Couple#first(Object)} and
-	 * {@link Couple#second(Object)} and instead should only be used if
-	 * compatibility with code using {@link Map.Entry} is desired, this
-	 * is a very common thing to see when people are in need of a tuple
-	 * implementation due to {@link SimpleEntry}'s existence, and is a
-	 * design pitfall due to the unsuitability of that interface as a
-	 * general purpose tuple.
-	 *
-	 * @see Couple#second(Object)
-	 */
+	/// Implementation of [#setValue(Object)].
+	///
+	/// This should not be preferred over [#first(Object)] or [#second(Object)]
+	/// and instead should only be used if compatibility with code using [Map.Entry]
+	/// is required. This is a very common thing to see when people are in need
+	/// of a tuple implementation (due to [SimpleEntry]'s existence).
+	///
+	/// @see Couple#second(Object)
 	@Override
 	public final B setValue(B value) {
 		B second = second();
@@ -204,9 +171,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Couple}.
- */
+/// A mutable implementation of [Couple].
 @Internal
 final class MutableCouple<A, B> extends Couple<A, B> {
 
@@ -246,9 +211,7 @@ final class MutableCouple<A, B> extends Couple<A, B> {
 	}
 }
 
-/**
- * An immutable implementation of {@link Couple}.
- */
+/// An immutable implementation of [Couple].
 @Internal
 final class ImmutableCouple<A, B> extends Couple<A, B> {
 

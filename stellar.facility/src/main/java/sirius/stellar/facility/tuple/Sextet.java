@@ -13,39 +13,33 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of six elements.
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Sextet#immutableSextet} and {@link Sextet#mutableSextet}
- * are available to create instances of the appropriate subtype. They are designed to
- * be imported statically to achieve a fluent interface.
- * <p>
- * Usage exemplars are available for tuples with &le;4 elements for brevity.
- * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of six elements.
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableSextet] and [#mutableSextet] are available
+/// to create instances of the appropriate subtype. They are designed to
+/// be imported statically to achieve a fluent interface.
+///
+/// Usage exemplars are available for tuples with &le;4 elements for brevity.
+/// See [Couple], [Triplet], [Quartet] for example usage.
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B, C, D, E, F>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 2857946100715781746L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable sextet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable sextet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F> Sextet<A, B, C, D, E, F> immutableSextet(A first, B second, C third, D fourth, E fifth, F sixth) {
 		return new ImmutableSextet<>(first, second, third, fourth, fifth, sixth);
 	}
 
-	/**
-	 * Creates a mutable sextet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable sextet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _, _ -> new")
 	public static <A, B, C, D, E, F> Sextet<A, B, C, D, E, F> mutableSextet(A first, B second, C third, D fourth, E fifth, F sixth) {
 		return new MutableSextet<>(first, second, third, fourth, fifth, sixth);
@@ -53,99 +47,75 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this sextet.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this sextet.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Gets the third element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the third element in this sextet.
+	/// @since 1.0
 	public abstract C third();
 
-	/**
-	 * Gets the fourth element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the fourth element in this sextet.
+	/// @since 1.0
 	public abstract D fourth();
 
-	/**
-	 * Gets the fifth element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the fifth element in this sextet.
+	/// @since 1.0
 	public abstract E fifth();
 
-	/**
-	 * Gets the sixth element in this sextet.
-	 * @since 1.0
-	 */
+	/// Gets the sixth element in this sextet.
+	/// @since 1.0
 	public abstract F sixth();
 
-	/**
-	 * Sets the first element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 
-	/**
-	 * Sets the third element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the third element.
-	 * @since 1.0
-	 */
+	/// Sets the third element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the third element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract C third(C third);
 
-	/**
-	 * Sets the fourth element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fourth element.
-	 * @since 1.0
-	 */
+	/// Sets the fourth element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fourth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
 
-	/**
-	 * Sets the fifth element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fifth element.
-	 * @since 1.0
-	 */
+	/// Sets the fifth element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fifth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract E fifth(E fifth);
 
-	/**
-	 * Sets the sixth element in this sextet.
-	 * If the sextet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the sixth element.
-	 * @since 1.0
-	 */
+	/// Sets the sixth element in this sextet.
+	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the sixth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract F sixth(F sixth);
 	//#endregion
@@ -185,9 +155,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Sextet}.
- */
+/// A mutable implementation of [Sextet].
 @Internal
 final class MutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 
@@ -283,9 +251,7 @@ final class MutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 	}
 }
 
-/**
- * An immutable implementation of {@link Sextet}.
- */
+/// An immutable implementation of [Sextet].
 @Internal
 final class ImmutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 

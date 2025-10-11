@@ -13,39 +13,33 @@ import java.util.Objects;
 
 import static sirius.stellar.facility.Strings.*;
 
-/**
- * A tuple consisting of five elements.
- * This class is non-sealed and may be extended for use as an abstraction.
- * <p>
- * Factory methods {@link Quintet#immutableQuintet} and {@link Quintet#mutableQuintet}
- * are available to create instances of the appropriate subtype. They are designed to
- * be imported statically to achieve a fluent interface.
- * <p>
- * Usage exemplars are available for tuples with &le;4 elements for brevity.
- * See {@link Couple}, {@link Triplet}, {@link Quartet} for example usage.
- *
- * @author Mahied Maruf (mechite)
- * @since 1.0
- */
+/// A tuple consisting of five elements.
+/// This class is non-sealed and may be extended for use as an abstraction.
+///
+/// Factory methods [#immutableQuintet] and [#mutableQuintet] are available
+/// to create instances of the appropriate subtype. They are designed to
+/// be imported statically to achieve a fluent interface.
+///
+/// Usage exemplars are available for tuples with &le;4 elements for brevity.
+/// See [Couple], [Triplet], [Quartet] for example usage.
+///
+/// @author Mahied Maruf (mechite)
+/// @since 1.0
 public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, C, D, E>>, Iterable<Object>, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1356093815330551527L;
 
 	//#region Factory Methods
-	/**
-	 * Creates an immutable quintet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates an immutable quintet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _ -> new")
 	public static <A, B, C, D, E> Quintet<A, B, C, D, E> immutableQuintet(A first, B second, C third, D fourth, E fifth) {
 		return new ImmutableQuintet<>(first, second, third, fourth, fifth);
 	}
 
-	/**
-	 * Creates a mutable quintet for four objects.
-	 * @since 1.0
-	 */
+	/// Creates a mutable quintet for four objects.
+	/// @since 1.0
 	@Contract("_, _, _, _, _ -> new")
 	public static <A, B, C, D, E> Quintet<A, B, C, D, E> mutableQuintet(A first, B second, C third, D fourth, E fifth) {
 		return new MutableQuintet<>(first, second, third, fourth, fifth);
@@ -53,83 +47,63 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	//#endregion
 
 	//#region Abstract Methods
-	/**
-	 * Gets the first element in this quintet.
-	 * @since 1.0
-	 */
+	/// Gets the first element in this quintet.
+	/// @since 1.0
 	public abstract A first();
 
-	/**
-	 * Gets the second element in this quintet.
-	 * @since 1.0
-	 */
+	/// Gets the second element in this quintet.
+	/// @since 1.0
 	public abstract B second();
 
-	/**
-	 * Gets the third element in this quintet.
-	 * @since 1.0
-	 */
+	/// Gets the third element in this quintet.
+	/// @since 1.0
 	public abstract C third();
 
-	/**
-	 * Gets the fourth element in this quintet.
-	 * @since 1.0
-	 */
+	/// Gets the fourth element in this quintet.
+	/// @since 1.0
 	public abstract D fourth();
 
-	/**
-	 * Gets the fifth element in this quintet.
-	 * @since 1.0
-	 */
+	/// Gets the fifth element in this quintet.
+	/// @since 1.0
 	public abstract E fifth();
 
-	/**
-	 * Sets the first element in this quintet.
-	 * If the quintet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the first element.
-	 * @since 1.0
-	 */
+	/// Sets the first element in this quintet.
+	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the first element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract A first(A first);
 
-	/**
-	 * Sets the second element in this quintet.
-	 * If the quintet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the second element.
-	 * @since 1.0
-	 */
+	/// Sets the second element in this quintet.
+	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the second element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract B second(B second);
 
-	/**
-	 * Sets the third element in this quintet.
-	 * If the quintet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the third element.
-	 * @since 1.0
-	 */
+	/// Sets the third element in this quintet.
+	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the third element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract C third(C third);
 
-	/**
-	 * Sets the fourth element in this quintet.
-	 * If the quintet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fourth element.
-	 * @since 1.0
-	 */
+	/// Sets the fourth element in this quintet.
+	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fourth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract D fourth(D fourth);
 
-	/**
-	 * Sets the fifth element in this quintet.
-	 * If the quintet is immutable, this method will throw {@link ImmutableModificationException}.
-	 *
-	 * @return The old value of the fifth element.
-	 * @since 1.0
-	 */
+	/// Sets the fifth element in this quintet.
+	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	///
+	/// @return The old value of the fifth element.
+	/// @since 1.0
 	@Contract("_ -> new")
 	public abstract E fifth(E fifth);
 	//#endregion
@@ -168,9 +142,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	//#endregion
 }
 
-/**
- * A mutable implementation of {@link Quintet}.
- */
+/// A mutable implementation of [Quintet].
 @Internal
 final class MutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 
@@ -252,9 +224,7 @@ final class MutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 	}
 }
 
-/**
- * An immutable implementation of {@link Quintet}.
- */
+/// An immutable implementation of [Quintet].
 @Internal
 final class ImmutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 

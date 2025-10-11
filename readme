@@ -15,8 +15,7 @@ siriushq/stellar
 	    stellar.throttle, stellar.serialization, stellar.metrics
 	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
 
-	TODO - markdown-ify JavaDoc in sirius.stellar.facility.tuple.*
-	TODO - markdown-ify JavaDoc in sirius.stellar.logging.*
+	TODO - markdown-ify JavaDoc in sirius.stellar.logging.Logger.*
 
 including
 =========
