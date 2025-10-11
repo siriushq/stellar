@@ -87,52 +87,19 @@ public final class Iterators {
 	/// Returns a primitive integer iterator wrapping (and auto-unboxing) the provided iterator.
 	/// @since 1.0
 	public static PrimitiveIterator.OfInt primitiveInt(Iterator<Integer> iterator) {
-		return new PrimitiveIterator.OfInt() {
-
-			@Override
-			public boolean hasNext() {
-				return iterator.hasNext();
-			}
-
-			@Override
-			public int nextInt() {
-				return iterator.next();
-			}
-		};
+		return new PrimitiveWrapperIterator.OfInt(iterator);
 	}
 
 	/// Returns a primitive double iterator wrapping (and auto-unboxing) the provided iterator.
 	/// @since 1.0
 	public static PrimitiveIterator.OfDouble primitiveDouble(Iterator<Double> iterator) {
-		return new PrimitiveIterator.OfDouble() {
-
-			@Override
-			public boolean hasNext() {
-				return iterator.hasNext();
-			}
-
-			@Override
-			public double nextDouble() {
-				return iterator.next();
-			}
-		};
+		return new PrimitiveWrapperIterator.OfDouble(iterator);
 	}
 
 	/// Returns a primitive long iterator wrapping (and auto-unboxing) the provided iterator.
 	/// @since 1.0
 	public static PrimitiveIterator.OfLong primitiveLong(Iterator<Long> iterator) {
-		return new PrimitiveIterator.OfLong() {
-
-			@Override
-			public boolean hasNext() {
-				return iterator.hasNext();
-			}
-
-			@Override
-			public long nextLong() {
-				return iterator.next();
-			}
-		};
+		return new PrimitiveWrapperIterator.OfLong(iterator);
 	}
 
 	/// Represents any iterator that can be brought back to an initial state, allowing for reuse.
@@ -289,6 +256,64 @@ final class ClosingIterator<T> implements Iterator<T>, AutoCloseable {
 			this.closed = true;
 		} catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+	}
+}
+
+/// Superclass for primitive iterators wrapping (and auto-unboxing) a provided boxed iterator.
+abstract class PrimitiveWrapperIterator<T, T_CONS>
+		implements PrimitiveIterator<T, T_CONS> {
+
+	protected final Iterator<T> delegate;
+
+	PrimitiveWrapperIterator(Iterator<T> delegate) {
+		this.delegate = delegate;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return this.delegate.hasNext();
+	}
+
+	/// A primitive integer iterator wrapping (and auto-unboxing) the provided iterator.
+	static final class OfInt extends PrimitiveWrapperIterator<Integer, IntConsumer>
+			implements PrimitiveIterator.OfInt {
+
+		OfInt(Iterator<Integer> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public int nextInt() {
+			return this.delegate.next();
+		}
+	}
+
+	/// A primitive double iterator wrapping (and auto-unboxing) the provided iterator.
+	static final class OfDouble extends PrimitiveWrapperIterator<Double, DoubleConsumer>
+			implements PrimitiveIterator.OfDouble {
+
+		OfDouble(Iterator<Double> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public double nextDouble() {
+			return this.delegate.next();
+		}
+	}
+
+	/// A primitive long iterator wrapping (and auto-unboxing) the provided iterator.
+	static final class OfLong extends PrimitiveWrapperIterator<Long, LongConsumer>
+			implements PrimitiveIterator.OfLong {
+
+		OfLong(Iterator<Long> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public long nextLong() {
+			return this.delegate.next();
 		}
 	}
 }

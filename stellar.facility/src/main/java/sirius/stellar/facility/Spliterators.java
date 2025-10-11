@@ -8,6 +8,8 @@ import java.util.function.DoubleConsumer;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 
+import static sirius.stellar.facility.Spliterators.*;
+
 /// Provides a facility for creating and working with [Spliterator]s.
 ///
 /// @author Mahied Maruf (mechite)
@@ -25,82 +27,19 @@ public final class Spliterators {
 	/// Returns a primitive integer spliterator wrapping (and auto-unboxing) the provided spliterator.
 	/// @since 1.0
 	public static Spliterator.OfInt primitiveInt(Spliterator<Integer> spliterator) {
-		return new Spliterator.OfInt() {
-
-			@Override
-			public OfInt trySplit() {
-				return primitiveInt(spliterator.trySplit());
-			}
-
-			@Override
-			public boolean tryAdvance(IntConsumer action) {
-				return spliterator.tryAdvance(action::accept);
-			}
-
-			@Override
-			public long estimateSize() {
-				return spliterator.estimateSize();
-			}
-
-			@Override
-			public int characteristics() {
-				return spliterator.characteristics();
-			}
-		};
+		return new PrimitiveWrapperSpliterator.OfInt(spliterator);
 	}
 
 	/// Returns a primitive double spliterator wrapping (and auto-unboxing) the provided spliterator.
 	/// @since 1.0
 	public static Spliterator.OfDouble primitiveDouble(Spliterator<Double> spliterator) {
-		return new Spliterator.OfDouble() {
-
-			@Override
-			public OfDouble trySplit() {
-				return primitiveDouble(spliterator.trySplit());
-			}
-
-			@Override
-			public boolean tryAdvance(DoubleConsumer action) {
-				return spliterator.tryAdvance(action::accept);
-			}
-
-			@Override
-			public long estimateSize() {
-				return spliterator.estimateSize();
-			}
-
-			@Override
-			public int characteristics() {
-				return spliterator.characteristics();
-			}
-		};
+		return new PrimitiveWrapperSpliterator.OfDouble(spliterator);
 	}
 
 	/// Returns a primitive long spliterator wrapping (and auto-unboxing) the provided spliterator.
 	/// @since 1.0
 	public static Spliterator.OfLong primitiveLong(Spliterator<Long> spliterator) {
-		return new Spliterator.OfLong() {
-
-			@Override
-			public OfLong trySplit() {
-				return primitiveLong(spliterator.trySplit());
-			}
-
-			@Override
-			public boolean tryAdvance(LongConsumer action) {
-				return spliterator.tryAdvance(action::accept);
-			}
-
-			@Override
-			public long estimateSize() {
-				return spliterator.estimateSize();
-			}
-
-			@Override
-			public int characteristics() {
-				return spliterator.characteristics();
-			}
-		};
+		return new PrimitiveWrapperSpliterator.OfLong(spliterator);
 	}
 }
 
@@ -159,6 +98,87 @@ final class ClosingSpliterator<T> implements Spliterator<T>, AutoCloseable {
 			this.closed = true;
 		} catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+	}
+}
+
+/// Superclass for primitive integer spliterators wrapping (and auto-unboxing) a provided boxed spliterator.
+abstract class PrimitiveWrapperSpliterator<T, T_CONS, T_SPLITR extends Spliterator.OfPrimitive<T, T_CONS, T_SPLITR>>
+		implements Spliterator.OfPrimitive<T, T_CONS, T_SPLITR> {
+
+	protected final Spliterator<T> delegate;
+
+	PrimitiveWrapperSpliterator(Spliterator<T> delegate) {
+		this.delegate = delegate;
+	}
+
+	@Override
+	public long estimateSize() {
+		return this.delegate.estimateSize();
+	}
+
+	@Override
+	public int characteristics() {
+		return this.delegate.characteristics();
+	}
+
+	/// A primitive integer spliterator wrapping (and auto-unboxing) the provided spliterator.
+	static final class OfInt
+			extends PrimitiveWrapperSpliterator<Integer, IntConsumer, Spliterator.OfInt>
+			implements Spliterator.OfInt {
+
+		OfInt(Spliterator<Integer> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public Spliterator.OfInt trySplit() {
+			return primitiveInt(super.delegate.trySplit());
+		}
+
+		@Override
+		public boolean tryAdvance(IntConsumer action) {
+			return this.delegate.tryAdvance(action::accept);
+		}
+	}
+
+	/// A primitive double spliterator wrapping (and auto-unboxing) the provided spliterator.
+	static final class OfDouble
+			extends PrimitiveWrapperSpliterator<Double, DoubleConsumer, Spliterator.OfDouble>
+			implements Spliterator.OfDouble {
+
+		OfDouble(Spliterator<Double> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public Spliterator.OfDouble trySplit() {
+			return primitiveDouble(super.delegate.trySplit());
+		}
+
+		@Override
+		public boolean tryAdvance(DoubleConsumer action) {
+			return this.delegate.tryAdvance(action::accept);
+		}
+	}
+
+	/// A primitive long spliterator wrapping (and auto-unboxing) the provided spliterator.
+	static final class OfLong
+			extends PrimitiveWrapperSpliterator<Long, LongConsumer, Spliterator.OfLong>
+			implements Spliterator.OfLong {
+
+		OfLong(Spliterator<Long> delegate) {
+			super(delegate);
+		}
+
+		@Override
+		public Spliterator.OfLong trySplit() {
+			return primitiveLong(super.delegate.trySplit());
+		}
+
+		@Override
+		public boolean tryAdvance(LongConsumer action) {
+			return this.delegate.tryAdvance(action::accept);
 		}
 	}
 }
