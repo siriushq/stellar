@@ -20,3 +20,6 @@ replay_pid*
 .settings/
 .project
 .classpath
+
+# Visual Studio Code
+.vscode/
