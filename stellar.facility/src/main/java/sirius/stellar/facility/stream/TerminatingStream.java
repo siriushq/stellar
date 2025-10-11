@@ -1,6 +1,8 @@
 package sirius.stellar.facility.stream;
 
 import org.jetbrains.annotations.Contract;
+import sirius.stellar.facility.Iterators;
+import sirius.stellar.facility.Spliterators;
 
 import java.nio.charset.Charset;
 import java.nio.file.FileVisitOption;
@@ -9,6 +11,10 @@ import java.util.*;
 import java.util.function.*;
 import java.util.regex.Pattern;
 import java.util.stream.*;
+
+import static sirius.stellar.facility.stream.TerminatingDoubleStream.*;
+import static sirius.stellar.facility.stream.TerminatingIntStream.*;
+import static sirius.stellar.facility.stream.TerminatingLongStream.*;
 
 /// Implementation of [Stream] which will automatically close when a terminal operation
 /// is executed. While the majority of [Stream]s do not have to be (and should not be)
@@ -52,10 +58,13 @@ import java.util.stream.*;
 ///     .filter(...)
 ///     .forEach(path -> ...); // This invocation will close the stream.
 /// ```
+/// @see TerminatingIntStream
+/// @see TerminatingDoubleStream
+/// @see TerminatingLongStream
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class TerminatingStream<T> implements Stream<T> {
+public class TerminatingStream<T> implements Stream<T> {
 
 	private final Stream<T> stream;
 
@@ -75,272 +84,314 @@ public final class TerminatingStream<T> implements Stream<T> {
 	//#region Terminal Operations
 	@Override
 	public void forEach(Consumer<? super T> action) {
-		this.stream.forEach(action);
-		this.stream.close();
+		try {
+			this.stream.forEach(action);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public void forEachOrdered(Consumer<? super T> action) {
-		this.stream.forEachOrdered(action);
-		this.stream.close();
+		try {
+			this.stream.forEachOrdered(action);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Object[] toArray() {
-		Object[] array = this.stream.toArray();
-		this.stream.close();
-		return array;
+		try {
+			return this.stream.toArray();
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public <A> A[] toArray(IntFunction<A[]> generator) {
-		A[] array = this.stream.toArray(generator);
-		this.stream.close();
-		return array;
+		try {
+			return this.stream.toArray(generator);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public T reduce(T identity, BinaryOperator<T> accumulator) {
-		T reduce = this.stream.reduce(identity, accumulator);
-		this.stream.close();
-		return reduce;
+		try {
+			return this.stream.reduce(identity, accumulator);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Optional<T> reduce(BinaryOperator<T> accumulator) {
-		Optional<T> optional = this.stream.reduce(accumulator);
-		this.stream.close();
-		return optional;
+		try {
+			return this.stream.reduce(accumulator);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public <U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner) {
-		U reduce = this.stream.reduce(identity, accumulator, combiner);
-		this.stream.close();
-		return reduce;
+		try {
+			return this.stream.reduce(identity, accumulator, combiner);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public <R> R collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner) {
-		R collect = this.stream.collect(supplier, accumulator, combiner);
-		this.stream.close();
-		return collect;
+		try {
+			return this.stream.collect(supplier, accumulator, combiner);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public <R, A> R collect(Collector<? super T, A, R> collector) {
-		R collect = this.stream.collect(collector);
-		this.stream.close();
-		return collect;
+		try {
+			return this.stream.collect(collector);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public List<T> toList() {
-		List<T> list = this.stream.toList();
-		this.stream.close();
-		return list;
+		try {
+			return this.stream.toList();
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Optional<T> min(Comparator<? super T> comparator) {
-		Optional<T> optional = this.stream.min(comparator);
-		this.stream.close();
-		return optional;
+		try {
+			return this.stream.min(comparator);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Optional<T> max(Comparator<? super T> comparator) {
-		Optional<T> optional = this.stream.max(comparator);
-		this.stream.close();
-		return optional;
+		try {
+			return this.stream.max(comparator);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public long count() {
-		long count = this.stream.count();
-		this.stream.close();
-		return count;
+		try {
+			return this.stream.count();
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public boolean anyMatch(Predicate<? super T> predicate) {
-		boolean anyMatch = this.stream.anyMatch(predicate);
-		this.stream.close();
-		return anyMatch;
+		try {
+			return this.stream.anyMatch(predicate);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public boolean allMatch(Predicate<? super T> predicate) {
-		boolean allMatch = this.stream.allMatch(predicate);
-		this.stream.close();
-		return allMatch;
+		try {
+			return this.stream.allMatch(predicate);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public boolean noneMatch(Predicate<? super T> predicate) {
-		boolean noneMatch = this.stream.noneMatch(predicate);
-		this.stream.close();
-		return noneMatch;
+		try {
+			return this.stream.noneMatch(predicate);
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Optional<T> findFirst() {
-		Optional<T> optional = this.stream.findFirst();
-		this.stream.close();
-		return optional;
+		try {
+			return this.stream.findFirst();
+		} finally {
+			this.stream.close();
+		}
 	}
 
 	@Override
 	public Optional<T> findAny() {
-		Optional<T> optional = this.stream.findAny();
-		this.stream.close();
-		return optional;
+		try {
+			return this.stream.findAny();
+		} finally {
+			this.stream.close();
+		}
 	}
+	//#endregion
 
+	//#region #iterator & #spliterator
 	@Override
 	public Iterator<T> iterator() {
 		Iterator<T> iterator = this.stream.iterator();
 		this.stream.close();
-		return iterator;
+		return Iterators.closing(iterator, this.stream);
 	}
 
 	@Override
 	public Spliterator<T> spliterator() {
 		Spliterator<T> spliterator = this.stream.spliterator();
 		this.stream.close();
-		return spliterator;
+		return Spliterators.closing(spliterator, this.stream);
 	}
 	//#endregion
 
-	//#region Other Operations [direct delegates]
+	//#region Intermediate Operations
 	@Override
 	public Stream<T> filter(Predicate<? super T> predicate) {
-		return this.stream.filter(predicate);
+		return terminalStream(this.stream.filter(predicate));
 	}
 
 	@Override
 	public <R> Stream<R> map(Function<? super T, ? extends R> mapper) {
-		return this.stream.map(mapper);
+		return terminalStream(this.stream.map(mapper));
 	}
 
 	@Override
 	public IntStream mapToInt(ToIntFunction<? super T> mapper) {
-		return this.stream.mapToInt(mapper);
+		return terminalIntStream(this.stream.mapToInt(mapper));
 	}
 
 	@Override
 	public LongStream mapToLong(ToLongFunction<? super T> mapper) {
-		return this.stream.mapToLong(mapper);
+		return terminalLongStream(this.stream.mapToLong(mapper));
 	}
 
 	@Override
 	public DoubleStream mapToDouble(ToDoubleFunction<? super T> mapper) {
-		return this.stream.mapToDouble(mapper);
+		return terminalDoubleStream(this.stream.mapToDouble(mapper));
 	}
 
 	@Override
 	public <R> Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper) {
-		return this.stream.flatMap(mapper);
+		return terminalStream(this.stream.flatMap(mapper));
 	}
 
 	@Override
 	public IntStream flatMapToInt(Function<? super T, ? extends IntStream> mapper) {
-		return this.stream.flatMapToInt(mapper);
+		return terminalIntStream(this.stream.flatMapToInt(mapper));
 	}
 
 	@Override
 	public LongStream flatMapToLong(Function<? super T, ? extends LongStream> mapper) {
-		return this.stream.flatMapToLong(mapper);
+		return terminalLongStream(this.stream.flatMapToLong(mapper));
 	}
 
 	@Override
 	public DoubleStream flatMapToDouble(Function<? super T, ? extends DoubleStream> mapper) {
-		return this.stream.flatMapToDouble(mapper);
+		return terminalDoubleStream(this.stream.flatMapToDouble(mapper));
 	}
 
 	@Override
 	public <R> Stream<R> mapMulti(BiConsumer<? super T, ? super Consumer<R>> mapper) {
-		return this.stream.mapMulti(mapper);
+		return terminalStream(this.stream.mapMulti(mapper));
 	}
 
 	@Override
 	public IntStream mapMultiToInt(BiConsumer<? super T, ? super IntConsumer> mapper) {
-		return this.stream.mapMultiToInt(mapper);
+		return terminalIntStream(this.stream.mapMultiToInt(mapper));
 	}
 
 	@Override
 	public LongStream mapMultiToLong(BiConsumer<? super T, ? super LongConsumer> mapper) {
-		return this.stream.mapMultiToLong(mapper);
+		return terminalLongStream(this.stream.mapMultiToLong(mapper));
 	}
 
 	@Override
 	public DoubleStream mapMultiToDouble(BiConsumer<? super T, ? super DoubleConsumer> mapper) {
-		return this.stream.mapMultiToDouble(mapper);
+		return terminalDoubleStream(this.stream.mapMultiToDouble(mapper));
 	}
 
 	@Override
 	public Stream<T> distinct() {
-		return this.stream.distinct();
+		return terminalStream(this.stream.distinct());
 	}
 
 	@Override
 	public Stream<T> sorted() {
-		return this.stream.sorted();
+		return terminalStream(this.stream.sorted());
 	}
 
 	@Override
 	public Stream<T> sorted(Comparator<? super T> comparator) {
-		return this.stream.sorted(comparator);
+		return terminalStream(this.stream.sorted(comparator));
 	}
 
 	@Override
 	public Stream<T> peek(Consumer<? super T> action) {
-		return this.stream.peek(action);
+		return terminalStream(this.stream.peek(action));
 	}
 
 	@Override
 	public Stream<T> limit(long maxSize) {
-		return this.stream.limit(maxSize);
+		return terminalStream(this.stream.limit(maxSize));
 	}
 
 	@Override
 	public Stream<T> skip(long n) {
-		return this.stream.skip(n);
+		return terminalStream(this.stream.skip(n));
 	}
 
 	@Override
 	public Stream<T> takeWhile(Predicate<? super T> predicate) {
-		return this.stream.takeWhile(predicate);
+		return terminalStream(this.stream.takeWhile(predicate));
 	}
 
 	@Override
 	public Stream<T> dropWhile(Predicate<? super T> predicate) {
-		return this.stream.dropWhile(predicate);
-	}
-
-	@Override
-	public boolean isParallel() {
-		return this.stream.isParallel();
+		return terminalStream(this.stream.dropWhile(predicate));
 	}
 
 	@Override
 	public Stream<T> sequential() {
-		return this.stream.sequential();
+		return terminalStream(this.stream.sequential());
 	}
 
 	@Override
 	public Stream<T> parallel() {
-		return this.stream.parallel();
+		return terminalStream(this.stream.parallel());
 	}
 
 	@Override
 	public Stream<T> unordered() {
-		return this.stream.unordered();
+		return terminalStream(this.stream.unordered());
 	}
 
 	@Override
 	public Stream<T> onClose(Runnable closeHandler) {
-		return this.stream.onClose(closeHandler);
+		return terminalStream(this.stream.onClose(closeHandler));
+	}
+	//#endregion
+
+	//#region Delegates
+	@Override
+	public boolean isParallel() {
+		return this.stream.isParallel();
 	}
 
 	@Override

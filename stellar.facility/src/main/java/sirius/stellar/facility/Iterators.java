@@ -1,18 +1,19 @@
 package sirius.stellar.facility;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.doctation.Internal;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 import java.util.stream.Stream;
 
 import static sirius.stellar.facility.Strings.*;
 
-/// Provides a facility for creating [Iterator]s.
+/// Provides a facility for creating and working with [Iterator]s.
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public class Iterators {
+public final class Iterators {
 
 	/// Returns an iterator for the provided values.
 	///
@@ -71,8 +72,67 @@ public class Iterators {
 	/// always preserved, meaning it is possible to reset back to the beginning of the iterator.
 	///
 	/// @since 1.0
-	public static <T> Iterators.Resettable<T> from(T seed, UnaryOperator<T> next) {
+	public static <T> Iterators.Resettable<T> from(T seed, UnaryOperator<@Nullable T> next) {
 		return new TraversalIterator<>(seed, next);
+	}
+
+	/// Returns an iterator wrapping the provided iterator associated to the provided [AutoCloseable]
+	/// resource, closing it when [Iterator#hasNext()] returns `false` or [Iterator#next()] fails.
+	///
+	/// @since 1.0
+	public static <T> Iterator<T> closing(Iterator<T> delegate, AutoCloseable resource) {
+		return new ClosingIterator<>(delegate, resource);
+	}
+
+	/// Returns a primitive integer iterator wrapping (and auto-unboxing) the provided iterator.
+	/// @since 1.0
+	public static PrimitiveIterator.OfInt primitiveInt(Iterator<Integer> iterator) {
+		return new PrimitiveIterator.OfInt() {
+
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public int nextInt() {
+				return iterator.next();
+			}
+		};
+	}
+
+	/// Returns a primitive double iterator wrapping (and auto-unboxing) the provided iterator.
+	/// @since 1.0
+	public static PrimitiveIterator.OfDouble primitiveDouble(Iterator<Double> iterator) {
+		return new PrimitiveIterator.OfDouble() {
+
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public double nextDouble() {
+				return iterator.next();
+			}
+		};
+	}
+
+	/// Returns a primitive long iterator wrapping (and auto-unboxing) the provided iterator.
+	/// @since 1.0
+	public static PrimitiveIterator.OfLong primitiveLong(Iterator<Long> iterator) {
+		return new PrimitiveIterator.OfLong() {
+
+			@Override
+			public boolean hasNext() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public long nextLong() {
+				return iterator.next();
+			}
+		};
 	}
 
 	/// Represents any iterator that can be brought back to an initial state, allowing for reuse.
@@ -107,7 +167,6 @@ final class ArrayIterator<T> implements Iterators.Resettable<T> {
 
 	@Override
 	public boolean hasNext() {
-		if (this.array == null) return false;
 		return this.index <= this.end;
 	}
 
@@ -141,9 +200,9 @@ final class TraversalIterator<T> implements Iterators.Resettable<T> {
 	private boolean traversing;
 
 	private final T first;
-	private final UnaryOperator<T> operator;
+	private final UnaryOperator<@Nullable T> operator;
 
-	TraversalIterator(T seed, UnaryOperator<T> operator) {
+	TraversalIterator(T seed, UnaryOperator<@Nullable T> operator) {
 		this.previous = seed;
 		this.traversing = false;
 
@@ -154,17 +213,18 @@ final class TraversalIterator<T> implements Iterators.Resettable<T> {
 	@Override
 	public boolean hasNext() {
 		if (!this.traversing) return true;
-		return operator.apply(this.previous) != null;
+		return this.operator.apply(this.previous) != null;
 	}
 
 	@Override
+	@Nullable
 	public T next() {
 		if (!hasNext()) throw new NoSuchElementException();
 		if (!this.traversing) {
 			this.traversing = true;
 			return this.previous;
 		}
-		return operator.apply(this.previous);
+		return this.operator.apply(this.previous);
 	}
 
 	@Override
@@ -181,5 +241,54 @@ final class TraversalIterator<T> implements Iterators.Resettable<T> {
 	@Override
 	public String toString() {
 		return format("TraversalIterator[previous={0}, traversing={1}, first={2}, operator={3}]", this.previous, this.traversing, this.first, this.operator);
+	}
+}
+
+/// An implementation of [Iterator] that can be associated with an [AutoCloseable]
+/// resource, which is automatically closed by this implementation when the next
+/// call to [#hasNext] returns `false`, or [#next] fails.
+final class ClosingIterator<T> implements Iterator<T>, AutoCloseable {
+
+	private final Iterator<T> delegate;
+	private final AutoCloseable resource;
+
+	private boolean closed;
+
+	ClosingIterator(Iterator<T> delegate, AutoCloseable resource) {
+		this.delegate = delegate;
+		this.resource = resource;
+		this.closed = false;
+	}
+
+	@Override
+	public boolean hasNext() {
+		if (this.closed) return false;
+		boolean hasNext = this.delegate.hasNext();
+		if (!hasNext) this.close();
+		return hasNext;
+	}
+
+	@Override
+	public T next() {
+		try {
+			if (this.closed) throw new NoSuchElementException();
+			return this.delegate.next();
+		} catch (NoSuchElementException exception) {
+			this.close();
+			throw exception;
+		} finally {
+			if (!this.delegate.hasNext()) this.close();
+		}
+	}
+
+	@Override
+	public void close() {
+		try {
+			if (this.closed) return;
+			this.resource.close();
+			this.closed = true;
+		} catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 }

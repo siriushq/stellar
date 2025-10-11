@@ -1,4 +1,4 @@
-/// Package containing stream related utilities.
+/// Package containing [java.util.stream] & [java.io]-stream related utilities.
 ///
 /// @see sirius.stellar.facility
 /// @since 1.0

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package sirius.stellar.serialization.msgpack.jsonb;
+package sirius.stellar.facility.stream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,8 +27,8 @@ import java.nio.charset.CoderResult;
 import java.util.Objects;
 
 /// Implementation of [InputStream] wrapping a [Reader].
-/// This is adapted from `org.apache.commons.io.input.ReaderInputStream` (to relieve the large dependency).
-final class ReaderInputStream extends InputStream {
+/// This is adapted from `org.apache.commons.io.input.ReaderInputStream`.
+public final class ReaderInputStream extends InputStream {
 
     private final Reader reader;
     private final CharsetEncoder charsetEncoder;
@@ -38,7 +38,7 @@ final class ReaderInputStream extends InputStream {
     private CoderResult lastCoderResult;
     private boolean endOfInput;
 
-    ReaderInputStream(final Reader reader) {
+    public ReaderInputStream(final Reader reader) {
         this.reader = reader;
         this.charsetEncoder = Charset.defaultCharset().newEncoder();
         this.encoderIn = CharBuffer.allocate(8192);

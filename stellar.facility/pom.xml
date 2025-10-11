@@ -16,7 +16,17 @@
 		in the Java standard library. Compared to similar projects such as Apache Commons or Guava,
 		this module is designed for JDK >21, and therefore some essential portions of those libraries
 		which have been introduced into the standard library are missing here.
+
+		Some portions of this library have been adapted from Apache Commons, these portions remain
+		licensed under their original Apache 2.0 license, and retain their file headers.
 	</description>
+
+	<licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
     <build>
         <plugins>

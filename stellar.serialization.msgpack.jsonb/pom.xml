@@ -20,6 +20,11 @@
     <dependencies>
 		<dependency>
 			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-facility</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
 			<artifactId>stellar-serialization-msgpack</artifactId>
 			<version>${project.version}</version>
 		</dependency>
