@@ -23,15 +23,11 @@ sealed class MsgpackWriter implements JsonWriter permits MsgpackBufferedWriter, 
 	private boolean serializeNulls;
 	private boolean serializeEmpty;
 
-	@Nullable
-	private MsgpackWriterOperator base;
-	@Nullable
-	private MsgpackWriterOperator current;
+	private @Nullable MsgpackWriterOperator base;
+	private @Nullable MsgpackWriterOperator current;
 
-	@Nullable
-	private MsgspackPropertyNames allPropertyNames;
-	@Nullable
-	private String nextPropertyName;
+	private @Nullable MsgspackPropertyNames allPropertyNames;
+	private @Nullable String nextPropertyName;
 
 	MsgpackWriter(MessagePacker packer, boolean serializeNulls, boolean serializeEmpty) {
 		this.packer = packer;

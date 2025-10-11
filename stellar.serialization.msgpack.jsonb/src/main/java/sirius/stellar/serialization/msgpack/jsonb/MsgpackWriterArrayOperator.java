@@ -1,23 +1,26 @@
 package sirius.stellar.serialization.msgpack.jsonb;
 
 import io.avaje.json.JsonIoException;
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.serialization.msgpack.MessagePacker;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 /// Implementation of [MsgpackWriterOperator] that writes an array.
 final class MsgpackWriterArrayOperator implements MsgpackWriterOperator {
 
-	private final MsgpackWriterOperator parent;
+	private final @Nullable MsgpackWriterOperator parent;
 	private final Queue<Consumer<MessagePacker>> operators;
 
 	MsgpackWriterArrayOperator() {
 		this(null);
 	}
 
-	MsgpackWriterArrayOperator(MsgpackWriterOperator parent) {
+	MsgpackWriterArrayOperator(@Nullable MsgpackWriterOperator parent) {
 		this.parent = parent;
 		this.operators = new LinkedList<>();
 	}
@@ -37,7 +40,7 @@ final class MsgpackWriterArrayOperator implements MsgpackWriterOperator {
 		try {
 			packer.packArrayHeader(this.operators.size());
 			for (Consumer<MessagePacker> operator : this.operators) operator.accept(packer);
-		} catch (Exception exception) {
+		} catch (IOException exception) {
 			throw new JsonIoException(new IOException(exception));
 		}
 	}

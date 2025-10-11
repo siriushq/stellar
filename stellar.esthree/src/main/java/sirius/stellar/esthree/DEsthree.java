@@ -55,11 +55,8 @@ final class DEsthreeBuilder implements Esthree.Builder {
 	private String endpoint;
 	private boolean endpointOverride;
 
-	@Nullable
-	private String accessKey;
-
-	@Nullable
-	private String secretKey;
+	private @Nullable String accessKey;
+	private @Nullable String secretKey;
 
 	DEsthreeBuilder() {
 		this.httpClientBuilder = HttpClient.builder();

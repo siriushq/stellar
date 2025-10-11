@@ -34,11 +34,8 @@ final class FileCollector implements Collector {
 	private final AtomicBoolean closing;
 	private final AtomicBoolean writing;
 
-	@Nullable
-	private FileChannel channel;
-
-	@Nullable
-	private Instant rolled;
+	private @Nullable FileChannel channel;
+	private @Nullable Instant rolled;
 
 	FileCollector(Path path, Duration duration) {
 		this.path = path;
