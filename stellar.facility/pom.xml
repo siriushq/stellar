@@ -11,7 +11,12 @@
     <packaging>jar</packaging>
     <artifactId>stellar-facility</artifactId>
     <name>Stellar :: Facility</name>
-	<description>Provides many facilities to conventionalize code and improve developer productivity - fills the gap that the Java standard library is missing; a much more convention-enforcing system than similar ones such as Apache Commons or Guava, providing improved security, declarativity &amp; productivity.</description>
+	<description>
+		Provides utility classes that are considered to be so standard as to justify existence
+		in the Java standard library. Compared to similar projects such as Apache Commons or Guava,
+		this module is designed for JDK >21, and therefore some essential portions of those libraries
+		which have been introduced into the standard library are missing here.
+	</description>
 
     <build>
         <plugins>
