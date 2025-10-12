@@ -33,18 +33,29 @@ public interface Esthree extends AutoCloseable {
 
 	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal operation is executed.
 	/// This will lazily load the listing recursively using AWS pagination.
-	/// <p>
+	///
 	/// A [Stream] is used to prevent extraneous requests being made, as a contract to define that
 	/// the [Bucket]s should only be consumed once. If such iterating view is unsuitable,
 	/// [Stream#collect] or `Stream#toList` (Java >16) can be used to obtain a persistent view.
-	/// <p>
+	///
 	/// This is a paginated view. If `ContinuationToken` is continually returned by S3 with every
 	/// request, it is very possible that the [Stream] will take a long time to completely iterate
 	/// every page; S3 is considered a trusted host, but this could be used as an attack vector.
+	///
+	/// @throws io.avaje.http.client.HttpException if the request failed
 	Stream<Bucket> buckets();
 
 	/// [Future]-based variant of [#buckets()].
+	/// @throws io.avaje.http.client.HttpException if the request failed
 	CompletableFuture<Stream<Bucket>> bucketsFuture();
+
+	/// Create a bucket with the provided name.
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	void createBucket(String name);
+
+	/// [Future] based variant of [#createBucket(String)].
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	CompletableFuture<Void> createBucketFuture(String name);
 
 	/// Access the underlying [HttpClient]. Most people should never use this method.
 	HttpClient httpClient();
@@ -68,13 +79,15 @@ public interface Esthree extends AutoCloseable {
 	interface Builder {
 
 		/// Configure the endpoint with which the client should communicate. \
-		/// The default endpoint is `s3.<region>.amazonaws.com`.
+		/// The default endpoint is `s3.<region>.amazonaws.com` and `true` virtual-hosted addressing style. \
+		/// If using a third-party S3 implementation, disable virtual-hosted addressing unless supported.
+		///
 		/// @see #region
-		Builder endpoint(String endpoint);
+		Builder endpoint(String endpoint, boolean virtual);
 
-		/// @see #endpoint(String)
-		default Builder endpoint(URI endpoint) {
-			return this.endpoint(endpoint.normalize().toString());
+		/// @see #endpoint(String, boolean)
+		default Builder endpoint(URI endpoint, boolean virtual) {
+			return this.endpoint(endpoint.normalize().toString(), virtual);
 		}
 
 		/// Configure the region with which the client should communicate.
