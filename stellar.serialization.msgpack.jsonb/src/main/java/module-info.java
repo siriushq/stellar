@@ -11,5 +11,5 @@ module sirius.stellar.serialization.msgpack.jsonb {
 
 	exports sirius.stellar.serialization.msgpack.jsonb;
 
-	provides io.avaje.jsonb.spi.JsonStreamFactory with sirius.stellar.serialization.msgpack.jsonb.MsgpackAdapterFactory;
+	provides io.avaje.jsonb.spi.JsonbExtension with sirius.stellar.serialization.msgpack.jsonb.MsgpackAdapterFactory;
 }

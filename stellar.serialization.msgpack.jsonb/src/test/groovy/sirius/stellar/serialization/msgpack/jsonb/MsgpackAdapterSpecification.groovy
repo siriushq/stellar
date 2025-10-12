@@ -1,23 +1,19 @@
 package sirius.stellar.serialization.msgpack.jsonb
 
 import io.avaje.jsonb.Jsonb
+import sirius.stellar.facility.Strings
 import spock.lang.Specification
 
 class MsgpackAdapterSpecification extends Specification {
 
 	def "adapter is located automagically by Jsonb with ServiceLoader"() {
 		given:
-		// def jsonb = Jsonb.instance(); - TODO make this test pass
-		def jsonb = Jsonb.builder()
-			.adapter(new MsgpackAdapter())
-			.build();
-		def input = new ByteArrayInputStream(new byte[0])
-		def output = new ByteArrayOutputStream()
+			def jsonb = Jsonb.instance();
 		when:
-		def reader = jsonb.reader(input)
-		def writer = jsonb.writer(output)
+			def reader = jsonb.reader(Strings.EMPTY)
+			def writer = jsonb.writer(OutputStream.nullOutputStream())
 		then:
-		reader instanceof MsgpackReader
-		writer instanceof MsgpackWriter
+			reader instanceof MsgpackReader
+			writer instanceof MsgpackWriter
 	}
 }
