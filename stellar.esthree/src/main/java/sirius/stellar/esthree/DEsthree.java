@@ -200,7 +200,6 @@ final class DEsthreeBuilder implements Esthree.Builder {
 			factory.setFeature(FEATURE_SECURE_PROCESSING, true);
 			factory.setAttribute(ACCESS_EXTERNAL_DTD, "");
 			factory.setAttribute(ACCESS_EXTERNAL_SCHEMA, "");
-			factory.setAttribute(ACCESS_EXTERNAL_STYLESHEET, "");
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
