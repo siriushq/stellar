@@ -1,4 +1,3 @@
-///
 /// Tiny Java S3 client using avaje-http-client &amp; JDK's built-in XML parsing. \
 /// Very small, secure and trivial. Requires Java >11. \
 /// Virtual Threads compatible with Java >21.
@@ -44,7 +43,4 @@
 ///    underlying [io.avaje.http.client.HttpClient].
 ///
 /// @see sirius.stellar.esthree.Esthree
-@NullMarked
 package sirius.stellar.esthree;
-
-import org.jspecify.annotations.NullMarked;
