@@ -11,31 +11,24 @@
     <packaging>jar</packaging>
     <artifactId>stellar-esthree-server</artifactId>
     <name>Stellar :: Esthree :: Server</name>
-	<description>
-		A wrapper of MinIO (min.io, licensed under AGPL) that can be used as
-		an embedded mock server for testing, or used in a clustered deployment.
+	<description>Wrapper of MinIO providing configuration, logging, metrics, clustering, etc.</description>
 
-		This allows `stellar.logging` to be leveraged as a logging backend for
-		MinIO, and allows for simple cloud-friendly configuration, and may allow
-		for cluster autodiscovery in the future using `stellar.cluster`.
-
-		You must manually build this module on the target OS and hardware in order
-		to get a JAR that is compatible with your system. This module is not published
-		to any repositories (i.e., if used for tests, should be an optional dependency).
-	</description>
-
-    <dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-jsonb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-jsonb-generator</artifactId>
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-logging</artifactId>
+		</dependency>
 	</dependencies>
-
-	<properties>
-		<os.detected>null</os.detected>
-		<arch.detected>null</arch.detected>
-
-		<minio.platform>null</minio.platform>
-		<minio.binary>null</minio.binary>
-		<minio.exists>null</minio.exists>
-		<minio.url>null</minio.url>
-	</properties>
 
     <build>
         <plugins>
@@ -63,7 +56,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -74,70 +66,31 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
 
 				<configuration>
-					<target>
-						<!-- normalize os name -->
-						<condition property="os.detected" value="windows" else="">
-							<contains string="${os.name}" substring="Windows"/>
-						</condition>
-						<condition property="os.detected" value="darwin" else="${os.detected}">
-							<contains string="${os.name}" substring="Mac"/>
-						</condition>
-						<condition property="os.detected" value="linux" else="${os.detected}">
-							<contains string="${os.name}" substring="Linux"/>
-						</condition>
-
-						<!-- normalize arch name -->
-						<condition property="arch.detected" value="amd64" else="">
-							<or>
-								<contains string="${os.arch}" substring="64"/>
-								<contains string="${os.arch}" substring="amd64"/>
-							</or>
-						</condition>
-						<condition property="arch.detected" value="arm64" else="${arch.detected}">
-							<contains string="${os.arch}" substring="aarch64"/>
-						</condition>
-						<condition property="arch.detected" value="arm" else="${arch.detected}">
-							<contains string="${os.arch}" substring="arm"/>
-						</condition>
-
-						<!-- build minio url -->
-						<property name="minio.platform" value="${os.detected}-${arch.detected}"/>
-						<condition property="minio.binary" value="minio.exe" else="minio">
-							<equals arg1="${os.detected}" arg2="windows"/>
-						</condition>
-						<property name="minio.url" value="https://dl.min.io/server/minio/release/${minio.platform}/${minio.binary}"/>
-
-						<!-- if not exists, download -->
-						<available file="${project.build.outputDirectory}/META-INF/${minio.binary}" property="minio.exists"/>
-						<if>
-							<equals arg1="${minio.exists}" arg2="false"/>
-							<then>
-								<echo message="Downloading MinIO binary from: ${minio.url}"/>
-								<mkdir dir="${project.build.outputDirectory}/META-INF/"/>
-								<get src="${minio.url}" dest="${project.build.outputDirectory}/META-INF/${minio.binary}" usetimestamp="true"/>
-								<chmod file="${project.build.outputDirectory}/META-INF/${minio.binary}" perm="755" verbose="true" skip="false"/>
-							</then>
-						</if>
-					</target>
+					<mainClass>sirius.stellar.esthree.server.DEsthreeServerBinary</mainClass>
+					<arguments>
+						<argument>${project.build.outputDirectory}</argument>
+						<argument>${os.name}</argument>
+						<argument>${os.arch}</argument>
+					</arguments>
 				</configuration>
 
 				<executions>
 					<execution>
-						<phase>process-resources</phase>
+						<id>download-binary</id>
+						<phase>package</phase>
 						<goals>
-							<goal>run</goal>
+							<goal>java</goal>
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
 			</plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

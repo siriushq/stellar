@@ -43,8 +43,10 @@
 		<module>stellar.logging.dispatch.tinylog</module>
 
 		<module>stellar.jsr305</module>
-		<module>stellar.esthree</module>
 		<module>stellar.javadoc</module>
+
+		<module>stellar.esthree</module>
+		<module>stellar.esthree.server</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
@@ -151,6 +153,7 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+						<proc>full</proc>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -215,6 +218,12 @@
 					</configuration>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>3.1.4</version>
+				</plugin>
+
+				<plugin>
 					<groupId>org.codehaus.gmavenplus</groupId>
 					<artifactId>gmavenplus-plugin</artifactId>
 					<version>4.2.1</version>
@@ -227,6 +236,11 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.6.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
