@@ -30,7 +30,7 @@ class TupleSpecification extends Specification {
 			couple.first("c")
 		then:
 			couple.first() == "c"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Couple - factory methods all return instances which correctly return values"() {
@@ -85,7 +85,7 @@ class TupleSpecification extends Specification {
 			triplet.first("d")
 		then:
 			triplet.first() == "d"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Triplet - factory methods all return instances which correctly return values"() {
@@ -128,7 +128,7 @@ class TupleSpecification extends Specification {
 			quartet.first("e")
 		then:
 			quartet.first() == "e"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Quartet - factory methods all return instances which correctly return values"() {
@@ -175,7 +175,7 @@ class TupleSpecification extends Specification {
 			quintet.first("f")
 		then:
 			quintet.first() == "f"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Quintet - factory methods all return instances which correctly return values"() {
@@ -226,7 +226,7 @@ class TupleSpecification extends Specification {
 			sextet.first("g")
 		then:
 			sextet.first() == "g"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Sextet - factory methods all return instances which correctly return values"() {
@@ -281,7 +281,7 @@ class TupleSpecification extends Specification {
 			septet.first("h")
 		then:
 			septet.first() == "h"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Septet - factory methods all return instances which correctly return values"() {
@@ -340,7 +340,7 @@ class TupleSpecification extends Specification {
 			octet.first("i")
 		then:
 			octet.first() == "i"
-			notThrown(ImmutableModificationException)
+			notThrown ImmutableModificationException
 	}
 
 	def "Octet - factory methods all return instances which correctly return values"() {

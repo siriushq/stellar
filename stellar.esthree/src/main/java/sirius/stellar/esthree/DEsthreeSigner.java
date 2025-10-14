@@ -12,8 +12,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.*;
 import static java.time.ZoneOffset.*;
@@ -50,17 +52,17 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
-	public void sign(HttpClientRequest request, BodyContent body) {
+	public void sign(String method, HttpClientRequest request, BodyContent body) {
 		String hash = hex(sha256(body.content()));
-		this.sign(request, hash, Instant.now());
+		this.sign(method, request, hash, Instant.now());
 	}
 
 	@Override
-	public InputStream sign(HttpClientRequest request, InputStream stream) {
+	public InputStream sign(String method, HttpClientRequest request, InputStream stream) {
 		String hash = "STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
 		Instant instant = Instant.now();
 
-		String candidate = this.sign(request, hash, instant);
+		String candidate = this.sign(method, request, hash, instant);
 		return new DEsthreeSignedStream(stream, this, this.formatter.format(instant), this.region, candidate);
 	}
 
@@ -68,26 +70,25 @@ final class DEsthreeSigner implements EsthreeSigner {
 	 * Sign the provided request with the provided payload hash & date.
 	 * Returns the "string-to-sign" of canonical request, if needed for streaming.
 	 */
-	String sign(HttpClientRequest request, String hash, Instant instant) {
+	String sign(String method, HttpClientRequest request, String hash, Instant instant) {
 		String now = this.formatter.format(instant);
 		String date = now.substring(0, 8);
 
 		URI uri = URI.create(request.url());
-		String host = uri.getHost();
+		String host = uri.getHost() + ":" + uri.getPort();
 
-		request.header("Host", host);
-		request.header("x-amz-date", now);
 		request.header("x-amz-content-sha256", hash);
+		request.header("x-amz-date", now);
 		String headers = "host;x-amz-content-sha256;x-amz-date";
 
 		String canonical = new StringJoiner("\n")
-				.add(request.method())
+				.add(method)
 				.add(uri.getPath().isEmpty() ? "/" : uri.getPath())
 				.add(uri.getQuery() == null ? "" : uri.getQuery())
 				.add("host:" + host)
-				.add("x-amz-content-sha256" + hash)
+				.add("x-amz-content-sha256:" + hash)
 				.add("x-amz-date:" + now)
-				.add("\n")
+				.add("")
 				.add(headers)
 				.add(hash)
 				.toString();
@@ -104,12 +105,13 @@ final class DEsthreeSigner implements EsthreeSigner {
 		byte[] key = signingKey(date);
 		String signature = hex(hmac(key, candidate));
 
-		String header = new StringJoiner(", ", "AWS4-HMAC-SHA256", "")
+		String header = new StringJoiner(", ", "AWS4-HMAC-SHA256 ", "")
 				.add("Credential=" + this.accessKey + "/" + scope)
 				.add("SignedHeaders=" + headers)
 				.add("Signature=" + signature)
 				.toString();
 		request.header("Authorization", header);
+
 		return candidate;
 	}
 

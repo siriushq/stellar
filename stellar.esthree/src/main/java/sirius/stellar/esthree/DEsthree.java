@@ -15,7 +15,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.http.HttpRequest;
@@ -23,6 +22,7 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
+import static java.lang.System.*;
 import static java.nio.charset.StandardCharsets.*;
 import static javax.xml.XMLConstants.*;
 import static javax.xml.transform.OutputKeys.*;
@@ -57,11 +57,6 @@ final class DEsthree implements Esthree {
 	}
 
 	@Override
-	public void close() {
-		this.client.close();
-	}
-
-	@Override
 	public Stream<Bucket> buckets() {
 		return Stream.empty();
 	}
@@ -73,28 +68,24 @@ final class DEsthree implements Esthree {
 
 	@Override
 	public void createBucket(String name) {
-		this.createBucketInternal(name)
+		this.createBucketResponse(name)
 				.asVoid();
 	}
 
 	@Override
 	public CompletableFuture<Void> createBucketFuture(String name) {
-		return this.createBucketInternal(name)
+		return this.createBucketResponse(name)
 				.async()
 				.asVoid()
 				.thenApply(HttpResponse::body);
 	}
 
-	private HttpClientResponse createBucketInternal(String name) {
+	/// Execute the AWS `CreateBucket` method and return the associated [HttpClientResponse].
+	/// Used by [#createBucket] and [#createBucketFuture].
+	private HttpClientResponse createBucketResponse(String name) {
 		HttpClientRequest request = this.client.request();
-		request.url(UrlBuilder.of(this.endpoint)
-				.path(name)
-				.build());
+		this.endpoint(request, name);
 
-		if (this.endpointVirtual) {
-			String endpoint = this.endpoint.replaceFirst("://", "://" + name + ".");
-			request.url(endpoint);
-		}
 		if (!this.region.equals(US_EAST_1.toString())) {
 			Document document = this.parser.newDocument();
 			Element root = document.createElementNS(xmlns, "CreateBucketConfiguration");
@@ -105,11 +96,65 @@ final class DEsthree implements Esthree {
 			root.appendChild(location);
 			document.appendChild(root);
 
-			request.body(this.write(document));
+			request.body(BodyContent.of("application/xml", this.write(document)));
 		}
 
-		this.signer.sign(request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		this.signer.sign("PUT", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
 		return request.PUT();
+	}
+
+	@Override
+	public void deleteBucket(String name) {
+		this.deleteBucketResponse(name)
+				.asVoid();
+	}
+
+	@Override
+	public CompletableFuture<Void> deleteBucketFuture(String name) {
+		return this.deleteBucketResponse(name)
+				.async()
+				.asVoid()
+				.thenApply(HttpResponse::body);
+	}
+
+	/// Execute the AWS `DeleteBucket` method and return the associated [HttpClientResponse].
+	/// Used by [#deleteBucket] and [#deleteBucketFuture].
+	private HttpClientResponse deleteBucketResponse(String name) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, name);
+
+		this.signer.sign("DELETE", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		return request.DELETE();
+	}
+
+	@Override
+	public boolean existsBucket(String name) {
+		try {
+			return this.existsBucketResponse(name)
+					.asVoid()
+					.statusCode() == 200;
+		} catch (HttpException exception) {
+			return false;
+		}
+	}
+
+	@Override
+	public CompletableFuture<Boolean> existsBucketFuture(String name) {
+		return this.existsBucketResponse(name)
+				.async()
+				.asVoid()
+				.thenApply(response -> response.statusCode() == 200)
+				.exceptionally(throwable -> false);
+	}
+
+	/// Execute the AWS `HeadBucket` method and return the associated [HttpClientResponse].
+	/// Used by [#existsBucket] and [#existsBucketFuture].
+	private HttpClientResponse existsBucketResponse(String name) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, name);
+
+		this.signer.sign("HEAD", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		return request.HEAD();
 	}
 
 	/// Write the provided document to a [String].
@@ -126,9 +171,27 @@ final class DEsthree implements Esthree {
 		}
 	}
 
+	/// Set the endpoint of the provided [HttpClientRequest] for bucket operations.
+	/// This will either use virtual-host based or path based addressing, depending on [#endpointVirtual].
+	private void endpoint(HttpClientRequest request, String bucket) {
+		request.url(UrlBuilder.of(this.endpoint)
+				.path(bucket)
+				.build());
+
+		if (this.endpointVirtual) {
+			String endpoint = this.endpoint.replaceFirst("://", "://" + bucket + ".");
+			request.url(endpoint);
+		}
+	}
+
 	@Override
 	public HttpClient httpClient() {
 		return this.client;
+	}
+
+	@Override
+	public void close() {
+		this.client.close();
 	}
 }
 
@@ -148,10 +211,18 @@ final class DEsthreeBuilder implements Esthree.Builder {
 	DEsthreeBuilder() {
 		this.httpClientBuilder = HttpClient.builder();
 
-		this.region = US_EAST_1.toString();
-		this.endpoint = "https://s3." + this.region + ".amazonaws.com";
-		this.endpointOverride = false;
-		this.endpointVirtual = true;
+		String region = getProperty("aws.region", getenv().get("AWS_REGION"));
+		String accessKey = getProperty("aws.accessKeyId", getenv().get("AWS_ACCESS_KEY_ID"));
+		String secretKey = getProperty("aws.secretAccessKey", getenv().get("AWS_SECRET_ACCESS_KEY"));
+		String endpoint = getProperty("aws.endpointUrl", getenv().get("AWS_ENDPOINT_URL"));
+
+		this.region = (region != null) ? region : US_EAST_1.toString();
+		this.endpoint = (endpoint != null) ? endpoint : ("https://s3." + this.region + ".amazonaws.com");
+		this.endpointOverride = (endpoint != null);
+		this.endpointVirtual = (endpoint == null);
+
+		this.accessKey = accessKey;
+		this.secretKey = secretKey;
 	}
 
 	@Override

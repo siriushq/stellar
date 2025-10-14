@@ -57,6 +57,20 @@ public interface Esthree extends AutoCloseable {
 	/// @throws io.avaje.http.client.HttpException if the request failed
 	CompletableFuture<Void> createBucketFuture(String name);
 
+	/// Delete a bucket with the provided name.
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	void deleteBucket(String name);
+
+	/// [Future] based variant of [#deleteBucket(String)].
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	CompletableFuture<Void> deleteBucketFuture(String name);
+
+	/// Return whether a bucket with the provided name exists.
+	boolean existsBucket(String name);
+
+	/// [Future] based variant of [#existsBucket(String)].
+	CompletableFuture<Boolean> existsBucketFuture(String name);
+
 	/// Access the underlying [HttpClient]. Most people should never use this method.
 	HttpClient httpClient();
 
@@ -81,6 +95,10 @@ public interface Esthree extends AutoCloseable {
 		/// Configure the endpoint with which the client should communicate. \
 		/// The default endpoint is `s3.<region>.amazonaws.com` and `true` virtual-hosted addressing style. \
 		/// If using a third-party S3 implementation, disable virtual-hosted addressing unless supported.
+		///
+		/// If this is not specified, the client will attempt to identify the endpoint automatically
+		/// using the `aws.endpointUrl` Java property and `AWS_ENDPOINT_URL` environment variable.
+		/// If those are set, `false` virtual-hosted addressing becomes the default.
 		///
 		/// @see #region
 		Builder endpoint(String endpoint, boolean virtual);

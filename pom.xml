@@ -44,6 +44,7 @@
 
 		<module>stellar.jsr305</module>
 		<module>stellar.esthree</module>
+		<module>stellar.javadoc</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>

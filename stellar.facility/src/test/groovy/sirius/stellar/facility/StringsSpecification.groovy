@@ -29,7 +29,7 @@ class StringsSpecification extends Specification {
 		when:
 			Strings.format(null, null)
 		then:
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 
 	def "format(String, Object,,,) with null formatting arguments doesn't throw NullPointerException"() {
@@ -39,7 +39,7 @@ class StringsSpecification extends Specification {
 		when:
 			Strings.format(format, arguments)
 		then:
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 	//#endregion
 
@@ -70,7 +70,7 @@ class StringsSpecification extends Specification {
 		when:
 			Strings.format(null, null, null)
 		then:
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 
 	def "format(Locale, String, Object,,,) with null formatting arguments doesn't throw NullPointerException"() {
@@ -80,7 +80,7 @@ class StringsSpecification extends Specification {
 		when:
 			Strings.format(format, arguments)
 		then:
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 
 	def "format(Locale, String, Object,,,) correctly formats with locale"() {
@@ -113,7 +113,7 @@ class StringsSpecification extends Specification {
 			def result = Strings.shuffle(null, string)
 		then:
 			result == string
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 	//#endregion
 
@@ -135,7 +135,7 @@ class StringsSpecification extends Specification {
 			def result = Strings.shuffle(null, characters)
 		then:
 			result == characters
-			notThrown(NullPointerException)
+			notThrown NullPointerException
 	}
 	//#endregion
 }

@@ -23,7 +23,7 @@ class IteratorsSpecification extends Specification {
 
 			d == "first"
 
-			notThrown(NoSuchElementException)
+			notThrown NoSuchElementException
 	}
 
 	def "from(int, int, T,,,) returns valid, resettable iterator starting from and ending at provided index"() {
@@ -58,7 +58,7 @@ class IteratorsSpecification extends Specification {
 			def b = iterator.next()
 		then:
 			iterator instanceof Iterators.Resettable
-			notThrown(NoSuchElementException)
+			notThrown NoSuchElementException
 
 			a == seed
 			b != seed

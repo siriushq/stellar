@@ -10,12 +10,18 @@ import java.io.InputStream;
 public interface EsthreeSigner {
 
 	/// Sign a request with a fully known body (i.e. String, byte[]).
+	///
+	/// Even if empty body content is required, `BodyContent.of(new byte[0])` should
+	/// be provided to this method to calculate the SHA256 hash for the empty body.
+	///
+	/// @param method The HTTP method that will be used (e.g. GET, PUT).
 	/// @see BodyContent
-	void sign(HttpClientRequest request, BodyContent body);
+	void sign(String method, HttpClientRequest request, BodyContent body);
 
 	/// Sign a request for streaming (chunked) payloads.
 	/// This returns a wrapped version of the provided stream, which signs chunks as they are read.
-	InputStream sign(HttpClientRequest request, InputStream stream);
+	/// @param method The HTTP method that will be used (e.g. GET, PUT).
+	InputStream sign(String method, HttpClientRequest request, InputStream stream);
 
 	/// Create an instance of [EsthreeSigner].
 	///
@@ -23,5 +29,10 @@ public interface EsthreeSigner {
 	/// it is a good practice to use [Esthree.Region#US_EAST_1], unless using AWS.
 	static EsthreeSigner create(String accessKey, String secretKey, String region) {
 		return new DEsthreeSigner(accessKey, secretKey, region);
+	}
+
+	/// [Esthree.Region] based variant of [#create(String, String, String)].
+	static EsthreeSigner create(String accessKey, String secretKey, Esthree.Region region) {
+		return create(accessKey, secretKey, region.toString());
 	}
 }

@@ -17,23 +17,24 @@
 ///     - DigitalOcean Spaces
 ///     - Oracle Object Storage
 /// 6. to support essential subset of S3 features:
-///     - `CreateBucket`
-///     - `HeadBucket`
-///     - `ListBuckets`
+///     - `CreateBucket`: [sirius.stellar.esthree.Esthree#createBucket]
+/// 	- `DeleteBucket`: [sirius.stellar.esthree.Esthree#deleteBucket]
+///     - `HeadBucket`: [sirius.stellar.esthree.Esthree#existsBucket]
+///     - `ListBuckets`: [sirius.stellar.esthree.Esthree#buckets]: unimplemented
 ///     <br/><br/>
-///     - `ListObjectsV2`
-///     - `GetObject`
-///     - `PutObject`
-///     - `DeleteObject`
-///     - `DeleteObjects`
-///     - `HeadObject`
-///     - `CopyObject`
+///     - `ListObjectsV2`: unimplemented
+///     - `GetObject`: unimplemented
+///     - `PutObject`: unimplemented
+///     - `DeleteObject`: unimplemented
+///     - `DeleteObjects`: unimplemented
+///     - `HeadObject`: unimplemented
+///     - `CopyObject`: unimplemented
 ///     <br/><br/>
-///     - `ListMultipartUploads`
-///     - `CreateMultipartUpload`
-///     - `CompleteMultipartUpload`
-///     - `AbortMultipartUpload`
-///     - `UploadPart`
+///     - `ListMultipartUploads`: unimplemented
+///     - `CreateMultipartUpload`: unimplemented
+///     - `CompleteMultipartUpload`: unimplemented
+///     - `AbortMultipartUpload`: unimplemented
+///     - `UploadPart`: unimplemented
 ///
 /// ### Security &amp; Compatibility
 /// 1. The library suppresses sensitive information when logging.
