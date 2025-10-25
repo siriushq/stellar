@@ -2,7 +2,6 @@ package sirius.stellar.esthree.mock;
 
 import io.avaje.jsonb.Jsonb;
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.collect.Collector;
 
