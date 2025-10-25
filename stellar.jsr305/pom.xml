@@ -25,7 +25,11 @@
 
 	<licenses>
         <license>
-            <name>CC BY 2.5 DEED</name>
+            <name>BSD 3-Clause License</name>
+            <url>https://opensource.org/license/bsd-3-clause</url>
+        </license>
+        <license>
+            <name>CC BY 2.5</name>
             <url>https://creativecommons.org/licenses/by/2.5/</url>
 			<comments>
 				Copyright (c) 2005 Brian Goetz

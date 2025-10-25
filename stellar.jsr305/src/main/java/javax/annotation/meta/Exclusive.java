@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause AND CC-BY-2.5
 package javax.annotation.meta;
 
 import java.lang.annotation.Documented;

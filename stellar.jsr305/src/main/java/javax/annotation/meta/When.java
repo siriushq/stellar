@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause AND CC-BY-2.5
 package javax.annotation.meta;
 
 /// Used to describe the relationship between a qualifier T and the set of values
