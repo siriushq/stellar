@@ -11,7 +11,10 @@
     <packaging>jar</packaging>
     <artifactId>stellar-esthree-server</artifactId>
     <name>Stellar :: Esthree :: Server</name>
-	<description>Wrapper of MinIO providing configuration, logging, metrics, clustering, etc.</description>
+	<description>
+		Wrapper of MinIO providing configuration, logging, metrics, clustering, etc.
+		Use a Maven classifier to get the artifact required for your target system, e.g. `windows-amd64`.
+	</description>
 
 	<dependencies>
 		<dependency>
@@ -24,6 +27,7 @@
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>sirius.stellar</groupId>
 			<artifactId>stellar-logging</artifactId>
@@ -56,14 +60,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
 
 			<plugin>
 				<groupId>org.codehaus.gmavenplus</groupId>
@@ -76,7 +72,8 @@
 				<configuration>
 					<mainClass>sirius.stellar.esthree.server.DEsthreeServerBinary</mainClass>
 					<arguments>
-						<argument>${project.build.outputDirectory}</argument>
+						<argument>${project.build.directory}</argument>
+						<argument>${project.build.finalName}</argument>
 						<argument>${os.name}</argument>
 						<argument>${os.arch}</argument>
 					</arguments>
@@ -84,7 +81,7 @@
 
 				<executions>
 					<execution>
-						<id>download-binary</id>
+						<id>download</id>
 						<phase>package</phase>
 						<goals>
 							<goal>java</goal>

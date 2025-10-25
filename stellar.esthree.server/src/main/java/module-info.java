@@ -9,4 +9,6 @@ module sirius.stellar.esthree.server {
 	requires io.avaje.jsonb;
 
 	exports sirius.stellar.esthree.server;
+
+	provides io.avaje.jsonb.spi.JsonbExtension with sirius.stellar.esthree.server.ServerJsonComponent;
 }

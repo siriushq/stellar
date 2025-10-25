@@ -12,7 +12,8 @@ import static sirius.stellar.logging.LoggerLevel.*;
 record DEsthreeServerMessage(Instant time, String level, String message, String name,
 							 @Json.Unmapped Map<String, Object> unmapped) {
 
-	LoggerLevel loggerLevel() {
+	/// Return the level of this message as a [LoggerLevel].
+	LoggerLevel mappedLevel() {
 		return switch (this.level) {
 			case "ERROR", "FATAL" -> ERROR;
 			case "WARNING" -> WARNING;
@@ -22,6 +23,8 @@ record DEsthreeServerMessage(Instant time, String level, String message, String 
 		};
 	}
 
+	/// Return the message string itself, with the unmapped fields
+	/// attached to the end of it.
 	public String message() {
 		return this.message + this.unmapped;
 	}

@@ -1,6 +1,6 @@
 package sirius.stellar.esthree.server;
 
-import io.avaje.json.mapper.JsonMapper;
+import io.avaje.jsonb.Jsonb;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.collect.Collector;
@@ -32,10 +32,13 @@ public final class DEsthreeServer implements EsthreeServer {
 	private final Process process;
 	private final ProcessHandle handle;
 	private final Thread logger;
+	private final Jsonb jsonb;
+
 	private final @Nullable Path temporary;
 
 	DEsthreeServer(Map<String, String> environment, List<String> arguments, @Nullable Path temporary) {
 		this.temporary = temporary;
+		this.jsonb = Jsonb.instance();
 
 		EsthreeServerBinary binary = EsthreeServerBinary.create();
 		try (InputStream stream = binary.open()) {
@@ -70,11 +73,13 @@ public final class DEsthreeServer implements EsthreeServer {
 	/// Dispatches logs to `stellar.logging`.
 	private void log(BufferedReader reader) {
 		try {
-			JsonMapper mapper = JsonMapper.builder().build();
-
 			String line;
 			while ((line = reader.readLine()) != null && !this.logger.isInterrupted()) {
-				Logger.information(line);
+				DEsthreeServerMessage message = this.jsonb.type(DEsthreeServerMessage.class).fromJson(line);
+				String thread = "EsthreeServer-" + this.process.pid();
+				String name = "sirius.stellar.esthree.server";
+
+				Logger.dispatch(message.time(), message.mappedLevel(), thread, name, message.message());
 //				Map<String, Object> object = mapper.fromJsonObject(line);
 //
 //				String time = object.get("time").toString();
