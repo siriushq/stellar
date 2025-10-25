@@ -46,7 +46,7 @@
 		<module>stellar.javadoc</module>
 
 		<module>stellar.esthree</module>
-		<module>stellar.esthree.server</module>
+		<module>stellar.esthree.mock</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
@@ -81,7 +81,7 @@
 			<dependency>
 				<groupId>sirius.stellar</groupId>
 				<artifactId>stellar-bom</artifactId>
-				<version>${project.version}</version>
+				<version>1.0-RC1</version>
 
 				<type>pom</type>
 				<scope>import</scope>

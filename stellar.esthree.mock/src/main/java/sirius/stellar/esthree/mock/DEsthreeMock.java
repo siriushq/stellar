@@ -1,7 +1,8 @@
-package sirius.stellar.esthree.server;
+package sirius.stellar.esthree.mock;
 
 import io.avaje.jsonb.Jsonb;
 import org.jspecify.annotations.Nullable;
+import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.collect.Collector;
 
@@ -21,12 +22,8 @@ import static java.nio.file.StandardCopyOption.*;
 import static java.nio.file.attribute.PosixFilePermission.*;
 import static sirius.stellar.logging.LoggerLevel.*;
 
-/// Domain implementation of [EsthreeServer].
-/// Use that interface for programmatic use (e.g. test suite).
-///
-/// This is directly runnable and is the entry-point `Main-Class` of the
-/// [sirius.stellar.esthree.server] module.
-public final class DEsthreeServer implements EsthreeServer {
+/// Domain implementation of [EsthreeMock].
+public final class DEsthreeMock implements EsthreeMock {
 
 	private final Path binary;
 	private final Process process;
@@ -36,11 +33,11 @@ public final class DEsthreeServer implements EsthreeServer {
 
 	private final @Nullable Path temporary;
 
-	DEsthreeServer(Map<String, String> environment, List<String> arguments, @Nullable Path temporary) {
+	DEsthreeMock(Map<String, String> environment, List<String> arguments, @Nullable Path temporary) {
 		this.temporary = temporary;
 		this.jsonb = Jsonb.instance();
 
-		EsthreeServerBinary binary = EsthreeServerBinary.create();
+		EsthreeMockBinary binary = EsthreeMockBinary.create();
 		try (InputStream stream = binary.open()) {
 			String executable = Path.of(binary.url().toURI()).getFileName().toString();
 			this.binary = Files.createTempFile("esthree-", "-" + executable);
@@ -66,7 +63,7 @@ public final class DEsthreeServer implements EsthreeServer {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(this.process.getErrorStream()));
 			this.logger = Thread.startVirtualThread(() -> this.log(reader));
 		} catch (IOException | URISyntaxException exception) {
-			throw new IllegalStateException("Failed to start EsthreeServer", exception);
+			throw new IllegalStateException("Failed to start EsthreeMock", exception);
 		}
 	}
 
@@ -75,44 +72,24 @@ public final class DEsthreeServer implements EsthreeServer {
 		try {
 			String line;
 			while ((line = reader.readLine()) != null && !this.logger.isInterrupted()) {
-				DEsthreeServerMessage message = this.jsonb.type(DEsthreeServerMessage.class).fromJson(line);
-				String thread = "EsthreeServer-" + this.process.pid();
-				String name = "sirius.stellar.esthree.server";
+				DEsthreeMockMessage message = this.jsonb.type(DEsthreeMockMessage.class).fromJson(line);
+				String thread = "EsthreeMock-" + this.process.pid();
+				String name = "sirius.stellar.esthree.mock";
 
 				Logger.dispatch(message.time(), message.mappedLevel(), thread, name, message.message());
-//				Map<String, Object> object = mapper.fromJsonObject(line);
-//
-//				String time = object.get("time").toString();
-//				String message = object.get("message").toString();
-//				String name = "sirius.stellar.esthree.server.DEsthreeServer";
-//
-//				LoggerLevel level = switch (object.get("level").toString()) {
-//					case "ERROR", "FATAL" -> ERROR;
-//					case "WARNING" -> WARNING;
-//					case "INFO" -> INFORMATION;
-//					case "DEBUG" -> DEBUGGING;
-//					default -> INFORMATION;
-//				};
-//
-//				object.remove("level");
-//				object.remove("time");
-//				object.remove("message");
-//				message += object;
-//
-//				Logger.dispatch(Instant.parse(time), level, "EsthreeServer-" + this.process.pid(), name, message);
 			}
-			Logger.information("Successfully closed EsthreeServer with code {0,number,integer}.", this.process.waitFor());
+			Logger.debugging("Closed EsthreeMock process with code {0,number,integer}.", this.process.waitFor());
 		} catch (IOException | InterruptedException exception) {
-			throw new IllegalStateException("Failed to read line when dispatching logging in EsthreeServer", exception);
+			throw new IllegalStateException("Failed to read line when dispatching logging in EsthreeMock", exception);
 		}
 	}
 
+	// TODO - remove
 	public static void main(String[] arguments) {
-		// TODO - full implementation
 		Logger.collector(Collector.console());
 		Logger.severity(DEBUGGING.severity());
 
-		EsthreeServer server = EsthreeServer.builder()
+		EsthreeMock server = EsthreeMock.builder()
 				.console(9090)
 				.temporaryVolume()
 				.build();
@@ -120,20 +97,21 @@ public final class DEsthreeServer implements EsthreeServer {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			try {
 				server.close();
+				Logger.close();
 			} catch (Exception exception) {
 				throw new RuntimeException(exception);
 			}
 		}));
 	}
+	//
 
 	@Override
 	public void close() throws IOException, ExecutionException, InterruptedException {
-		Logger.information("Attempting to close EsthreeServer...");
-
-		this.process.getErrorStream().close();
+		Logger.debugging("Closing EsthreeMock process" + (this.temporary == null ? " & logger thread." : ", logger thread & temporary directory."));
 
 		this.handle.destroy();
 		this.handle.onExit().get();
+		this.process.getErrorStream().close();
 		this.logger.interrupt();
 
 		Files.deleteIfExists(this.binary);
@@ -145,7 +123,7 @@ public final class DEsthreeServer implements EsthreeServer {
 	}
 }
 
-final class DEsthreeServerBuilder implements EsthreeServer.Builder {
+final class DEsthreeMockBuilder implements EsthreeMock.Builder {
 
 	private final Set<String> arguments;
 	private final Set<String> volumes;
@@ -153,7 +131,7 @@ final class DEsthreeServerBuilder implements EsthreeServer.Builder {
 
 	private @Nullable Path temporary;
 
-	DEsthreeServerBuilder() {
+	DEsthreeMockBuilder() {
 		this.arguments = new LinkedHashSet<>();
 		this.volumes = new LinkedHashSet<>();
 		this.environment = new HashMap<>();
@@ -162,50 +140,50 @@ final class DEsthreeServerBuilder implements EsthreeServer.Builder {
 	}
 
 	@Override
-	public EsthreeServer.Builder volumes(List<String> volumes) {
+	public EsthreeMock.Builder volumes(List<String> volumes) {
 		this.volumes.addAll(volumes);
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder volume(String volume) {
+	public EsthreeMock.Builder volume(String volume) {
 		this.volumes.add(volume);
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder temporaryVolume() {
+	public EsthreeMock.Builder temporaryVolume() {
 		try {
 			this.volumes.clear();
 			this.temporary = Files.createTempDirectory("esthree-");
 			return this;
 		} catch (IOException exception) {
-			throw new IllegalStateException("Failed to create temporary volume in EsthreeServer Builder", exception);
+			throw new IllegalStateException("Failed to create temporary volume in EsthreeMock Builder", exception);
 		}
 	}
 
 	@Override
-	public EsthreeServer.Builder console(int port) {
+	public EsthreeMock.Builder console(int port) {
 		this.arguments.add("--console-address");
 		this.arguments.add(":" + port);
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder disableConsole() {
+	public EsthreeMock.Builder disableConsole() {
 		this.environment.put("MINIO_BROWSER", "off");
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder certificates(Path directory) {
+	public EsthreeMock.Builder certificates(Path directory) {
 		this.arguments.add("--certs-dir");
 		this.arguments.add(directory.toAbsolutePath().toString());
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder ftps(int port, Path publicKey, Path privateKey) {
+	public EsthreeMock.Builder ftps(int port, Path publicKey, Path privateKey) {
 		this.arguments.add("--ftp=\"" + "address=:" + port + "\"");
 		this.arguments.add("--ftp=\"" + "tls-public-cert=" + publicKey.toAbsolutePath() + "\"");
 		this.arguments.add("--ftp=\"" + "tls-private-key=" + privateKey.toAbsolutePath() + "\"");
@@ -213,28 +191,28 @@ final class DEsthreeServerBuilder implements EsthreeServer.Builder {
 	}
 
 	@Override
-	public EsthreeServer.Builder sftp(int port, Path privateKey) {
+	public EsthreeMock.Builder sftp(int port, Path privateKey) {
 		this.arguments.add("--sftp=\"" + "address=:" + port + "\"");
 		this.arguments.add("--sftp=\"" + "ssh-private-key=" + privateKey.toAbsolutePath() + "\"");
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder quiet() {
+	public EsthreeMock.Builder quiet() {
 		this.arguments.add("--quiet");
 		return this;
 	}
 
 	@Override
-	public EsthreeServer.Builder anonymous() {
+	public EsthreeMock.Builder anonymous() {
 		this.arguments.add("--anonymous");
 		return this;
 	}
 
 	@Override
-	public EsthreeServer build() {
+	public EsthreeMock build() {
 		Stream<String> volumes = (this.temporary != null) ? Stream.of(this.temporary.toAbsolutePath().toString()) : this.volumes.stream();
 		List<String> arguments = Stream.concat(this.arguments.stream(), volumes).toList();
-		return new DEsthreeServer(this.environment, arguments, this.temporary);
+		return new DEsthreeMock(this.environment, arguments, this.temporary);
 	}
 }

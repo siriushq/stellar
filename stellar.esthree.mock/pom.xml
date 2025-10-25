@@ -9,12 +9,19 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-esthree-server</artifactId>
-    <name>Stellar :: Esthree :: Server</name>
+    <artifactId>stellar-esthree-mock</artifactId>
+    <name>Stellar :: Esthree :: Mock</name>
 	<description>
-		Wrapper of MinIO providing configuration, logging, metrics, clustering, etc.
+		Wrapper of MinIO (under AGPL license) providing simple builder-pattern configuration for testing.
 		Use a Maven classifier to get the artifact required for your target system, e.g. `windows-amd64`.
 	</description>
+
+	<licenses>
+        <license>
+            <name>GNU AGPLv3</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
 
 	<dependencies>
 		<dependency>
@@ -70,7 +77,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 
 				<configuration>
-					<mainClass>sirius.stellar.esthree.server.DEsthreeServerBinary</mainClass>
+					<mainClass>sirius.stellar.esthree.mock.DEsthreeMockBinary</mainClass>
 					<arguments>
 						<argument>${project.build.directory}</argument>
 						<argument>${project.build.finalName}</argument>

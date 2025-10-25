@@ -1,4 +1,4 @@
-package sirius.stellar.esthree.server;
+package sirius.stellar.esthree.mock;
 
 import io.avaje.jsonb.Json;
 import sirius.stellar.logging.LoggerLevel;
@@ -9,8 +9,8 @@ import java.util.Map;
 import static sirius.stellar.logging.LoggerLevel.*;
 
 @Json
-record DEsthreeServerMessage(Instant time, String level, String message, String name,
-							 @Json.Unmapped Map<String, Object> unmapped) {
+record DEsthreeMockMessage(Instant time, String level, String message, String name,
+						   @Json.Unmapped Map<String, Object> unmapped) {
 
 	/// Return the level of this message as a [LoggerLevel].
 	LoggerLevel mappedLevel() {
@@ -24,8 +24,8 @@ record DEsthreeServerMessage(Instant time, String level, String message, String 
 	}
 
 	/// Return the message string itself, with the unmapped fields
-	/// attached to the end of it.
+	/// attached to the end of it (given they are non-empty).
 	public String message() {
-		return this.message + this.unmapped;
+		return this.message + (!this.unmapped.isEmpty() ? "\n" + this.unmapped : "");
 	}
 }

@@ -1,12 +1,12 @@
-package sirius.stellar.esthree.server;
+package sirius.stellar.esthree.mock;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-/// Abstraction to get access to the underlying MinIO binary used by [EsthreeServer].
+/// Abstraction to get access to the underlying MinIO binary used by [EsthreeMock].
 /// This can be created using the static [#create] method.
-public interface EsthreeServerBinary {
+public interface EsthreeMockBinary {
 
 	/// Get the URL for the MinIO binary.
 	URL url();
@@ -16,8 +16,8 @@ public interface EsthreeServerBinary {
 	/// @throws IOException failed to open stream to located binary
 	InputStream open() throws IOException;
 
-	/// Create an instance of [EsthreeServerBinary].
-	static EsthreeServerBinary create() {
-		return new DEsthreeServerBinary();
+	/// Create an instance of [EsthreeMockBinary].
+	static EsthreeMockBinary create() {
+		return new DEsthreeMockBinary();
 	}
 }
