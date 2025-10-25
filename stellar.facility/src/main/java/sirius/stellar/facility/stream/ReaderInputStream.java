@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.facility.stream;
 
+import org.jspecify.annotations.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -20,7 +22,7 @@ public final class ReaderInputStream extends InputStream {
     private final CharBuffer encoderIn;
     private final ByteBuffer encoderOut;
 
-    private CoderResult lastCoderResult;
+    private @Nullable CoderResult lastCoderResult;
     private boolean endOfInput;
 
     public ReaderInputStream(final Reader reader) {
