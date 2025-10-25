@@ -1,0 +1,6 @@
+module sirius.stellar.javadoc {
+	requires org.eclipse.jdt.core;
+	requires org.eclipse.jdt.core.compiler.batch;
+
+	exports sirius.stellar.javadoc;
+}
