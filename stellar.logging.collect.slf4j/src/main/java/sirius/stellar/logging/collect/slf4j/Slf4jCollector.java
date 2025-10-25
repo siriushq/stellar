@@ -10,22 +10,25 @@ import java.util.HashMap;
 
 /// Implementation of [Collector] that delegates to SLF4J.
 ///
-/// This is not used by default and is available for users to make use of
-/// `stellar.logging.*` as an API, passing logging messages to their
-/// desired underlying implementation in order to retrofit applications
-/// making use of more complicated logging setups.
+/// This is available for users to make use of `stellar.logging` as an API,
+/// passing logging messages to their desired underlying implementation in order
+/// to retrofit applications making use of more complicated logging setups.
 ///
-/// Notable factors when using this collector include the fact that the level
-/// configured for [Logger] is still significant, the fact that all messages
-/// will be reported as arriving from the thread that the collector is invoked
-/// from (which is managed by the executor in [Logger]), the slight delay that
-/// may be experienced in timestamps as the underlying SLF4J implementation
-/// will compute the timestamp, and the level mapping.
+/// When using this logger, consider the following behavior:
+/// - the level configured for [Logger] is still significant
+/// - by default, all messages will be reported as arriving from the thread
+///   that the collector is invoked from (managed by the executor in [Logger])
+/// - a slight delay may be experienced in timestamps, as the underlying SLF4J
+///   implementation will compute the timestamp, and the level mapping.
+/// - [Slf4jCollectorFactory] will create an instance of this collector
+///   automatically from the static initialization in [Logger], provided this
+///   collector is on the module path.
 ///
-/// Do not use this implementation if you do not have a different implementation
-/// for SLF4J available on the classpath or module path, as it will lead to an
-/// endless loop of logging being dispatched to this collector, from this
-/// collector to the SLF4J dispatcher, and then back to this collector.
+/// Ensure this collector is NOT on the module path if:
+/// - you do not want to use an SLF4J logging backend
+/// - you have the SLF4J dispatcher on the classpath, which itself is a logging
+/// backend which intercepts SLF4J calls - having both the dispatcher and the
+/// collector on the module path will lead to an infinite loop / deadlock.
 ///
 /// ---------------------------------
 /// | [LoggerLevel]   | `org.slf4j` |

@@ -11,5 +11,5 @@ module sirius.stellar.logging.jcl {
 
 	exports sirius.stellar.logging.dispatch.jcl;
 
-	provides org.apache.commons.logging.LogFactory with sirius.stellar.logging.dispatch.jcl.JclFactory;
+	provides org.apache.commons.logging.LogFactory with JclDispatcherFactory;
 }

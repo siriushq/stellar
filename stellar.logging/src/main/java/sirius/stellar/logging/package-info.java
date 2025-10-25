@@ -16,7 +16,6 @@
 ///
 ///     public static void main(String[] arguments) {
 ///         Logger.collector(Collector.console());
-///         // Logger.collector(new Slf4jCollector()); - send logs to SLF4J
 ///         Logger.severity(ERROR.severity());
 ///
 ///         // use the statically accessible methods for logging
@@ -50,6 +49,9 @@
 ///         org.tinylog.Logger.info("Hello from tinylog!");
 ///
 ///         com.esotericsoftware.minlog.Log.info("Hello from minlog!");
+///
+///         // add any collectors to your classpath, to have logs sent there
+///         // e.g., add SLF4J collector to use SLF4J-based logging backend, like Logback.
 ///     }
 /// }
 /// ```

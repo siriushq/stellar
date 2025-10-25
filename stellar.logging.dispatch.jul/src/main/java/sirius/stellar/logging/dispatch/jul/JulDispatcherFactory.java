@@ -9,7 +9,7 @@ import sirius.stellar.logging.dispatch.Dispatcher;
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 @Internal
-public final class JulFactory implements Dispatcher.Provider {
+public final class JulDispatcherFactory implements Dispatcher.Provider {
 
 	@Override
 	public Dispatcher create() {

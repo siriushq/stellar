@@ -7,16 +7,16 @@ import java.util.concurrent.ConcurrentMap;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class JclFactory extends org.apache.commons.logging.LogFactory {
+public final class JclDispatcherFactory extends org.apache.commons.logging.LogFactory {
 
-	private static final JclFactory instance = new JclFactory();
+	private static final JclDispatcherFactory instance = new JclDispatcherFactory();
 
 	public static final String LOG_PROPERTY = "org.apache.commons.logging.Log";
 
 	private final ConcurrentMap<String, org.apache.commons.logging.Log> loggers = new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, Object> attributes = new ConcurrentHashMap<>();
 
-	public static JclFactory getInstance() {
+	public static JclDispatcherFactory getInstance() {
 		return instance;
 	}
 

@@ -12,5 +12,5 @@ module sirius.stellar.logging.minlog {
 
 	exports sirius.stellar.logging.dispatch.minlog;
 
-	provides Dispatcher.Provider with sirius.stellar.logging.dispatch.minlog.MinlogFactory;
+	provides Dispatcher.Provider with MinlogDispatcherFactory;
 }

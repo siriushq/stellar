@@ -144,4 +144,16 @@ public interface Collector extends AutoCloseable, Serializable {
 	static Collector file(Path path, Duration duration) {
 		return new FileCollector(path, duration);
 	}
+
+	/// Provides an instance of a [Collector].
+	///
+	/// This provides automatic registration of collectors, but is not required if
+	/// the collector should be optional (and registered manually using the static
+	/// [Logger#collector(Collector)] method.
+	///
+	/// @author Mahied Maruf (mechite)
+	/// @since 1.0
+	interface Provider {
+		Collector create();
+	}
 }

@@ -1,1 +1,1 @@
-sirius.stellar.logging.dispatch.jul.JulFactory
+sirius.stellar.logging.dispatch.jul.JulDispatcherFactory

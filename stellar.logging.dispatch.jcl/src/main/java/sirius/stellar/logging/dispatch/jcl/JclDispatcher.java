@@ -26,7 +26,7 @@ public final class JclDispatcher implements org.apache.commons.logging.Log, Seri
 
 	@Serial
 	private Object readResolve() throws ObjectStreamException {
-		return JclFactory.getInstance().getInstance(this.name);
+		return JclDispatcherFactory.getInstance().getInstance(this.name);
 	}
 
 	//#region is*Enabled

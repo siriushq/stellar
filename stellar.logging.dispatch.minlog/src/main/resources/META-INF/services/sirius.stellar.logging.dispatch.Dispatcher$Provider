@@ -1,1 +1,1 @@
-sirius.stellar.logging.dispatch.minlog.MinlogFactory
+sirius.stellar.logging.dispatch.minlog.MinlogDispatcherFactory

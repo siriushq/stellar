@@ -58,6 +58,13 @@ public final class Logger {
 		} catch (Throwable throwable) {
 			Logger.stacktrace("Failed to wire dispatchers", throwable);
 		}
+
+		try {
+			ServiceLoader<Collector.Provider> loader = ServiceLoader.load(Collector.Provider.class);
+			for (Collector.Provider provider : loader) collector(provider.create());
+		} catch (Throwable throwable) {
+			Logger.stacktrace("Failed to wire collectors", throwable);
+		}
 	}
 
 	/// Set the severity of the logger to the provided value.

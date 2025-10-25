@@ -4,7 +4,7 @@ package sirius.stellar.logging.dispatch.slf4j;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class Slf4jFactory implements org.slf4j.ILoggerFactory {
+public final class Slf4jDispatcherFactory implements org.slf4j.ILoggerFactory {
 
 	@Override
 	public org.slf4j.Logger getLogger(String name) {
