@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.serialization.msgpack.exception;
 
 /// Thrown to indicate too large message size (e.g, larger than 2^31-1).

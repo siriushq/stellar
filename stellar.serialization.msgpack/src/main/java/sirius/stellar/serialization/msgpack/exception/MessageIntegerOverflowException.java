@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.serialization.msgpack.exception;
 
 import sirius.stellar.serialization.msgpack.MessageUnpacker;

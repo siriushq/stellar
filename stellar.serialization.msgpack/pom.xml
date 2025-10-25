@@ -20,6 +20,10 @@
 
 	<licenses>
         <license>
+            <name>BSD 3-Clause License</name>
+            <url>https://opensource.org/license/bsd-3-clause</url>
+        </license>
+        <license>
             <name>Apache 2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
