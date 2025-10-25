@@ -1,6 +1,7 @@
 package sirius.stellar.logging.collect;
 
 import org.jetbrains.annotations.Contract;
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.doctation.Internal;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerMessage;
@@ -89,7 +90,7 @@ public interface Collector extends AutoCloseable, Serializable {
 	/// task will end, and [Logger#close] will block until it does if it is invoked.
 	///
 	/// @since 1.0
-	default Future<Void> task(Callable<Void> callable) {
+	default Future<@Nullable Void> task(Callable<@Nullable Void> callable) {
 		return executor.submit(callable);
 	}
 

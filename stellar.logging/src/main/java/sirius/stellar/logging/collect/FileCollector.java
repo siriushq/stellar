@@ -8,18 +8,18 @@ import java.io.IOException;
 import java.io.Serial;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.*;
+import static java.util.stream.Collectors.*;
 
 /// Implementation of [Collector] that prints to log files.
 @Internal
@@ -49,34 +49,39 @@ final class FileCollector implements Collector {
 
 	@Override
 	public void collect(LoggerMessage message) {
-		try {
-			if (this.closing.get()) return;
-			this.writing.set(true);
+		if (this.closing.get()) return;
+		this.writing.set(true);
 
-			assert this.rolled != null;
-			if (this.rolled.plus(this.duration).isBefore(Instant.now())) this.roll();
+		assert this.rolled != null;
+		if (this.rolled.plus(this.duration).isBefore(Instant.now())) this.roll();
 
-			byte[] text = ("\"" +
-					message.time() + "\",\"" +
-					message.level() + "\",\"" +
-					message.thread() + "\",\"" +
-					message.name() + "\",\"" +
-					Arrays.stream(message.text()
-							.replaceAll("\"", "`")
-							.replaceAll("'", "`")
-							.split("\n"))
-							.map(string -> "'" + string + "'")
-							.collect(Collectors.joining()) +
-			"\"\n").getBytes(UTF_8);
+		this.task(() -> {
+			try {
+				StringJoiner joiner = new StringJoiner("\",\"", "\"", "\"\n");
+				joiner.add(message.time().toString())
+					  .add(message.level().toString())
+					  .add(message.thread())
+					  .add(message.name());
+				String lines = Arrays.stream(message.text()
+						.replaceAll("\"", "`")
+						.replaceAll("'", "`")
+						.split("\n"))
+						.map(line -> "'" + line + "'")
+						.collect(joining());
+				joiner.add(lines);
 
-			assert this.channel != null;
-			int written = this.channel.write(ByteBuffer.wrap(text));
-			if (written != text.length) throw new IllegalStateException("Failed to append to file (written length does not match expected length)");
+				byte[] text = joiner.toString().getBytes(UTF_8);
 
-			this.writing.set(false);
-		} catch (IOException exception) {
-			throw new IllegalStateException("Failed to append to file", exception);
-		}
+				assert this.channel != null;
+				int written = this.channel.write(ByteBuffer.wrap(text));
+				if (written != text.length) throw new IllegalStateException("Failed to append to file (written length does not match expected length)");
+
+				this.writing.set(false);
+				return null;
+			} catch (IOException exception) {
+				throw new IllegalStateException("Failed to append to file", exception);
+			}
+		});
 	}
 
 	@Override
