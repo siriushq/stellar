@@ -76,7 +76,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 
 		URI uri = URI.create(request.url());
 		int port = uri.getPort();
-		String host = uri.getHost() + (port != -1) ? (":" + port) : "";
+		String host = uri.getHost() + (port != -1 ? (":" + port) : "");
 
 		request.header("x-amz-content-sha256", hash);
 		request.header("x-amz-date", now);
