@@ -6,7 +6,9 @@ import io.avaje.http.client.HttpClientRequest;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -75,7 +77,8 @@ final class DEsthreeSigner implements EsthreeSigner {
 		String date = now.substring(0, 8);
 
 		URI uri = URI.create(request.url());
-		String host = uri.getHost() + ":" + uri.getPort();
+		int port = uri.getPort();
+		String host = uri.getHost() + ((port != -1) ? (":" + port) : "");
 
 		request.header("x-amz-content-sha256", hash);
 		request.header("x-amz-date", now);
