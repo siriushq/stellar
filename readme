@@ -103,6 +103,9 @@ licensing
 	This is being done at our loss. Consider starring this repository and/or buying our
 	products to support the development and future of this project.
 
+	Some portions of this project are adapted from projects with other licenses, licenses
+	are clearly marked with `SPDX-License-Identifier` AND declared in `pom.xml`.
+
 support
 =======
 
