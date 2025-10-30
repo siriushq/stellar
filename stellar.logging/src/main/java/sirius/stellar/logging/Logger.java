@@ -59,8 +59,8 @@ public final class Logger {
 		try {
 			ServiceLoader<Collector.Provider> loader = ServiceLoader.load(Collector.Provider.class);
 			for (Collector.Provider provider : loader) collector(provider.create());
-		} catch (Throwable throwable) {
-			Logger.stacktrace("Failed to wire collectors", throwable);
+		} catch (ServiceConfigurationError error) {
+			Logger.stacktrace("Failed to wire collectors", error);
 		}
 	}
 
