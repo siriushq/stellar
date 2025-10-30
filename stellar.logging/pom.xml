@@ -11,7 +11,10 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging</artifactId>
     <name>Stellar :: Logging</name>
-	<description>Flexible logging system with a transparent interface and support for many facades and logging backends such as JCL, JUL, SLF4J, etc.</description>
+	<description>
+		Flexible logging system with a transparent interface and support for
+		many facades and logging backends such as JCL, JUL, SLF4J, etc.
+	</description>
 
     <dependencies>
         <dependency>
