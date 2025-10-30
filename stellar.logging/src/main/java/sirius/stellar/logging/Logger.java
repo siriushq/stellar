@@ -82,11 +82,7 @@ public final class Logger {
 	}
 
 	/// Set the [ExecutorService] used by the logger to a [SynchronousExecutorService].
-	///
-	/// This is mostly a convenience method, but a different approach may be used in the future to
-	/// provide a fast synchronous logger such as an event loop or more advanced collection system
-	/// in order to achieve optimal performance. This is why this method should be preferred instead
-	/// of calling `Logger.executor(new SynchronousExecutorService())` directly.
+	/// This is a convenience method. It is usually undesirable from a performance perspective.
 	///
 	/// Calling this method will cause (as a side effect) the logger to no longer cause any given
 	/// application to hang/"wait"; there are no non-daemon threads, or any threads for that matter,
