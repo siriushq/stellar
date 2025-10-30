@@ -101,13 +101,16 @@ final class DEsthreeSignedStream extends InputStream {
 		byte[] signature = this.signer.hmac(this.signingKey, candidate);
 		this.previous = signature;
 
-		byte[] header = (Integer.toHexString(payload.length) + ";chunk-signature=" + this.signer.hex(signature) + "\r\n").getBytes(UTF_8);
+		String lengthHex = Integer.toHexString(payload.length);
+		String signatureHex = this.signer.hex(signature);
+
+		byte[] header = (lengthHex + ";chunk-signature=" + signatureHex + "\r\n").getBytes(UTF_8);
 		byte[] footer = "\r\n".getBytes(UTF_8);
 
 		byte[] result = new byte[header.length + payload.length + footer.length];
 		System.arraycopy(header, 0, result, 0, header.length);
 		System.arraycopy(payload, 0, result, header.length, payload.length);
-		System.arraycopy(footer, 0, result, header.length + payload.length, footer.length);
+		System.arraycopy(footer, 0, result, (header.length + payload.length), footer.length);
 
 		return result;
 	}
