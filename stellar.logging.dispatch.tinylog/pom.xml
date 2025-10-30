@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-tinylog</artifactId>
     <name>Stellar :: Logging :: tinylog Dispatcher</name>
-	<description>tinylog dispatcher for the logging system.</description>
+	<description>tinylog (under Apache 2.0) dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>

@@ -12,7 +12,7 @@
     <artifactId>stellar-logging-slf4j-collector</artifactId>
     <name>Stellar :: Logging :: SLF4J Collector</name>
 	<description>
-		SLF4J collector for the logging system.
+		SLF4J (under MIT) collector for the logging system.
 		To use this artifact, you should run Logger.collector(new Slf4jCollector());
 
 		This artifact should not be used in tandem with the SLF4J dispatcher.

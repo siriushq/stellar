@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-kwik</artifactId>
     <name>Stellar :: Logging :: Kwik! Dispatcher</name>
-	<description>Kwik (QUIC client) dispatcher for the logging system.</description>
+	<description>Kwik (QUIC client, under LGPL-3.0 OR GPL-3.0) dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>

@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-log4j2</artifactId>
     <name>Stellar :: Logging :: Log4j 2x Dispatcher</name>
-	<description>Log4j2 dispatcher for the logging system.</description>
+	<description>Log4j2 (under Apache 2.0) dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>

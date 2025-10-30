@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-slf4j</artifactId>
     <name>Stellar :: Logging :: SLF4J Dispatcher</name>
-	<description>SLF4J dispatcher for the logging system.</description>
+	<description>SLF4J (under MIT) dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>

@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-jcl</artifactId>
     <name>Stellar :: Logging :: Jakarta/Apache Commons Logging Dispatcher</name>
-	<description>JCL (Apache Commons Logging) dispatcher for the logging system.</description>
+	<description>JCL (Apache Commons Logging, under Apache 2.0) dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>
