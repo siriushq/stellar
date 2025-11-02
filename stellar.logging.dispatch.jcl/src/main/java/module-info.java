@@ -1,4 +1,5 @@
 import org.jspecify.annotations.NullMarked;
+import sirius.stellar.logging.dispatch.jcl.JclDispatcherFactory;
 
 @NullMarked
 module sirius.stellar.logging.jcl {

@@ -1,4 +1,5 @@
 import sirius.stellar.logging.dispatch.Dispatcher;
+import sirius.stellar.logging.dispatch.minlog.MinlogDispatcherFactory;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
