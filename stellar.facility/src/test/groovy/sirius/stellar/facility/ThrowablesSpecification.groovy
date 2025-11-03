@@ -73,6 +73,23 @@ class ThrowablesSpecification extends Specification {
 		then:
 			stream.toList().size() == 2
 	}
+
+	def "stream(Throwable) correctly handles cycles in the cause chain tail"() {
+		given:
+			def a = new Throwable("A")
+			def b = new Throwable("B")
+			b.initCause(a)
+			a.initCause(b)
+
+			def root = new Throwable("Root")
+			root.initCause(b)
+		when:
+			def stream = Throwables.stream(root)
+			def list = stream.toList()
+		then:
+			list == [root, b, a]
+			list.size() == 3
+	}
 	//#endregion
 
 	//#region stacktrace(Throwable)

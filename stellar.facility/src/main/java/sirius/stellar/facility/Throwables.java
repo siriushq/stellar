@@ -5,10 +5,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -60,10 +57,15 @@ public final class Throwables {
 	public static Stream<Throwable> stream(@Nullable Throwable throwable) {
 		if (throwable == null) return Stream.empty();
 
+		List<Throwable> causes = new ArrayList<>();
 		Set<Throwable> processed = new HashSet<>();
-        processed.add(throwable);
+		Throwable current = throwable;
 
-        return Stream.concat(Stream.of(throwable), Stream.iterate(throwable.getCause(), cause -> cause != null && !processed.contains(cause), Throwable::getCause));
+		while (current != null && processed.add(current)) {
+			causes.add(current);
+			current = current.getCause();
+		}
+		return causes.stream();
 	}
 
 	/// Returns a stacktrace string for the provided throwable.
