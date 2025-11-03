@@ -15,19 +15,14 @@ import java.util.random.RandomGenerator;
 /// This class is entirely `null` safe and no operations should cause a [NullPointerException].
 /// However, methods may return `null`, causing a [NullPointerException] elsewhere.
 ///
-/// The null safety of these methods strongly depends on the fact that invoking JDK [java.text.Format]
-/// formatters and [String#format] uses the null-safe [String#valueOf(Object)] method to replace
-/// arguments into the string, instead of attempting to invoke [#toString()] on a null argument.
-///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 public final class Strings {
 
 	/// Represents an empty string.
 	///
-	/// This should be preferred over simply using an empty string literal when calling specific methods,
-	/// though it could make less sense in concatenation scenarios. It guarantees to the reader that the
-	/// string is indeed empty and not, e.g., a special whitespace character.
+	/// This can be preferred over using an empty string literal, judged on a case-by-case basis,
+	/// guaranteeing to the reader that the string is not, e.g., a special whitespace character.
 	///
 	/// @see Strings#SPACE
 	/// @since 1.0
@@ -35,10 +30,8 @@ public final class Strings {
 
 	/// Represents a single space (` `) character.
 	///
-	/// This should be preferred over simply using a string literal containing the space character when
-	/// calling specific methods, though it could make less sense in concatenation scenarios. It guarantees
-	/// to the reader that the string is indeed a single, regular space character, and not, e.g., a special,
-	/// non-standard whitespace character.
+	/// This can be preferred over using an empty string literal, judged on a case-by-case basis,
+	/// guaranteeing to the reader that the string is not, e.g., a special whitespace character.
 	///
 	/// @see Strings#EMPTY
 	/// @since 1.0
@@ -48,10 +41,11 @@ public final class Strings {
 	///
 	/// This method invokes both [MessageFormat] and [String#format], allowing for
 	/// both types of formatting to be applied to the message (as they do not clash
-	/// with each other's syntax - both ignore extra arguments).
+	/// with each other's syntax - both can ignore extra arguments).
 	///
-	/// @return The provided string, formatted, or null if the provided string is null,
-	/// or the provided string if the argument array is null.
+	/// @return The provided string, formatted, or `null` if the provided string is `null`,
+	/// or the provided string, if the argument array is `null`.
+	///
 	/// @see Strings#format(Locale, String, Object...)
 	/// @since 1.0
 	@Nullable
@@ -77,8 +71,9 @@ public final class Strings {
 	/// [String#format(Locale,String,Object...)] to accept. If null is provided,
 	/// [Locale#ENGLISH] is used as a fallback.
 	///
-	/// @return The provided string, formatted, or null if the provided string is null,
-	/// or the provided string if the argument array is null.
+	/// @return The provided string, formatted, or `null` if the provided string is `null`,
+	/// or the provided string, if the argument array is `null`.
+	///
 	/// @see Strings#format(String, Object...)
 	/// @since 1.0
 	@Nullable
@@ -95,18 +90,9 @@ public final class Strings {
 				.orElseThrow(IllegalStateException::new);
 	}
 
-	/// Returns a shuffled string using the provided [Random] instance.
+	/// Returns a shuffled string using the provided [RandomGenerator] instance.
 	///
-	/// This method can be called with [SecureRandom] providing an alphabet string
-	/// in order to generate a secure random identifier.
-	///
-	/// If a very secure random generator is desired, [SecureRandom#getInstanceStrong()]
-	/// can be used, however this is not recommended as [SecureRandom#SecureRandom()] is
-	/// usually strong enough for most cases and this method could deplete the entropy pool
-	/// of the operating system (less likely to happen on newer systems) depending on how
-	/// often the random instance is used (how often this shuffle method is called),
-	/// degrading quality/randomness.
-	///
+	/// @see SecureRandom#SecureRandom()
 	/// @see Strings#shuffle(RandomGenerator, char[])
 	/// @since 1.0
 	@Nullable
@@ -118,18 +104,9 @@ public final class Strings {
 		return new String(shuffle(random, string.toCharArray()));
 	}
 
-	/// Returns a shuffled character array using the provided [Random] instance.
+	/// Returns a shuffled character array using the provided [RandomGenerator] instance.
 	///
-	/// This method can be called with [SecureRandom] providing an alphabet array
-	/// in order to generate a secure random identifier.
-	///
-	/// If a very secure random generator is desired, [SecureRandom#getInstanceStrong()]
-	/// can be used, however this is not recommended as [SecureRandom#SecureRandom()] is
-	/// usually strong enough for most cases and this method could deplete the entropy pool
-	/// of the operating system (less likely to happen on newer systems) depending on how
-	/// often the random instance is used (how often this shuffle method is called),
-	/// degrading quality/randomness.
-	///
+	/// @see SecureRandom#SecureRandom()
 	/// @see Strings#shuffle(RandomGenerator, String)
 	/// @since 1.0
 	@Contract(value = "!null, _ -> new; null, _ -> param2;", pure = true)
