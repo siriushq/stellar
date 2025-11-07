@@ -6,9 +6,7 @@ module sirius.stellar.lifecycle.spi {
 
 	exports sirius.stellar.lifecycle.spi;
 
-	provides javax.annotation.processing.Processor with
-			sirius.stellar.lifecycle.spi.ServiceProcessor;//,
-//			sirius.stellar.lifecycle.spi.ServiceClassifierProcessor;
+	provides javax.annotation.processing.Processor with sirius.stellar.lifecycle.spi.ServiceProcessor;
 
 	requires sirius.stellar.facility;
 }

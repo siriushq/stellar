@@ -13,9 +13,8 @@ import static java.lang.annotation.RetentionPolicy.*;
 /// Marks a class or interface as a service type.
 ///
 /// Use this directly to force inference when creating providers of this service
-/// type, use [Service.Provider] to mark providers of this service type, and use
-/// [Service.Classifier] to declaratively create classifier artifacts for service
-/// providers of optional dependencies.
+/// type and use [Service.Provider] to mark providers of a given service type,
+/// using inference if their subclasses lack [Service].
 ///
 /// ```
 /// @Service // mark to make A the chosen SPI
@@ -46,33 +45,4 @@ public @interface Service {
 		/// If none are defined, it will be inferred.
 		@NonNull Class<?>[] value() default {};
 	}
-
-//	/// Generates separate Maven classifier artifacts declaratively for service providers
-//	/// of optional dependencies, directly integrating with Maven lifecycle.
-//	///
-//	/// You must author a module file for the separate classifier artifact using a file,
-//	/// in the following case named `module-info$foo-provider.java`, with these rules:
-//	///
-//	/// - classifier module must export unique packages, not exported in the main module
-//	/// - all packages exported for the classifier will be built for that artifact
-//	/// - all packages exported for the classifier will be excluded from the main module
-//	/// - the classifier module must have a unique name to the main module
-//	/// - the classifier must depend on the main module
-//	@Documented
-//	@Target(MODULE) @Retention(CLASS)
-//	@interface Classifier {
-//
-//		/// The name for the generated classifier and `module-info$(name).java`
-//		/// source file. This is required.
-//		String value();
-//
-//		/// The SPI to provide. This can be excluded to use inference.
-//		Class<?> provides() default Void.class;
-//
-//		/// The implementation to provide with.
-//		///
-//		/// This should never be marked with [Service.Provider], etc., as this would mark
-//		/// it as being a provider for the main artifact, rather than the classifier.
-//		Class<?> with();
-//	}
 }

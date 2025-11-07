@@ -2,8 +2,7 @@
 @GenerateModuleInfoReader
 @GeneratePrisms({
 		@GeneratePrism(name = "ServicePrism", value = Service.class),
-		@GeneratePrism(name = "ServiceProviderPrism", value = Service.Provider.class)//,
-//		@GeneratePrism(name = "ServiceClassifierPrism", value = Service.Classifier.class)
+		@GeneratePrism(name = "ServiceProviderPrism", value = Service.Provider.class)
 })
 package sirius.stellar.lifecycle.spi;
 
