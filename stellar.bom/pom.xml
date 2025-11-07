@@ -4,7 +4,7 @@
 	<groupId>sirius.stellar</groupId>
 	<artifactId>stellar-bom</artifactId>
 	<version>1.0-RC1</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
     <name>Stellar :: Bill of Materials</name>
 	<description>
