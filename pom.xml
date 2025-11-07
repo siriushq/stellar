@@ -43,7 +43,6 @@
 		<module>stellar.logging.dispatch.tinylog</module>
 
 		<module>stellar.jsr305</module>
-		<module>stellar.javadoc</module>
 
 		<module>stellar.esthree</module>
 		<module>stellar.esthree.mock</module>
@@ -51,6 +50,7 @@
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
 
+		<module>stellar.lifecycle.javadoc</module>
 		<module>stellar.lifecycle.spi</module>
 
 		<module>stellar.platform</module>
