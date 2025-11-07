@@ -1,0 +1,43 @@
+package sirius.stellar.lifecycle.spi;
+
+import sirius.stellar.facility.doctation.Internal;
+
+import javax.annotation.processing.*;
+import javax.lang.model.SourceVersion;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.util.Elements;
+import java.util.Set;
+
+import static javax.lang.model.SourceVersion.*;
+
+@Internal
+@SupportedAnnotationTypes(ServiceClassifierPrism.PRISM_TYPE)
+public final class ServiceClassifierProcessor extends AbstractProcessor {
+
+	@Override
+	public SourceVersion getSupportedSourceVersion() {
+		return latestSupported();
+	}
+
+	@Override
+    public synchronized void init(ProcessingEnvironment environment) {
+        super.init(environment);
+        APContext.init(environment);
+    }
+
+	@Override
+	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment round) {
+		if (round.processingOver()) {
+			this.write();
+			APContext.clear();
+			return false;
+		}
+
+		return false;
+	}
+
+	/// Write source files (during the final processing round).
+	private void write() {
+
+	}
+}

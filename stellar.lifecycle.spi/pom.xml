@@ -1,0 +1,99 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>sirius.stellar</groupId>
+        <artifactId>stellar</artifactId>
+        <version>1.0-RC1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+	<distributionManagement>
+		<relocation>
+			<message>We recommend you use avaje-spi-service instead.</message>
+
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-spi-service</artifactId>
+		</relocation>
+	</distributionManagement>
+
+    <packaging>jar</packaging>
+    <artifactId>stellar-lifecycle-spi</artifactId>
+    <name>Stellar :: Lifecycle :: SPI</name>
+	<description>
+		Uses annotation processing to automatically add "META-INF/services" entries
+		for service providers, and validate "module-info.java" files.
+
+		Based on jstachio/pistachio project (under BSD-3-Clause, © Adam Gent, © Bruce Chapman).
+		Uses avaje-prisms (under Apache-2.0).
+	</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-prisms</artifactId>
+
+			<!-- TODO - remove when 1.44 released & avaje-jex-parent bumps -->
+			<version>1.44-RC1</version>
+
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-facility</artifactId>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+        </plugins>
+    </build>
+</project>
