@@ -18,7 +18,7 @@
 		which have been introduced into the standard library are missing here.
 
 		Some portions of this library have been adapted from Apache Commons, these portions remain
-		licensed under their original Apache 2.0 license and contain clear license headers.
+		licensed under their original Apache-2.0 license and contain clear license headers.
 	</description>
 
 	<licenses>

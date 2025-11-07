@@ -12,7 +12,7 @@
     <artifactId>stellar-esthree-mock</artifactId>
     <name>Stellar :: Esthree :: Mock</name>
 	<description>
-		Wrapper of MinIO (under AGPL license) providing simple builder-pattern configuration for testing.
+		Wrapper of MinIO (under AGPL-3.0 license) providing simple builder-pattern configuration for testing.
 		Use a Maven classifier to get the artifact required for your target system, e.g. `windows-amd64`.
 	</description>
 

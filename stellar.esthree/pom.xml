@@ -13,7 +13,7 @@
     <name>Stellar :: Esthree</name>
 	<description>
 		Tiny Java S3 client using avaje-http-client &amp; JDK's built-in XML parsing.
-		Uses avaje-http-client (under Apache 2.0).
+		Uses avaje-http-client (under Apache-2.0).
 	</description>
 
 	<properties>

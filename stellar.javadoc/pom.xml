@@ -13,7 +13,7 @@
     <name>Stellar :: JavaDoc</name>
 	<description>
 		Simple, customizable JavaDoc generator built from scratch.
-		AST read using Eclipse JDT (which is licensed under EPL) under the hood.
+		AST read using Eclipse JDT (under EPL-2.0) under the hood.
 		This generator can read broken/uncompilable files and supports parallel generation.
 	</description>
 
