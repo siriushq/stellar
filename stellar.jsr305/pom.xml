@@ -10,11 +10,10 @@
 
 	<distributionManagement>
 		<relocation>
-			<message>JSR305-esque annotations are no longer the best option.</message>
+			<message>Favour JSpecify over JSR305-esque annotations.</message>
 
 			<groupId>org.jspecify</groupId>
 			<artifactId>jspecify</artifactId>
-			<version>1.0.0</version>
 		</relocation>
 	</distributionManagement>
 
