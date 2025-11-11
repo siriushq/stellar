@@ -17,7 +17,7 @@ public interface RawValue extends Value {
 	byte[] asByteArray();
 
 	/// Returns the value as `ByteBuffer`. \
-	/// Returned ByteBuffer is read-only. See also [#asReadOnlyBuffer()].
+	/// Returned ByteBuffer is read-only (using [ByteBuffer#asReadOnlyBuffer()]).
 	/// This method doesn't copy the byte array as much as possible.
 	ByteBuffer asByteBuffer();
 

@@ -112,6 +112,22 @@
 
             <dependency>
                 <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-lifecycle-javadoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-lifecycle-testing</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-lifecycle-spi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
                 <artifactId>stellar-platform</artifactId>
                 <version>${project.version}</version>
             </dependency>

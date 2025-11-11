@@ -17,7 +17,7 @@ import static sirius.stellar.facility.Spliterators.*;
 public final class Spliterators {
 
 	/// Returns a spliterator wrapping the provided spliterator associated to the provided [AutoCloseable]
-	/// resource, closing it when [Spliterator#hasNext()] returns `false` or [Spliterator#next()] fails.
+	/// resource, closing it when [Spliterator#tryAdvance] returns `false` or [Spliterator#trySplit()] fails.
 	///
 	/// @since 1.0
 	public static <T> Spliterator<T> closing(Spliterator<T> delegate, AutoCloseable resource) {

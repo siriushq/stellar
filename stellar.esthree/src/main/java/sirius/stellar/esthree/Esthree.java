@@ -137,7 +137,7 @@ public interface Esthree extends AutoCloseable {
 		Esthree build();
 	}
 
-	/// Enumerator for valid AWS regions that can be provided to [#region].
+	/// Enumerator for valid AWS regions that can be provided to [Esthree.Builder#region].
 	/// This is provided only for convenience.
 	enum Region {
 		AF_SOUTH_1("af-south-1"),

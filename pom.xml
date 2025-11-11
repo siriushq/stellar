@@ -45,12 +45,13 @@
 		<module>stellar.jsr305</module>
 
 		<module>stellar.esthree</module>
-		<module>stellar.esthree.mock</module>
+<!--		<module>stellar.esthree.mock</module>-->
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
 
 		<module>stellar.lifecycle.javadoc</module>
+		<module>stellar.lifecycle.testing</module>
 		<module>stellar.lifecycle.spi</module>
 
 		<module>stellar.platform</module>
@@ -73,9 +74,33 @@
 				<scope>import</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.spockframework</groupId>
-				<artifactId>spock-bom</artifactId>
-				<version>2.4-M6-groovy-4.0</version>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>6.0.1</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>net.bytebuddy</groupId>
+				<artifactId>byte-buddy-parent</artifactId>
+				<version>1.17.8</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-bom</artifactId>
+				<version>3.27.6</version>
+
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-bom</artifactId>
+				<version>5.20.0</version>
 
 				<type>pom</type>
 				<scope>import</scope>
@@ -104,12 +129,6 @@
 			<version>26.0.2</version>
 			<scope>provided</scope>
 		</dependency>
-
-        <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-core</artifactId>
-            <scope>test</scope>
-        </dependency>
 	</dependencies>
 
     <repositories>
@@ -211,13 +230,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>3.5.4</version>
-
-					<configuration>
-						<includes>
-							<include>**/*Specification.class</include>
-							<include>**/*Test.class</include>
-						</includes>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -231,43 +243,9 @@
 				</plugin>
 
 				<plugin>
-					<groupId>org.codehaus.gmavenplus</groupId>
-					<artifactId>gmavenplus-plugin</artifactId>
-					<version>4.2.1</version>
-
-					<executions>
-						<execution>
-							<goals>
-								<goal>addTestSources</goal>
-								<goal>compileTests</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>3.6.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>3.6.1</version>
-
-					<configuration>
-						<sources>
-							<source>src/test/groovy</source>
-						</sources>
-					</configuration>
-
-					<executions>
-						<execution>
-							<phase>generate-test-sources</phase>
-							<goals>
-								<goal>add-test-source</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
             </plugins>
         </pluginManagement>

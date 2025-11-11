@@ -32,7 +32,7 @@ public @interface Service {
 	/// Mark service providers as described in [ServiceLoader].
 	///
 	/// The annotation processor generates the configuration files that allow the
-	/// annotated class to be loaded with [#load(Class)].
+	/// annotated class to be loaded with [ServiceLoader#load(Class)].
 	///
 	/// The annotated type must conform to the SPI specification, i.e. it must:
 	/// - be a non-anonymous, non-inner, concrete class

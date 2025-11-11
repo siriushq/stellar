@@ -25,6 +25,12 @@
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-http-client</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>
@@ -52,15 +58,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-			</plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
 			</plugin>
         </plugins>
     </build>
