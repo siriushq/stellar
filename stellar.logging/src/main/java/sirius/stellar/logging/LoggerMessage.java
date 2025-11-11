@@ -20,10 +20,20 @@ import static sirius.stellar.facility.Strings.*;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public record LoggerMessage(Instant time, LoggerLevel level, String thread, String name, String text) implements Serializable, Orderable<LoggerMessage> {
+public record LoggerMessage(
+	Instant time,
+	LoggerLevel level,
+	String thread,
+	String name,
+	String text
+) implements Serializable, Orderable<LoggerMessage> {
 
 	@Serial
 	private static final long serialVersionUID = 4451006818948527851L;
+
+	public static LoggerMessageBuilder builder() {
+		return LoggerMessageBuilder.builder();
+	}
 
 	@Override
 	public String toString() {

@@ -1,9 +1,12 @@
+import io.avaje.recordbuilder.RecordBuilder;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
+@RecordBuilder
 module sirius.stellar.logging {
 
 	requires static org.jetbrains.annotations;
+	requires static io.avaje.recordbuilder;
 	requires org.jspecify;
 
 	requires sirius.stellar.facility;

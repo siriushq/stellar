@@ -14,10 +14,10 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import static java.lang.StackWalker.Option.*;
+import static java.util.concurrent.TimeUnit.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// This class is the main entry-point for the logging system.
@@ -64,14 +64,14 @@ public final class Logger {
 	/// @see LoggerLevel
 	/// @since 1.0
 	public static void severity(int value) {
-		if (value < 0) throw new UnsupportedOperationException("Logger severity must be between 0 and Integer#MAX_VALUE");
+		if (value < 0) throw new UnsupportedOperationException("Logger severity must be between 0 and " + Integer.MAX_VALUE);
 		severity = value;
 	}
 
 	/// Set the [ExecutorService] used by the logger to the provided value.
 	/// @since 1.0
 	public static void executor(ExecutorService value) {
-		if (value.isShutdown() || value.isTerminated()) throw new UnsupportedOperationException("Attempted to set executor to a terminated executor");
+		if (value.isShutdown() || value.isTerminated()) throw new IllegalArgumentException("Attempted to set executor to a terminated executor");
 		executor = value;
 	}
 
@@ -101,16 +101,22 @@ public final class Logger {
 	///
 	/// When making dispatchers, this should be avoided and the specific style of
 	/// interpolation used by the specific logger or facade that the dispatcher is to
-	/// delegate should be called instead, and this argument should be null.
+	/// delegate should be called instead, and this argument should be `null`.
 	@Internal
 	public static void dispatch(Instant time, LoggerLevel level, String thread, String name,
 								@Nullable String text, Object @Nullable... arguments) {
 		if (executor.isShutdown() || executor.isTerminated()) return;
 		executor.submit(() -> {
 			if (!enabled(level)) return;
-			if (text == null || text.isEmpty() || text.isBlank() || text.equalsIgnoreCase("null")) return;
+			if (text == null || text.isBlank() || text.equalsIgnoreCase("null")) return;
 
-			LoggerMessage message = new LoggerMessage(time, level, thread, name, (arguments == null || arguments.length == 0) ? text : format(text, arguments));
+			LoggerMessage message = LoggerMessage.builder()
+					.time(time)
+					.level(level)
+					.thread(thread)
+					.name(name)
+					.text((arguments == null || arguments.length == 0) ? text : format(text, arguments))
+					.build();
 			collectors.forEach(collector -> collector.collect(message));
 		});
 	}
@@ -118,27 +124,26 @@ public final class Logger {
 	/// Closes the logger.
 	/// This prevents any new messages being dispatched and is an irreversible call.
 	///
-	/// However, it could be noted that many collectors often have dependencies such as external
-	/// message brokers whose clients need to be gracefully closed after the logger. This is why
-	/// [Collector#close()] is run for all collectors before the closure of the logging system;
-	/// handling can be added to guarantee that collectors will never fail.
+	/// It should be noted that collectors often have external dependencies, such as
+	/// message brokers whose clients need to be gracefully closed after the logger.
+	/// The [Collector#close()] method is called during shutdown to allow for this.
 	///
-	/// Furthermore, it is extremely important that there is at least one active collector publishing
-	/// logging in a production application; information about the shutdown of an application can be
-	/// very helpful to diagnose data loss issues, even when replication is an enforced practice.
-	///
-	/// Logging tends to be the last thing that closes in an application - undesirable behavior,
-	/// as issues can occur if the dependencies a collector might have are longer accepting calls.
+	/// It is extremely important that there are active collectors publishing until
+	/// the end of the lifetime of any given application.
 	public static void close() {
 		try {
-			executor.shutdown();
-			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-			executor.close();
+			if (executor != ForkJoinPool.commonPool()) {
+				executor.shutdown();
+				boolean terminated = executor.awaitTermination(10, SECONDS);
+				if (!terminated) throw new IllegalStateException("Failed executor shutdown");
+				executor.close();
+			}
 
 			for (Collector collector : collectors) collector.close();
 
 			Collector.executor.shutdown();
-			Collector.executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+			boolean terminated = Collector.executor.awaitTermination(10, SECONDS);
+			if (!terminated) throw new IllegalStateException("Failed collector executor shutdown");
 			Collector.executor.close();
 		} catch (Exception exception) {
 			throw new RuntimeException(exception);
