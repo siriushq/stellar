@@ -17,6 +17,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import static java.lang.StackWalker.Option.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// This class is the main entry-point for the logging system.
@@ -36,7 +37,7 @@ import static sirius.stellar.facility.Strings.*;
 public final class Logger {
 
 	private static final List<Collector> collectors = new ArrayList<>();
-	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 
 	private static int severity = Integer.MAX_VALUE;
 	private static ExecutorService executor = ForkJoinPool.commonPool();
