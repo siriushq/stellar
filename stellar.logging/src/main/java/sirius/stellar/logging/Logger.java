@@ -47,14 +47,14 @@ public final class Logger {
 			ServiceLoader<Dispatcher.Provider> loader = ServiceLoader.load(Dispatcher.Provider.class);
 			for (Dispatcher.Provider provider : loader) provider.create().wire();
 		} catch (Throwable throwable) {
-			throw new IllegalStateException("Failed to wire dispatchers", throwable);
+			throw new IllegalStateException("Failed to wire logging dispatchers", throwable);
 		}
 
 		try {
 			ServiceLoader<Collector.Provider> loader = ServiceLoader.load(Collector.Provider.class);
 			for (Collector.Provider provider : loader) collector(provider.create());
 		} catch (ServiceConfigurationError error) {
-			throw new IllegalStateException("Failed to wire collectors", error);
+			throw new IllegalStateException("Failed to wire logging collectors", error);
 		}
 	}
 
