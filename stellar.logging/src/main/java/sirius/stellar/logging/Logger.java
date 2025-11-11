@@ -13,7 +13,7 @@ import sirius.stellar.logging.supplier.ThrowableSupplier;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
@@ -22,21 +22,14 @@ import static sirius.stellar.facility.Strings.*;
 /// This class is the main entry-point for the logging system.
 /// By default, no collectors are registered. See [sirius.stellar.logging] for a usage example.
 ///
-/// All logging methods are asynchronous and executed against a single logging thread (a platform thread).
-/// Virtual threads are not used in this case (in favor of `Executors.newFixedThreadPool(1)`) as only one
-/// single thread is needed to achieve fast logging performance even over a very involved application.
+/// All logging methods are asynchronous and executed against a logging executor, which is,
+/// preferably, a platform thread. The default executor is the [ForkJoinPool#commonPool()],
+/// enough to achieve fast logging performance even over a very involved application.
 ///
-/// This can be changed with [#executor(ExecutorService)] if you wish to register collectors that will
-/// perform very heavy lifting, such as database writes or submitting to an external message broker, or
-/// any other kind of I/oO operation.
-///
-/// The preferred alternative to the default if this is required is [Executors#newVirtualThreadPerTaskExecutor()],
-/// however, if a fixed number of total virtual threads is desired (generally an anti-pattern: virtual threads are
-/// lightweight to create and the number of carrier threads is normally bound to the number of CPU cores available),
-/// one can use `newFixedThreadPool(1, Thread::startVirtualThread)` to achieve that.
-///
-/// It is also a valid option to use any executor you might be sharing across the application for this purpose,
-/// and it could benefit the performance of other application logic to use a virtual thread executor.
+/// Implementations of [Collector]s are expected to use; the provided [Collector#task] method
+/// for delegating I/O operations to be performed on virtual threads (such as database writes);
+/// the [Thread#ofVirtual] method; any other method of dispatching that may already be in-use or
+/// shared across an application.
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
@@ -46,7 +39,7 @@ public final class Logger {
 	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
 
 	private static int severity = Integer.MAX_VALUE;
-	private static ExecutorService executor = Executors.newFixedThreadPool(1);
+	private static ExecutorService executor = ForkJoinPool.commonPool();
 
 	static {
 		try {
