@@ -35,8 +35,9 @@
 		<dependency>
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-jsonb-generator</artifactId>
-			<scope>provided</scope>
+
 			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
