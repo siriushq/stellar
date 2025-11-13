@@ -1,0 +1,83 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>sirius.stellar</groupId>
+        <artifactId>stellar</artifactId>
+        <version>1.0-RC1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <packaging>jar</packaging>
+    <artifactId>stellar-configuration</artifactId>
+    <name>Stellar :: Configuration</name>
+	<description>
+		Provides external configuration for JVM services, by default sourcing from JVM Properties,
+		environment variables, and .properties files, also providing dynamic hot-reload functionality.
+		<!-- TODO - hot-reload functionality (default provider sun.misc.Signal/SignalHandler SIGHUP + filesystem reload of loaded .properties) -->
+	</description>
+
+	<properties>
+		<java.version>11</java.version>
+		<java.version.tests>17</java.version.tests>
+	</properties>
+
+    <dependencies>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-spi</artifactId>
+
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<id>default-testCompile</id>
+						<configuration>
+							<release>${java.version.tests}</release>
+							<source>${java.version.tests}</source>
+							<target>${java.version.tests}</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+
+				<configuration>
+					<argLine>--add-opens java.base/java.util=sirius.stellar.configuration</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+        </plugins>
+    </build>
+</project>

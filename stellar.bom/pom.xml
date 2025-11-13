@@ -93,9 +93,21 @@
                 <artifactId>stellar-jsr305</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>sirius.stellar</groupId>
                 <artifactId>stellar-esthree</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--<dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-esthree-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>-->
+
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-configuration</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
