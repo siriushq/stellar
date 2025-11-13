@@ -13,13 +13,11 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.NullType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Objects.*;
@@ -54,12 +52,7 @@ public final class ServiceProcessor extends AbstractProcessor {
 
 	@Override
 	public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment round) {
-		if (round.processingOver()) {
-			this.write();
-			this.validate();
-			APContext.clear();
-			return false;
-		}
+		if (round.processingOver()) return processFinal();
 
 		Elements elements = processingEnv().getElementUtils();
 		TypeElement providerAnnotation = elements.getTypeElement(ServiceProviderPrism.PRISM_TYPE);
@@ -80,6 +73,18 @@ public final class ServiceProcessor extends AbstractProcessor {
 			}
 		}
 		return false;
+	}
+
+	/// Compute the final round of annotation processing.
+	private boolean processFinal() {
+		try {
+			this.write();
+			this.validate();
+			APContext.clear();
+			return false;
+		} catch (IOException exception) {
+			throw new IllegalStateException(exception);
+		}
 	}
 
 	/// Infer the SPI for the [Service.Provider] annotation, if [Service.Provider#value()] returns `{}`.
@@ -137,18 +142,33 @@ public final class ServiceProcessor extends AbstractProcessor {
 	}
 
 	/// Write the `META-INF/services` files (during the final processing round).
-	private void write() {
+	/// @throws IOException a fatal error occurred merging with an existing file
+	private void write() throws IOException {
+		Filer filer = processingEnv().getFiler();
 		for (Map.Entry<String, Set<String>> entry : this.services.entrySet()) {
 			String spi = entry.getKey();
 			String resource = "META-INF/services/" + spi;
 
-			Filer filer = processingEnv().getFiler();
-			if (!this.validateUnimplemented(filer, spi, resource)) continue;
+			Set<String> sp = new HashSet<>(entry.getValue());
+			try (Reader reader = filer.getResource(CLASS_OUTPUT, EMPTY, resource).openReader(true)) {
+				BufferedReader buffered = new BufferedReader(reader);
+				sp.addAll(buffered.lines().collect(toSet()));
+			} catch (IOException exception) {
+				logNote("Generating fresh META-INF/services for SPI %s", spi);
+			}
 
-			try (Writer writer = filer.createResource(CLASS_OUTPUT, EMPTY, resource).openWriter()) {
-				writer.write(String.join("\n", entry.getValue()));
+			Writer writer = null;
+			try {
+				writer = filer.createResource(CLASS_OUTPUT, EMPTY, resource).openWriter();
+				writer.write(String.join("\n", sp));
+			} catch (FilerException exception) {
+				writer = filer.getResource(CLASS_OUTPUT, EMPTY, resource).openWriter();
+				writer.write(String.join("\n", sp));
 			} catch (IOException exception) {
 				logWarn("Failed to write SPI '%s' to location '%s'.\n%s", spi, resource, exception.getMessage());
+			} finally {
+				assert writer != null;
+				writer.close();
 			}
 		}
 	}
@@ -217,17 +237,6 @@ public final class ServiceProcessor extends AbstractProcessor {
 	private void validateJava() {
 		int release = processingEnv().getSourceVersion().ordinal();
 		if (release < RELEASE_11.ordinal()) throw new IllegalStateException("Java release must be >=11, is " + release);
-	}
-
-	/// Validate that no existing `META-INF/services/` entries exist for the provided SPI (and associated resource location).
-	private boolean validateUnimplemented(Filer filer, String spi, String resource) {
-		try (Reader reader = filer.getResource(CLASS_OUTPUT, EMPTY, resource).openReader(true)) {
-			if (reader.read() != -1) return true;
-			logError("Found a service provider list for SPI '%s' at '%s'.", spi, resource);
-			return false;
-		} catch (IOException exception) {
-			return true;
-		}
 	}
 
 	/// Replace all `$` in a string with `.`, to provide readable output for inner class references.
