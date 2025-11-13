@@ -27,7 +27,6 @@
 		<module>stellar.facility</module>
 
         <module>stellar.logging</module>
-		<module>stellar.logging.bundle</module>
 
 		<module>stellar.logging.collect.slf4j</module>
 
