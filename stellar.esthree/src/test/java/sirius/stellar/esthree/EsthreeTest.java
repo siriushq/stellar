@@ -7,6 +7,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import javax.net.ssl.SSLException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
+import static java.lang.System.*;
 import static org.assertj.core.api.Assertions.*;
 import static sirius.stellar.esthree.Esthree.Region.*;
 
@@ -23,6 +30,22 @@ final class EsthreeTest {
 			.endpoint("http://127.0.0.1:9000", false)
 			.credentials("minioadmin", "minioadmin")
 			.build();
+	}
+
+	/// Returns `false` if the S3 server is not running, also sending an error message.
+	boolean running() {
+		try {
+			var url = URI.create("https://127.0.0.1:9000").toURL();
+			url.openConnection()
+					.getInputStream()
+					.readAllBytes();
+			return true;
+		} catch (SSLException exception) {
+			return true;
+		} catch (IOException exception) {
+			err.printf("Failed to connect to mock S3 server, skipping test (%s)\n", exception);
+			return false;
+		}
 	}
 
 	@Test @Order(1)
@@ -42,6 +65,7 @@ final class EsthreeTest {
 	@Test @Order(3)
 	@DisplayName("Esthree successfully creates bucket")
 	void successfullyCreatesBucket() {
+		if (!running()) return;
 		assertThatNoException().isThrownBy(() -> {
 			var esthree = this.esthree();
 			esthree.createBucket("example-123");
@@ -51,6 +75,7 @@ final class EsthreeTest {
 	@Test @Order(4)
 	@DisplayName("Esthree successfully checks existence of bucket")
 	void successfullyChecksBucketExistence() {
+		if (!running()) return;
 		var esthree = this.esthree();
 		assertThat(esthree.existsBucket("example-123")).isTrue();
 	}
@@ -58,6 +83,7 @@ final class EsthreeTest {
 	@Test @Order(5)
 	@DisplayName("Esthree successfully deletes bucket")
 	void successfullyDeletesBucket() {
+		if (!running()) return;
 		assertThatNoException().isThrownBy(() -> {
 			var esthree = this.esthree();
 			esthree.deleteBucket("example-123");
@@ -67,6 +93,7 @@ final class EsthreeTest {
 	@Test @Order(6)
 	@DisplayName("Esthree successfully checks non-existence of bucket")
 	void successfullyChecksBucketNonExistence() {
+		if (!running()) return;
 		var esthree = this.esthree();
 		assertThat(esthree.existsBucket("example-123")).isFalse();
 	}
@@ -74,6 +101,8 @@ final class EsthreeTest {
 	@Test @Order(7)
 	@DisplayName("Esthree does not expose credentials in stacktrace")
 	void doesNotExposeCredentialsStacktrace() {
+		if (!running()) return;
+
 		var esthree = this.esthree();
 		var signer = (DEsthreeSigner) this.esthreeSigner();
 
