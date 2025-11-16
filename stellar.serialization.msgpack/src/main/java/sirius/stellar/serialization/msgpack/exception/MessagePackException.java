@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.serialization.msgpack.exception;
 
+import java.io.Serial;
+
 /// A base class for all the message pack exceptions.
 public class MessagePackException extends RuntimeException {
+
+	@Serial
+	private static final long serialVersionUID = -8500291745795509824L;
 
 	public MessagePackException() {
 		super();

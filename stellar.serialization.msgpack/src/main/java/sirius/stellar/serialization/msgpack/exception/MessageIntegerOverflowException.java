@@ -3,6 +3,7 @@ package sirius.stellar.serialization.msgpack.exception;
 
 import sirius.stellar.serialization.msgpack.MessageUnpacker;
 
+import java.io.Serial;
 import java.math.BigInteger;
 
 /// This error is thrown when the caller tries to read a numeric value
@@ -11,6 +12,9 @@ import java.math.BigInteger;
 /// For example, calling [MessageUnpacker#unpackInt()] for a value
 /// that is larger than [Integer#MAX_VALUE] will cause this exception.
 public class MessageIntegerOverflowException extends MessageTypeException {
+
+	@Serial
+	private static final long serialVersionUID = 5950422114695899642L;
 
 	private final BigInteger number;
 

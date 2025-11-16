@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.serialization.msgpack.exception;
 
+import java.io.Serial;
+
 /// Exception that indicates end of input.
 public class MessageInsufficientBufferException extends MessagePackException {
+
+	@Serial
+	private static final long serialVersionUID = -4434520549029117922L;
 
 	public MessageInsufficientBufferException() {
 		super();
