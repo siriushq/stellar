@@ -23,7 +23,7 @@ import static sirius.stellar.esthree.Esthree.Region.*;
 final class DEsthree implements Esthree {
 
 	/// The `xmlns` property, required on the root tag to make S3 requests with bodies.
-	private static final String xmlns = "http://s3.amazonaws.com/doc/2006-03-01/";
+	private static final String XMLNS = "http://s3.amazonaws.com/doc/2006-03-01/";
 
 	private final EsthreeSigner signer;
 	private final HttpClient client;
@@ -79,7 +79,7 @@ final class DEsthree implements Esthree {
 
 		if (!this.region.equals(US_EAST_1.toString())) {
 			Document document = this.parser.newDocument();
-			Element root = document.createElementNS(xmlns, "CreateBucketConfiguration");
+			Element root = document.createElementNS(XMLNS, "CreateBucketConfiguration");
 
 			Element location = document.createElement("LocationConstraint");
 			location.setTextContent(name);
