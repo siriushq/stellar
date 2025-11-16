@@ -150,4 +150,11 @@
             </dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<distributionManagement>
+		<repository>
+			<id>sirius</id>
+			<url>https://maven.sirius.cam/</url>
+		</repository>
+	</distributionManagement>
 </project>
