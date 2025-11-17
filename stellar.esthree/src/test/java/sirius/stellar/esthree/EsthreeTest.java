@@ -24,10 +24,10 @@ final class EsthreeTest {
 
 	Esthree esthree() {
 		return Esthree.builder()
-			.region(US_EAST_2)
-			.endpoint("http://127.0.0.1:9000", false)
-			.credentials("minioadmin", "minioadmin")
-			.build();
+				.region(US_EAST_2)
+				.endpoint("http://127.0.0.1:9000", false)
+				.credentials("minioadmin", "minioadmin")
+				.build();
 	}
 
 	/// Returns `true` if the S3 server is not running, also sending an error message.
@@ -57,7 +57,8 @@ final class EsthreeTest {
 	@Test @Order(2)
 	@DisplayName("Esthree fails with credential-free instantiation")
 	void failsCredentialFreeInstantiation() {
-		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> Esthree.builder().build());
+		assertThatExceptionOfType(IllegalStateException.class)
+				.isThrownBy(() -> Esthree.builder().build());
 	}
 
 	@Test @Order(3)

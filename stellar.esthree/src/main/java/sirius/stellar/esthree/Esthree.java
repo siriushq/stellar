@@ -47,7 +47,15 @@ public interface Esthree extends AutoCloseable {
 
 	/// [Future]-based variant of [#buckets()].
 	/// @throws io.avaje.http.client.HttpException if the request failed
-	CompletableFuture<Stream<Bucket>> bucketsFuture();
+	Stream<CompletableFuture<Bucket>> bucketsFuture();
+
+	/// [#buckets()], efficiently limiting results with the provided prefix string.
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	Stream<Bucket> buckets(String prefix);
+
+	/// [Future]-based variant of [#buckets(String)].
+	/// @throws io.avaje.http.client.HttpException if the request failed
+	Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix);
 
 	/// Create a bucket with the provided name.
 	/// @throws io.avaje.http.client.HttpException if the request failed

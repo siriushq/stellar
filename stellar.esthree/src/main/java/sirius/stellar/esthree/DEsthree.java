@@ -3,6 +3,8 @@ package sirius.stellar.esthree;
 import io.avaje.http.client.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.Transformer;
@@ -49,12 +51,47 @@ final class DEsthree implements Esthree {
 
 	@Override
 	public Stream<Bucket> buckets() {
-		return Stream.empty();
+		return this.bucketsPaginator(this.client.request()).stream();
 	}
 
 	@Override
-	public CompletableFuture<Stream<Bucket>> bucketsFuture() {
-		return null;
+	public Stream<CompletableFuture<Bucket>> bucketsFuture() {
+		return this.bucketsPaginator(this.client.request()).streamFuture();
+	}
+
+	@Override
+	public Stream<Bucket> buckets(String prefix) {
+		HttpClientRequest request = this.client.request();
+		request.queryParam("prefix", prefix);
+		return this.bucketsPaginator(request).stream();
+	}
+
+	@Override
+	public Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix) {
+		HttpClientRequest request = this.client.request();
+		request.queryParam("prefix", prefix);
+		return this.bucketsPaginator(request).streamFuture();
+	}
+
+	/// Return a paginator used to execute the AWS `ListBuckets` method.
+	/// Used by [#buckets] and [#bucketsFuture].
+	private DEsthreePaginator<Bucket> bucketsPaginator(HttpClientRequest request) {
+		String continuation = "ContinuationToken";
+		return new DEsthreePaginator<>(this.parser, this.signer, continuation, request, document -> {
+			NodeList bucketsTags = document.getElementsByTagName("Buckets");
+			if (bucketsTags.getLength() == 0) return 0;
+
+			Node buckets = bucketsTags.item(0);
+			return buckets.getChildNodes().getLength();
+		}, (document, index) -> {
+			NodeList bucketsTags = document.getElementsByTagName("Buckets");
+			if (bucketsTags.getLength() == 0) throw new IllegalStateException();
+
+			Node buckets = bucketsTags.item(0);
+			Node bucket = buckets.getChildNodes().item(index);
+
+			return new DEsthreeBucket(bucket);
+		});
 	}
 
 	@Override
@@ -114,7 +151,7 @@ final class DEsthree implements Esthree {
 		HttpClientRequest request = this.client.request();
 		this.endpoint(request, name);
 
-		this.signer.sign("DELETE", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		this.signer.sign("DELETE", request, BodyContent.of(new byte[0]));
 		return request.DELETE();
 	}
 
@@ -144,7 +181,7 @@ final class DEsthree implements Esthree {
 		HttpClientRequest request = this.client.request();
 		this.endpoint(request, name);
 
-		this.signer.sign("HEAD", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		this.signer.sign("HEAD", request, BodyContent.of(new byte[0]));
 		return request.HEAD();
 	}
 

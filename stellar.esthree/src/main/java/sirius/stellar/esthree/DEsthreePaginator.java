@@ -1,16 +1,178 @@
 package sirius.stellar.esthree;
 
-import java.util.Iterator;
+import io.avaje.http.client.BodyContent;
+import io.avaje.http.client.HttpClientRequest;
+import io.avaje.http.client.HttpClientResponse;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.http.HttpResponse;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
+import static java.util.Spliterators.*;
+import static java.util.concurrent.CompletableFuture.*;
+
+/// A paginator implementation for [Document], reading into `T` using a conversion function.
+/// This utilizes [Iterator] and provides [#stream()] to obtain a [Stream] view of it.
 final class DEsthreePaginator<T> implements Iterator<T> {
+
+	private final DocumentBuilder parser;
+	private final EsthreeSigner signer;
+
+	private final String continuation;
+	private final HttpClientRequest request;
+
+	private final Function<Document, Integer> measurer;
+	private final BiFunction<Document, Integer, T> reader;
+
+	/// The previous response body, used for retrieving the next continuation.
+	private Document previous;
+
+	/// The index of the response list that the cursor is currently placed at.
+	private int index;
+
+	/// The size of the list returned in the previous response.
+	private int size;
+
+	/// Instantiate this paginator, with the provided field name for obtaining continuation tokens
+	/// (e.g. `ContinuationToken` or `NextContinuationToken`) from the provided [Document], using
+	/// the provided function that converts each [Document] response to `T` instances.
+	///
+	/// @param parser [DocumentBuilder] used for parsing XML body responses.
+	/// @param signer [EsthreeSigner] used for signing request body content.
+	///
+	/// @param continuation Field name used for obtaining continuation tokens from the root of a
+	/// [Document], e.g. `ContinuationToken` or `NextContinuationToken`.
+	/// @param request Request builder to append a `continuation-token` query parameter to.
+	///
+	/// @param measurer Function for measuring how many elements are in a response body list.
+	/// @param reader Function for reading the next element from the response body list.
+	DEsthreePaginator(DocumentBuilder parser, EsthreeSigner signer, String continuation, HttpClientRequest request, Function<Document, Integer> measurer, BiFunction<Document, Integer, T> reader) {
+		this.parser = parser;
+		this.signer = signer;
+
+		this.continuation = continuation;
+		this.request = request;
+
+		this.measurer = measurer;
+		this.reader = reader;
+
+		this.previous = parser.newDocument();
+	}
 
 	@Override
 	public boolean hasNext() {
-		return false;
+		return (this.index < this.size)
+				|| this.previous.getElementsByTagName(this.continuation).getLength() > 0
+				|| (this.index == 0 && this.size == 0);
 	}
 
 	@Override
 	public T next() {
-		return null;
+		if (this.index < this.size) {
+			T t = this.reader.apply(this.previous, this.index);
+			this.index++;
+			return t;
+		}
+
+		try (InputStream stream = this.nextResponse()
+					.asInputStream()
+					.body()) {
+			return nextBody(stream);
+		} catch (IOException | SAXException exception) {
+			throw new IllegalStateException("Failed to parse next response body for paginated Esthree request", exception);
+		}
+	}
+
+	/// Non-blocking analogous implementation of [#next].
+	public CompletableFuture<T> nextFuture() {
+		if (this.index < this.size) return supplyAsync(() -> {
+			T t = this.reader.apply(this.previous, this.index);
+			this.index++;
+			return t;
+		});
+
+		return this.nextResponse()
+				.async()
+				.asInputStream()
+				.thenApplyAsync(HttpResponse::body)
+				.thenApplyAsync(stream -> {
+					try (stream) {
+						return nextBody(stream);
+					} catch (IOException | SAXException exception) {
+						throw new CompletionException("Failed to parse next response body for asynchronous paginated Esthree request", exception);
+					}
+				});
+	}
+
+	/// Execute the request and return the associated [HttpClientResponse].
+	/// Used by [#next] and [#nextFuture].
+	private HttpClientResponse nextResponse() {
+		String token = this.previous.getElementsByTagName(this.continuation)
+				.item(0)
+				.getTextContent();
+
+		HttpClientRequest request = this.request;
+		if (token != null && !token.isBlank()) request.queryParam("continuation-token", token);
+
+		this.signer.sign("GET", request, BodyContent.of(new byte[0]));
+		return request.GET();
+	}
+
+	/// Obtain the next body from the provided [InputStream] (to retrieve from [#nextResponse]).
+	/// @return The first element from the newly read body.
+	private T nextBody(InputStream stream) throws SAXException, IOException {
+		this.previous = this.parser.parse(stream);
+		this.size = this.measurer.apply(this.previous);
+
+		this.index = 0;
+		T t = this.reader.apply(this.previous, this.index);
+		this.index++;
+
+		return t;
+	}
+
+	/// Returns a view of this paginator as a [Stream].
+	public Stream<T> stream() {
+		Spliterator<T> spliterator = spliteratorUnknownSize(this, 0);
+		return StreamSupport.stream(spliterator, false);
+	}
+
+	/// Returns a view of this paginator as a [Stream] of [CompletableFuture]s.
+	public Stream<CompletableFuture<T>> streamFuture() {
+		Iterator<CompletableFuture<T>> iteratorFuture = new DEsthreePaginatorFuture<>(this);
+		Spliterator<CompletableFuture<T>> spliterator = spliteratorUnknownSize(iteratorFuture, 0);
+		return StreamSupport.stream(spliterator, false);
+	}
+}
+
+/// Wraps the given [DEsthreePaginator] (which is an `[Iterator] of `T`), and returns an
+/// [Iterator] of [CompletableFuture] of `T`, using [DEsthreePaginator#nextFuture()] method.
+final class DEsthreePaginatorFuture<T> implements Iterator<CompletableFuture<T>> {
+
+	private final DEsthreePaginator<T> delegate;
+
+	DEsthreePaginatorFuture(DEsthreePaginator<T> delegate) {
+		this.delegate = delegate;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return this.delegate.hasNext();
+	}
+
+	@Override
+	public CompletableFuture<T> next() {
+		return this.delegate.nextFuture();
 	}
 }

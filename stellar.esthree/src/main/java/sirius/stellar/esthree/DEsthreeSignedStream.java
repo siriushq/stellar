@@ -35,8 +35,8 @@ final class DEsthreeSignedStream extends InputStream {
 
 	@Override
 	public int read() throws IOException {
-		if (bufferPosition >= bufferLimit && this.refillBuffer()) return -1;
-		return buffer[bufferPosition++] & 0xFF;
+		if (this.bufferPosition >= this.bufferLimit && this.refillBuffer()) return -1;
+		return this.buffer[this.bufferPosition++] & 0xFF;
 	}
 
 	@Override
