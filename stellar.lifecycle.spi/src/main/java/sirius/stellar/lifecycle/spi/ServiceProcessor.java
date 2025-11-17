@@ -1,6 +1,6 @@
 package sirius.stellar.lifecycle.spi;
 
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.facility.tuple.Couple;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Provides;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Requires;

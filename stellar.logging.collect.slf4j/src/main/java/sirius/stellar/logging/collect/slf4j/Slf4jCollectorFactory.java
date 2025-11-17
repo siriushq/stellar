@@ -1,6 +1,6 @@
 package sirius.stellar.logging.collect.slf4j;
 
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.collect.Collector;
 
 /// Implementation of [Collector.Provider] used for obtaining instances of [Slf4jCollector].

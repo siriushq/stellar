@@ -1,6 +1,6 @@
 package sirius.stellar.logging.dispatch.tinylog;
 
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

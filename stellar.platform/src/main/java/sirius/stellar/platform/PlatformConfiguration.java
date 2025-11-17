@@ -1,7 +1,7 @@
 package sirius.stellar.platform;
 
 import sirius.stellar.facility.Strings;
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 
 import java.io.*;
 import java.nio.file.Files;

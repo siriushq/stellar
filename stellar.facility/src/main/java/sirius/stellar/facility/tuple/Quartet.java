@@ -3,7 +3,7 @@ package sirius.stellar.facility.tuple;
 import org.jetbrains.annotations.Contract;
 import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import java.io.Serial;

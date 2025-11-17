@@ -2,7 +2,7 @@ package sirius.stellar.logging.collect;
 
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerMessage;
 

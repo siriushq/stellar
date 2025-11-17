@@ -1,6 +1,6 @@
 package sirius.stellar.logging.dispatch.jboss;
 
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 
 /// Represents an entry in the NDC provided by [JbossProvider].
 @Internal

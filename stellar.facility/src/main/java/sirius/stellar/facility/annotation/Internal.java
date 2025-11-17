@@ -1,4 +1,4 @@
-package sirius.stellar.facility.doctation;
+package sirius.stellar.facility.annotation;
 
 import java.lang.annotation.*;
 

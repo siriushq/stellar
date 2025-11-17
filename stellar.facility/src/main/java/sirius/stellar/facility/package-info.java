@@ -7,7 +7,7 @@
 /// ## Contents
 /// - [sirius.stellar.facility]
 /// - [sirius.stellar.facility.concurrent]
-/// - [sirius.stellar.facility.doctation]
+/// - [sirius.stellar.facility.annotation]
 /// - [sirius.stellar.facility.exception]
 /// - [sirius.stellar.facility.executor]
 /// - [sirius.stellar.facility.terminal]

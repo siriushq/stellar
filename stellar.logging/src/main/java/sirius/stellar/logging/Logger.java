@@ -3,7 +3,7 @@ package sirius.stellar.logging;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.Throwables;
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.collect.Collector;
 import sirius.stellar.logging.dispatch.Dispatcher;

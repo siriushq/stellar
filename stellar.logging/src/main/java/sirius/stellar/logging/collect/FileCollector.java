@@ -1,7 +1,7 @@
 package sirius.stellar.logging.collect;
 
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.doctation.Internal;
+import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.IOException;

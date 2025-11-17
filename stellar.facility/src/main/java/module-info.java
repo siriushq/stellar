@@ -7,7 +7,7 @@ module sirius.stellar.facility {
 	requires org.jspecify;
 
 	exports sirius.stellar.facility.concurrent;
-	exports sirius.stellar.facility.doctation;
+	exports sirius.stellar.facility.annotation;
 	exports sirius.stellar.facility.exception;
 	exports sirius.stellar.facility.executor;
 	exports sirius.stellar.facility.functional;
