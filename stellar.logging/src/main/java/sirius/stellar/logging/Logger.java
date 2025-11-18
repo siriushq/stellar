@@ -64,7 +64,7 @@ public final class Logger {
 	/// @see LoggerLevel
 	/// @since 1.0
 	public static void severity(int value) {
-		if (value < 0) throw new UnsupportedOperationException("Logger severity must be between 0 and " + Integer.MAX_VALUE);
+		if (value < -1) throw new UnsupportedOperationException("Logger severity must be between -1 and " + Integer.MAX_VALUE);
 		severity = value;
 	}
 
