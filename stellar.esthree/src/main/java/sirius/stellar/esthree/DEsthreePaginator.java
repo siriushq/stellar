@@ -4,6 +4,7 @@ import io.avaje.http.client.BodyContent;
 import io.avaje.http.client.HttpClientRequest;
 import io.avaje.http.client.HttpClientResponse;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -80,6 +81,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	@Override
 	public T next() {
 		if (this.index < this.size) {
+			if (EsthreeException.detected(this.previous)) throw EsthreeException.of(this.previous);
 			T t = this.reader.apply(this.previous, this.index);
 			this.index++;
 			return t;
@@ -97,6 +99,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// Non-blocking analogous implementation of [#next].
 	public CompletableFuture<T> nextFuture() {
 		if (this.index < this.size) return supplyAsync(() -> {
+			if (EsthreeException.detected(this.previous)) throw EsthreeException.of(this.previous);
 			T t = this.reader.apply(this.previous, this.index);
 			this.index++;
 			return t;
@@ -118,12 +121,11 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// Execute the request and return the associated [HttpClientResponse].
 	/// Used by [#next] and [#nextFuture].
 	private HttpClientResponse nextResponse() {
-		String token = this.previous.getElementsByTagName(this.continuation)
-				.item(0)
-				.getTextContent();
+		Node token = this.previous.getElementsByTagName(this.continuation).item(0);
 
-		HttpClientRequest request = this.request;
-		if (token != null && !token.isBlank()) request.queryParam("continuation-token", token);
+		HttpClientRequest request = this.request.clone();
+		request.queryParam("max-buckets", "1000");
+		if (token != null) request.queryParam("continuation-token", token.getTextContent());
 
 		this.signer.sign("GET", request, BodyContent.of(new byte[0]));
 		return request.GET();
@@ -133,9 +135,11 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// @return The first element from the newly read body.
 	private T nextBody(InputStream stream) throws SAXException, IOException {
 		this.previous = this.parser.parse(stream);
-		this.size = this.measurer.apply(this.previous);
+		if (EsthreeException.detected(this.previous)) throw EsthreeException.of(this.previous);
 
+		this.size = this.measurer.apply(this.previous);
 		this.index = 0;
+
 		T t = this.reader.apply(this.previous, this.index);
 		this.index++;
 

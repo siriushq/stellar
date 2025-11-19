@@ -5,12 +5,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -49,6 +51,7 @@ final class DEsthree implements Esthree {
 		this.endpointVirtual = endpointVirtual;
 	}
 
+	//#region buckets*
 	@Override
 	public Stream<Bucket> buckets() {
 		return this.bucketsPaginator(this.client.request()).stream();
@@ -85,7 +88,7 @@ final class DEsthree implements Esthree {
 			return buckets.getChildNodes().getLength();
 		}, (document, index) -> {
 			NodeList bucketsTags = document.getElementsByTagName("Buckets");
-			if (bucketsTags.getLength() == 0) throw new IllegalStateException();
+			if (bucketsTags.getLength() == 0) throw new IllegalStateException();//TODO
 
 			Node buckets = bucketsTags.item(0);
 			Node bucket = buckets.getChildNodes().item(index);
@@ -93,19 +96,24 @@ final class DEsthree implements Esthree {
 			return new DEsthreeBucket(bucket);
 		});
 	}
+	//#endregion
 
+	//#region createBucket*
 	@Override
 	public void createBucket(String name) {
-		this.createBucketResponse(name)
-				.asVoid();
+		byte[] body = this.createBucketResponse(name)
+				.asByteArray()
+				.body();
+		this.errorResponse(body);
 	}
 
 	@Override
 	public CompletableFuture<Void> createBucketFuture(String name) {
 		return this.createBucketResponse(name)
 				.async()
-				.asVoid()
-				.thenApply(HttpResponse::body);
+				.asByteArray()
+				.thenApply(HttpResponse::body)
+				.thenAccept(this::errorResponse);
 	}
 
 	/// Execute the AWS `CreateBucket` method and return the associated [HttpClientResponse].
@@ -130,19 +138,24 @@ final class DEsthree implements Esthree {
 		this.signer.sign("PUT", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
 		return request.PUT();
 	}
+	//#endregion
 
+	//#region deleteBucket*
 	@Override
 	public void deleteBucket(String name) {
-		this.deleteBucketResponse(name)
-				.asVoid();
+		byte[] body = this.deleteBucketResponse(name)
+				.asByteArray()
+				.body();
+		this.errorResponse(body);
 	}
 
 	@Override
 	public CompletableFuture<Void> deleteBucketFuture(String name) {
 		return this.deleteBucketResponse(name)
 				.async()
-				.asVoid()
-				.thenApply(HttpResponse::body);
+				.asByteArray()
+				.thenApply(HttpResponse::body)
+				.thenAccept(this::errorResponse);
 	}
 
 	/// Execute the AWS `DeleteBucket` method and return the associated [HttpClientResponse].
@@ -154,14 +167,17 @@ final class DEsthree implements Esthree {
 		this.signer.sign("DELETE", request, BodyContent.of(new byte[0]));
 		return request.DELETE();
 	}
+	//#endregion
 
+	//#region existsBucket
 	@Override
 	public boolean existsBucket(String name) {
 		try {
-			return this.existsBucketResponse(name)
-					.asVoid()
-					.statusCode() == 200;
+			HttpResponse<byte[]> response = this.existsBucketResponse(name).asByteArray();
+			this.errorResponse(response.body());
+			return response.statusCode() == 200;
 		} catch (HttpException exception) {
+			this.errorResponse(exception.bodyAsBytes());
 			return false;
 		}
 	}
@@ -170,9 +186,17 @@ final class DEsthree implements Esthree {
 	public CompletableFuture<Boolean> existsBucketFuture(String name) {
 		return this.existsBucketResponse(name)
 				.async()
-				.asVoid()
-				.thenApply(response -> response.statusCode() == 200)
-				.exceptionally(throwable -> false);
+				.asByteArray()
+				.thenApply(response -> {
+					this.errorResponse(response.body());
+					return (response.statusCode() == 200);
+				})
+				.exceptionally(throwable -> {
+					if (!(throwable instanceof HttpException)) return false;
+					HttpException exception = (HttpException) throwable;
+					this.errorResponse(exception.bodyAsBytes());
+					return false;
+				});
 	}
 
 	/// Execute the AWS `HeadBucket` method and return the associated [HttpClientResponse].
@@ -184,6 +208,7 @@ final class DEsthree implements Esthree {
 		this.signer.sign("HEAD", request, BodyContent.of(new byte[0]));
 		return request.HEAD();
 	}
+	//#endregion
 
 	/// Write the provided document to a [String].
 	///
@@ -211,6 +236,21 @@ final class DEsthree implements Esthree {
 			request.url(endpoint);
 		}
 	}
+
+	/// Assert that the provided body does not contain an error response.
+	/// Throws [EsthreeException] if an error is found, using the contents of the response.
+	private void errorResponse(byte[] body) {
+		try {
+			if (body.length == 0) return;
+			Document document = this.parser.parse(new ByteArrayInputStream(body));
+
+			if (!EsthreeException.detected(document)) return;
+			throw EsthreeException.of(document);
+		} catch (IOException | SAXException exception) {
+			throw EsthreeException.of(this.parser.newDocument(), exception);
+		}
+	}
+
 
 	@Override
 	public HttpClient httpClient() {

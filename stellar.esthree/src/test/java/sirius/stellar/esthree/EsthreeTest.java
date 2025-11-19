@@ -1,6 +1,5 @@
 package sirius.stellar.esthree;
 
-import io.avaje.http.client.HttpException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -9,9 +8,15 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import javax.net.ssl.SSLException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URI;
+import java.time.Instant;
 
 import static java.lang.System.*;
+import static java.time.temporal.ChronoUnit.*;
+import static java.util.stream.Collectors.*;
+import static java.util.stream.IntStream.*;
 import static org.assertj.core.api.Assertions.*;
 import static sirius.stellar.esthree.Esthree.Region.*;
 
@@ -48,7 +53,7 @@ final class EsthreeTest {
 
 	@Test @Order(1)
 	@DisplayName("Esthree does not fail during instantiation")
-	void notFailsInstantiation() {
+	void instantiation() {
 		assertThatNoException().isThrownBy(() -> Esthree.builder()
 				.credentials("example", "example")
 				.build());
@@ -56,14 +61,14 @@ final class EsthreeTest {
 
 	@Test @Order(2)
 	@DisplayName("Esthree fails with credential-free instantiation")
-	void failsCredentialFreeInstantiation() {
+	void credentialFreeInstantiation() {
 		assertThatExceptionOfType(IllegalStateException.class)
 				.isThrownBy(() -> Esthree.builder().build());
 	}
 
 	@Test @Order(3)
 	@DisplayName("Esthree successfully creates bucket")
-	void successfullyCreatesBucket() {
+	void createBucket() {
 		if (unavailable()) return;
 		assertThatNoException().isThrownBy(() -> {
 			var esthree = this.esthree();
@@ -73,7 +78,7 @@ final class EsthreeTest {
 
 	@Test @Order(4)
 	@DisplayName("Esthree successfully checks existence of bucket")
-	void successfullyChecksBucketExistence() {
+	void checkBucketExistence() {
 		if (unavailable()) return;
 		var esthree = this.esthree();
 		assertThat(esthree.existsBucket("example-123")).isTrue();
@@ -81,7 +86,7 @@ final class EsthreeTest {
 
 	@Test @Order(5)
 	@DisplayName("Esthree successfully deletes bucket")
-	void successfullyDeletesBucket() {
+	void deleteBucket() {
 		if (unavailable()) return;
 		assertThatNoException().isThrownBy(() -> {
 			var esthree = this.esthree();
@@ -91,13 +96,53 @@ final class EsthreeTest {
 
 	@Test @Order(6)
 	@DisplayName("Esthree successfully checks non-existence of bucket")
-	void successfullyChecksBucketNonExistence() {
+	void checksBucketNonExistence() {
 		if (unavailable()) return;
 		var esthree = this.esthree();
 		assertThat(esthree.existsBucket("example-123")).isFalse();
 	}
 
 	@Test @Order(7)
+	@DisplayName("Esthree successfully mass-creates 2000 buckets")
+	void createBuckets() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			var esthree = this.esthree();
+			for (int i = 0; i < 2000; i++) esthree.createBucket("example-" + i);
+		});
+	}
+
+	@Test @Order(8)
+	@DisplayName("Esthree successfully lists 2000 buckets with pagination and prefix limiting")
+	void listBuckets() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			var esthree = this.esthree();
+			var yesterday = Instant.now().minus(24, HOURS);
+
+			var expected = range(0, 2000)
+					.mapToObj(index -> "example-" + index)
+					.collect(toList());
+
+			assertThat(esthree.buckets("example-")
+					.filter(bucket -> bucket.creation().isAfter(yesterday))
+					.map(Esthree.Bucket::name)
+					.collect(toList()))
+					.isEqualTo(expected);
+		});
+	}
+
+	@Test @Order(9)
+	@DisplayName("Esthree successfully mass-deletes 2000 buckets")
+	void deleteBuckets() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			var esthree = this.esthree();
+			for (int i = 0; i < 2000; i++) esthree.deleteBucket("example-" + i);
+		});
+	}
+
+	@Test @Order(10)
 	@DisplayName("Esthree does not expose credentials in stacktrace")
 	void doesNotExposeCredentialsStacktrace() {
 		if (unavailable()) return;
@@ -106,8 +151,12 @@ final class EsthreeTest {
 		var signer = (DEsthreeSigner) this.esthreeSigner();
 
 		assertThatThrownBy(() -> esthree.deleteBucket("example-123"))
-				.isInstanceOf(HttpException.class)
-				.extracting(Throwable::getMessage)
+				.isInstanceOf(EsthreeException.class)
+				.extracting(throwable -> {
+					var writer = new StringWriter();
+					throwable.printStackTrace(new PrintWriter(writer));
+					return writer.toString();
+				})
 				.satisfies(message -> {
 					assertThat(message).doesNotContain("minioadmin");
 					assertThat(message).doesNotContain(signer.hex(signer.sha256(new byte[0])));

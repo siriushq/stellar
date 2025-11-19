@@ -4,6 +4,10 @@ import io.avaje.http.client.HttpClient;
 
 import java.net.URI;
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
@@ -42,35 +46,35 @@ public interface Esthree extends AutoCloseable {
 	/// request, it is very possible that the [Stream] will take a long time to completely iterate
 	/// every page; S3 is considered a trusted host, but this could be used as an attack vector.
 	///
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	Stream<Bucket> buckets();
 
 	/// [Future]-based variant of [#buckets()].
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	Stream<CompletableFuture<Bucket>> bucketsFuture();
 
 	/// [#buckets()], efficiently limiting results with the provided prefix string.
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	Stream<Bucket> buckets(String prefix);
 
 	/// [Future]-based variant of [#buckets(String)].
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix);
 
 	/// Create a bucket with the provided name.
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	void createBucket(String name);
 
 	/// [Future] based variant of [#createBucket(String)].
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> createBucketFuture(String name);
 
 	/// Delete a bucket with the provided name.
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	void deleteBucket(String name);
 
 	/// [Future] based variant of [#deleteBucket(String)].
-	/// @throws io.avaje.http.client.HttpException if the request failed
+	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> deleteBucketFuture(String name);
 
 	/// Return whether a bucket with the provided name exists.
@@ -220,6 +224,13 @@ public interface Esthree extends AutoCloseable {
 			this.identifier = identifier;
 		}
 
+		/// Parse a [Region] from the provided string identifier.
+		public static Optional<Region> from(String identifier) {
+			return Arrays.stream(Region.values())
+					.filter(region -> region.identifier.equals(identifier))
+					.findFirst();
+		}
+
 		@Override
 		public String toString() {
 			return this.identifier;
@@ -230,15 +241,21 @@ public interface Esthree extends AutoCloseable {
 	interface Bucket {
 
 		/// The Amazon Resource Name (ARN) of the S3 bucket.
+		/// @throws NoSuchElementException if field is missing from response
 		String arn();
 
 		/// The AWS region where the bucket is located.
-		String region();
+		/// @throws NoSuchElementException if field is missing from response
+		/// @throws IllegalStateException failed to parse response region
+		Region region();
 
 		/// Date the bucket was created (some bucket changes can update this).
+		/// @throws NoSuchElementException if field is missing from response
+		/// @throws DateTimeParseException failure to parse response timestamp
 		Instant creation();
 
 		/// The name of the bucket.
+		/// @throws NoSuchElementException if field is missing from response
 		String name();
 	}
 }
