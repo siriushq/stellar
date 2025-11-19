@@ -18,7 +18,7 @@ package sirius.stellar.logging;
 /// @since 1.0
 public enum LoggerLevel {
 
-	ALL(-1, "All"),
+	OFF(-1, "Off"),
 
 	INFORMATION(0, "Information"),
 	WARNING(1, "Warning"),
@@ -28,7 +28,7 @@ public enum LoggerLevel {
 	DEBUGGING(4, "Debugging"),
 	CONFIGURATION(5, "Configuration"),
 
-	OFF(Integer.MAX_VALUE, "Off");
+	ALL(Integer.MAX_VALUE, "All");
 
 	private final int severity;
 	private final String display;
