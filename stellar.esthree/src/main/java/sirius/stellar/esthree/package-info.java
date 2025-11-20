@@ -20,7 +20,7 @@
 ///     - `CreateBucket`: [sirius.stellar.esthree.Esthree#createBucket]
 /// 	- `DeleteBucket`: [sirius.stellar.esthree.Esthree#deleteBucket]
 ///     - `HeadBucket`: [sirius.stellar.esthree.Esthree#existsBucket]
-///     - `ListBuckets`: [sirius.stellar.esthree.Esthree#buckets]: unimplemented
+///     - `ListBuckets`: [sirius.stellar.esthree.Esthree#buckets]
 ///     <br/><br/>
 ///     - `ListObjectsV2`: unimplemented
 ///     - `GetObject`: unimplemented

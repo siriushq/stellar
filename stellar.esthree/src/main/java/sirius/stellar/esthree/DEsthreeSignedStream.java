@@ -62,10 +62,8 @@ final class DEsthreeSignedStream extends InputStream {
 		return this.bufferLimit - this.bufferPosition;
 	}
 
-	/**
-	 * Read some bytes from {@link #source} and allocate buffer, with space for chunk size & signature.
-	 * Returns {@code true} if EOF is reached, otherwise {@code false} for successful buffer refilling.
-	 */
+	/// Read some bytes from [#source] and allocate buffer, with space for chunk size & signature.
+	/// Returns `true` if EOF is reached, otherwise `false` for successful buffer refilling.
 	private boolean refillBuffer() throws IOException {
 		byte[] chunk = new byte[16 * 1024];
 
@@ -86,7 +84,7 @@ final class DEsthreeSignedStream extends InputStream {
 		return false;
 	}
 
-	/** Build a chunk from the provided read chunk, from the regular {@link InputStream}. */
+	/// Build a chunk from the provided read chunk, from the regular [InputStream].
 	private byte[] buildChunk(byte[] payload) {
 		String hash = this.signer.hex(this.signer.sha256(payload));
 

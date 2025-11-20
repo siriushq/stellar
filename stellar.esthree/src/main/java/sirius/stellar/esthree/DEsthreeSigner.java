@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.*;
 import static java.time.ZoneOffset.*;
@@ -66,10 +65,8 @@ final class DEsthreeSigner implements EsthreeSigner {
 		return new DEsthreeSignedStream(stream, this, this.formatter.format(instant), this.region, candidate);
 	}
 
-	/**
-	 * Sign the provided request with the provided payload hash & date.
-	 * Returns the "string-to-sign" of canonical request, if needed for streaming.
-	 */
+	/// Sign the provided request with the provided payload hash & date.
+	/// Returns the "string-to-sign" of canonical request, if needed for streaming.
 	String sign(String method, HttpClientRequest request, String hash, Instant instant) {
 		String now = this.formatter.format(instant);
 		String date = now.substring(0, 8);
@@ -85,7 +82,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 		String canonical = new StringJoiner("\n")
 				.add(method)
 				.add(uri.getPath().isEmpty() ? "/" : uri.getPath())
-				.add(uri.getQuery() == null ? "" : uri.getQuery())
+				.add(uri.getRawQuery() == null ? "" : this.query(uri.getRawQuery()))
 				.add("host:" + host)
 				.add("x-amz-content-sha256:" + hash)
 				.add("x-amz-date:" + now)
@@ -116,7 +113,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 		return candidate;
 	}
 
-	/** Creates a signing key from the provided date. */
+	/// Creates a signing key from the provided date.
 	byte[] signingKey(String date) {
 		byte[] dateKey = this.hmac(("AWS4" + this.secretKey).getBytes(UTF_8), date);
 		byte[] regionKey = this.hmac(dateKey, this.region);
@@ -124,7 +121,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 		return this.hmac(serviceKey, "aws4_request");
 	}
 
-	/** Generate a SHA256 digest for the provided input. */
+	/// Generate a SHA256 digest for the provided input.
 	byte[] sha256(byte[] input) {
 		try {
 			this.lockSha256.lock();
@@ -134,7 +131,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 		}
 	}
 
-	/** Generate a HMAC with the provided key for the provided payload. */
+	/// Generate a HMAC with the provided key for the provided payload.
 	byte[] hmac(byte[] key, String data) {
 		try {
 			this.lockHmacSha256.lock();
@@ -147,13 +144,23 @@ final class DEsthreeSigner implements EsthreeSigner {
 		}
 	}
 
-	/**
-	 * Convert the provided {@code byte[]} to a hexadecimal representation.
-	 * Used instead of {@code java.util.HexFormat} to support older JVMs.
-	 */
+	/// Convert the provided `byte[]` to a hexadecimal representation.
+	/// Used instead of `java.util.HexFormat` to support older JVMs.
 	String hex(byte[] bytes) {
 		StringBuilder builder = new StringBuilder();
 		for (byte b : bytes) builder.append(String.format("%02x", b));
 		return builder.toString();
+	}
+
+	/// Returns a sorted query parameter string for the provided one,
+	/// to be retrieved from [URI#getRawQuery()].
+	String query(String query) {
+		String[] parameters = query.split("&");
+		Arrays.sort(parameters, (first, second) -> {
+			first = first.split("=")[0];
+			second = second.split("=")[0];
+			return first.compareTo(second);
+		});
+		return String.join("&", parameters);
 	}
 }
