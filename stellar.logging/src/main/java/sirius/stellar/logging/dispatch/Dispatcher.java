@@ -1,22 +1,11 @@
 package sirius.stellar.logging.dispatch;
 
-import sirius.stellar.logging.Logger;
-
 import java.io.Serializable;
 
 /// Represents a dispatcher.
 ///
 /// This is used to wire any dispatchers that are not automatically service loaded by
 /// a given logging facade. Dispatchers that are can simply not implement this interface.
-///
-/// This was created instead of simply referencing all the dispatchers directly in order to
-/// allow for contributions to be made more easily to eventually cover every single logging
-/// facade / implementation (before facades were used) so that not a single library isn't
-/// able to push logging output to [Logger], though this violates the YAGNI rule.
-///
-/// It is a part of the public interface allowing people to respectively register their own
-/// dispatchers given they are attempting to retrofit an unknown/proprietary logging system
-/// that may be called across many internal packages.
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
