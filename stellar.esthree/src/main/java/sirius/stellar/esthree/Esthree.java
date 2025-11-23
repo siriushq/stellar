@@ -30,7 +30,6 @@ import java.util.stream.Stream;
 ///
 /// esthree.buckets()
 ///         .forEach(bucket -> System.out.println(bucket.name()));
-/// }
 /// ```
 /// @see sirius.stellar.esthree
 public interface Esthree extends AutoCloseable {
