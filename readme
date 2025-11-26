@@ -11,6 +11,7 @@ siriushq/stellar
 	<ⓘ> stellar.logging & stellar.facility are usable & stable.
 	<ⓘ> stellar.esthree is not feature-complete yet.
 	<ⓘ> stellar.platform* is to be deleted.
+	<ⓘ> stellar.facility* — many portions to migrate/extract outside
 	<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
 	    stellar.throttle, stellar.serialization, stellar.metrics
 	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
