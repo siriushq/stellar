@@ -1,8 +1,5 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.configuration.ConfigurationProvider;
-import sirius.stellar.configuration.EnvironmentConfigurationProvider;
-import sirius.stellar.configuration.PropertiesConfigurationProvider;
-import sirius.stellar.configuration.SystemConfigurationProvider;
+import sirius.stellar.configuration.*;
 
 @NullMarked
 module sirius.stellar.configuration {
@@ -10,10 +7,17 @@ module sirius.stellar.configuration {
 	exports sirius.stellar.configuration;
 
 	requires static sirius.stellar.lifecycle.spi;
+	requires static jdk.unsupported;
 
 	uses ConfigurationProvider;
+	uses ConfigurationReloader;
+
 	provides ConfigurationProvider with
 			PropertiesConfigurationProvider,
 			EnvironmentConfigurationProvider,
 			SystemConfigurationProvider;
+
+	provides ConfigurationReloader with
+			SignalConfigurationReloader,
+			PropertiesConfigurationReloader;
 }

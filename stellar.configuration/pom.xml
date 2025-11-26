@@ -14,7 +14,6 @@
 	<description>
 		Provides external configuration for JVM services, by default sourcing from JVM Properties,
 		environment variables, and .properties files, also providing dynamic hot-reload functionality.
-		<!-- TODO - hot-reload functionality (default provider sun.misc.Signal/SignalHandler SIGHUP + filesystem reload of loaded .properties) -->
 	</description>
 
 	<properties>
@@ -39,18 +38,54 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Multi-Release>true</Multi-Release>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 
 				<executions>
 					<execution>
-						<id>default-testCompile</id>
+						<id>compile-java23</id>
+
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+
 						<configuration>
+							<release>23</release>
+							<multiReleaseOutput>true</multiReleaseOutput>
+
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/src/main/java23</compileSourceRoot>
+							</compileSourceRoots>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-compile-java23</id>
+
+						<phase>test-compile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+
+						<configuration>
+							<release>23</release>
+
+							<compileSourceRoots>
+								<compileSourceRoot>${project.basedir}/src/test/java23</compileSourceRoot>
+							</compileSourceRoots>
 						</configuration>
 					</execution>
 				</executions>
