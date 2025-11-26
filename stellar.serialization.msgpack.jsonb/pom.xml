@@ -14,7 +14,8 @@
 	<description>Adapter implementing support for the MessagePack binary format to avaje-jsonb (under Apache-2.0).</description>
 
 	<properties>
-		<java.version>17</java.version>
+		<java.version.main>17</java.version.main>
+		<java.version.test>17</java.version.test>
 	</properties>
 
     <dependencies>

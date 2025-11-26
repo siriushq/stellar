@@ -58,7 +58,9 @@
     </modules>
 
     <properties>
-		<java.version>21</java.version>
+		<java.version.main>21</java.version.main>
+		<java.version.test>21</java.version.test>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -170,11 +172,22 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.14.1</version>
 
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-						<proc>full</proc>
-                    </configuration>
+					<executions>
+						<execution>
+							<id>default-compile</id>
+							<configuration>
+								<release>${java.version.main}</release>
+								<proc>full</proc>
+							</configuration>
+						</execution>
+						<execution>
+							<id>default-testCompile</id>
+							<configuration>
+								<release>${java.version.test}</release>
+								<proc>full</proc>
+							</configuration>
+						</execution>
+					</executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

@@ -30,7 +30,8 @@
     </licenses>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version.main>11</java.version.main>
+		<java.version.test>11</java.version.test>
 	</properties>
 
     <build>
