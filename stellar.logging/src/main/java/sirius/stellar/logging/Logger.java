@@ -3,7 +3,6 @@ package sirius.stellar.logging;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.Throwables;
-import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.collect.Collector;
 import sirius.stellar.logging.dispatch.Dispatcher;
@@ -12,11 +11,12 @@ import sirius.stellar.logging.supplier.ThrowableSupplier;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 
+import static java.lang.Runtime.*;
 import static java.lang.StackWalker.Option.*;
+import static java.util.concurrent.Executors.*;
 import static java.util.concurrent.TimeUnit.*;
 import static sirius.stellar.facility.Strings.*;
 
@@ -37,6 +37,9 @@ import static sirius.stellar.facility.Strings.*;
 public final class Logger {
 
 	private static final List<Collector> collectors = new ArrayList<>();
+	private static final Set<Future<?>> futures = new HashSet<>();
+
+	private static final ExecutorService virtual = newVirtualThreadPerTaskExecutor();
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 
 	private static int severity = Integer.MAX_VALUE;
@@ -56,6 +59,20 @@ public final class Logger {
 		} catch (ServiceConfigurationError error) {
 			throw new IllegalStateException("Failed to wire logging collectors", error);
 		}
+
+		getRuntime().addShutdownHook(Thread.ofPlatform().unstarted(() -> {
+			try {
+				for (Future<?> future : futures) future.get(60, SECONDS);
+
+				if (executor != ForkJoinPool.commonPool()) executor.close();
+				for (Collector collector : collectors) collector.close();
+				virtual.close();
+			} catch (ExecutionException | InterruptedException exception) {
+				throw new IllegalStateException("Logging dispatch during shutdown failed or was interrupted", exception);
+			} catch (TimeoutException exception) {
+				throw new IllegalStateException("Logging dispatch during shutdown timed out", exception);
+			}
+		}));
 	}
 
 	/// Set the severity of the logger to the provided value.
@@ -87,7 +104,8 @@ public final class Logger {
 		executor(new SynchronousExecutorService());
 	}
 
-	/// Dispatches a message.
+	/// Dispatches a message (for use when implementing dispatchers, not for
+	/// application logging).
 	///
 	/// @param thread The name of the thread this message was dispatched from.
 	/// This should never be the identifier of the thread [Thread#threadId()].
@@ -102,11 +120,10 @@ public final class Logger {
 	/// When making dispatchers, this should be avoided and the specific style of
 	/// interpolation used by the specific logger or facade that the dispatcher is to
 	/// delegate should be called instead, and this argument should be `null`.
-	@Internal
 	public static void dispatch(Instant time, LoggerLevel level, String thread, String name,
 								@Nullable String text, Object @Nullable... arguments) {
 		if (executor.isShutdown() || executor.isTerminated()) return;
-		executor.submit(() -> {
+		futures.add(executor.submit(() -> {
 			if (!enabled(level)) return;
 			if (text == null || text.isBlank() || text.equalsIgnoreCase("null")) return;
 
@@ -118,36 +135,21 @@ public final class Logger {
 					.text((arguments == null || arguments.length == 0) ? text : format(text, arguments))
 					.build();
 			collectors.forEach(collector -> collector.collect(message));
-		});
+		}));
 	}
 
-	/// Closes the logger.
-	/// This prevents any new messages being dispatched and is an irreversible call.
+	/// Dispatches a task on a virtual thread.
 	///
-	/// It should be noted that collectors often have external dependencies, such as
-	/// message brokers whose clients need to be gracefully closed after the logger.
-	/// The [Collector#close()] method is called during shutdown to allow for this.
+	/// This task will be awaited for on application shutdown, and should be used
+	/// for performing I/O operations for logging, ensuring that those operations
+	/// are efficient, but are still cleaned up.
 	///
-	/// It is extremely important that there are active collectors publishing until
-	/// the end of the lifetime of any given application.
-	public static void close() {
-		try {
-			if (executor != ForkJoinPool.commonPool()) {
-				executor.shutdown();
-				boolean terminated = executor.awaitTermination(10, SECONDS);
-				if (!terminated) throw new IllegalStateException("Failed executor shutdown");
-				executor.close();
-			}
-
-			for (Collector collector : collectors) collector.close();
-
-			Collector.executor.shutdown();
-			boolean terminated = Collector.executor.awaitTermination(10, SECONDS);
-			if (!terminated) throw new IllegalStateException("Failed collector executor shutdown");
-			Collector.executor.close();
-		} catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	/// @return The [Future] that returns `null` on completion, which can be
+	/// canceled in order to interrupt the dispatched task if necessary.
+	public static Future<?> task(Runnable runnable) {
+		Future<?> future = virtual.submit(runnable);
+		futures.add(future);
+		return future;
 	}
 
 	//#region enabled*
