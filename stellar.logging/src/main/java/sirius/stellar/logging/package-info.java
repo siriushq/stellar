@@ -2,9 +2,8 @@
 /// many facades and logging backends such as JCL, JUL, SLF4J, etc.
 ///
 /// For most users, the "best default" configuration would be to provide the
-/// [sirius.stellar.logging.collect.Collector#console] collector, a severity
-/// of [sirius.stellar.logging.LoggerLevel#ERROR]`.severity()`, and use the
-/// default virtual thread executor.
+/// [sirius.stellar.logging.collect.Collector#console] collector and a severity
+/// of [sirius.stellar.logging.LoggerLevel#ERROR]`.severity()`.
 ///
 /// The below example displays common usage patterns:
 /// ```
@@ -18,12 +17,16 @@
 ///         Logger.collector(Collector.console());
 ///         Logger.severity(ERROR.severity());
 ///
+///         //
+///
 ///         // use the statically accessible methods for logging
-///
 ///         Logger.information("Hello, world!");
-///         Logger.stacktrace(throwable, "Failed to reticulate splines");
 ///
-///         // add any dispatchers to your classpath, to use other API, as follows:
+///         // lazy-evaluate throwable
+///         // due to ERROR severity, this throwable is never computed
+///         Logger.stacktrace(() -> new Throwable("..."), "Failed to reticulate splines");
+///
+///         // add dependencies on any dispatchers to use other API, as follows:
 ///
 ///         var slf4j = org.slf4j.LoggerFactory.getLogger(Main.class);
 ///         slf4j.info("Hello from SLF4j!");

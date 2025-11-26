@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 
 import static java.lang.Runtime.*;
 import static java.lang.StackWalker.Option.*;
+import static java.util.Collections.*;
 import static java.util.concurrent.Executors.*;
 import static java.util.concurrent.TimeUnit.*;
 import static sirius.stellar.facility.Strings.*;
@@ -50,11 +51,11 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public final class Logger {
 
-	private static final List<Collector> collectors = new ArrayList<>();
-	private static final Set<Future<?>> futures = new HashSet<>();
-
 	private static final ExecutorService virtual = newVirtualThreadPerTaskExecutor();
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
+
+	private static Set<Collector> collectors = new HashSet<>();
+	private static Set<Future<?>> futures = new HashSet<>();
 
 	private static int severity = Integer.MAX_VALUE;
 	private static ExecutorService executor = ForkJoinPool.commonPool();
@@ -87,6 +88,9 @@ public final class Logger {
 				throw new IllegalStateException("Logging dispatch during shutdown timed out", exception);
 			}
 		}));
+
+		collectors = synchronizedSet(collectors);
+		futures = synchronizedSet(futures);
 	}
 
 	/// Set the severity of the logger to the provided value.
@@ -109,9 +113,8 @@ public final class Logger {
 	/// Set the [ExecutorService] used by the logger to a [SynchronousExecutorService].
 	/// This is a convenience method. It is usually undesirable from a performance perspective.
 	///
-	/// Calling this method will cause (as a side effect) the logger to no longer cause any given
-	/// application to hang/"wait"; there are no non-daemon threads, or any threads for that matter,
-	/// created by the logger as a result of this call.
+	/// This causes all logging methods to execute on their caller thread.
+	/// Thread creation is only used when any registered collectors use [#task].
 	///
 	/// @since 1.0
 	public static void synchronous() {
@@ -189,11 +192,12 @@ public final class Logger {
 	//#region collector*
 	/// Registers the provided collector to run when things are being logged.
 	///
+	/// @throws UnsupportedOperationException collector already registered
 	/// @see #collectors
 	/// @since 1.0
 	public static void collector(Collector collector) {
-		if (collectors.contains(collector)) throw new UnsupportedOperationException("Cannot register the same collector twice");
-		collectors.add(collector);
+		boolean added = collectors.add(collector);
+		if (!added) throw new UnsupportedOperationException("Cannot register the same collector twice");
 	}
 
 	/// Registers the provided collectors to run when things are being logged.
@@ -205,7 +209,7 @@ public final class Logger {
 	/// @see #collector
 	/// @since 1.0
 	public static void collectors(Iterable<Collector> collectors) {
-		collectors.forEach(Logger::collector);
+		for (Collector collector : collectors) collector(collector);
 	}
 	//#endregion
 
