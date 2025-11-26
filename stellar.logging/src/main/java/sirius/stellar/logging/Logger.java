@@ -23,14 +23,28 @@ import static sirius.stellar.facility.Strings.*;
 /// This class is the main entry-point for the logging system.
 /// By default, no collectors are registered. See [sirius.stellar.logging] for a usage example.
 ///
+/// ### Dispatch
 /// All logging methods are asynchronous and executed against a logging executor, which is,
 /// preferably, a platform thread. The default executor is the [ForkJoinPool#commonPool()],
 /// enough to achieve fast logging performance even over a very involved application.
 ///
-/// Implementations of [Collector]s are expected to use; the provided [Collector#task] method
-/// for delegating I/O operations to be performed on virtual threads (such as database writes);
-/// the [Thread#ofVirtual] method; any other method of dispatching that may already be in-use or
-/// shared across an application.
+/// Dispatchers that send messages through this logging system can be created, and must
+/// delegate messages to [Logger#dispatch]. The [Dispatcher] SPI can be optionally be leveraged
+/// to automatically instantiate your implementations.
+///
+/// ### Collect
+/// Implementations of [Collector]s consume messages on the logging executor, but they are
+/// expected to delegate I/O operations required for the usage of the messages to:
+///
+/// - the provided [Logger#task] method, which uses a virtual thread executor, and awaits
+///   the tasks automatically (so application shutdown does not interrupt them)
+///
+/// - the [Thread#ofVirtual] method, if the messages do not need to be guaranteed during
+///   the shutdown of a given application
+///
+/// - any other method of dispatching that may already be in-use or shared across an
+///   application, if your application shutdown is more advanced (and the provided
+///   shutdown hook is insufficient and/or interrupts your I/O too early)
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
