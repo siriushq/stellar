@@ -1,1 +1,0 @@
-package sirius.stellar.platform;

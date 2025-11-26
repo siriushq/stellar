@@ -55,9 +55,6 @@
 		<module>stellar.lifecycle.javadoc</module>
 		<module>stellar.lifecycle.testing</module>
 		<module>stellar.lifecycle.spi</module>
-
-		<module>stellar.platform</module>
-		<module>stellar.platform.generator</module>
     </modules>
 
     <properties>
