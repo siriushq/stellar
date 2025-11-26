@@ -31,15 +31,16 @@ final class DEsthree implements Esthree {
 
 	private final EsthreeSigner signer;
 	private final HttpClient client;
-	private final DocumentBuilder parser;
-	private final Transformer transformer;
+
+	private final ThreadLocal<DocumentBuilder> parser;
+	private final ThreadLocal<Transformer> transformer;
 
 	private final String region;
 
 	private final String endpoint;
 	private final boolean endpointVirtual;
 
-	DEsthree(EsthreeSigner signer, HttpClient client, DocumentBuilder parser, Transformer transformer, String region, String endpoint, boolean endpointVirtual) {
+	DEsthree(EsthreeSigner signer, HttpClient client, ThreadLocal<DocumentBuilder> parser, ThreadLocal<Transformer> transformer, String region, String endpoint, boolean endpointVirtual) {
 		this.signer = signer;
 		this.client = client;
 		this.parser = parser;
@@ -123,7 +124,7 @@ final class DEsthree implements Esthree {
 		this.endpoint(request, name);
 
 		if (!this.region.equals(US_EAST_1.toString())) {
-			Document document = this.parser.newDocument();
+			Document document = this.parser.get().newDocument();
 			Element root = document.createElementNS(XMLNS, "CreateBucketConfiguration");
 
 			Element location = document.createElement("LocationConstraint");
@@ -217,7 +218,7 @@ final class DEsthree implements Esthree {
 	/// (which would be a heavier operation).
 	private String write(Document document) {
 		try (Writer writer = new StringWriter()) {
-			this.transformer.transform(new DOMSource(document), new StreamResult(writer));
+			this.transformer.get().transform(new DOMSource(document), new StreamResult(writer));
 			return writer.toString();
 		} catch (TransformerException | IOException exception) {
 			throw new IllegalStateException("Failed to transform document body for request in Esthree", exception);
@@ -242,12 +243,12 @@ final class DEsthree implements Esthree {
 	private void errorResponse(byte[] body) {
 		try {
 			if (body.length == 0) return;
-			Document document = this.parser.parse(new ByteArrayInputStream(body));
+			Document document = this.parser.get().parse(new ByteArrayInputStream(body));
 
 			if (!EsthreeException.detected(document)) return;
 			throw EsthreeException.of(document);
 		} catch (IOException | SAXException exception) {
-			throw EsthreeException.of(this.parser.newDocument(), exception);
+			throw EsthreeException.of(this.parser.get().newDocument(), exception);
 		}
 	}
 

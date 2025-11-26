@@ -1,47 +1,59 @@
 package sirius.stellar.esthree;
 
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import javax.net.ssl.SSLException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.time.Instant;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static java.lang.Runtime.*;
 import static java.lang.System.*;
+import static java.lang.Thread.*;
+import static java.net.HttpURLConnection.*;
 import static java.time.temporal.ChronoUnit.*;
+import static java.util.concurrent.Executors.*;
 import static java.util.stream.Collectors.*;
 import static java.util.stream.IntStream.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 import static sirius.stellar.esthree.Esthree.Region.*;
 
 @TestMethodOrder(OrderAnnotation.class)
 final class EsthreeTest {
 
-	EsthreeSigner esthreeSigner() {
-		return EsthreeSigner.create("minioadmin", "minioadmin", US_EAST_2);
-	}
+	/// Username and password for accessing mock S3 server.
+	String key = "minioadmin";
 
-	Esthree esthree() {
-		return Esthree.builder()
-				.region(US_EAST_2)
-				.endpoint("http://127.0.0.1:9000", false)
-				.credentials("minioadmin", "minioadmin")
-				.build();
+	/// Executor for parallel testing with large request counts.
+	ExecutorService executor;
+
+	Esthree esthree = Esthree.builder()
+			.region(US_EAST_2)
+			.endpoint("http://127.0.0.1:9000", false)
+			.credentials(key, key)
+			.build();
+
+	@BeforeEach
+	void setup() {
+		executor = newFixedThreadPool(getRuntime().availableProcessors());
 	}
 
 	/// Returns `true` if the S3 server is not running, also sending an error message.
 	boolean unavailable() {
 		try {
 			var url = URI.create("https://127.0.0.1:9000").toURL();
-			url.openConnection()
-					.getInputStream()
-					.readAllBytes();
+
+			var connection = (HttpURLConnection) url.openConnection();
+			if (connection.getResponseCode() == HTTP_FORBIDDEN) return false;
+
+			connection.getInputStream().readAllBytes();
 			return false;
 		} catch (SSLException exception) {
 			return false;
@@ -71,8 +83,8 @@ final class EsthreeTest {
 	void createBucket() {
 		if (unavailable()) return;
 		assertThatNoException().isThrownBy(() -> {
-			var esthree = this.esthree();
 			esthree.createBucket("example-123");
+			esthree.createBucketFuture("example-123-future").get();
 		});
 	}
 
@@ -80,8 +92,10 @@ final class EsthreeTest {
 	@DisplayName("Esthree successfully checks existence of bucket")
 	void checkBucketExistence() {
 		if (unavailable()) return;
-		var esthree = this.esthree();
-		assertThat(esthree.existsBucket("example-123")).isTrue();
+		assertThatNoException().isThrownBy(() -> {
+			assertThat(esthree.existsBucket("example-123")).isTrue();
+			assertThat(esthree.existsBucketFuture("example-123-future").get()).isTrue();
+		});
 	}
 
 	@Test @Order(5)
@@ -89,8 +103,8 @@ final class EsthreeTest {
 	void deleteBucket() {
 		if (unavailable()) return;
 		assertThatNoException().isThrownBy(() -> {
-			var esthree = this.esthree();
 			esthree.deleteBucket("example-123");
+			esthree.deleteBucketFuture("example-123-future").get();
 		});
 	}
 
@@ -98,17 +112,32 @@ final class EsthreeTest {
 	@DisplayName("Esthree successfully checks non-existence of bucket")
 	void checksBucketNonExistence() {
 		if (unavailable()) return;
-		var esthree = this.esthree();
-		assertThat(esthree.existsBucket("example-123")).isFalse();
+		assertThatNoException().isThrownBy(() -> {
+			assertThat(esthree.existsBucket("example-123")).isFalse();
+			assertThat(esthree.existsBucketFuture("example-123-future").get()).isFalse();
+		});
 	}
 
 	@Test @Order(7)
-	@DisplayName("Esthree successfully mass-creates 2000 buckets")
+	@DisplayName("Esthree successfully mass-creates 2000 buckets in parallel")
 	void createBuckets() {
 		if (unavailable()) return;
-		assertThatNoException().isThrownBy(() -> {
-			var esthree = this.esthree();
-			for (int i = 0; i < 2000; i++) esthree.createBucket("example-" + i);
+		assertSoftly(softly -> {
+			var counter = new AtomicInteger(0);
+			range(0, 2000)
+					.mapToObj(index -> "example-" + index)
+					.forEach(name -> executor.execute(() -> {
+						var error = catchThrowable(() -> esthree.createBucket(name));
+						softly.assertThat(error).isNull();
+						counter.incrementAndGet();
+					}));
+
+			executor.shutdown();
+			while (!executor.isTerminated() && counter.get() < 2000 && !currentThread().isInterrupted()) {
+				err.printf("\rcreated %s buckets...", counter.get());
+				onSpinWait();
+			}
+			err.printf("\rcreation complete...%s\n", " ".repeat(20));
 		});
 	}
 
@@ -117,7 +146,6 @@ final class EsthreeTest {
 	void listBuckets() {
 		if (unavailable()) return;
 		assertThatNoException().isThrownBy(() -> {
-			var esthree = this.esthree();
 			var yesterday = Instant.now().minus(24, HOURS);
 
 			var expected = range(0, 2000)
@@ -133,12 +161,25 @@ final class EsthreeTest {
 	}
 
 	@Test @Order(9)
-	@DisplayName("Esthree successfully mass-deletes 2000 buckets")
+	@DisplayName("Esthree successfully mass-deletes 2000 buckets in parallel")
 	void deleteBuckets() {
 		if (unavailable()) return;
-		assertThatNoException().isThrownBy(() -> {
-			var esthree = this.esthree();
-			for (int i = 0; i < 2000; i++) esthree.deleteBucket("example-" + i);
+		assertSoftly(softly -> {
+			var counter = new AtomicInteger(0);
+			range(0, 2000)
+					.mapToObj(index -> "example-" + index)
+					.forEach(name -> executor.execute(() -> {
+						var error = catchThrowable(() -> esthree.deleteBucket(name));
+						softly.assertThat(error).isNull();
+						counter.incrementAndGet();
+					}));
+
+			executor.shutdown();
+			while (!executor.isTerminated() && counter.get() < 2000 && !currentThread().isInterrupted()) {
+				err.printf("\rdeleted %s buckets...", counter.get());
+				onSpinWait();
+			}
+			err.printf("\rdeleting complete...%s\n", " ".repeat(20));
 		});
 	}
 
@@ -146,10 +187,6 @@ final class EsthreeTest {
 	@DisplayName("Esthree does not expose credentials in stacktrace")
 	void doesNotExposeCredentialsStacktrace() {
 		if (unavailable()) return;
-
-		var esthree = this.esthree();
-		var signer = (DEsthreeSigner) this.esthreeSigner();
-
 		assertThatThrownBy(() -> esthree.deleteBucket("example-123"))
 				.isInstanceOf(EsthreeException.class)
 				.extracting(throwable -> {
@@ -158,6 +195,8 @@ final class EsthreeTest {
 					return writer.toString();
 				})
 				.satisfies(message -> {
+					var signer = (DEsthreeSigner) EsthreeSigner.create(key, key, US_EAST_2);
+
 					assertThat(message).doesNotContain("minioadmin");
 					assertThat(message).doesNotContain(signer.hex(signer.sha256(new byte[0])));
 				});

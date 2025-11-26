@@ -3,6 +3,7 @@ package sirius.stellar.esthree;
 import io.avaje.http.client.HttpClient;
 import org.jspecify.annotations.Nullable;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -10,6 +11,7 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
 import static java.lang.System.*;
+import static java.lang.ThreadLocal.*;
 import static java.nio.charset.StandardCharsets.*;
 import static javax.xml.XMLConstants.*;
 import static javax.xml.transform.OutputKeys.*;
@@ -74,6 +76,26 @@ final class DEsthreeBuilder implements Esthree.Builder {
 		return this.httpClientBuilder;
 	}
 
+	/// Creates a [DocumentBuilder] using the provided factory, for thread-local instantiation.
+	private DocumentBuilder documentBuilder(DocumentBuilderFactory factory) {
+		try {
+			return factory.newDocumentBuilder();
+		} catch (ParserConfigurationException exception) {
+			throw new IllegalStateException("Failed to create thread-local javax.xml DocumentBuilder in Esthree", exception);
+		}
+	}
+
+	/// Creates a [Transformer] using the provided factory, for thread-local instantiation.
+	private Transformer transformer(TransformerFactory factory) {
+		try {
+			Transformer transformer = factory.newTransformer();
+			transformer.setOutputProperty(ENCODING, UTF_8.name());
+			return transformer;
+		} catch (TransformerConfigurationException exception) {
+			throw new IllegalStateException("Failed to create thread-local javax.xml Transformer in Esthree", exception);
+		}
+	}
+
 	@Override
 	public Esthree build() {
 		if (this.accessKey == null || this.accessKey.isEmpty() || this.secretKey == null || this.secretKey.isEmpty())
@@ -91,15 +113,12 @@ final class DEsthreeBuilder implements Esthree.Builder {
 			factory.setAttribute(ACCESS_EXTERNAL_DTD, "");
 			factory.setAttribute(ACCESS_EXTERNAL_SCHEMA, "");
 
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			transformer.setOutputProperty(ENCODING, UTF_8.name());
+			ThreadLocal<DocumentBuilder> documentBuilder = withInitial(() -> documentBuilder(factory));
+			ThreadLocal<Transformer> transformer = withInitial(() -> transformer(TransformerFactory.newInstance()));
 
-			return new DEsthree(signer, this.httpClientBuilder.build(), factory.newDocumentBuilder(), transformer, this.region, this.endpoint, this.endpointVirtual);
+			return new DEsthree(signer, this.httpClientBuilder.build(), documentBuilder, transformer, this.region, this.endpoint, this.endpointVirtual);
 		} catch (ParserConfigurationException exception) {
 			throw new IllegalStateException("Failed to configure javax.xml DocumentBuilderFactory in Esthree Builder", exception);
-		} catch (TransformerConfigurationException exception) {
-			throw new IllegalStateException("Failed to configure javax.xml Transformer in Esthree Builder", exception);
 		}
 	}
 }

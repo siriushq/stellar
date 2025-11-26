@@ -27,7 +27,7 @@ import static java.util.concurrent.CompletableFuture.*;
 /// This utilizes [Iterator] and provides [#stream()] to obtain a [Stream] view of it.
 final class DEsthreePaginator<T> implements Iterator<T> {
 
-	private final DocumentBuilder parser;
+	private final ThreadLocal<DocumentBuilder> parser;
 	private final EsthreeSigner signer;
 
 	private final String continuation;
@@ -49,7 +49,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// (e.g. `ContinuationToken` or `NextContinuationToken`) from the provided [Document], using
 	/// the provided function that converts each [Document] response to `T` instances.
 	///
-	/// @param parser [DocumentBuilder] used for parsing XML body responses.
+	/// @param parser Thread-local [DocumentBuilder] used for parsing XML body responses.
 	/// @param signer [EsthreeSigner] used for signing request body content.
 	///
 	/// @param continuation Field name used for obtaining continuation tokens from the root of a
@@ -58,7 +58,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	///
 	/// @param measurer Function for measuring how many elements are in a response body list.
 	/// @param reader Function for reading the next element from the response body list.
-	DEsthreePaginator(DocumentBuilder parser, EsthreeSigner signer, String continuation, HttpClientRequest request, Function<Document, Integer> measurer, BiFunction<Document, Integer, T> reader) {
+	DEsthreePaginator(ThreadLocal<DocumentBuilder> parser, EsthreeSigner signer, String continuation, HttpClientRequest request, Function<Document, Integer> measurer, BiFunction<Document, Integer, T> reader) {
 		this.parser = parser;
 		this.signer = signer;
 
@@ -68,7 +68,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 		this.measurer = measurer;
 		this.reader = reader;
 
-		this.previous = parser.newDocument();
+		this.previous = parser.get().newDocument();
 	}
 
 	@Override
@@ -134,7 +134,7 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// Obtain the next body from the provided [InputStream] (to retrieve from [#nextResponse]).
 	/// @return The first element from the newly read body.
 	private T nextBody(InputStream stream) throws SAXException, IOException {
-		this.previous = this.parser.parse(stream);
+		this.previous = this.parser.get().parse(stream);
 		if (EsthreeException.detected(this.previous)) throw EsthreeException.of(this.previous);
 
 		this.size = this.measurer.apply(this.previous);

@@ -77,20 +77,24 @@ public interface Esthree extends AutoCloseable {
 	CompletableFuture<Void> deleteBucketFuture(String name);
 
 	/// Return whether a bucket with the provided name exists.
+	/// @throws EsthreeException if the request failed
 	boolean existsBucket(String name);
 
 	/// [Future] based variant of [#existsBucket(String)].
+	/// @throws EsthreeException if the request failed
 	CompletableFuture<Boolean> existsBucketFuture(String name);
 
 	/// Access the underlying [HttpClient]. Most people should never use this method.
 	HttpClient httpClient();
 
-	/// Return the current aggregate metrics, collected for all requests by [HttpClient].
+	/// Return the current aggregate metrics, collected for all requests.
+	/// @see HttpClient.Metrics
 	default HttpClient.Metrics metrics() {
 		return this.httpClient().metrics();
 	}
 
-	/// Return and reset the current aggregate metrics, collected for all requests by [HttpClient].
+	/// Return (and optionally reset) the current aggregate metrics, collected for all requests.
+	/// @see HttpClient.Metrics
 	default HttpClient.Metrics metrics(boolean reset) {
 		return this.httpClient().metrics(reset);
 	}
