@@ -94,51 +94,67 @@ public interface Collector extends AutoCloseable, Serializable {
 		return executor.submit(callable);
 	}
 
-	/// Returns an instance that prints to console.
+	/// Returns an instance that prints to console (`stderr`).
 	///
 	/// This method can only be called once across the application lifecycle as it
-	/// runs [System#setOut(PrintStream)] and [System#setErr(PrintStream)].
+	/// runs [System#setOut(PrintStream)] and [System#setErr(PrintStream)] to create
+	/// a dispatcher for later `stdout`/`stderr` calls to redirect to [Logger].
 	///
-	/// This essentially means that this not only provides a collector that collects
-	/// logs to `stdout`, but also it sets a dispatcher so that any later calls
-	/// to try and output to `stdout` will be redirected to logging.
-	///
+	/// @see #consoleOut()
 	/// @since 1.0
 	static Collector console() {
-		return ConsoleCollector.get();
+		return ConsoleCollector.overriding(System.err);
 	}
 
-	/// Returns an instance that prints to log files.
-	/// This method does not accept a path argument and defaults to `logging/`.
-	/// It rolls to a new file every 12 hours.
+	/// Returns an instance that prints to console (`stdout`).
+	/// This method has the same semantics as [#console()].
 	///
-	/// @see Collector#file(Path)
-	/// @see Collector#file(Path, Duration)
+	/// @since 1.0
+	static Collector consoleOut() {
+		return ConsoleCollector.overriding(System.out);
+	}
+
+	/// Returns an instance that prints to the provided [PrintStream], with
+	/// the same output as [#console()]/[#consoleOut()], but not overriding the
+	/// global `stdout`/`stderr` streams as dispatchers.
+	///
+	/// @since 1.0
+	static Collector consoleStream(PrintStream stream) {
+		return new ConsoleCollector(System.out);
+	}
+
+	/// Returns an instance that prints CSV formatted output to log files.
+	///
+	/// Output is written to `./logging/` relative to working directory
+	/// and rolls to a new file every 12 hours.
+	///
+	/// @see #file(Path)
+	/// @see #file(Path, Duration)
 	/// @since 1.0
 	static Collector file() {
 		return file(Path.of("logging"));
 	}
 
-	/// Returns an instance that prints to log files.
+	/// Returns an instance that prints CSV formatted output to log files.
 	/// It rolls to a new file every 12 hours.
 	///
-	/// @param path The root of where the files are output.
+	/// @param path directory to write log files to
 	///
-	/// @see Collector#file()
-	/// @see Collector#file(Path, Duration)
+	/// @see #file()
+	/// @see #file(Path, Duration)
 	/// @since 1.0
 	@Contract("_ -> new")
 	static Collector file(Path path) {
 		return file(path, Duration.ofHours(12));
 	}
 
-	/// Returns an instance that prints to log files.
+	/// Returns an instance that prints CSV formatted output to log files.
 	///
-	/// @param path The root of where the files are output.
-	/// @param duration How often it rolls.
+	/// @param path directory to write log files to
+	/// @param duration how often to roll to a new file
 	///
-	/// @see Collector#file()
-	/// @see Collector#file(Path)
+	/// @see #file()
+	/// @see #file(Path)
 	/// @since 1.0
 	@Contract("_, _ -> new")
 	static Collector file(Path path, Duration duration) {

@@ -4,7 +4,6 @@ import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.Logger;
-import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.OutputStream;
@@ -16,8 +15,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.terminal.TerminalColor.*;
+import static sirius.stellar.logging.Logger.*;
+import static sirius.stellar.logging.LoggerLevel.*;
 
 /// Implementation of [Collector] that prints to [System#out].
 ///
@@ -32,41 +34,44 @@ final class ConsoleCollector implements Collector {
 
 	private final PrintStream stream;
 
-	private ConsoleCollector(PrintStream stream) {
+	/// Returns an instance of this collector for the provided [PrintStream].
+	ConsoleCollector(PrintStream stream) {
 		this.stream = stream;
 	}
 
-	/// Returns an instance of this collector. This can only be called once across
-	/// the application lifecycle as [System#out] and [System#err] are overridden statically.
+	/// Returns an instance of this collector for the provided [PrintStream], overriding
+	/// [System#out] (`stdout`) and [System#err] (`stderr`) with a stream that dispatches
+	/// further writes to [Logger] at appropriate logger levels.
 	///
-	/// Overrides [System#out] and [System#err] with implementations that will pass messages
-	/// through to the logger at appropriate levels.
-	public static ConsoleCollector get() {
-		ConsoleCollector collector = new ConsoleCollector(System.out);
-		System.setOut(new DelegatePrintStream(text -> Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "stdout", text)));
-		System.setErr(new DelegatePrintStream(text -> Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), "stderr", text)));
+	/// This can only be called once across the application lifecycle.
+	/// @param stream the stream to collect to, e.g. [System#err]
+	static ConsoleCollector overriding(PrintStream stream) {
+		ConsoleCollector collector = new ConsoleCollector(stream);
+		System.setOut(new DelegatePrintStream(text -> dispatch(Instant.now(), INFORMATION, currentThread().getName(), "stdout", text)));
+		System.setErr(new DelegatePrintStream(text -> dispatch(Instant.now(), ERROR, currentThread().getName(), "stderr", text)));
 		return collector;
 	}
 
 	@Override
 	public void collect(LoggerMessage message) {
 		this.stream.println(format(
-				"{5}[{6}{0,date,dd/MM/yyyy HH:mm:ss} {5}| {6}{1} {5}| {6}{2} {5}| {6}{3}{5}] {7}{4}",
-				Date.from(message.time()),
-				switch (message.level()) {
-					case ALL, INFORMATION -> BLUE.foreground().bright() + message.level().display();
-					case WARNING -> YELLOW.foreground().bright() + message.level().display();
-					case ERROR, STACKTRACE -> RED.foreground().bright() + message.level().display();
-					case DEBUGGING, CONFIGURATION -> MAGENTA.foreground().bright() + message.level().display();
-					case OFF -> message.level().display();
-				},
-				message.thread(),
-				message.name(),
-				message.text(),
+			"{5}[{6}{0,date,dd/MM/yyyy HH:mm:ss} {5}| {6}{1} {5}| {6}{2} {5}| {6}{3}{5}] {7}{4}{8}",
+			Date.from(message.time()),
+			switch (message.level()) {
+				case ALL, INFORMATION -> BLUE.foreground().bright() + message.level().display();
+				case WARNING -> YELLOW.foreground().bright() + message.level().display();
+				case ERROR, STACKTRACE -> RED.foreground().bright() + message.level().display();
+				case DEBUGGING, CONFIGURATION -> MAGENTA.foreground().bright() + message.level().display();
+				case OFF -> message.level().display();
+			},
+			message.thread(),
+			message.name(),
+			message.text(),
 
-				BLACK.foreground().bright(),
-				WHITE.foreground().dark(),
-				DEFAULT.foreground().bright()
+			BLACK.foreground().bright(),
+			WHITE.foreground().dark(),
+			WHITE.foreground().bright(),
+			DEFAULT.foreground().bright()
 		));
 	}
 
@@ -85,10 +90,12 @@ final class ConsoleCollector implements Collector {
 ///
 /// This implements [Serializable] - while it is not a semantic use of a [PrintStream] to serialize
 /// the stream (and subsequently write a stream inside a stream), it is quite a common scenario for
-/// this to be done on accident, and it is perfectly fine to serialize this object. Accidentally
-/// serializing this object can be done if, say, a logger object from logging facade that a dispatcher
-/// is available for is stored as an instance variable - serializing the logger object could cause
-/// `System.out` or `System.err` to be serialized and, potentially, subsequently, this class serialized.
+/// this to be done on accident, and it is perfectly fine to serialize this object.
+///
+/// Accidentally serializing this object can be done if, say, a logger object from logging facade
+/// that a dispatcher is available for, is stored as an instance variable - serializing the logger
+/// object could cause `System.out` or `System.err` to be serialized, and subsequently,
+/// this class serialized.
 @Internal
 final class DelegatePrintStream extends PrintStream implements Serializable {
 
