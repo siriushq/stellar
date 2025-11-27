@@ -88,6 +88,11 @@ public interface FileConfigurationProvider extends ConfigurationProvider {
 		return all;
 	}
 
+	@Override
+	default Set<Class<? extends ConfigurationProvider>> preceding() {
+		return Set.of(EnvironmentConfigurationProvider.class, SystemConfigurationProvider.class);
+	}
+
 	/// Returns whether the provided [String] file name ends with one of the
 	/// declared [#extensions()]. This method should not be overridden.
 	///

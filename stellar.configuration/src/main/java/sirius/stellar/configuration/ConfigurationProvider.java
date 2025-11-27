@@ -2,8 +2,8 @@ package sirius.stellar.configuration;
 
 import io.avaje.spi.Service;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Collections.*;
 
@@ -19,13 +19,13 @@ public interface ConfigurationProvider {
 	/// @since 1.0
 	Map<String, String> get() throws Throwable;
 
-	/// An array of providers that this one requires load before itself.
+	/// A set of providers that this one requires load before itself.
 	///
 	/// Cyclic dependencies are resolved non-deterministically.
 	/// Given `X <-> Y`, `X` can load before or after `Y` with no guarantees.
 	///
 	/// @since 1.0
-	default List<Class<? extends ConfigurationProvider>> preceding() {
-		return emptyList();
+	default Set<Class<? extends ConfigurationProvider>> preceding() {
+		return emptySet();
 	}
 }

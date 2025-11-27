@@ -2,8 +2,8 @@ package sirius.stellar.configuration;
 
 import io.avaje.spi.ServiceProvider;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.stream.Collectors.*;
 
@@ -24,7 +24,7 @@ public final class SystemConfigurationProvider implements ConfigurationProvider 
 	}
 
 	@Override
-	public List<Class<? extends ConfigurationProvider>> preceding() {
-		return List.of(EnvironmentConfigurationProvider.class, PropertiesConfigurationProvider.class);
+	public Set<Class<? extends ConfigurationProvider>> preceding() {
+		return Set.of(EnvironmentConfigurationProvider.class);
 	}
 }
