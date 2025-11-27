@@ -1,4 +1,4 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.testing;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import java.nio.file.Path;
 
 import static java.nio.file.Files.*;
 import static java.text.MessageFormat.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 import static sirius.stellar.configuration.Configuration.*;
 

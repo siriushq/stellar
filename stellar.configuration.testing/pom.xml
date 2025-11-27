@@ -9,60 +9,52 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration</artifactId>
-    <name>Stellar :: Configuration</name>
-	<description>
-		Provides external configuration for JVM services, by default sourcing from JVM Properties,
-		environment variables, and .properties files, also providing dynamic hot-reload functionality.
-	</description>
+    <artifactId>stellar-configuration-testing</artifactId>
+    <name>Stellar :: Configuration :: Testing</name>
+	<description>Test suite for the configuration system, and shared testing facility for extensions.</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>
+		<java.version.test>17</java.version.test>
 	</properties>
 
     <dependencies>
 		<dependency>
-			<groupId>io.avaje</groupId>
-			<artifactId>avaje-spi-service</artifactId>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-configuration</artifactId>
+		</dependency>
 
-			<optional>true</optional>
-			<scope>provided</scope>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
     <build>
         <plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Multi-Release>true</Multi-Release>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 
 				<executions>
 					<execution>
-						<id>compile-java23</id>
+						<id>test-compile-java23</id>
 
-						<phase>compile</phase>
+						<phase>test-compile</phase>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 
 						<configuration>
 							<release>23</release>
-							<multiReleaseOutput>true</multiReleaseOutput>
 
 							<compileSourceRoots>
-								<compileSourceRoot>${project.basedir}/src/main/java23</compileSourceRoot>
+								<compileSourceRoot>${project.basedir}/src/test/java23</compileSourceRoot>
 							</compileSourceRoots>
 						</configuration>
 					</execution>
@@ -79,6 +71,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+
+				<configuration>
+					<argLine>--add-opens java.base/java.util=sirius.stellar.configuration</argLine>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

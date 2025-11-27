@@ -1,4 +1,4 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.testing;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.math.BigInteger;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 import static sirius.stellar.configuration.Configuration.*;
 

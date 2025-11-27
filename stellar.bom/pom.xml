@@ -110,6 +110,21 @@
                 <artifactId>stellar-configuration</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-configuration-testing</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-configuration-inject</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-configuration-toml</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>sirius.stellar</groupId>

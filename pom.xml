@@ -47,7 +47,9 @@
 <!--		<module>stellar.esthree.mock</module>-->
 
 		<module>stellar.configuration</module>
+		<module>stellar.configuration.testing</module>
 		<module>stellar.configuration.inject</module>
+		<module>stellar.configuration.provider.toml</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
