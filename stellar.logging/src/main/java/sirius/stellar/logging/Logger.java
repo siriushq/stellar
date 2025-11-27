@@ -151,7 +151,8 @@ public final class Logger {
 					.name(name)
 					.text((arguments == null || arguments.length == 0) ? text : format(text, arguments))
 					.build();
-			collectors.forEach(collector -> collector.collect(message));
+
+			for (Collector collector : collectors) collector.collect(message);
 		}));
 	}
 
