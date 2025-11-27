@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static java.nio.file.Files.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.SoftAssertions.*;
 import static sirius.stellar.configuration.Configuration.*;
 
 final class ConfigurationProviderTest extends AbstractConfigurationTest {
@@ -24,7 +24,11 @@ final class ConfigurationProviderTest extends AbstractConfigurationTest {
 
 		this.reset();
 
-		var myKey = property("EXAMPLE_KEY");
-		assertThat(myKey).isEqualTo("Hello, from properties file!");
+		assertSoftly(softly -> {
+			var myKey = property("EXAMPLE_KEY");
+			softly.assertThat(myKey).isEqualTo("Hello, from properties file!");
+
+			softly.assertThatCode(() -> deleteIfExists(file)).doesNotThrowAnyException();
+		});
 	}
 }
