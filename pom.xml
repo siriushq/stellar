@@ -1,12 +1,12 @@
 <project>
-    <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>sirius.stellar</groupId>
-    <artifactId>stellar</artifactId>
-    <version>1.0-RC1</version>
-    <packaging>pom</packaging>
+	<groupId>sirius.stellar</groupId>
+	<artifactId>stellar</artifactId>
+	<version>1.0-RC1</version>
+	<packaging>pom</packaging>
 
-    <name>Stellar</name>
+	<name>Stellar</name>
 	<url>https://stellar.sirius.cam</url>
 
 	<organization>
@@ -15,18 +15,18 @@
 	</organization>
 
 	<licenses>
-        <license>
-            <name>BSD 3-Clause License</name>
-            <url>https://opensource.org/license/bsd-3-clause</url>
-        </license>
-    </licenses>
+		<license>
+			<name>BSD 3-Clause License</name>
+			<url>https://opensource.org/license/bsd-3-clause</url>
+		</license>
+	</licenses>
 
-    <modules>
+	<modules>
 		<module>stellar.bom</module>
 
 		<module>stellar.facility</module>
 
-        <module>stellar.logging</module>
+		<module>stellar.logging</module>
 
 		<module>stellar.logging.collect.slf4j</module>
 
@@ -49,6 +49,7 @@
 		<module>stellar.configuration</module>
 		<module>stellar.configuration.testing</module>
 		<module>stellar.configuration.inject</module>
+		<module>stellar.configuration.provider.yaml</module>
 		<module>stellar.configuration.provider.toml</module>
 
 		<module>stellar.serialization.msgpack</module>
@@ -57,14 +58,14 @@
 		<module>stellar.lifecycle.javadoc</module>
 		<module>stellar.lifecycle.testing</module>
 		<module>stellar.lifecycle.spi</module>
-    </modules>
+	</modules>
 
-    <properties>
+	<properties>
 		<java.version.main>21</java.version.main>
 		<java.version.test>21</java.version.test>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	</properties>
 
 	<dependencyManagement>
 		<dependencies>
@@ -134,20 +135,20 @@
 		</dependency>
 	</dependencies>
 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://maven-central.storage.googleapis.com/</url>
-        </repository>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://maven-central.storage.googleapis.com/</url>
+		</repository>
 		<repository>
 			<id>apache-central</id>
 			<url>https://repo.maven.apache.org/maven2/</url>
 		</repository>
-        <repository>
-            <id>jitpack</id>
-            <url>https://jitpack.io/</url>
-        </repository>
-    </repositories>
+		<repository>
+			<id>jitpack</id>
+			<url>https://jitpack.io/</url>
+		</repository>
+	</repositories>
 
 	<distributionManagement>
 		<repository>
@@ -156,23 +157,23 @@
 		</repository>
 	</distributionManagement>
 
-    <build>
-        <pluginManagement>
-            <plugins>
+	<build>
+		<pluginManagement>
+			<plugins>
 				<plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.4.2</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>3.4.2</version>
 
-                    <configuration>
-                        <forceCreation>true</forceCreation>
-                        <skipIfEmpty>true</skipIfEmpty>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.14.1</version>
+					<configuration>
+						<forceCreation>true</forceCreation>
+						<skipIfEmpty>true</skipIfEmpty>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.14.1</version>
 
 					<executions>
 						<execution>
@@ -190,11 +191,11 @@
 							</configuration>
 						</execution>
 					</executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>3.3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.3.1</version>
 
 					<executions>
 						<execution>
@@ -204,18 +205,18 @@
 							</goals>
 						</execution>
 					</executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.12.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>3.12.0</version>
 
-                    <configuration>
-                        <quiet>true</quiet>
-                        <verbose>false</verbose>
-                        <failOnError>true</failOnError>
+					<configuration>
+						<quiet>true</quiet>
+						<verbose>false</verbose>
+						<failOnError>true</failOnError>
 						<doclint>all,-missing</doclint>
-                    </configuration>
+					</configuration>
 
 					<executions>
 						<execution>
@@ -225,7 +226,7 @@
 							</goals>
 						</execution>
 					</executions>
-                </plugin>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
@@ -261,7 +262,7 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>3.6.1</version>
 				</plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

@@ -8,6 +8,8 @@ module sirius.stellar.configuration {
 	requires static io.avaje.spi;
 	requires static jdk.unsupported;
 
+	opens sirius.stellar.configuration to sirius.stellar.configuration.testing;
+
 	provides sirius.stellar.configuration.ConfigurationProvider with
 			sirius.stellar.configuration.PropertiesConfigurationProvider,
 			sirius.stellar.configuration.EnvironmentConfigurationProvider,

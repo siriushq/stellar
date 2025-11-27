@@ -62,7 +62,7 @@
 							<multiReleaseOutput>true</multiReleaseOutput>
 
 							<compileSourceRoots>
-								<compileSourceRoot>${project.basedir}/src/main/java23</compileSourceRoot>
+								<root>${project.basedir}/src/main/java23</root>
 							</compileSourceRoots>
 						</configuration>
 					</execution>
