@@ -32,8 +32,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>sirius.stellar</groupId>
-			<artifactId>stellar-lifecycle-spi</artifactId>
+			<groupId>io.avaje</groupId>
+			<artifactId>avaje-spi-service</artifactId>
 
 			<optional>true</optional>
 			<scope>provided</scope>

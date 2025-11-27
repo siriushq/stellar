@@ -1,7 +1,7 @@
 package sirius.stellar.configuration.inject;
 
 import io.avaje.inject.spi.ConfigPropertyPlugin;
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.ServiceProvider;
 
 import java.util.Optional;
 
@@ -9,8 +9,8 @@ import static sirius.stellar.configuration.Configuration.*;
 
 /// Implementation of `avaje-inject` [ConfigPropertyPlugin], provided when the optional dependency
 /// is available on the module path.
-@Service.Provider
-public class DConfigPropertyPlugin implements ConfigPropertyPlugin {
+@ServiceProvider
+public final class DConfigPropertyPlugin implements ConfigPropertyPlugin {
 
 	@Override
 	public Optional<String> get(String property) {

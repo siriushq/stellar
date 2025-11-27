@@ -1,13 +1,13 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.ServiceProvider;
 
 import java.util.List;
 import java.util.Map;
 
 /// Implementation of [ConfigurationProvider] returning [System#getenv()].
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class EnvironmentConfigurationProvider implements ConfigurationProvider {
 
 	@Override

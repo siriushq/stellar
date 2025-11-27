@@ -1,6 +1,6 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.ServiceProvider;
 import sun.misc.Signal;
 
 import static java.lang.System.*;
@@ -9,7 +9,7 @@ import static java.lang.System.*;
 /// `sun.misc.Signal` and `sun.misc.SignalHandler` API.
 ///
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class SignalConfigurationReloader implements ConfigurationReloader {
 
 	@Override

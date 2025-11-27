@@ -1,7 +1,7 @@
 package sirius.stellar.configuration;
 
+import io.avaje.spi.ServiceProvider;
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.lifecycle.spi.Service;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
@@ -23,7 +23,7 @@ import static java.util.concurrent.TimeUnit.*;
 /// POSIX APIs using the Foreign Function and Memory API (on Java >23).
 ///
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class SignalConfigurationReloader implements ConfigurationReloader, Runnable {
 
 	/// The UNIX-standard signal number for `SIGHUP`.

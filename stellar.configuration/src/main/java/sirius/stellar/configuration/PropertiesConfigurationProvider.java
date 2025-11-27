@@ -1,6 +1,6 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.ServiceProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.*;
 ///
 /// @see FileConfigurationProvider
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class PropertiesConfigurationProvider implements FileConfigurationProvider {
 
 	@Override

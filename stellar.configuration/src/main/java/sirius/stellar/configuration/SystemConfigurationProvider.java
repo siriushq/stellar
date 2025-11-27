@@ -1,6 +1,6 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.ServiceProvider;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.*;
 
 /// Implementation of [ConfigurationProvider] returning [System#getProperties()].
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class SystemConfigurationProvider implements ConfigurationProvider {
 
 	@Override

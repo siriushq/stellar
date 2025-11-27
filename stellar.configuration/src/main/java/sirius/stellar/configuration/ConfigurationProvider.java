@@ -1,6 +1,6 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.Service;
 
 import java.util.List;
 import java.util.Map;

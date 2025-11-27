@@ -1,6 +1,6 @@
 package sirius.stellar.configuration;
 
-import sirius.stellar.lifecycle.spi.Service;
+import io.avaje.spi.Service;
 
 /// Represents a configuration reload dispatcher, which is wired by [Configuration] on
 /// the first attempt to access any configuration keys.

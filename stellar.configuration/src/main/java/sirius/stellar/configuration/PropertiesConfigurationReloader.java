@@ -1,7 +1,7 @@
 package sirius.stellar.configuration;
 
+import io.avaje.spi.ServiceProvider;
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.lifecycle.spi.Service;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -24,7 +24,7 @@ import static java.util.concurrent.TimeUnit.*;
 /// files on the filesystem relative to the working directory of the application.
 ///
 /// @see Configuration
-@Service.Provider
+@ServiceProvider
 public final class PropertiesConfigurationReloader implements ConfigurationReloader, Runnable {
 
 	@Nullable

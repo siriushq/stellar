@@ -1,23 +1,22 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.configuration.*;
 
 @NullMarked
 module sirius.stellar.configuration {
 	requires org.jspecify;
 	exports sirius.stellar.configuration;
 
-	requires static sirius.stellar.lifecycle.spi;
+	requires static io.avaje.spi;
 	requires static jdk.unsupported;
 
-	uses ConfigurationProvider;
-	uses ConfigurationReloader;
+	provides sirius.stellar.configuration.ConfigurationProvider with
+			sirius.stellar.configuration.PropertiesConfigurationProvider,
+			sirius.stellar.configuration.EnvironmentConfigurationProvider,
+			sirius.stellar.configuration.SystemConfigurationProvider;
 
-	provides ConfigurationProvider with
-			PropertiesConfigurationProvider,
-			EnvironmentConfigurationProvider,
-			SystemConfigurationProvider;
+	provides sirius.stellar.configuration.ConfigurationReloader with
+			sirius.stellar.configuration.SignalConfigurationReloader,
+			sirius.stellar.configuration.PropertiesConfigurationReloader;
 
-	provides ConfigurationReloader with
-			SignalConfigurationReloader,
-			PropertiesConfigurationReloader;
+	uses sirius.stellar.configuration.ConfigurationProvider;
+	uses sirius.stellar.configuration.ConfigurationReloader;
 }
