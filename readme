@@ -1,25 +1,25 @@
 siriushq/stellar
 ================
 
-	There are many available sources of documentation for users and contributors.
-	Rendered source documentation is available in the "target" directory for any
-	given module after building. https://stellar.sirius.cam houses the handbook.
+There are many available sources of documentation for users and contributors.
+Rendered source documentation is available in the "target" directory for any
+given module after building. https://stellar.sirius.cam houses the handbook.
 
-	<!> The handbook is currently not public.
-	<!> 1.0-RC1 will be published when the task list implied below is complete.
+<!> The handbook is currently not public.
+<!> 1.0-RC1 will be published when the task list implied below is complete.
 
-	<ⓘ> stellar.logging & stellar.facility are usable & stable.
-	<ⓘ> stellar.esthree is not feature-complete yet.
-	<ⓘ> stellar.facility* — many portions to migrate/extract outside
-	<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
-	    stellar.throttle, stellar.serialization, stellar.metrics
-	<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
+<ⓘ> stellar.logging & stellar.facility are usable & stable.
+<ⓘ> stellar.esthree is not feature-complete yet.
+<ⓘ> stellar.facility* — many portions to migrate/extract outside
+<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
+    stellar.throttle, stellar.serialization, stellar.metrics
+<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
 
 including
 =========
 
-	Releases and release-candidates are published to our repository.
-	Start by adding this to your project.
+Releases and release-candidates are published to our repository.
+Start by adding this to your project.
 
 	pom.xml ====================================
 	<repositories>
@@ -30,8 +30,8 @@ including
 	</repositories>
 	============================================
 
-	A bill-of-materials is provided to control dependency versions.
-	Directly add `stellar-bom` or use `stellar` to also use our build lifecycle.
+A bill-of-materials is provided to control dependency versions.
+Directly add `stellar-bom` (or use `stellar` to also use our build lifecycle).
 
 	pom.xml ========================================
 	<dependencyManagement>
@@ -47,9 +47,9 @@ including
 	</dependencyManagement>
 	================================================
 
-	Finally, register (& require) any dependencies you need.
-	You should exclude the versions when using `dependencyManagement`.
-	For example, to use `stellar-logging`:
+Finally, register (& require) any dependencies you need.
+You should exclude the versions when using `dependencyManagement`.
+For example, to use `stellar-logging`:
 
 	pom.xml ====================================
 	<dependency>
@@ -65,57 +65,57 @@ including
 building
 ========
 
-	The preferred environment includes Oracle GraalVM for Java 25 and the Apache
-	Maven Daemon (mvnd), or any other suitable distribution of Maven.
+The preferred environment includes Oracle GraalVM for Java 25 and the Apache
+Maven Daemon (mvnd), or any other suitable distribution of Maven.
 
 	$ git clone --recursive git@github.com:siriushq/stellar.git
 	$ cd stellar
 	$ mvnd package
 
-	An installation of GnuPG is required to run the `install` or `deploy` goals
-	(alternatively, use `-Dgpg.skip` flag to skip, not recommended!)
+An installation of GnuPG is required to run the `install` or `deploy` goals
+(alternatively, use `-Dgpg.skip` flag to skip, not recommended!)
 
 contributing
 ============
 
-	Contributions are accepted as long as they fall within implied project scope.
+Contributions are accepted as long as they fall within implied project scope.
 
-	All commits must contain at least `Signed-off-by` to identify the author of the
-	contribution, and may contain `Co-authored-by` to attach any number of other
-	authors (this can be added automatically with `git commit ... -s ...`).
+All commits must contain at least `Signed-off-by` to identify the author of the
+contribution, and may contain `Co-authored-by` to attach any number of other
+authors (this can be added automatically with `git commit ... -s ...`).
 
-	(furthermore, commits from people with repository write access are to be signed
-	with a verified GPG, SSH or S/MIME signature attached to your GitHub account).
+(furthermore, commits from people with repository write access are to be signed
+with a verified GPG, SSH or S/MIME signature attached to your GitHub account).
 
-	Relevant documentation should be updated to include accrediting. For example,
-	JavaDoc comments on type declarations should contain name & GitHub username:
+Relevant documentation should be updated to include accrediting. For example,
+JavaDoc comments on type declarations should contain name & GitHub username:
 
-		@author John Doe (jdoe)
+	@author John Doe (jdoe)
 
-	By submitting a contribution, you certify that you and other authors are making
-	your contribution available under the license of the project, and that you have
-	the rights to submit it.
+By submitting a contribution, you certify that you and other authors are making
+your contribution available under the license of the project, and that you have
+the rights to submit it.
 
 licensing
 =========
 
-	This project is licensed under the 3-Clause BSD.
-	This is being done at our loss. Consider starring this repository and/or buying our
-	products to support the development and future of this project.
+This project is licensed under the 3-Clause BSD.
+This is being done at our loss. Consider starring this repository and/or buying
+our products to support the development and future of this project.
 
-	Some portions of this project are adapted from projects with other licenses, licenses
-	are clearly marked with `SPDX-License-Identifier` AND declared in `pom.xml`.
+Some portions of this project are adapted from projects with other licenses.
+They are clearly marked with `SPDX-License-Identifier` & declared in `pom.xml`.
 
 support
 =======
 
-	If commercial support is required, it can be granted for users/organizations by
-	request. Responses will be provided within 24 hours.
+If commercial support is required, it can be granted for users/organizations by
+request. Responses will be provided within 24 hours.
 
-	This can be obtained by emailing `stellar@mechite.com` with the following message
-	(* for required; please fill all fields using "N/A" for empty optionals):
+This can be obtained by emailing `stellar@mechite.com` with the following
+(* for required; please fill all fields using "N/A" for empty optionals):
 
-	example.eml ========================================================================
+	example.eml ===========================================================
 	To: <stellar@mechite.com>
 	Subject: siriushq/stellar commercial support
 	Content-Type: text/plain; charset="UTF-8"
@@ -124,6 +124,6 @@ support
 	Organization
 	Role
 
-	Minimum duration commitment required (or N/A)
-	Earliest required start date (or N/A)
-	====================================================================================
+	Minimum duration commitment required
+	Earliest required start date
+	=======================================================================
