@@ -6,7 +6,6 @@ module sirius.stellar.facility {
 	requires static org.jetbrains.annotations;
 	requires org.jspecify;
 
-	exports sirius.stellar.facility.concurrent;
 	exports sirius.stellar.facility.annotation;
 	exports sirius.stellar.facility.exception;
 	exports sirius.stellar.facility.executor;
