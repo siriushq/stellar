@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [tech.kwik.core.log.Logger] which delegates to [Logger].
@@ -31,7 +32,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	protected void log(@Nullable String text) {
 		try {
 			this.lock.lock();
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "tech.kwik", text);
+			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
 		} finally {
 			this.lock.unlock();
 		}
@@ -42,7 +43,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 		try {
 			this.lock.lock();
 			if (throwable != null) text += "\n" + stacktrace(throwable);
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "tech.kwik", text);
+			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
 		} finally {
 			this.lock.unlock();
 		}
@@ -54,7 +55,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 			this.lock.lock();
 			text += "\n" + this.byteToHexBlock(data, length);
 
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "tech.kwik", text);
+			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
 		} finally {
 			this.lock.unlock();
 		}
@@ -66,7 +67,7 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 			this.lock.lock();
 			text += "\n" + this.byteToHexBlock(data, offset, length);
 
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), "tech.kwik", text);
+			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
 		} finally {
 			this.lock.unlock();
 		}

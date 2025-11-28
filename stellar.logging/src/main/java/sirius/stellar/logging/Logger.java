@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 
 import static java.lang.Runtime.*;
 import static java.lang.StackWalker.Option.*;
+import static java.lang.Thread.*;
 import static java.util.Collections.*;
 import static java.util.concurrent.Executors.*;
 import static java.util.concurrent.TimeUnit.*;
@@ -223,7 +224,7 @@ public final class Logger {
 	 */
 	public static void information(String text) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -234,7 +235,7 @@ public final class Logger {
 	 */
 	public static void information(Object object) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -246,7 +247,7 @@ public final class Logger {
 	 */
 	public static void information(String text, Object argument) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -258,7 +259,7 @@ public final class Logger {
 	 */
 	public static void information(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -270,7 +271,7 @@ public final class Logger {
 	 */
 	public static void information(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -281,7 +282,7 @@ public final class Logger {
 	 */
 	public static void information(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [information*, Lambda]
@@ -297,7 +298,7 @@ public final class Logger {
 	public static void information(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -314,7 +315,7 @@ public final class Logger {
 	public static void information(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -331,7 +332,7 @@ public final class Logger {
 	public static void information(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -348,7 +349,7 @@ public final class Logger {
 	public static void information(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -364,7 +365,7 @@ public final class Logger {
 	public static void information(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.INFORMATION)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 
@@ -377,7 +378,7 @@ public final class Logger {
 	 */
 	public static void warning(String text) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -388,7 +389,7 @@ public final class Logger {
 	 */
 	public static void warning(Object object) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -400,7 +401,7 @@ public final class Logger {
 	 */
 	public static void warning(String text, Object argument) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -412,7 +413,7 @@ public final class Logger {
 	 */
 	public static void warning(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -424,7 +425,7 @@ public final class Logger {
 	 */
 	public static void warning(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -435,7 +436,7 @@ public final class Logger {
 	 */
 	public static void warning(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.WARNING)) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [warning*, Lambda]
@@ -451,7 +452,7 @@ public final class Logger {
 	public static void warning(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.WARNING)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -468,7 +469,7 @@ public final class Logger {
 	public static void warning(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.WARNING)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -485,7 +486,7 @@ public final class Logger {
 	public static void warning(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.WARNING)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -502,7 +503,7 @@ public final class Logger {
 	public static void warning(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.WARNING)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -518,7 +519,7 @@ public final class Logger {
 	public static void warning(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.WARNING)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 
@@ -531,7 +532,7 @@ public final class Logger {
 	 */
 	public static void error(String text) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -542,7 +543,7 @@ public final class Logger {
 	 */
 	public static void error(Object object) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -554,7 +555,7 @@ public final class Logger {
 	 */
 	public static void error(String text, Object argument) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -566,7 +567,7 @@ public final class Logger {
 	 */
 	public static void error(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -578,7 +579,7 @@ public final class Logger {
 	 */
 	public static void error(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -589,7 +590,7 @@ public final class Logger {
 	 */
 	public static void error(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.ERROR)) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [error*, Lambda]
@@ -605,7 +606,7 @@ public final class Logger {
 	public static void error(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.ERROR)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -622,7 +623,7 @@ public final class Logger {
 	public static void error(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.ERROR)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -639,7 +640,7 @@ public final class Logger {
 	public static void error(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.ERROR)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -656,7 +657,7 @@ public final class Logger {
 	public static void error(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.ERROR)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -672,7 +673,7 @@ public final class Logger {
 	public static void error(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.ERROR)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 
@@ -685,7 +686,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -696,7 +697,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -708,7 +709,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -720,7 +721,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -732,7 +733,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -743,7 +744,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [stacktrace*, Throwable]
@@ -756,7 +757,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(Throwable throwable) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), Throwables.stacktrace(throwable));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), Throwables.stacktrace(throwable));
 	}
 
 	/**
@@ -769,7 +770,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -782,7 +783,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		String text = object + "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -796,7 +797,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -810,7 +811,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -824,7 +825,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -837,7 +838,7 @@ public final class Logger {
 	public static void stacktrace(Throwable throwable, String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable);
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [stacktrace*, Lambda for formatting]
@@ -853,7 +854,7 @@ public final class Logger {
 	public static void stacktrace(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -870,7 +871,7 @@ public final class Logger {
 	public static void stacktrace(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -887,7 +888,7 @@ public final class Logger {
 	public static void stacktrace(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -904,7 +905,7 @@ public final class Logger {
 	public static void stacktrace(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -920,7 +921,7 @@ public final class Logger {
 	public static void stacktrace(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 	//#region Logging [stacktrace*, Lambda for throwable]
@@ -941,7 +942,7 @@ public final class Logger {
 	 */
 	public static void stacktrace(ThrowableSupplier throwable) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), Throwables.stacktrace(throwable.get()));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), Throwables.stacktrace(throwable.get()));
 	}
 
 	/**
@@ -962,7 +963,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, String text) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -983,7 +984,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, Object object) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		String text = object + "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -1005,7 +1006,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -1027,7 +1028,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -1049,7 +1050,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -1070,7 +1071,7 @@ public final class Logger {
 	public static void stacktrace(ThrowableSupplier throwable, String text, Object... arguments) {
 		if (!enabled(LoggerLevel.STACKTRACE)) return;
 		text += "\n" + Throwables.stacktrace(throwable.get());
-		dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 
@@ -1083,7 +1084,7 @@ public final class Logger {
 	 */
 	public static void debugging(String text) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -1094,7 +1095,7 @@ public final class Logger {
 	 */
 	public static void debugging(Object object) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -1106,7 +1107,7 @@ public final class Logger {
 	 */
 	public static void debugging(String text, Object argument) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -1118,7 +1119,7 @@ public final class Logger {
 	 */
 	public static void debugging(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -1130,7 +1131,7 @@ public final class Logger {
 	 */
 	public static void debugging(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -1141,7 +1142,7 @@ public final class Logger {
 	 */
 	public static void debugging(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [debugging*, Lambda]
@@ -1157,7 +1158,7 @@ public final class Logger {
 	public static void debugging(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -1174,7 +1175,7 @@ public final class Logger {
 	public static void debugging(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -1191,7 +1192,7 @@ public final class Logger {
 	public static void debugging(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -1208,7 +1209,7 @@ public final class Logger {
 	public static void debugging(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -1224,7 +1225,7 @@ public final class Logger {
 	public static void debugging(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.DEBUGGING)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 
@@ -1237,7 +1238,7 @@ public final class Logger {
 	 */
 	public static void configuration(String text) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), text);
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), text);
 	}
 
 	/**
@@ -1248,7 +1249,7 @@ public final class Logger {
 	 */
 	public static void configuration(Object object) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(object));
 	}
 
 	/**
@@ -1260,7 +1261,7 @@ public final class Logger {
 	 */
 	public static void configuration(String text, Object argument) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument));
 	}
 
 	/**
@@ -1272,7 +1273,7 @@ public final class Logger {
 	 */
 	public static void configuration(String text, Object argument1, Object argument2) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2));
 	}
 
 	/**
@@ -1284,7 +1285,7 @@ public final class Logger {
 	 */
 	public static void configuration(String text, Object argument1, Object argument2, Object argument3) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1, argument2, argument3));
 	}
 
 	/**
@@ -1295,7 +1296,7 @@ public final class Logger {
 	 */
 	public static void configuration(String text, Object... arguments) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, arguments));
 	}
 	//#endregion
 	//#region Logging [configuration*, Lambda]
@@ -1311,7 +1312,7 @@ public final class Logger {
 	public static void configuration(@Nullable ObjectSupplier supplier) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
 		if (supplier == null) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), String.valueOf(supplier.get()));
 	}
 
 	/**
@@ -1328,7 +1329,7 @@ public final class Logger {
 	public static void configuration(String text, @Nullable ObjectSupplier argument) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
 		if (argument == null) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument.get()));
 	}
 
 	/**
@@ -1345,7 +1346,7 @@ public final class Logger {
 	public static void configuration(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
 		if (argument1 == null || argument2 == null) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get()));
 	}
 
 	/**
@@ -1362,7 +1363,7 @@ public final class Logger {
 	public static void configuration(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
 		if (argument1 == null || argument2 == null || argument3 == null) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, argument1.get(), argument2.get(), argument3.get()));
 	}
 
 	/**
@@ -1378,7 +1379,7 @@ public final class Logger {
 	public static void configuration(String text, ObjectSupplier @Nullable... arguments) {
 		if (!enabled(LoggerLevel.CONFIGURATION)) return;
 		if (arguments == null) return;
-		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, Thread.currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
+		dispatch(Instant.now(), LoggerLevel.CONFIGURATION, currentThread().getName(), walker.getCallerClass().getName(), format(text, Arrays.stream(arguments).map(Supplier::get).toArray()));
 	}
 	//#endregion
 }

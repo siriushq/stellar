@@ -7,6 +7,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.time.Instant;
 import java.util.Locale;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.tinylog.provider.LoggingProvider] which dispatches to [Logger].
@@ -58,7 +59,7 @@ public final class TinylogDispatcher implements org.tinylog.provider.LoggingProv
 
 		if (tag != null && !tag.isEmpty() && !tag.isBlank()) message = "[" + tag + "] " + message;
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), this.convert(level), Thread.currentThread().getName(), caller, message);
+		Logger.dispatch(Instant.now(), this.convert(level), currentThread().getName(), caller, message);
 	}
 
 	/// Converts the provided level to a [LoggerLevel].

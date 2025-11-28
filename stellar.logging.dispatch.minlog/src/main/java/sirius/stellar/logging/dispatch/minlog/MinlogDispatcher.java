@@ -8,6 +8,7 @@ import java.io.ObjectStreamException;
 import java.io.Serial;
 import java.time.Instant;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [com.esotericsoftware.minlog.Log.Logger] which dispatches to [Logger].
@@ -47,7 +48,7 @@ public final class MinlogDispatcher extends com.esotericsoftware.minlog.Log.Logg
 
 		if (throwable != null) message += "\n" + stacktrace(throwable);
 		String caller = String.valueOf(walker.walk(stream -> stream.limit(3).toList()).get(2).getClassName());
-		Logger.dispatch(Instant.now(), loggerLevel, Thread.currentThread().getName(), caller, message);
+		Logger.dispatch(Instant.now(), loggerLevel, currentThread().getName(), caller, message);
 	}
 
 	@Serial

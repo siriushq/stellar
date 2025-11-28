@@ -9,6 +9,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
+import static java.lang.Thread.*;
+
 /// Implementation of [org.apache.commons.logging.Log] which dispatches to [Logger].
 ///
 /// @author Mahied Maruf (mechite)
@@ -65,78 +67,78 @@ public final class JclDispatcher implements org.apache.commons.logging.Log, Seri
 	@Override
 	public void trace(Object message) {
 		if (!isTraceEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void trace(Object message, Throwable throwable) {
 		if (!isTraceEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 	//#region debug*
 	@Override
 	public void debug(Object message) {
 		if (!isDebugEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void debug(Object message, Throwable throwable) {
 		if (!isDebugEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 	//#region info*
 	@Override
 	public void info(Object message) {
 		if (!isInfoEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void info(Object message, Throwable throwable) {
 		if (!isInfoEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 	//#region warn*
 	@Override
 	public void warn(Object message) {
 		if (!isWarnEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void warn(Object message, Throwable throwable) {
 		if (!isWarnEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 	//#region error*
 	@Override
 	public void error(Object message) {
 		if (!isErrorEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void error(Object message, Throwable throwable) {
 		if (!isErrorEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 	//#region fatal*
 	@Override
 	public void fatal(Object message) {
 		if (!isFatalEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message.toString());
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString());
 	}
 
 	@Override
 	public void fatal(Object message, Throwable throwable) {
 		if (!isFatalEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
 	}
 	//#endregion
 }

@@ -5,6 +5,7 @@ import sirius.stellar.logging.LoggerLevel;
 
 import java.time.Instant;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Shadow class for `org.apache.log4j.Logger`.
@@ -41,14 +42,14 @@ public class Logger extends Category {
 
 	public void trace(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_TRACE) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.getName(), String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.getName(), String.valueOf(object));
 	}
 
 	public void trace(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_TRACE) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.getName(), message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.getName(), message);
 	}
 
 	public boolean isTraceEnabled() {

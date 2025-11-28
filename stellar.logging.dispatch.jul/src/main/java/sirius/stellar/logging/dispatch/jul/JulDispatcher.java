@@ -9,6 +9,8 @@ import java.io.Serial;
 import java.text.MessageFormat;
 import java.util.Map;
 
+import static java.lang.Thread.*;
+
 /// Implementation of [java.util.logging.Handler] which dispatches to [Logger].
 ///
 /// -------------------------------
@@ -58,7 +60,7 @@ public final class JulDispatcher extends java.util.logging.Handler implements Di
 		if (original == null) return;
 		LoggerLevel level = conversions.get(original);
 		if (level == null) return;
-		Logger.dispatch(record.getInstant(), level, Thread.currentThread().getName(), record.getSourceClassName(), MessageFormat.format(record.getMessage(), record.getParameters()));
+		Logger.dispatch(record.getInstant(), level, currentThread().getName(), record.getSourceClassName(), MessageFormat.format(record.getMessage(), record.getParameters()));
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.io.Serial;
 import java.time.Instant;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.apache.logging.log4j.spi.AbstractLogger] which dispatches to [Logger].
@@ -129,7 +130,7 @@ public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.Abstrac
 		String text = message.getFormattedMessage();
 		if (marker != null) text = "[" + marker.getName() + "] " + text;
 		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), loggerLevel, Thread.currentThread().getName(), caller, text);
+		Logger.dispatch(Instant.now(), loggerLevel, currentThread().getName(), caller, text);
 	}
 
 	@Override

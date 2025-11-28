@@ -9,6 +9,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
+import static java.lang.Thread.*;
+
 /// Implementation of [org.slf4j.Logger] which dispatches to [Logger].
 ///
 /// There is suboptimal handling of [org.slf4j.Marker]s in this implementation;
@@ -42,35 +44,35 @@ public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializ
 	@Override
 	public void trace(String text) {
 		if (!isTraceEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void trace(String text, Object argument) {
 		if (!isTraceEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void trace(String text, Object argument1, Object argument2) {
 		if (!isTraceEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument1, argument2).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void trace(String text, Object... arguments) {
 		if (!isTraceEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, arguments).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void trace(String text, Throwable throwable) {
 		if (!isTraceEnabled()) return;
 		if (throwable != null) text += "\n" + Throwables.stacktrace(throwable);
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, text);
 	}
 	//#endregion
 	//#region trace* [Marker]
@@ -119,35 +121,35 @@ public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializ
 	@Override
 	public void debug(String text) {
 		if (!isDebugEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void debug(String text, Object argument) {
 		if (!isDebugEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void debug(String text, Object argument1, Object argument2) {
 		if (!isDebugEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument1, argument2).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void debug(String text, Object... arguments) {
 		if (!isDebugEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, arguments).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void debug(String text, Throwable throwable) {
 		if (!isDebugEnabled()) return;
 		if (throwable != null) text += "\n" + Throwables.stacktrace(throwable);
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, text);
 	}
 	//#endregion
 	//#region debug* [Marker]
@@ -196,35 +198,35 @@ public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializ
 	@Override
 	public void info(String text) {
 		if (!isInfoEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void info(String text, Object argument) {
 		if (!isInfoEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void info(String text, Object argument1, Object argument2) {
 		if (!isInfoEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument1, argument2).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void info(String text, Object... arguments) {
 		if (!isInfoEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, arguments).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void info(String text, Throwable throwable) {
 		if (!isInfoEnabled()) return;
 		if (throwable != null) text += "\n" + Throwables.stacktrace(throwable);
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, text);
 	}
 	//#endregion
 	//#region info* [Marker]
@@ -273,35 +275,35 @@ public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializ
 	@Override
 	public void warn(String text) {
 		if (!isWarnEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void warn(String text, Object argument) {
 		if (!isWarnEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void warn(String text, Object argument1, Object argument2) {
 		if (!isWarnEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument1, argument2).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void warn(String text, Object... arguments) {
 		if (!isWarnEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, arguments).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void warn(String text, Throwable throwable) {
 		if (!isWarnEnabled()) return;
 		if (throwable != null) text += "\n" + Throwables.stacktrace(throwable);
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, text);
 	}
 	//#endregion
 	//#region warn* [Marker]
@@ -350,35 +352,35 @@ public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializ
 	@Override
 	public void error(String text) {
 		if (!isErrorEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void error(String text, Object argument) {
 		if (!isErrorEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void error(String text, Object argument1, Object argument2) {
 		if (!isErrorEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, argument1, argument2).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void error(String text, Object... arguments) {
 		if (!isErrorEnabled()) return;
 		text = org.slf4j.helpers.MessageFormatter.format(text, arguments).getMessage();
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void error(String text, Throwable throwable) {
 		if (!isErrorEnabled()) return;
 		if (throwable != null) text += "\n" + Throwables.stacktrace(throwable);
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, text);
 	}
 	//#endregion
 	//#region error* [Marker]

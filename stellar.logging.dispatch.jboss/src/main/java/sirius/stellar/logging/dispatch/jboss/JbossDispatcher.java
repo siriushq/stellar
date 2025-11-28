@@ -6,6 +6,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.text.MessageFormat;
 import java.time.Instant;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Implementation of [org.jboss.logging.Logger] which delegates to [Logger].
@@ -23,14 +24,14 @@ public final class JbossDispatcher extends org.jboss.logging.Logger {
 		if (!isEnabled(level)) return;
 		String text = String.valueOf(object);
 		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), convert(level), Thread.currentThread().getName(), this.getName(), MessageFormat.format(text, arguments));
+		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.getName(), MessageFormat.format(text, arguments));
 	}
 
 	@Override
 	protected void doLogf(org.jboss.logging.Logger.Level level, String name, String text, Object[] arguments, Throwable throwable) {
 		if (!isEnabled(level)) return;
 		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), convert(level), Thread.currentThread().getName(), this.getName(), String.format(String.valueOf(text), arguments));
+		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.getName(), String.format(String.valueOf(text), arguments));
 	}
 
 	@Override

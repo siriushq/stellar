@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.Throwables.*;
 
@@ -37,13 +38,13 @@ public record Jsr379Dispatcher(String name) implements System.Logger, Serializab
 	public void log(Level level, ResourceBundle bundle, String text, Throwable throwable) {
 		if (!isLoggable(level)) return;
 		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), convert(level), Thread.currentThread().getName(), this.name, text);
+		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, text);
 	}
 
 	@Override
 	public void log(Level level, ResourceBundle bundle, String text, Object... arguments) {
 		if (!isLoggable(level)) return;
-		Logger.dispatch(Instant.now(), convert(level), Thread.currentThread().getName(), this.name, format(text, arguments));
+		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, format(text, arguments));
 	}
 
 	/// Converts the provided level to a [LoggerLevel].

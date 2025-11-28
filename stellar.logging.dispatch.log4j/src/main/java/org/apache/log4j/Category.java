@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
+import static java.lang.Thread.*;
 import static sirius.stellar.facility.Throwables.*;
 
 /// Shadow class for `org.apache.log4j.Category`.
@@ -45,7 +46,7 @@ public class Category {
 	public void assertLog(boolean assertion, String string) {
 		if (!assertion && MINIMUM_LEVEL_COVERS_ERROR) {
 			if (!MINIMUM_LEVEL_COVERS_INFO) return;
-			sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, (string));
+			sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, (string));
 		}
 	}
 
@@ -55,26 +56,26 @@ public class Category {
 
 	public void debug(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void debug(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, message);
 	}
 
 	public void error(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void error(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message);
 	}
 
 	public static Logger exists(String name) {
@@ -83,20 +84,20 @@ public class Category {
 
 	public void fatal(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void fatal(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message);
 	}
 
 	protected void forcedLog(String caller, Priority priority, Object object, Throwable throwable) {
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), caller, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), caller, message);
 	}
 
 	public boolean getAdditivity() {
@@ -157,14 +158,14 @@ public class Category {
 
 	public void info(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void info(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_INFO) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, message);
 	}
 
 	public boolean isAttached(Appender appender) {
@@ -188,7 +189,7 @@ public class Category {
 		String message = bundle == null ? key : bundle.getString(key);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
 
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), this.name, message);
 	}
 
 	public void l7dlog(Priority priority, String key, Object[] arguments, Throwable throwable) {
@@ -196,23 +197,23 @@ public class Category {
 		String message = bundle == null ? key : MessageFormat.format(bundle.getString(key), arguments);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
 
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), this.name, message);
 	}
 
 	public void log(Priority priority, Object object, Throwable throwable) {
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), this.name, message);
 	}
 
 	public void log(Priority priority, Object object) {
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void log(String caller, Priority priority, Object object, Throwable throwable) {
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(priority), currentThread().getName(), this.name, message);
 	}
 
 	public void removeAllAppenders() {
@@ -249,14 +250,14 @@ public class Category {
 
 	public void warn(Object object) {
 		if (!MINIMUM_LEVEL_COVERS_WARN) return;
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(Level.WARN), Thread.currentThread().getName(), this.name, String.valueOf(object));
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(Level.WARN), currentThread().getName(), this.name, String.valueOf(object));
 	}
 
 	public void warn(Object object, Throwable throwable) {
 		if (!MINIMUM_LEVEL_COVERS_WARN) return;
 		String message = String.valueOf(object);
 		if (throwable != null) message += "\n" + stacktrace(throwable);
-		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(Level.WARN), Thread.currentThread().getName(), this.name, message);
+		sirius.stellar.logging.Logger.dispatch(Instant.now(), convert(Level.WARN), currentThread().getName(), this.name, message);
 	}
 
 	/// Converts the provided level or priority to a [LoggerLevel].
