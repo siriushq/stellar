@@ -72,7 +72,7 @@ public final class JShellConfigurationProvider implements FileConfigurationProvi
 
 	@Override
 	public Set<String> extensions() {
-		return Set.of(".jsh");
+		return Set.of(".jsh", ".jshell");
 	}
 
 	/// Evaluate the provided expression, providing error handling and feedback.

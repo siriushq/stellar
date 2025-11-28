@@ -12,4 +12,6 @@ module sirius.stellar.configuration.yaml {
 
 	provides sirius.stellar.configuration.ConfigurationProvider with
 			sirius.stellar.configuration.yaml.YamlConfigurationProvider;
+	provides sirius.stellar.configuration.ConfigurationReloader with
+			sirius.stellar.configuration.yaml.YamlConfigurationReloader;
 }

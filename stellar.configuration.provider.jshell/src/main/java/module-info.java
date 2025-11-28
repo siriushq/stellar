@@ -1,5 +1,4 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.configuration.jshell.JShellConfigurationProvider;
 
 @NullMarked
 module sirius.stellar.configuration.jshell {
@@ -12,5 +11,7 @@ module sirius.stellar.configuration.jshell {
 	exports sirius.stellar.configuration.jshell;
 
 	provides sirius.stellar.configuration.ConfigurationProvider
-			with JShellConfigurationProvider;
+			with sirius.stellar.configuration.jshell.JShellConfigurationProvider;
+	provides sirius.stellar.configuration.ConfigurationReloader
+			with sirius.stellar.configuration.jshell.JShellConfigurationReloader;
 }

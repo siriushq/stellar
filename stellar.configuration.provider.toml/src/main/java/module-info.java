@@ -12,4 +12,6 @@ module sirius.stellar.configuration.toml {
 
 	provides sirius.stellar.configuration.ConfigurationProvider with
 			sirius.stellar.configuration.toml.TomlConfigurationProvider;
+	provides sirius.stellar.configuration.ConfigurationReloader with
+			sirius.stellar.configuration.toml.TomlConfigurationReloader;
 }
