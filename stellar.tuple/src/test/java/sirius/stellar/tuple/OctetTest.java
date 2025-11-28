@@ -1,18 +1,17 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.facility.tuple.Octet.*;
+import static sirius.stellar.tuple.Octet.*;
 
 final class OctetTest {
 
-	@Test @DisplayName("immutableOctet throws ImmutableModificationException on modification")
+	@Test @DisplayName("immutableOctet throws UnsupportedOperationException on modification")
 	void immutableOctetThrowsOnModification() {
 		var octet = immutableOctet("a", "b", "c", "d", "e", "f", "g", "h");
-		assertThatThrownBy(() -> octet.first("i")).isInstanceOf(ImmutableModificationException.class);
+		assertThatThrownBy(() -> octet.first("i")).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test @DisplayName("mutableOctet allows modification")

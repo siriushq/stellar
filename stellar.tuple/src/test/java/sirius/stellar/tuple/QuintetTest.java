@@ -1,19 +1,17 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.facility.tuple.Quintet.*;
+import static sirius.stellar.tuple.Quintet.*;
 
 final class QuintetTest {
 
-	@Test @DisplayName("immutableQuintet throws ImmutableModificationException on modification")
+	@Test @DisplayName("immutableQuintet throws UnsupportedOperationException on modification")
 	void immutableQuintetThrowsOnModification() {
 		var quintet = immutableQuintet("a", "b", "c", "d", "e");
-		assertThatThrownBy(() -> quintet.first("f")).isInstanceOf(ImmutableModificationException.class);
+		assertThatThrownBy(() -> quintet.first("f")).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test @DisplayName("mutableQuintet allows modification")

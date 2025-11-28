@@ -1,17 +1,14 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of six elements.
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -27,7 +24,6 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B, C, D, E, F>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 2857946100715781746L;
 
 	//#region Factory Methods
@@ -72,7 +68,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract F sixth();
 
 	/// Sets the first element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -80,7 +76,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract A first(A first);
 
 	/// Sets the second element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -88,7 +84,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract B second(B second);
 
 	/// Sets the third element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the third element.
 	/// @since 1.0
@@ -96,7 +92,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract C third(C third);
 
 	/// Sets the fourth element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fourth element.
 	/// @since 1.0
@@ -104,7 +100,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract D fourth(D fourth);
 
 	/// Sets the fifth element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fifth element.
 	/// @since 1.0
@@ -112,7 +108,7 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 	public abstract E fifth(E fifth);
 
 	/// Sets the sixth element in this sextet.
-	/// If the sextet is immutable, this method will throw [ImmutableModificationException].
+	/// If the sextet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the sixth element.
 	/// @since 1.0
@@ -133,12 +129,21 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
+		return Stream.of(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Sextet<?, ?, ?, ?, ?, ?> sextet) && Objects.equals(this.first(), sextet.first()) && Objects.equals(this.second(), sextet.second()) && Objects.equals(this.third(), sextet.third()) && Objects.equals(this.fourth(), sextet.fourth()) && Objects.equals(this.fifth(), sextet.fifth()) && Objects.equals(this.sixth(), sextet.sixth());
+		if (object == this) return true;
+		if (!(object instanceof Sextet)) return false;
+
+		Sextet<?, ?, ?, ?, ?, ?> sextet = (Sextet<?, ?, ?, ?, ?, ?>) object;
+		return Objects.equals(this.first(), sextet.first())
+			&& Objects.equals(this.second(), sextet.second())
+			&& Objects.equals(this.third(), sextet.third())
+			&& Objects.equals(this.fourth(), sextet.fourth())
+			&& Objects.equals(this.fifth(), sextet.fifth())
+			&& Objects.equals(this.sixth(), sextet.sixth());
 	}
 
 	@Override
@@ -148,18 +153,16 @@ public abstract class Sextet<A, B, C, D, E, F> implements Orderable<Sextet<A, B,
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableSextet<A, B, C, D, E, F>) return format("MutableSextet[{0}, {1}, {2}, {3}, {4}, {5}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
-		if (this instanceof ImmutableSextet<A, B, C, D, E, F>) return format("ImmutableSextet[{0}, {1}, {2}, {3}, {4}, {5}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
+		if (this instanceof MutableSextet) return format("MutableSextet[{0}, {1}, {2}, {3}, {4}, {5}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
+		if (this instanceof ImmutableSextet) return format("ImmutableSextet[{0}, {1}, {2}, {3}, {4}, {5}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
 		return format("Sextet[{0}, {1}, {2}, {3}, {4}, {5}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Sextet].
-@Internal
 final class MutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 
-	@Serial
 	private static final long serialVersionUID = 2857946100715781746L;
 
 	private A first;
@@ -252,10 +255,8 @@ final class MutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 }
 
 /// An immutable implementation of [Sextet].
-@Internal
 final class ImmutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 
-	@Serial
 	private static final long serialVersionUID = 2857946100715781746L;
 
 	private final A first;
@@ -306,31 +307,31 @@ final class ImmutableSextet<A, B, C, D, E, F> extends Sextet<A, B, C, D, E, F> {
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public C third(C third) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public D fourth(D fourth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public E fifth(E fifth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public F sixth(F sixth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }

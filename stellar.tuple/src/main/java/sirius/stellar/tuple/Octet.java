@@ -1,17 +1,14 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of eight elements.
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -27,7 +24,6 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A, B, C, D, E, F, G, H>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	//#region Factory Methods
@@ -80,7 +76,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract H eighth();
 
 	/// Sets the first element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -88,7 +84,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract A first(A first);
 
 	/// Sets the second element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -96,7 +92,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract B second(B second);
 
 	/// Sets the third element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the third element.
 	/// @since 1.0
@@ -104,7 +100,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract C third(C third);
 
 	/// Sets the fourth element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fourth element.
 	/// @since 1.0
@@ -112,7 +108,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract D fourth(D fourth);
 
 	/// Sets the fifth element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fifth element.
 	/// @since 1.0
@@ -120,7 +116,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract E fifth(E fifth);
 
 	/// Sets the sixth element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the sixth element.
 	/// @since 1.0
@@ -128,7 +124,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract F sixth(F sixth);
 
 	/// Sets the seventh element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the seventh element.
 	/// @since 1.0
@@ -136,7 +132,7 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 	public abstract G seventh(G seventh);
 
 	/// Sets the eighth element in this octet.
-	/// If the octet is immutable, this method will throw [ImmutableModificationException].
+	/// If the octet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the eighth element.
 	/// @since 1.0
@@ -159,12 +155,23 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
+		return Stream.of(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Octet<?, ?, ?, ?, ?, ?, ?, ?> octet) && Objects.equals(this.first(), octet.first()) && Objects.equals(this.second(), octet.second()) && Objects.equals(this.third(), octet.third()) && Objects.equals(this.fourth(), octet.fourth()) && Objects.equals(this.fifth(), octet.fifth()) && Objects.equals(this.sixth(), octet.sixth()) && Objects.equals(this.seventh(), octet.seventh()) && Objects.equals(this.eighth(), octet.eighth());
+		if (object == this) return true;
+		if (!(object instanceof Octet)) return false;
+
+		Octet<?, ?, ?, ?, ?, ?, ?, ?> octet = (Octet<?, ?, ?, ?, ?, ?, ?, ?>) object;
+		return Objects.equals(this.first(), octet.first())
+			&& Objects.equals(this.second(), octet.second())
+			&& Objects.equals(this.third(), octet.third())
+			&& Objects.equals(this.fourth(), octet.fourth())
+			&& Objects.equals(this.fifth(), octet.fifth())
+			&& Objects.equals(this.sixth(), octet.sixth())
+			&& Objects.equals(this.seventh(), octet.seventh())
+			&& Objects.equals(this.eighth(), octet.eighth());
 	}
 
 	@Override
@@ -174,18 +181,16 @@ public abstract class Octet<A, B, C, D, E, F, G, H> implements Orderable<Octet<A
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableOctet<A, B, C, D, E, F, G, H>) return format("MutableOctet[{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh(), this.eighth());
-		if (this instanceof ImmutableOctet<A, B, C, D, E, F, G, H>) return format("ImmutableOctet[{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh(), this.eighth());
+		if (this instanceof MutableOctet) return format("MutableOctet[{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh(), this.eighth());
+		if (this instanceof ImmutableOctet) return format("ImmutableOctet[{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh(), this.eighth());
 		return format("Octet[{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh(), this.eighth());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Octet].
-@Internal
 final class MutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F, G, H> {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	private A first;
@@ -306,10 +311,8 @@ final class MutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F,
 }
 
 /// An immutable implementation of [Octet].
-@Internal
 final class ImmutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, F, G, H> {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	private final A first;
@@ -374,41 +377,41 @@ final class ImmutableOctet<A, B, C, D, E, F, G, H> extends Octet<A, B, C, D, E, 
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public C third(C third) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public D fourth(D fourth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public E fifth(E fifth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public F sixth(F sixth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public G seventh(G seventh) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public H eighth(H eighth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }

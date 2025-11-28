@@ -1,22 +1,20 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.facility.tuple.Couple.*;
+import static sirius.stellar.tuple.Couple.*;
 
 final class CoupleTest {
 
-	@Test @DisplayName("immutableCouple returns immutable couple which throws ImmutableModificationException on modification")
+	@Test @DisplayName("immutableCouple returns immutable couple which throws UnsupportedOperationException on modification")
 	void immutableCoupleThrowsOnModification() {
 		var couple = immutableCouple("a", "b");
-		assertThatThrownBy(() -> couple.first("c")).isInstanceOf(ImmutableModificationException.class);
+		assertThatThrownBy(() -> couple.first("c")).isInstanceOf(UnsupportedOperationException.class);
 	}
 
-	@Test @DisplayName("mutableCouple returns mutable couple, which doesn't throw ImmutableModificationException")
+	@Test @DisplayName("mutableCouple returns mutable couple, which doesn't throw UnsupportedOperationException")
 	void mutableCoupleAllowsModification() {
 		var couple = mutableCouple("a", "b");
 		couple.first("c");

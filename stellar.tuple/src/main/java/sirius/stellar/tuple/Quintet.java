@@ -1,17 +1,14 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of five elements.
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -27,7 +24,6 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, C, D, E>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 1356093815330551527L;
 
 	//#region Factory Methods
@@ -68,7 +64,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	public abstract E fifth();
 
 	/// Sets the first element in this quintet.
-	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	/// If the quintet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -76,7 +72,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	public abstract A first(A first);
 
 	/// Sets the second element in this quintet.
-	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	/// If the quintet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -84,7 +80,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	public abstract B second(B second);
 
 	/// Sets the third element in this quintet.
-	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	/// If the quintet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the third element.
 	/// @since 1.0
@@ -92,7 +88,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	public abstract C third(C third);
 
 	/// Sets the fourth element in this quintet.
-	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	/// If the quintet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fourth element.
 	/// @since 1.0
@@ -100,7 +96,7 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 	public abstract D fourth(D fourth);
 
 	/// Sets the fifth element in this quintet.
-	/// If the quintet is immutable, this method will throw [ImmutableModificationException].
+	/// If the quintet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fifth element.
 	/// @since 1.0
@@ -120,12 +116,20 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second(), this.third(), this.fourth(), this.fifth());
+		return Stream.of(this.first(), this.second(), this.third(), this.fourth(), this.fifth()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Quintet<?, ?, ?, ?, ?> quintet) && Objects.equals(this.first(), quintet.first()) && Objects.equals(this.second(), quintet.second()) && Objects.equals(this.third(), quintet.third()) && Objects.equals(this.fourth(), quintet.fourth()) && Objects.equals(this.fifth(), quintet.fifth());
+		if (object == this) return true;
+		if (!(object instanceof Quintet)) return false;
+
+		Quintet<?, ?, ?, ?, ?> quintet = (Quintet<?, ?, ?, ?, ?>) object;
+		return Objects.equals(this.first(), quintet.first())
+			&& Objects.equals(this.second(), quintet.second())
+			&& Objects.equals(this.third(), quintet.third())
+			&& Objects.equals(this.fourth(), quintet.fourth())
+			&& Objects.equals(this.fifth(), quintet.fifth());
 	}
 
 	@Override
@@ -135,18 +139,16 @@ public abstract class Quintet<A, B, C, D, E> implements Orderable<Quintet<A, B, 
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableQuintet<A, B, C, D, E>) return format("MutableQuintet[{0}, {1}, {2}, {3}, {4}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth());
-		if (this instanceof ImmutableQuintet<A, B, C, D, E>) return format("ImmutableQuintet[{0}, {1}, {2}, {3}, {4}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth());
+		if (this instanceof MutableQuintet) return format("MutableQuintet[{0}, {1}, {2}, {3}, {4}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth());
+		if (this instanceof ImmutableQuintet) return format("ImmutableQuintet[{0}, {1}, {2}, {3}, {4}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth());
 		return format("Quintet[{0}, {1}, {2}, {3}, {4}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Quintet].
-@Internal
 final class MutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 
-	@Serial
 	private static final long serialVersionUID = 1356093815330551527L;
 
 	private A first;
@@ -225,10 +227,8 @@ final class MutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 }
 
 /// An immutable implementation of [Quintet].
-@Internal
 final class ImmutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 
-	@Serial
 	private static final long serialVersionUID = 1356093815330551527L;
 
 	private final A first;
@@ -272,26 +272,26 @@ final class ImmutableQuintet<A, B, C, D, E> extends Quintet<A, B, C, D, E> {
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public C third(C third) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public D fourth(D fourth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public E fifth(E fifth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }

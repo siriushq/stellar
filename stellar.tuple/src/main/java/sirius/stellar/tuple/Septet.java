@@ -1,17 +1,14 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of seven elements.
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -27,7 +24,6 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A, B, C, D, E, F, G>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	//#region Factory Methods
@@ -76,7 +72,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract G seventh();
 
 	/// Sets the first element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -84,7 +80,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract A first(A first);
 
 	/// Sets the second element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -92,7 +88,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract B second(B second);
 
 	/// Sets the third element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the third element.
 	/// @since 1.0
@@ -100,7 +96,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract C third(C third);
 
 	/// Sets the fourth element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fourth element.
 	/// @since 1.0
@@ -108,7 +104,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract D fourth(D fourth);
 
 	/// Sets the fifth element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the fifth element.
 	/// @since 1.0
@@ -116,7 +112,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract E fifth(E fifth);
 
 	/// Sets the sixth element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the sixth element.
 	/// @since 1.0
@@ -124,7 +120,7 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 	public abstract F sixth(F sixth);
 
 	/// Sets the seventh element in this septet.
-	/// If the septet is immutable, this method will throw [ImmutableModificationException].
+	/// If the septet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the seventh element.
 	/// @since 1.0
@@ -146,12 +142,22 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
+		return Stream.of(this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Septet<?, ?, ?, ?, ?, ?, ?> septet) && Objects.equals(this.first(), septet.first()) && Objects.equals(this.second(), septet.second()) && Objects.equals(this.third(), septet.third()) && Objects.equals(this.fourth(), septet.fourth()) && Objects.equals(this.fifth(), septet.fifth()) && Objects.equals(this.sixth(), septet.sixth()) && Objects.equals(this.seventh(), septet.seventh());
+		if (object == this) return true;
+		if (!(object instanceof Septet)) return false;
+
+		Septet<?, ?, ?, ?, ?, ?, ?> septet = (Septet<?, ?, ?, ?, ?, ?, ?>) object;
+		return Objects.equals(this.first(), septet.first())
+			&& Objects.equals(this.second(), septet.second())
+			&& Objects.equals(this.third(), septet.third())
+			&& Objects.equals(this.fourth(), septet.fourth())
+			&& Objects.equals(this.fifth(), septet.fifth())
+			&& Objects.equals(this.sixth(), septet.sixth())
+			&& Objects.equals(this.seventh(), septet.seventh());
 	}
 
 	@Override
@@ -161,18 +167,16 @@ public abstract class Septet<A, B, C, D, E, F, G> implements Orderable<Septet<A,
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableSeptet<A, B, C, D, E, F, G>) return format("MutableSeptet[{0}, {1}, {2}, {3}, {4}, {5}, {6}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
-		if (this instanceof ImmutableSeptet<A, B, C, D, E, F, G>) return format("ImmutableSeptet[{0}, {1}, {2}, {3}, {4}, {5}, {6}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
+		if (this instanceof MutableSeptet) return format("MutableSeptet[{0}, {1}, {2}, {3}, {4}, {5}, {6}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
+		if (this instanceof ImmutableSeptet) return format("ImmutableSeptet[{0}, {1}, {2}, {3}, {4}, {5}, {6}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
 		return format("Septet[{0}, {1}, {2}, {3}, {4}, {5}, {6}]", this.first(), this.second(), this.third(), this.fourth(), this.fifth(), this.sixth(), this.seventh());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Septet].
-@Internal
 final class MutableSeptet<A, B, C, D, E, F, G> extends Septet<A, B, C, D, E, F, G> {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	private A first;
@@ -279,10 +283,8 @@ final class MutableSeptet<A, B, C, D, E, F, G> extends Septet<A, B, C, D, E, F, 
 }
 
 /// An immutable implementation of [Septet].
-@Internal
 final class ImmutableSeptet<A, B, C, D, E, F, G> extends Septet<A, B, C, D, E, F, G> {
 
-	@Serial
 	private static final long serialVersionUID = 3723717904972880012L;
 
 	private final A first;
@@ -340,36 +342,36 @@ final class ImmutableSeptet<A, B, C, D, E, F, G> extends Septet<A, B, C, D, E, F
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public C third(C third) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public D fourth(D fourth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public E fifth(E fifth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public F sixth(F sixth) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public G seventh(G seventh) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }

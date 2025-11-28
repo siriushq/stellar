@@ -1,0 +1,62 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>sirius.stellar</groupId>
+        <artifactId>stellar</artifactId>
+        <version>1.0-RC1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <packaging>jar</packaging>
+    <artifactId>stellar-tuple</artifactId>
+    <name>Stellar :: Tuple</name>
+	<description>A general-purpose tuple data structure library.</description>
+
+	<properties>
+		<java.version.main>11</java.version.main>
+		<java.version.test>17</java.version.test>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-facility</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,19 +1,17 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.facility.tuple.Septet.*;
+import static sirius.stellar.tuple.Septet.*;
 
 final class SeptetTest {
 
-	@Test @DisplayName("immutableSeptet throws ImmutableModificationException on modification")
+	@Test @DisplayName("immutableSeptet throws UnsupportedOperationException on modification")
 	void immutableSeptetThrowsOnModification() {
 		var septet = immutableSeptet("a", "b", "c", "d", "e", "f", "g");
-		assertThatThrownBy(() -> septet.first("h")).isInstanceOf(ImmutableModificationException.class);
+		assertThatThrownBy(() -> septet.first("h")).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test @DisplayName("mutableSeptet allows modification")

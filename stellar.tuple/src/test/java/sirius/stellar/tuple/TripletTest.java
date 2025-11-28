@@ -1,19 +1,17 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.facility.tuple.Triplet.*;
+import static sirius.stellar.tuple.Triplet.*;
 
 final class TripletTest {
 
-	@Test @DisplayName("immutableTriplet throws ImmutableModificationException on modification")
+	@Test @DisplayName("immutableTriplet throws UnsupportedOperationException on modification")
 	void immutableTripletThrowsOnModification() {
 		var triplet = immutableTriplet("a", "b", "c");
-		assertThatThrownBy(() -> triplet.first("d")).isInstanceOf(ImmutableModificationException.class);
+		assertThatThrownBy(() -> triplet.first("d")).isInstanceOf(UnsupportedOperationException.class);
 	}
 
 	@Test @DisplayName("mutableTriplet allows modification")

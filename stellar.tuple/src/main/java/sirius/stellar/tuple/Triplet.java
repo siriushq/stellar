@@ -1,17 +1,14 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of three elements.
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -22,19 +19,18 @@ import static sirius.stellar.facility.Strings.*;
 ///
 /// A usage exemplar is as follows:
 /// ```
-///     // The `var` keyword can be used instead.
-///     // var triplet = immutableTriplet("Random", 16, 2007);
-///     Triplet<String, Integer, Integer> triplet = immutableTriplet("Random", 16, 2007);
-///     triplet.first().equals("Random")
-///     triplet.second() == 16;
-///     triplet.third() == 2007;
+/// // The `var` keyword can be used instead.
+/// // var triplet = immutableTriplet("Random", 16, 2007);
+/// Triplet<String, Integer, Integer> triplet = immutableTriplet("Random", 16, 2007);
+/// triplet.first().equals("Random")
+/// triplet.second() == 16;
+/// triplet.third() == 2007;
 /// ```
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 4529072832431752049L;
 
 	//#region Factory Methods
@@ -67,7 +63,7 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 	public abstract C third();
 
 	/// Sets the first element in this triplet.
-	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	/// If the triplet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -75,7 +71,7 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 	public abstract A first(A first);
 
 	/// Sets the second element in this triplet.
-	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	/// If the triplet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -83,7 +79,7 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 	public abstract B second(B second);
 
 	/// Sets the third element in this triplet.
-	/// If the triplet is immutable, this method will throw [ImmutableModificationException].
+	/// If the triplet is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the third element.
 	/// @since 1.0
@@ -101,12 +97,18 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second(), this.third());
+		return Stream.of(this.first(), this.second(), this.third()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Triplet<?, ?, ?> triplet) && Objects.equals(this.first(), triplet.first()) && Objects.equals(this.second(), triplet.second()) && Objects.equals(this.third(), triplet.third());
+		if (object == this) return true;
+		if (!(object instanceof Triplet<?, ?, ?>)) return false;
+
+		Triplet<?, ?, ?> triplet = (Triplet<?, ?, ?>) object;
+		return Objects.equals(this.first(), triplet.first())
+				&& Objects.equals(this.second(), triplet.second())
+				&& Objects.equals(this.third(), triplet.third());
 	}
 
 	@Override
@@ -116,18 +118,16 @@ public abstract class Triplet<A, B, C> implements Orderable<Triplet<A, B, C>>, I
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableTriplet<A, B, C>) return format("MutableTriplet[{0}, {1}, {2}]", this.first(), this.second(), this.third());
-		if (this instanceof ImmutableTriplet<A, B, C>) return format("ImmutableTriplet[{0}, {1}, {2}]", this.first(), this.second(), this.third());
+		if (this instanceof MutableTriplet) return format("MutableTriplet[{0}, {1}, {2}]", this.first(), this.second(), this.third());
+		if (this instanceof ImmutableTriplet) return format("ImmutableTriplet[{0}, {1}, {2}]", this.first(), this.second(), this.third());
 		return format("Triplet[{0}, {1}, {2}]", this.first(), this.second(), this.third());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Triplet].
-@Internal
 final class MutableTriplet<A, B, C> extends Triplet<A, B, C> {
 
-	@Serial
 	private static final long serialVersionUID = 4529072832431752049L;
 
 	private A first;
@@ -178,10 +178,8 @@ final class MutableTriplet<A, B, C> extends Triplet<A, B, C> {
 }
 
 /// An immutable implementation of [Triplet].
-@Internal
 final class ImmutableTriplet<A, B, C> extends Triplet<A, B, C> {
 
-	@Serial
 	private static final long serialVersionUID = 4529072832431752049L;
 
 	private final A first;
@@ -211,16 +209,16 @@ final class ImmutableTriplet<A, B, C> extends Triplet<A, B, C> {
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public C third(C third) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }

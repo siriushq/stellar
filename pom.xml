@@ -25,11 +25,10 @@
 		<module>stellar.bom</module>
 
 		<module>stellar.facility</module>
+		<module>stellar.tuple</module>
 
 		<module>stellar.logging</module>
-
 		<module>stellar.logging.collect.slf4j</module>
-
 		<module>stellar.logging.dispatch.applog</module>
 		<module>stellar.logging.dispatch.jboss</module>
 		<module>stellar.logging.dispatch.jcl</module>

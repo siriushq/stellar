@@ -1,7 +1,6 @@
 package sirius.stellar.lifecycle.spi;
 
 import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.tuple.Couple;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Provides;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Requires;
 
@@ -26,7 +25,6 @@ import static javax.lang.model.SourceVersion.*;
 import static javax.lang.model.element.ElementKind.*;
 import static javax.tools.StandardLocation.*;
 import static sirius.stellar.facility.Strings.*;
-import static sirius.stellar.facility.tuple.Couple.*;
 import static sirius.stellar.lifecycle.spi.APContext.*;
 
 @Internal
@@ -207,9 +205,9 @@ public final class ServiceProcessor extends AbstractProcessor {
 							.stream()
 							.map(this::qualifyDollar)
 							.collect(toSet());
-					return immutableCouple(spi, sp);
+					return Map.entry(spi, sp);
 				})
-				.collect(toMap(Couple::first, Couple::second));
+				.collect(toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 		for (Provides provide : provides) {
 			String spi = qualifyDollar(provide.service());

@@ -1,19 +1,16 @@
-package sirius.stellar.facility.tuple;
+package sirius.stellar.tuple;
 
 import org.jetbrains.annotations.Contract;
-import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Orderable;
-import sirius.stellar.facility.annotation.Internal;
-import sirius.stellar.facility.exception.ImmutableModificationException;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.*;
 
 /// A tuple consisting of two elements (coupled together).
 /// This class is non-sealed and may be extended for use as an abstraction.
@@ -38,7 +35,6 @@ import static sirius.stellar.facility.Strings.*;
 /// @since 1.0
 public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<A, B>>, Iterable<Object>, Serializable {
 
-	@Serial
 	private static final long serialVersionUID = 2425620414811236114L;
 
 	//#region Factory Methods
@@ -81,7 +77,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	public abstract B second();
 
 	/// Sets the first element in this couple.
-	/// If the couple is immutable, this method will throw [ImmutableModificationException].
+	/// If the couple is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the first element.
 	/// @since 1.0
@@ -89,7 +85,7 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 	public abstract A first(A first);
 
 	/// Sets the second element in this couple.
-	/// If the couple is immutable, this method will throw [ImmutableModificationException].
+	/// If the couple is immutable, this method will throw [UnsupportedOperationException].
 	///
 	/// @return The old value of the second element.
 	/// @since 1.0
@@ -149,12 +145,17 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 
 	@Override
 	public Iterator<Object> iterator() {
-		return Iterators.from(this.first(), this.second());
+		return Stream.of(this.first(), this.second()).iterator();
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		return (object == this) || (object instanceof Map.Entry<?, ?> entry) && Objects.equals(this.first(), entry.getKey()) && Objects.equals(this.second(), entry.getValue());
+		if (object == this) return true;
+		if (!(object instanceof Map.Entry)) return false;
+
+		Map.Entry<?, ?> entry = (Map.Entry<?, ?>) object;
+		return Objects.equals(this.first(), entry.getKey())
+			&& Objects.equals(this.second(), entry.getValue());
 	}
 
 	@Override
@@ -164,18 +165,16 @@ public abstract class Couple<A, B> implements Map.Entry<A, B>, Orderable<Couple<
 
 	@Override
 	public String toString() {
-		if (this instanceof MutableCouple<A, B>) return format("MutableCouple[{0}, {1}]", this.first(), this.second());
-		if (this instanceof ImmutableCouple<A, B>) return format("ImmutableCouple[{0}, {1}]", this.first(), this.second());
+		if (this instanceof MutableCouple) return format("MutableCouple[{0}, {1}]", this.first(), this.second());
+		if (this instanceof ImmutableCouple) return format("ImmutableCouple[{0}, {1}]", this.first(), this.second());
 		return format("Couple[{0}, {1}]", this.first(), this.second());
 	}
 	//#endregion
 }
 
 /// A mutable implementation of [Couple].
-@Internal
 final class MutableCouple<A, B> extends Couple<A, B> {
 
-	@Serial
 	private static final long serialVersionUID = 2425620414811236114L;
 
 	private A first;
@@ -212,10 +211,8 @@ final class MutableCouple<A, B> extends Couple<A, B> {
 }
 
 /// An immutable implementation of [Couple].
-@Internal
 final class ImmutableCouple<A, B> extends Couple<A, B> {
 
-	@Serial
 	private static final long serialVersionUID = 2425620414811236114L;
 
 	private final A first;
@@ -238,11 +235,11 @@ final class ImmutableCouple<A, B> extends Couple<A, B> {
 
 	@Override
 	public A first(A first) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public B second(B second) {
-		throw new ImmutableModificationException();
+		throw new UnsupportedOperationException();
 	}
 }
