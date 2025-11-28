@@ -49,9 +49,9 @@
 		<module>stellar.configuration</module>
 		<module>stellar.configuration.testing</module>
 		<module>stellar.configuration.inject</module>
-		<module>stellar.configuration.provider.yaml</module>
-		<module>stellar.configuration.provider.toml</module>
-		<module>stellar.configuration.provider.jshell</module>
+		<module>stellar.configuration.yaml</module>
+		<module>stellar.configuration.toml</module>
+		<module>stellar.configuration.jshell</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>

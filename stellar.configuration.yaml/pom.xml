@@ -9,9 +9,9 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration-toml</artifactId>
-    <name>Stellar :: Configuration :: TOML Provider</name>
-	<description>Provides configuration for TOML files using TomlJ (under Apache-2.0).</description>
+    <artifactId>stellar-configuration-yaml</artifactId>
+    <name>Stellar :: Configuration :: YAML</name>
+	<description>Provides configuration for YAML files using SnakeYAML (under Apache-2.0).</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>
@@ -24,9 +24,9 @@
 			<artifactId>stellar-configuration</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.tomlj</groupId>
-			<artifactId>tomlj</artifactId>
-			<version>1.1.1</version>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 		<dependency>

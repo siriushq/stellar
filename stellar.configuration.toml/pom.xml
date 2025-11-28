@@ -9,9 +9,9 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration-jshell</artifactId>
-    <name>Stellar :: Configuration :: JShell Provider</name>
-	<description>Provides configuration using JShell scripts.</description>
+    <artifactId>stellar-configuration-toml</artifactId>
+    <name>Stellar :: Configuration :: TOML</name>
+	<description>Provides configuration for TOML files using TomlJ (under Apache-2.0).</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>
@@ -22,6 +22,11 @@
 		<dependency>
 			<groupId>sirius.stellar</groupId>
 			<artifactId>stellar-configuration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.tomlj</groupId>
+			<artifactId>tomlj</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 
 		<dependency>
