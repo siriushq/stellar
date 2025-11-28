@@ -33,58 +33,63 @@
 
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-collect-slf4j</artifactId>
+                <artifactId>stellar-logging-slf4j-collector</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-jboss</artifactId>
+                <artifactId>stellar-logging-applog</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-jcl</artifactId>
+                <artifactId>stellar-logging-jboss</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-jsr379</artifactId>
+                <artifactId>stellar-logging-jcl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-jul</artifactId>
+                <artifactId>stellar-logging-jsr379</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-kwik</artifactId>
+                <artifactId>stellar-logging-jul</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-log4j</artifactId>
+                <artifactId>stellar-logging-kwik</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-log4j2</artifactId>
+                <artifactId>stellar-logging-log4j</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-minlog</artifactId>
+                <artifactId>stellar-logging-log4j2</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-slf4j</artifactId>
+                <artifactId>stellar-logging-minlog</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-logging-dispatch-tinylog</artifactId>
+                <artifactId>stellar-logging-slf4j</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>sirius.stellar</groupId>
+                <artifactId>stellar-logging-tinylog</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

@@ -30,6 +30,7 @@
 
 		<module>stellar.logging.collect.slf4j</module>
 
+		<module>stellar.logging.dispatch.applog</module>
 		<module>stellar.logging.dispatch.jboss</module>
 		<module>stellar.logging.dispatch.jcl</module>
 		<module>stellar.logging.dispatch.jsr379</module>
