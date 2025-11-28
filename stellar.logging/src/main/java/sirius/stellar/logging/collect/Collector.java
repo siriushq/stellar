@@ -10,22 +10,11 @@ import java.nio.file.Path;
 import java.time.Duration;
 import java.util.concurrent.Callable;
 
-/// Represents an operation that takes place when a logger message is emitted.
+/// Represents a collector of logger messages.
+/// The minimum requirement for an implementation is to override [#collect].
 ///
 /// Static methods are also available under this interface for obtaining default
 /// implementations of the interface, such as for console logging.
-///
-/// When implementing this interface, the [LoggerMessage] object emitted when
-/// collecting a message can have heavy assertions made against it and any heavy
-/// operations needed to, e.g., publish messages through a distributed log, can be
-/// done safely, as it is expected that collectors are always invoked asynchronously.
-///
-/// This means that performance is predictable, log ordering is never affected, and
-/// the impact logging has on your application is negligible. However, it is still
-/// suggested that [Collector#task(Callable)] is used to schedule a task if it is
-/// heavy enough that mixing the task with other virtual threads is desirable, i.e.,
-/// if it does any heavy I/O operations that could affect the general performance
-/// of your application.
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
@@ -33,10 +22,7 @@ import java.util.concurrent.Callable;
 public interface Collector extends AutoCloseable, Serializable {
 
 	/// Runs when a logger message is emitted.
-	///
-	/// This should only be used for lightweight logging I/O, and anything that
-	/// may affect the performance of the application should instead be scheduled
-	/// with [#task(Callable)].
+	/// To perform I/O from the implementation of this method, use [Logger#task].
 	///
 	/// @since 1.0
 	void collect(LoggerMessage message);
