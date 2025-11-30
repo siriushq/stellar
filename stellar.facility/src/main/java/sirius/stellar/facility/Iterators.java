@@ -1,7 +1,7 @@
 package sirius.stellar.facility;
 
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.annotation.Internal;
+import sirius.stellar.annotation.Internal;
 
 import java.util.*;
 import java.util.function.*;

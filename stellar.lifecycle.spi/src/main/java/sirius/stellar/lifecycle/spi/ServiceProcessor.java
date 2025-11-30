@@ -1,6 +1,5 @@
 package sirius.stellar.lifecycle.spi;
 
-import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Provides;
 import sirius.stellar.lifecycle.spi.ModuleInfoReader.Requires;
 
@@ -27,7 +26,6 @@ import static javax.tools.StandardLocation.*;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.lifecycle.spi.APContext.*;
 
-@Internal
 @SupportedAnnotationTypes({
 		ServicePrism.PRISM_TYPE,
 		ServiceProviderPrism.PRISM_TYPE

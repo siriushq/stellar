@@ -1,14 +1,13 @@
 package sirius.stellar.facility;
 
-import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
+import sirius.stellar.annotation.Contract;
 
 import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Random;
 import java.util.random.RandomGenerator;
 
 /// Provides a facility for modifying and examining [String]s.
@@ -49,7 +48,7 @@ public final class Strings {
 	/// @see Strings#format(Locale, String, Object...)
 	/// @since 1.0
 	@Nullable
-	@Contract(value = "null, _ -> null; _, null -> param1; !null, !null -> new", pure = true)
+	@Contract("null, _ -> null; _, null -> param1; !null, !null -> new")
 	public static String format(@Nullable String string, Object @Nullable... arguments) {
 		if (string == null) return null;
 		if (arguments == null) return string;
@@ -77,7 +76,7 @@ public final class Strings {
 	/// @see Strings#format(String, Object...)
 	/// @since 1.0
 	@Nullable
-	@Contract(value = "_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new", pure = true)
+	@Contract("_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new")
 	public static String format(@Nullable Locale locale, @Nullable String string, Object @Nullable... arguments) {
 		if (string == null) return null;
 		if (arguments == null) return string;
@@ -96,7 +95,7 @@ public final class Strings {
 	/// @see Strings#shuffle(RandomGenerator, char[])
 	/// @since 1.0
 	@Nullable
-	@Contract(value = "!null, !null -> new; null, !null -> param2; _, null -> null", pure = true)
+	@Contract("!null, !null -> new; null, !null -> param2; _, null -> null")
 	public static String shuffle(@Nullable RandomGenerator random, @Nullable String string) {
 		if (string == null) return null;
 		if (random == null) return string;
@@ -109,7 +108,7 @@ public final class Strings {
 	/// @see SecureRandom#SecureRandom()
 	/// @see Strings#shuffle(RandomGenerator, String)
 	/// @since 1.0
-	@Contract(value = "!null, _ -> new; null, _ -> param2;", pure = true)
+	@Contract("!null, _ -> new; null, _ -> param2;")
 	public static char[] shuffle(@Nullable RandomGenerator random, char[] characters) {
 		char[] finalCharacters = Arrays.copyOf(characters, characters.length);
 		if (random == null) return finalCharacters;

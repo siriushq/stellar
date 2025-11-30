@@ -1,6 +1,6 @@
 package sirius.stellar.facility.functional;
 
-import org.jetbrains.annotations.Contract;
+import sirius.stellar.annotation.Contract;
 
 import java.util.function.Function;
 

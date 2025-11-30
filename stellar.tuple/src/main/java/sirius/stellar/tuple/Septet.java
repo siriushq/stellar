@@ -1,6 +1,6 @@
 package sirius.stellar.tuple;
 
-import org.jetbrains.annotations.Contract;
+import sirius.stellar.annotation.Contract;
 import sirius.stellar.facility.Orderable;
 
 import java.io.Serializable;

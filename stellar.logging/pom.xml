@@ -20,8 +20,12 @@
         <dependency>
             <groupId>sirius.stellar</groupId>
             <artifactId>stellar-facility</artifactId>
-            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>sirius.stellar</groupId>
+            <artifactId>stellar-annotation</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-record-builder</artifactId>

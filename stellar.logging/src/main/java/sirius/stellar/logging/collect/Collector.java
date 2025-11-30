@@ -1,6 +1,6 @@
 package sirius.stellar.logging.collect;
 
-import org.jetbrains.annotations.Contract;
+import sirius.stellar.annotation.Contract;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerMessage;
 
@@ -8,7 +8,6 @@ import java.io.PrintStream;
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.time.Duration;
-import java.util.concurrent.Callable;
 
 /// Represents a collector of logger messages.
 /// The minimum requirement for an implementation is to override [#collect].

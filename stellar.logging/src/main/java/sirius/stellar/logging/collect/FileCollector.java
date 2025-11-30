@@ -1,7 +1,6 @@
 package sirius.stellar.logging.collect;
 
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import static java.util.stream.Collectors.*;
 import static sirius.stellar.logging.Logger.*;
 
 /// Implementation of [Collector] that prints to log files.
-@Internal
 final class FileCollector implements Collector {
 
 	@Serial

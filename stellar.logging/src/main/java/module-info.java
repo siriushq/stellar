@@ -4,10 +4,10 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 @RecordBuilder
 module sirius.stellar.logging {
-
-	requires static org.jetbrains.annotations;
-	requires static io.avaje.recordbuilder;
 	requires org.jspecify;
+
+	requires static io.avaje.recordbuilder;
+	requires static sirius.stellar.annotation;
 
 	requires sirius.stellar.facility;
 

@@ -1,6 +1,5 @@
 package sirius.stellar.logging.dispatch.jul;
 
-import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.dispatch.Dispatcher;
 
 /// Implementation of [Dispatcher.Provider] used for obtaining instances of [JulDispatcher].
@@ -8,7 +7,6 @@ import sirius.stellar.logging.dispatch.Dispatcher;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-@Internal
 public final class JulDispatcherFactory implements Dispatcher.Provider {
 
 	@Override

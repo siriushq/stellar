@@ -2,7 +2,6 @@ package sirius.stellar.logging.collect;
 
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
-import sirius.stellar.facility.annotation.Internal;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerMessage;
 
@@ -26,7 +25,6 @@ import static sirius.stellar.logging.LoggerLevel.*;
 /// Only one instance of this class should ever be created as when creating
 /// an instance, the [System#setOut(PrintStream)] method as well as
 /// the [System#setErr(PrintStream)] method should be called.
-@Internal
 final class ConsoleCollector implements Collector {
 
 	@Serial
@@ -96,7 +94,6 @@ final class ConsoleCollector implements Collector {
 /// that a dispatcher is available for, is stored as an instance variable - serializing the logger
 /// object could cause `System.out` or `System.err` to be serialized, and subsequently,
 /// this class serialized.
-@Internal
 final class DelegatePrintStream extends PrintStream implements Serializable {
 
 	@Serial

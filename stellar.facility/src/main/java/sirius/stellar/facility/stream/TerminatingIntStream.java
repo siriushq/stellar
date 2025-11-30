@@ -1,6 +1,6 @@
 package sirius.stellar.facility.stream;
 
-import org.jetbrains.annotations.Contract;
+import sirius.stellar.annotation.Contract;
 import sirius.stellar.facility.Iterators;
 import sirius.stellar.facility.Spliterators;
 

@@ -1,7 +1,7 @@
 package sirius.stellar.facility;
 
-import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
+import sirius.stellar.annotation.Contract;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,7 +38,7 @@ public final class Throwables {
 	/// @see Throwables#forEach(Throwable, Consumer)
 	/// @see Throwables#stream(Throwable)
 	/// @since 1.0
-	@Contract(value = "_ -> new", pure = true)
+	@Contract("_ -> new")
 	public static List<Throwable> causes(@Nullable Throwable throwable) {
 		if (throwable == null) return Collections.emptyList();
 		return stream(throwable).toList();
@@ -53,7 +53,7 @@ public final class Throwables {
 	/// @see Throwables#forEach(Throwable, Consumer)
 	/// @see Throwables#causes(Throwable)
 	/// @since 1.0
-	@Contract(value = "_ -> new", pure = true)
+	@Contract("_ -> new")
 	public static Stream<Throwable> stream(@Nullable Throwable throwable) {
 		if (throwable == null) return Stream.empty();
 
@@ -92,7 +92,7 @@ public final class Throwables {
 	/// @return The stacktrace or the string `"null"` if the provided throwable is null.
 	/// @see Throwable#printStackTrace() Read the Throwable#printStackTrace() method for insight.
 	/// @since 1.0
-	@Contract(value = "_ -> new", pure = true)
+	@Contract("_ -> new")
 	public static String stacktrace(@Nullable Throwable throwable) {
 		if (throwable == null) return "null";
 		StringWriter writer = new StringWriter();

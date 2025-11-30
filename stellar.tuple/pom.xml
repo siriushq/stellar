@@ -21,6 +21,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-annotation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>sirius.stellar</groupId>
 			<artifactId>stellar-facility</artifactId>
 		</dependency>
 
