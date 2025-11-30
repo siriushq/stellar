@@ -6,7 +6,6 @@ import sirius.stellar.logging.LoggerLevel;
 
 import java.io.ObjectStreamException;
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 
 import static java.lang.Thread.*;
@@ -20,10 +19,7 @@ import static java.lang.Thread.*;
 /// @param name The name of the logger.
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public record Slf4jDispatcher(String name) implements org.slf4j.Logger, Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 4716358284362605810L;
+public record Slf4jDispatcher(String name) implements org.slf4j.Logger {
 
 	@Override
 	public String getName() {

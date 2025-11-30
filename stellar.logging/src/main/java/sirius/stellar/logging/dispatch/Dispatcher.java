@@ -1,7 +1,5 @@
 package sirius.stellar.logging.dispatch;
 
-import java.io.Serializable;
-
 /// Represents a dispatcher.
 ///
 /// This is used to wire any dispatchers that are not automatically service loaded by
@@ -9,7 +7,7 @@ import java.io.Serializable;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public interface Dispatcher extends Serializable {
+public interface Dispatcher {
 
 	/// Run when a dispatcher is wired.
 	///

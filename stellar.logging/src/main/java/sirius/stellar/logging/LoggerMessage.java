@@ -3,7 +3,6 @@ package sirius.stellar.logging;
 import sirius.stellar.facility.Orderable;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
@@ -26,10 +25,7 @@ public record LoggerMessage(
 	String thread,
 	String name,
 	String text
-) implements Serializable, Orderable<LoggerMessage> {
-
-	@Serial
-	private static final long serialVersionUID = 4451006818948527851L;
+) implements Orderable<LoggerMessage> {
 
 	public static LoggerMessageBuilder builder() {
 		return LoggerMessageBuilder.builder();

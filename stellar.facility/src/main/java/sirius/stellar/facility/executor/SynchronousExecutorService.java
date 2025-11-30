@@ -1,7 +1,6 @@
 package sirius.stellar.facility.executor;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.AbstractExecutorService;
@@ -14,10 +13,7 @@ import java.util.concurrent.TimeUnit;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class SynchronousExecutorService extends AbstractExecutorService implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 4766450303790084245L;
+public final class SynchronousExecutorService extends AbstractExecutorService {
 
 	private volatile boolean terminated;
 

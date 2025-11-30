@@ -5,7 +5,6 @@ import sirius.stellar.logging.LoggerLevel;
 
 import java.io.ObjectStreamException;
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.ResourceBundle;
 
@@ -19,10 +18,7 @@ import static sirius.stellar.facility.Throwables.*;
 /// @param name The name of the logger.
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public record Jsr379Dispatcher(String name) implements System.Logger, Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 5261704108702390210L;
+public record Jsr379Dispatcher(String name) implements System.Logger {
 
 	@Override
 	public String getName() {

@@ -5,7 +5,6 @@ import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.nio.file.Path;
 import java.time.Duration;
 
@@ -18,7 +17,7 @@ import java.time.Duration;
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 @FunctionalInterface
-public interface Collector extends AutoCloseable, Serializable {
+public interface Collector extends AutoCloseable {
 
 	/// Runs when a logger message is emitted.
 	/// To perform I/O from the implementation of this method, use [Logger#task].

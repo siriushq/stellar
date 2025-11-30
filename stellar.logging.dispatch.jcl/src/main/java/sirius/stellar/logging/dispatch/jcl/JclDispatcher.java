@@ -6,7 +6,6 @@ import sirius.stellar.logging.LoggerLevel;
 
 import java.io.ObjectStreamException;
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 
 import static java.lang.Thread.*;
@@ -15,10 +14,7 @@ import static java.lang.Thread.*;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class JclDispatcher implements org.apache.commons.logging.Log, Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 7257949654240249339L;
+public final class JclDispatcher implements org.apache.commons.logging.Log {
 
 	private final String name;
 

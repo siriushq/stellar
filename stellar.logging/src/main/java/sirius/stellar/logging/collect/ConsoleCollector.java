@@ -7,8 +7,6 @@ import sirius.stellar.logging.LoggerMessage;
 
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
@@ -26,9 +24,6 @@ import static sirius.stellar.logging.LoggerLevel.*;
 /// an instance, the [System#setOut(PrintStream)] method as well as
 /// the [System#setErr(PrintStream)] method should be called.
 final class ConsoleCollector implements Collector {
-
-	@Serial
-	private static final long serialVersionUID = -6081062057103191874L;
 
 	private final PrintStream stream;
 
@@ -85,19 +80,7 @@ final class ConsoleCollector implements Collector {
 /// [PrintStream#print] and [PrintStream#append] methods will perform the equivalent of `println`.
 /// [PrintStream#format] methods will perform the equivalent of [PrintStream#printf].
 /// [PrintStream#write] methods are not implemented at all, and are completely discarded.
-///
-/// This implements [Serializable] - while it is not a semantic use of a [PrintStream] to serialize
-/// the stream (and subsequently write a stream inside a stream), it is quite a common scenario for
-/// this to be done on accident, and it is perfectly fine to serialize this object.
-///
-/// Accidentally serializing this object can be done if, say, a logger object from logging facade
-/// that a dispatcher is available for, is stored as an instance variable - serializing the logger
-/// object could cause `System.out` or `System.err` to be serialized, and subsequently,
-/// this class serialized.
-final class DelegatePrintStream extends PrintStream implements Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 163954357471100L;
+final class DelegatePrintStream extends PrintStream {
 
 	private final Consumer<String> dispatcher;
 
