@@ -16,16 +16,27 @@
 		<dependencies>
             <dependency>
                 <groupId>sirius.stellar</groupId>
-                <artifactId>stellar-facility</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>sirius.stellar</groupId>
                 <artifactId>stellar-tuple</artifactId>
                 <version>${project.version}</version>
             </dependency>
+			<dependency>
+				<groupId>sirius.stellar</groupId>
+				<artifactId>stellar-facility</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-            <dependency>
+			<dependency>
+				<groupId>sirius.stellar</groupId>
+				<artifactId>stellar-annotation</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>sirius.stellar</groupId>
+				<artifactId>stellar-annotation-intellij</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
                 <groupId>sirius.stellar</groupId>
                 <artifactId>stellar-logging</artifactId>
                 <version>${project.version}</version>

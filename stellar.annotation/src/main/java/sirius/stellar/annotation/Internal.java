@@ -1,8 +1,12 @@
-package sirius.stellar.facility.annotation;
+package sirius.stellar.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
 
 /// Marks the provided element as being for internal use only and may change
 /// without any notice, or possibly produce unwanted/unexpected behavior.
@@ -17,6 +21,7 @@ import static java.lang.annotation.ElementType.*;
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 @Documented @Inherited
+@Retention(CLASS)
 @Target({
 		TYPE,
 		FIELD,
@@ -25,7 +30,6 @@ import static java.lang.annotation.ElementType.*;
 		ANNOTATION_TYPE,
 		PACKAGE,
 		TYPE_USE,
-		MODULE,
-		RECORD_COMPONENT
+		MODULE
 })
 public @interface Internal {}

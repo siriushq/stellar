@@ -24,8 +24,11 @@
 	<modules>
 		<module>stellar.bom</module>
 
-		<module>stellar.facility</module>
 		<module>stellar.tuple</module>
+		<module>stellar.facility</module>
+
+		<module>stellar.annotation</module>
+		<module>stellar.annotation.intellij</module>
 
 		<module>stellar.logging</module>
 		<module>stellar.logging.collect.slf4j</module>
@@ -127,13 +130,6 @@
 			<artifactId>jspecify</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>26.0.2</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
 
 	<repositories>
@@ -144,6 +140,14 @@
 		<repository>
 			<id>apache-central</id>
 			<url>https://repo.maven.apache.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>jetbrains-releases</id>
+			<url>https://www.jetbrains.com/intellij-repository/releases/</url>
+		</repository>
+		<repository>
+			<id>jetbrains-dependencies</id>
+			<url>https://cache-redirector.jetbrains.com/intellij-dependencies</url>
 		</repository>
 		<repository>
 			<id>jitpack</id>
@@ -256,6 +260,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-shade-plugin</artifactId>
 					<version>3.6.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.7.1</version>
 				</plugin>
 
 				<plugin>

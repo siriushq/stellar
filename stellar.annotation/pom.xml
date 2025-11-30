@@ -9,16 +9,11 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-facility</artifactId>
-    <name>Stellar :: Facility</name>
+    <artifactId>stellar-annotation</artifactId>
+    <name>Stellar :: Annotation</name>
 	<description>
-		Provides utility classes that are considered to be so standard as to justify existence
-		in the Java standard library. Compared to similar projects such as Apache Commons or Guava,
-		this module is designed for JDK >21, and therefore some essential portions of those libraries
-		which have been introduced into the standard library are missing here.
-
-		Some portions of this library have been adapted from Apache Commons, these portions remain
-		licensed under their original Apache-2.0 license and contain clear license headers.
+		Annotations used for code inspection support and documentation.
+		These are used alongside the JSpecify standard nullability annotations.
 	</description>
 
 	<licenses>
@@ -32,17 +27,9 @@
         </license>
     </licenses>
 
-	<dependencies>
-		<dependency>
-			<groupId>sirius.stellar</groupId>
-			<artifactId>stellar-annotation</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>sirius.stellar</groupId>
-			<artifactId>stellar-lifecycle-testing</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<properties>
+		<java.version.main>11</java.version.main>
+	</properties>
 
     <build>
         <plugins>

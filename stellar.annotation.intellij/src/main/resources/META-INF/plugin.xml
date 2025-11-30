@@ -1,0 +1,18 @@
+<idea-plugin>
+	<id>sirius.stellar.annotation</id>
+	<name>Stellar Annotation Support</name>
+
+	<description><![CDATA[
+		IntelliJ Platform plugin for annotation integration.
+	]]></description>
+
+	<vendor url="https://www.sirius.cam">siriushq</vendor>
+
+	<depends>com.intellij.modules.lang</depends>
+	<depends>com.intellij.modules.platform</depends>
+	<depends>com.intellij.modules.java</depends>
+
+	<extensions defaultExtensionNs="com.intellij">
+		<lang.psiAugmentProvider implementation="sirius.stellar.annotation.intellij.DPsiAugmentProvider"/>
+	</extensions>
+</idea-plugin>
