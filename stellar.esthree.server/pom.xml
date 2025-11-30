@@ -78,7 +78,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 
 				<configuration>
-					<mainClass>sirius.stellar.esthree.mock.DEsthreeMockBinary</mainClass>
+					<mainClass>sirius.stellar.esthree.server.DEsthreeServerBinary</mainClass>
 					<arguments>
 						<argument>${project.build.directory}</argument>
 						<argument>${project.build.finalName}</argument>

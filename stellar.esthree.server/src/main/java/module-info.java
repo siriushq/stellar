@@ -1,0 +1,14 @@
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
+module sirius.stellar.esthree.server {
+
+	requires org.jspecify;
+
+	requires sirius.stellar.logging;
+	requires io.avaje.jsonb;
+
+	exports sirius.stellar.esthree.server;
+
+	provides io.avaje.jsonb.spi.JsonbExtension with sirius.stellar.esthree.server.ServerJsonComponent;
+}

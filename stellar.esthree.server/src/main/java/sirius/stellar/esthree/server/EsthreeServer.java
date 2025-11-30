@@ -1,4 +1,4 @@
-package sirius.stellar.esthree.mock;
+package sirius.stellar.esthree.server;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /// Most methods in [Builder] should not be called more than once, unless documented.
 ///
 /// ```
-/// EsthreeMock server = EsthreeMock.builder()
+/// EsthreeServer server = EsthreeServer.builder()
 ///         .volume("/path/to/working_directory")
 ///         .console(9090)
 ///         .build();
@@ -17,15 +17,15 @@ import java.util.List;
 /// server.close();
 /// ```
 ///
-/// @see sirius.stellar.esthree.mock
-public interface EsthreeMock extends AutoCloseable {
+/// @see sirius.stellar.esthree.server
+public interface EsthreeServer extends AutoCloseable {
 
-	/// Return a builder to construct [EsthreeMock] instances with.
+	/// Return a builder to construct [EsthreeServer] instances with.
 	static Builder builder() {
-		return new DEsthreeMockBuilder();
+		return new DEsthreeServerBuilder();
 	}
 
-	/// @see EsthreeMock
+	/// @see EsthreeServer
 	interface Builder {
 
 		/// Supply a list of multiple volumes (remote nodes, or directories) to connect to.
@@ -66,6 +66,6 @@ public interface EsthreeMock extends AutoCloseable {
 		Builder anonymous();
 
 		/// Build and return the server (which is an [AutoCloseable]).
-		EsthreeMock build();
+		EsthreeServer build();
 	}
 }

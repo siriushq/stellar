@@ -1,4 +1,4 @@
-package sirius.stellar.esthree.mock;
+package sirius.stellar.esthree.server;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,16 +6,20 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermission;
+import java.util.Set;
+
+import static java.nio.file.attribute.PosixFilePermission.*;
 
 /// Downloading tool that is run from the Maven build lifecycle, in order to
-/// supply a binary accessible from [EsthreeMockBinary].
-public final class DEsthreeMockBinary implements EsthreeMockBinary {
+/// supply a binary accessible from [EsthreeServerBinary].
+public final class DEsthreeServerBinary implements EsthreeServerBinary {
 
 	@Override
 	public URL url() {
 		URL url = this.getClass().getResource("/META-INF/minio");
 		if (url == null) url = this.getClass().getResource("/META-INF/minio.exe");
-		if (url == null) throw new IllegalStateException("Cannot locate MinIO executable for EsthreeMockBinary");
+		if (url == null) throw new IllegalStateException("Cannot locate MinIO executable for EsthreeServerBinary");
 		return url;
 	}
 

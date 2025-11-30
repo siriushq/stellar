@@ -116,7 +116,7 @@
 			<dependency>
 				<groupId>sirius.stellar</groupId>
 				<artifactId>stellar-bom</artifactId>
-				<version>1.0-RC1</version>
+				<version>${project.version}</version>
 
 				<type>pom</type>
 				<scope>import</scope>

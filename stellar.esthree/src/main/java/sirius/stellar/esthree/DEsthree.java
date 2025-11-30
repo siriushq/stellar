@@ -252,7 +252,6 @@ final class DEsthree implements Esthree {
 		}
 	}
 
-
 	@Override
 	public HttpClient httpClient() {
 		return this.client;
