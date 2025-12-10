@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-serialization-msgpack-jsonb</artifactId>
     <name>Stellar :: Serialization :: MessagePack :: Jsonb Adapter</name>
-	<description>Adapter implementing support for the MessagePack binary format to avaje-jsonb (under Apache-2.0).</description>
 
 	<properties>
 		<java.version.main>17</java.version.main>

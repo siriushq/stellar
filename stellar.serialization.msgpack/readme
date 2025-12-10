@@ -1,0 +1,8 @@
+siriushq/stellar.serialization.msgpack
+======================================
+
+Core serialization streaming/generation for the MessagePack binary format.
+
+This is a fork of `org.msgpack:msgpack-core`.
+All original portions are licensed by the authors under Apache-2.0,
+modifications made here are licensed under the BSD-3-Clause.

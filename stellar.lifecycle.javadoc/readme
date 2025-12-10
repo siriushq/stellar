@@ -1,0 +1,10 @@
+siriushq/stellar.lifecycle.javadoc
+==================================
+
+Simple, customizable Javadoc generator built from scratch.
+AST read using Eclipse JDT (under EPL-2.0) under the hood.
+
+This generator can read broken/uncompilable files and supports in-parallel
+generation of documentation.
+
+<!> This is a work-in-progress tool.

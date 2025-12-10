@@ -1,0 +1,7 @@
+siriushq/stellar.configuration.inject
+=====================================
+
+Integration for avaje-inject (under Apache-2.0).
+
+The presence of this library on the module-path is sufficient to allow the
+associated features (e.g. `@RequiresProperty("EXAMPLE")`) to function correctly.

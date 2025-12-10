@@ -1,0 +1,9 @@
+siriushq/stellar.configuration.testing
+======================================
+
+Test suite for the configuration system, and shared testing facility for
+the development of extensions.
+
+Use this if you need access to reload the internals of [Configuration], which
+is a protected action in normal cases where configuration files are not being
+created programmatically.

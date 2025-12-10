@@ -1,0 +1,6 @@
+siriushq/stellar.configuration
+==============================
+
+Provides external configuration for JVM services, by default sourcing from JVM
+Properties, environment variables, and .properties files, also providing dynamic
+hot-reload functionality.

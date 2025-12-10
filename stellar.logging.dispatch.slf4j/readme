@@ -1,0 +1,7 @@
+siriushq/stellar.logging.dispatch.slf4j
+=======================================
+
+SLF4J (under MIT) dispatcher for the logging system.
+
+This redirects logging that uses the SLF4J API, it does not utilize an SLF4J
+backend. For that, see [siriushq/stellar.logging.collect.slf4j].

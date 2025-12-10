@@ -1,0 +1,8 @@
+siriushq/stellar.lifecycle.spi
+==============================
+
+Uses annotation processing to automatically add "META-INF/services" entries
+for service providers, and validate "module-info.java" files.
+
+Based on jstachio/pistachio (under BSD-3-Clause, © Adam Gent, © Bruce Chapman).
+Uses avaje-prisms (under Apache-2.0).

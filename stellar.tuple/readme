@@ -1,0 +1,7 @@
+siriushq/stellar.tuple
+======================
+
+A general-purpose tuple data structure library.
+
+Generally, tuple data structures should be avoided, but where applicable, this
+is a simple, hand-written, well-tested library providing this functionality.

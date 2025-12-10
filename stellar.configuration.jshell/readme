@@ -1,0 +1,18 @@
+siriushq/stellar.configuration.jshell
+=====================================
+
+Provides configuration and hot-reload using JShell scripts.
+
+Simply create a `.jsh` or `.jshell` script in the root directory, optionally
+author a template file in your project resources folder (and declare in
+your META-INF).
+
+A dismissed expression evaluated in the script must be a `Map` of key-value
+(`String, String`) entries, which is stored in the scratch variable `$1`.
+
+You must be running under a JDK (Java Development Kit) to have access to
+the JShell API that this provider uses.
+
+These scripts are unsandboxed, and must be trusted; remote access to them
+must be controlled or inaccessible, or they can be used as an attack vector
+against your system (running under the privileges of your application).

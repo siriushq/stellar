@@ -1,0 +1,11 @@
+siriushq/stellar.esthree.server
+===============================
+
+Wrapper of [siriushq/midio], providing a simple builder-pattern configuration
+for establishing a testing server, and providing a standard Java entry-point for
+running as a dedicated server, utilizing [siriushq/stellar.logging] for logging
+and [siriushq/stellar.configuration] for configuration.
+
+Use a Maven classifier to get the artifact required for your target system,
+e.g. `windows-amd64`, and use Maven profiles to scope on the correct artifact,
+to keep your build system portable (support for all platforms is desired).

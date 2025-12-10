@@ -1,0 +1,4 @@
+siriushq/stellar.logging.dispatch.jsr379
+========================================
+
+Java 9 (System.Logger) dispatcher for the logging system.

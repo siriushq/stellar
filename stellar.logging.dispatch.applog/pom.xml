@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-logging-applog</artifactId>
     <name>Stellar :: Logging :: avaje-applog Dispatcher</name>
-	<description>avaje applog dispatcher for the logging system.</description>
 
     <dependencies>
         <dependency>

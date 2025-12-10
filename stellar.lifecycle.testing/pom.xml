@@ -11,12 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-lifecycle-testing</artifactId>
     <name>Stellar :: Lifecycle :: Testing</name>
-	<description>
-		Managed dependency aggregator module for test frameworks and utility libraries.
-
-		Provides JUnit Platform and JUnit Jupiter (under EPL-2.0), AssertJ (under Apache-2.0),
-		Mockito (under MIT), ByteBuddy (under Apache-2.0) &amp; ASM (under BSD-3-Clause).
-	</description>
 
 	<dependencies>
 		<dependency>

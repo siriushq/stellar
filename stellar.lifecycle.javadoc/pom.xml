@@ -11,11 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-lifecycle-javadoc</artifactId>
     <name>Stellar :: Lifecycle :: Javadoc</name>
-	<description>
-		Simple, customizable Javadoc generator built from scratch.
-		AST read using Eclipse JDT (under EPL-2.0) under the hood.
-		This generator can read broken/uncompilable files and supports parallel generation.
-	</description>
 
 	<dependencies>
 		<dependency>

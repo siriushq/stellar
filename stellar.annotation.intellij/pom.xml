@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-annotation-intellij</artifactId>
     <name>Stellar :: Annotation :: IntelliJ Plugin</name>
-	<description>IntelliJ Platform plugin for annotation integration.</description>
 
 	<properties>
 		<platform.version>252.28238.29</platform.version>

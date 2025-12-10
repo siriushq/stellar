@@ -1,0 +1,8 @@
+siriushq/stellar.annotation
+===========================
+
+Annotations used for code inspection support and documentation.
+These are used alongside the JSpecify standard nullability annotations.
+
+This provides @Contract, @Experimental and @Internal.
+IDE support is available in [siriushq/stellar.annotation.intellij].

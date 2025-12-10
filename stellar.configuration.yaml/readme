@@ -1,0 +1,4 @@
+siriushq/stellar.configuration.yaml
+===================================
+
+Provides configuration for YAML files using SnakeYAML (under Apache-2.0).

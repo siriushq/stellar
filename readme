@@ -6,14 +6,7 @@ Rendered source documentation is available in the "target" directory for any
 given module after building. https://stellar.sirius.cam houses the handbook.
 
 <!> The handbook is currently not public.
-<!> 1.0-RC1 will be published when the task list implied below is complete.
-
-<ⓘ> stellar.logging & stellar.facility are usable & stable.
-<ⓘ> stellar.esthree is not feature-complete yet.
-<ⓘ> stellar.facility* — many portions to migrate/extract outside
-<ⓘ> TBD — stellar.cluster, stellar.configuration, stellar.security,
-    stellar.throttle, stellar.serialization, stellar.metrics
-<ⓘ> Contact "stellar@mechite.com" for support (more information below...)
+<!> 1.0-RC1 has not yet been published.
 
 including
 =========

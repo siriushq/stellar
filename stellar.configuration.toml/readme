@@ -1,0 +1,4 @@
+siriushq/stellar.configuration.toml
+===================================
+
+Provides configuration for TOML files using TomlJ (under Apache-2.0).

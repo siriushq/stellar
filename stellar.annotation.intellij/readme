@@ -1,0 +1,7 @@
+siriushq/stellar.annotation.intellij
+====================================
+
+IntelliJ Platform IDE plugin for supporting [siriushq/stellar.annotation].
+
+The plugin is built using Maven, but tested manually using the standard IntelliJ
+plugin Gradle project template, by simply dragging source Java and XML files in.

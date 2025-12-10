@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-configuration-inject</artifactId>
     <name>Stellar :: Configuration :: avaje-inject</name>
-	<description>Integration for avaje-inject (under Apache-2.0).</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>

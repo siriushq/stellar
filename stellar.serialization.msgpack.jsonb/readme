@@ -1,0 +1,5 @@
+siriushq/stellar.serialization.msgpack.jsonb
+============================================
+
+Adapter implementing support for the MessagePack binary format
+to avaje-jsonb (under Apache-2.0).

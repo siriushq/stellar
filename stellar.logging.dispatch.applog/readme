@@ -1,0 +1,7 @@
+siriushq/stellar.logging.dispatch.applog
+========================================
+
+avaje-applog dispatcher for the logging system.
+
+This removes one level of indirection, for libraries using avaje-applog.
+It depends on the existing [siriushq/stellar.logging.dispatch.jsr379].

@@ -20,21 +20,14 @@
     <packaging>jar</packaging>
     <artifactId>stellar-lifecycle-spi</artifactId>
     <name>Stellar :: Lifecycle :: SPI</name>
-	<description>
-		Uses annotation processing to automatically add "META-INF/services" entries
-		for service providers, and validate "module-info.java" files.
-
-		Based on jstachio/pistachio project (under BSD-3-Clause, © Adam Gent, © Bruce Chapman).
-		Uses avaje-prisms (under Apache-2.0).
-	</description>
 
 	<dependencies>
 		<dependency>
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-prisms</artifactId>
 
-			<!-- TODO - remove when 1.44 released & avaje-jex-parent bumps -->
-			<version>1.44-RC1</version>
+			<!-- TODO - remove when avaje-jex-parent bumps -->
+			<version>1.44</version>
 
 			<optional>true</optional>
 			<scope>provided</scope>

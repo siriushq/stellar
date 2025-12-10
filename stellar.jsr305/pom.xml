@@ -20,7 +20,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-jsr305</artifactId>
     <name>Stellar :: JSR305</name>
-	<description>Provides an implementation of JSR305 (javax.annotation) annotations to assist IDE auto-completion.</description>
 
 	<licenses>
         <license>

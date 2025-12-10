@@ -1,0 +1,5 @@
+siriushq/stellar.logging.dispatch.jcl
+=====================================
+
+JCL (Apache Commons Logging, under Apache-2.0) dispatcher for the
+logging system.

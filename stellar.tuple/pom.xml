@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-tuple</artifactId>
     <name>Stellar :: Tuple</name>
-	<description>A general-purpose tuple data structure library.</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>

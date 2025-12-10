@@ -11,10 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-annotation</artifactId>
     <name>Stellar :: Annotation</name>
-	<description>
-		Annotations used for code inspection support and documentation.
-		These are used alongside the JSpecify standard nullability annotations.
-	</description>
 
 	<licenses>
         <license>

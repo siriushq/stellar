@@ -11,7 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-configuration-toml</artifactId>
     <name>Stellar :: Configuration :: TOML</name>
-	<description>Provides configuration for TOML files using TomlJ (under Apache-2.0).</description>
 
 	<properties>
 		<java.version.main>11</java.version.main>

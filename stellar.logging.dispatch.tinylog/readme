@@ -1,0 +1,4 @@
+siriushq/stellar.logging.dispatch.tinylog
+=========================================
+
+tinylog (under Apache-2.0) dispatcher for the logging system.

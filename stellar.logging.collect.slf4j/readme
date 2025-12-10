@@ -1,0 +1,10 @@
+siriushq/stellar.logging.collect.slf4j
+======================================
+
+SLF4J (under MIT) collector for the logging system.
+
+The presence of this artifact on the class-path or module-path will cause it
+to be automatically registered (service loaded).
+
+This artifact should not be used in tandem with the SLF4J dispatcher.
+It would lead to an infinite logging loop being created.

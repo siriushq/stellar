@@ -1,0 +1,8 @@
+siriushq/stellar.jsr305
+=======================
+
+Provides an implementation of JSR305 (javax.annotation) annotations
+to assist IDE auto-completion and static analysis.
+
+<!> It is generally advised to favour JSpecify over JSR305-esque annotations.
+    This artifact is provided as a legacy compatibility layer.

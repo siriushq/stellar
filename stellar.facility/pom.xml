@@ -11,15 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>stellar-facility</artifactId>
     <name>Stellar :: Facility</name>
-	<description>
-		Provides utility classes that are considered to be so standard as to justify existence
-		in the Java standard library. Compared to similar projects such as Apache Commons or Guava,
-		this module is designed for JDK >21, and therefore some essential portions of those libraries
-		which have been introduced into the standard library are missing here.
-
-		Some portions of this library have been adapted from Apache Commons, these portions remain
-		licensed under their original Apache-2.0 license and contain clear license headers.
-	</description>
 
 	<licenses>
         <license>
