@@ -6,9 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.logging.LoggerFormat.*;
 
-final class LoggerFormatTest {
+final class LoggerTest {
 
     //#region format(String, Object...)
     @Test @DisplayName("format(String, Object...) invokes MessageFormat")
@@ -16,7 +15,7 @@ final class LoggerFormatTest {
         var format = "Lorem {0} dolor sit amet.";
         var arguments = new Object[]{"ipsum"};
 
-        var result = format(format, arguments);
+        var result = Logger.format(format, arguments);
 
         assertThat(result).isEqualTo("Lorem ipsum dolor sit amet.");
     }
@@ -26,7 +25,7 @@ final class LoggerFormatTest {
         var format = "Lorem %s dolor sit amet.";
         var arguments = new Object[]{"ipsum"};
 
-        var result = format(format, arguments);
+        var result = Logger.format(format, arguments);
 
         assertThat(result).isEqualTo("Lorem ipsum dolor sit amet.");
     }
@@ -34,7 +33,7 @@ final class LoggerFormatTest {
     @Test @DisplayName("format(String, Object...) with null inputs doesn't throw")
     void formatWithNullInputsDoesNotThrow() {
 		assertThatNoException().isThrownBy(() -> {
-			format(null, (Object[]) null);
+			Logger.format(null, (Object[]) null);
 		});
     }
 
@@ -44,7 +43,7 @@ final class LoggerFormatTest {
         	var format = "Lorem {1} dolor sit amet.";
 	        var arguments = new Object[]{null, "ipsum"};
 
-			format(format, arguments);
+			Logger.format(format, arguments);
 		});
     }
     //#endregion
@@ -56,7 +55,7 @@ final class LoggerFormatTest {
         var format = "Lorem {0} dolor sit amet.";
         var arguments = new Object[]{"ipsum"};
 
-        var result = format(locale, format, arguments);
+        var result = Logger.format(locale, format, arguments);
 
         assertThat(result).isEqualTo("Lorem ipsum dolor sit amet.");
     }
@@ -67,7 +66,7 @@ final class LoggerFormatTest {
         var format = "Lorem %s dolor sit amet.";
         var arguments = new Object[]{"ipsum"};
 
-        var result = format(locale, format, arguments);
+        var result = Logger.format(locale, format, arguments);
 
         assertThat(result).isEqualTo("Lorem ipsum dolor sit amet.");
     }
@@ -75,7 +74,7 @@ final class LoggerFormatTest {
     @Test @DisplayName("format(Locale, String, Object...) with null inputs doesn't throw NullPointerException")
     void formatWithLocaleAndNullInputsDoesNotThrow() {
 		assertThatNoException().isThrownBy(() -> {
-			format(null, null, (Object[]) null);
+			Logger.format(null, null, (Object[]) null);
 		});
     }
 
@@ -85,7 +84,7 @@ final class LoggerFormatTest {
 			var format = "Lorem {1} dolor sit amet.";
 			var arguments = new String[]{null, "ipsum"};
 
-			format(format, (Object[]) arguments);
+			Logger.format(format, (Object[]) arguments);
 		});
     }
 
@@ -95,7 +94,7 @@ final class LoggerFormatTest {
         var format = "Foobar costs {0}";
         var arguments = new Object[]{123_456.789};
 
-        var result = format(locale, format, arguments);
+        var result = Logger.format(locale, format, arguments);
 
         assertThat(result).isEqualTo("Foobar costs 123.456,789");
     }

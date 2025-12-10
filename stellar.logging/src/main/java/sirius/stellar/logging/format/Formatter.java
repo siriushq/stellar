@@ -1,13 +1,13 @@
 package sirius.stellar.logging.format;
 
 import org.jspecify.annotations.NullUnmarked;
-import org.jspecify.annotations.Nullable;
 import sirius.stellar.annotation.Contract;
-import sirius.stellar.logging.LoggerFormat;
+import sirius.stellar.logging.Logger;
 
 import java.util.Locale;
+import java.util.ServiceLoader;
 
-/// Represents a string formatter, used by the [LoggerFormat] public API.
+/// Represents a string formatter, used by the [Logger#format] public API.
 /// This allows for another implementation to be provided, if desired.
 ///
 /// @author Mahied Maruf (mechite)
@@ -31,4 +31,19 @@ public interface Formatter {
 	/// @since 1.0
 	@Contract("_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new")
 	String formatString(Locale locale, String string, Object[] arguments);
+
+	/// Obtain a [Formatter] instance, service-loading the first alternative
+	/// implementation found, if one is available.
+	static Formatter create() {
+		try {
+			ServiceLoader<Formatter> loader = ServiceLoader.load(Formatter.class);
+			for (Formatter formatter : loader) {
+				if (formatter instanceof DFormatter) continue;
+				return formatter;
+			}
+			return new DFormatter();
+		} catch (Throwable throwable) {
+			throw new IllegalStateException("Failed wiring alternate logger formatter", throwable);
+		}
+	}
 }

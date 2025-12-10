@@ -9,9 +9,7 @@ import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 import static java.lang.Thread.*;
-import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.Throwables.*;
-import static sirius.stellar.logging.LoggerFormat.*;
 
 /// Implementation of [System.Logger] which dispatches to [Logger].
 /// There is a lack of handling for [ResourceBundle]s in this implementation.
@@ -85,7 +83,7 @@ public record Jsr379Dispatcher(String name, @Nullable ResourceBundle bundle) imp
 		if (!isLoggable(level)) return;
 		if (bundle != null && bundle.containsKey(text)) text = bundle.getString(text);
 
-		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, format(text, arguments));
+		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, Logger.format(text, arguments));
 	}
 
 	/// Converts the provided level to a [LoggerLevel].

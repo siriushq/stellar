@@ -3,7 +3,7 @@ package sirius.stellar.logging;
 import java.time.Instant;
 import java.util.Date;
 
-import static sirius.stellar.logging.LoggerFormat.*;
+import static sirius.stellar.logging.Logger.*;
 
 /// Represents a message emitted by [Logger]. This is [Comparable],
 /// lexicographically comparing the messages by [#time] for sorting.
@@ -24,17 +24,24 @@ public record LoggerMessage(
 	String text
 ) implements Comparable<LoggerMessage> {
 
+	/// Obtain a builder for [LoggerMessage]s.
 	public static LoggerMessageBuilder builder() {
 		return LoggerMessageBuilder.builder();
 	}
 
 	@Override
-	public String toString() {
-		return format("LoggerMessage[{0,date,dd/MM/yyyy HH:mm:ss} | {1} | {2} | \"{3}\"]", Date.from(this.time), this.level, this.name, this.text);
+	public int compareTo(LoggerMessage other) {
+		return this.time.compareTo(other.time);
 	}
 
 	@Override
-	public int compareTo(LoggerMessage other) {
-		return this.time.compareTo(other.time);
+	public String toString() {
+		return format(
+			"LoggerMessage[{0,date,dd/MM/yyyy HH:mm:ss} | {1} | {2} | \"{3}\"]",
+			Date.from(this.time),
+			this.level,
+			this.name,
+			this.text
+		);
 	}
 }
