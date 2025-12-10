@@ -1,7 +1,5 @@
 package sirius.stellar.logging.dispatch.jboss;
 
-import sirius.stellar.facility.Strings;
-
 import java.util.Deque;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -64,13 +62,13 @@ public final class JbossProvider implements org.jboss.logging.LoggerProvider {
 
 	@Override
 	public String popNdc() {
-		if (this.ndc.isEmpty()) return Strings.EMPTY;
+		if (this.ndc.isEmpty()) return "";
 		return this.ndc.pop().current;
 	}
 
 	@Override
 	public String peekNdc() {
-		if (this.ndc.isEmpty()) return Strings.EMPTY;
+		if (this.ndc.isEmpty()) return "";
 		return this.ndc.peek().current;
 	}
 

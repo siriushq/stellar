@@ -2,6 +2,7 @@ package sirius.stellar.facility.functional;
 
 import sirius.stellar.annotation.Contract;
 
+import static java.text.MessageFormat.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// Represents an operation, that does not return a result, but may throw a
@@ -33,7 +34,7 @@ public interface RethrowingRunnable extends Runnable {
 		} catch (Throwable throwable) {
 			thread.setUncaughtExceptionHandler((exceptionThread, exception) -> {
 				String name = exceptionThread.getName();
-				System.err.println(format("Unhandled exception thrown from a RethrowingRunnable, executed on thread '{0}': {1}", name, exception));
+				System.err.println(format("Unhandled exception thrown from a RethrowingRunnable, executed on thread \"{0}\": {1}", name, exception));
 			});
 			throw new RuntimeException(throwable);
 		} finally {

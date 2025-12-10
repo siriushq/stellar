@@ -1,15 +1,12 @@
 package sirius.stellar.logging;
 
-import sirius.stellar.facility.Orderable;
-
-import java.io.Serial;
 import java.time.Instant;
 import java.util.Date;
 
-import static sirius.stellar.facility.Strings.*;
+import static sirius.stellar.logging.LoggerFormat.*;
 
-/// Represents a message emitted by [Logger].
-/// Implements [Orderable], lexicographically comparing the messages by [#time] for sorting.
+/// Represents a message emitted by [Logger]. This is [Comparable],
+/// lexicographically comparing the messages by [#time] for sorting.
 ///
 /// @param time The time the message was created.
 /// @param level The severity of the message.
@@ -25,7 +22,7 @@ public record LoggerMessage(
 	String thread,
 	String name,
 	String text
-) implements Orderable<LoggerMessage> {
+) implements Comparable<LoggerMessage> {
 
 	public static LoggerMessageBuilder builder() {
 		return LoggerMessageBuilder.builder();
@@ -37,7 +34,7 @@ public record LoggerMessage(
 	}
 
 	@Override
-	public void compare(LoggerMessage other, Results results) {
-		results.append(this.time, other.time);
+	public int compareTo(LoggerMessage other) {
+		return this.time.compareTo(other.time);
 	}
 }

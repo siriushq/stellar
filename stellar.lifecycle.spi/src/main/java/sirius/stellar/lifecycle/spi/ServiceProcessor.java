@@ -146,7 +146,7 @@ public final class ServiceProcessor extends AbstractProcessor {
 			String resource = "META-INF/services/" + spi;
 
 			Set<String> sp = new HashSet<>(entry.getValue());
-			try (Reader reader = filer.getResource(CLASS_OUTPUT, EMPTY, resource).openReader(true)) {
+			try (Reader reader = filer.getResource(CLASS_OUTPUT, "", resource).openReader(true)) {
 				BufferedReader buffered = new BufferedReader(reader);
 				sp.addAll(buffered.lines().collect(toSet()));
 			} catch (IOException exception) {
@@ -155,10 +155,10 @@ public final class ServiceProcessor extends AbstractProcessor {
 
 			Writer writer = null;
 			try {
-				writer = filer.createResource(CLASS_OUTPUT, EMPTY, resource).openWriter();
+				writer = filer.createResource(CLASS_OUTPUT, "", resource).openWriter();
 				writer.write(String.join("\n", sp));
 			} catch (FilerException exception) {
-				writer = filer.getResource(CLASS_OUTPUT, EMPTY, resource).openWriter();
+				writer = filer.getResource(CLASS_OUTPUT, "", resource).openWriter();
 				writer.write(String.join("\n", sp));
 			} catch (IOException exception) {
 				logWarn("Failed to write SPI '%s' to location '%s'.\n%s", spi, resource, exception.getMessage());

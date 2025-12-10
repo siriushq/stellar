@@ -18,7 +18,7 @@ final class MsgpackAdapterTest {
 	void serviceLoaded() {
 		var jsonb = Jsonb.instance();
 
-		var reader = jsonb.reader(Strings.EMPTY);
+		var reader = jsonb.reader("");
 		var writer = jsonb.writer(OutputStream.nullOutputStream());
 
 		assertThat(reader).isInstanceOf(MsgpackReader.class);

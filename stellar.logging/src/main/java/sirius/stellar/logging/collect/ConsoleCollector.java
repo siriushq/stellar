@@ -3,6 +3,7 @@ package sirius.stellar.logging.collect;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.facility.Strings;
 import sirius.stellar.logging.Logger;
+import sirius.stellar.logging.LoggerFormat;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.OutputStream;
@@ -16,6 +17,7 @@ import static java.lang.Thread.*;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.terminal.TerminalColor.*;
 import static sirius.stellar.logging.Logger.*;
+import static sirius.stellar.logging.LoggerFormat.*;
 import static sirius.stellar.logging.LoggerLevel.*;
 
 /// Implementation of [Collector] that prints to [System#out].
@@ -162,13 +164,13 @@ final class DelegatePrintStream extends PrintStream {
 	//#region format*
 	@Override
 	public PrintStream format(@Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Strings.format(String.valueOf(text), arguments));
+		this.dispatcher.accept(LoggerFormat.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
 	public PrintStream format(Locale locale, @Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Strings.format(locale, String.valueOf(text), arguments));
+		this.dispatcher.accept(LoggerFormat.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
 	//#endregion [
@@ -176,13 +178,13 @@ final class DelegatePrintStream extends PrintStream {
 	//#region printf*
 	@Override
 	public PrintStream printf(@Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Strings.format(String.valueOf(text), arguments));
+		this.dispatcher.accept(LoggerFormat.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
 	public PrintStream printf(Locale locale, @Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Strings.format(locale, String.valueOf(text), arguments));
+		this.dispatcher.accept(LoggerFormat.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
 	//#endregion

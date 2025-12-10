@@ -16,7 +16,7 @@ package sirius.stellar.facility.terminal;
 ///
 /// A usage exemplar is as follows (where `...TerminalColor.*` is statically imported):
 /// ```
-/// Strings.format(
+/// format(
 ///    "{2}Here are some colors, {0}red {2}and {1}blue{2}.",
 ///    RED.foreground().bright(),
 ///    BLUE.foreground().bright(),

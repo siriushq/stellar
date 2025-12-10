@@ -1,7 +1,5 @@
 package org.apache.log4j;
 
-import sirius.stellar.facility.Strings;
-
 import java.util.Stack;
 
 /// Shadow class for `org.apache.log4j.NDC`.
@@ -34,12 +32,12 @@ public final class NDC {
 	}
 
 	public static String pop() {
-		if (ndc.isEmpty()) return Strings.EMPTY;
+		if (ndc.isEmpty()) return "";
 		return ndc.pop();
 	}
 
 	public static String peek() {
-		if (ndc.isEmpty()) return Strings.EMPTY;
+		if (ndc.isEmpty()) return "";
 		return ndc.peek();
 	}
 

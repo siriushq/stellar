@@ -32,7 +32,10 @@ final class TerminatingStreamTest {
 		var runnable = mock(Runnable.class);
 		stream = stream.onClose(runnable);
 
-		var values = terminalStream(stream).filter(s -> !s.equals("c")).map(String::toUpperCase).toList();
+		var values = terminalStream(stream)
+				.filter(string -> !string.equals("c"))
+				.map(String::toUpperCase)
+				.toList();
 
 		verify(runnable, times(1)).run();
 		assertThat(values).containsExactly("A", "B", "D");

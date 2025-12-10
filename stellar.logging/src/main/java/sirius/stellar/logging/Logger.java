@@ -1,7 +1,6 @@
 package sirius.stellar.logging;
 
 import org.jspecify.annotations.Nullable;
-import sirius.stellar.facility.Strings;
 import sirius.stellar.facility.Throwables;
 import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.collect.Collector;
@@ -20,7 +19,7 @@ import static java.lang.Thread.*;
 import static java.util.Collections.*;
 import static java.util.concurrent.Executors.*;
 import static java.util.concurrent.TimeUnit.*;
-import static sirius.stellar.facility.Strings.*;
+import static sirius.stellar.logging.LoggerFormat.*;
 
 /// This class is the main entry-point for the logging system.
 /// By default, no collectors are registered. See [sirius.stellar.logging] for a usage example.
@@ -132,7 +131,7 @@ public final class Logger {
 	/// quickly with each call using [StackWalker#getCallerClass()].
 	///
 	/// @param arguments Arguments to use for string interpolation / formatting.
-	/// This invokes [Strings#format(String,Object...)], essentially using both the
+	/// This invokes [LoggerFormat#format(String,Object...)], essentially using both the
 	/// [java.text.MessageFormat] and [String#format] styles of formatting.
 	///
 	/// When making dispatchers, this should be avoided and the specific style of
@@ -241,7 +240,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -253,7 +252,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -265,7 +264,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -276,7 +275,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#INFORMATION}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -308,7 +307,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -325,7 +324,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -342,7 +341,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -358,7 +357,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -395,7 +394,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -407,7 +406,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -419,7 +418,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#WARNING}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -430,7 +429,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#WARNING}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -462,7 +461,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -479,7 +478,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -496,7 +495,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -512,7 +511,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -549,7 +548,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -561,7 +560,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -573,7 +572,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#ERROR}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -584,7 +583,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#ERROR}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -616,7 +615,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -633,7 +632,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -650,7 +649,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -666,7 +665,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -703,7 +702,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -715,7 +714,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -727,7 +726,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -738,7 +737,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -789,7 +788,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
 	 * @since 1.0
@@ -803,7 +802,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
 	 * @since 1.0
@@ -817,7 +816,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
 	 * @since 1.0
@@ -830,7 +829,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 *
 	 * @since 1.0
@@ -864,7 +863,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -881,7 +880,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -898,7 +897,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -914,7 +913,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -934,7 +933,7 @@ public final class Logger {
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -954,7 +953,7 @@ public final class Logger {
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -975,7 +974,7 @@ public final class Logger {
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -990,14 +989,14 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 * <p>
 	 * A supplier is used on this method to allow for the throwable not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -1012,14 +1011,14 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 * <p>
 	 * A supplier is used on this method to allow for the throwable not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -1034,14 +1033,14 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 * <p>
 	 * A supplier is used on this method to allow for the throwable not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -1055,14 +1054,14 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#STACKTRACE}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 * The stacktrace for the provided {@link Throwable} is printed out too.
 	 * <p>
 	 * A supplier is used on this method to allow for the throwable not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the throwable is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
 	 * Obtaining an instance of a throwable can be a heavy operation if evaluating the arguments to the constructor of
-	 * the throwable is a heavy operation, e.g., a call to {@link Strings#format(String, Object...)} for building the
+	 * the throwable is a heavy operation, e.g., a call to {@link LoggerFormat#format(String, Object...)} for building the
 	 * message, supplying arguments that are heavy to evaluate. This is why the lambda pattern is ideal for this type
 	 * of scenario when making debug records in the log.
 	 *
@@ -1101,7 +1100,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1113,7 +1112,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1125,7 +1124,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1136,7 +1135,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#DEBUGGING}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1168,7 +1167,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1185,7 +1184,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1202,7 +1201,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1218,7 +1217,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1255,7 +1254,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * This accepts a single object as an argument for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1267,7 +1266,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * This accepts two objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1279,7 +1278,7 @@ public final class Logger {
 	/**
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
 	 * This accepts three objects as arguments for formatting to prevent the creation of an array.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1290,7 +1289,7 @@ public final class Logger {
 
 	/**
 	 * Logs a message at {@link LoggerLevel#CONFIGURATION}.
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1322,7 +1321,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1339,7 +1338,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1356,7 +1355,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */
@@ -1372,7 +1371,7 @@ public final class Logger {
 	 * A supplier is used on this method to allow for the object not to be evaluated (and stored), useful for if
 	 * obtaining an instance of the object is a heavy operation that should only be performed if logging is enabled.
 	 * <p>
-	 * Formatting is performed with {@link Strings#format(String, Object...)}.
+	 * Formatting is performed with {@link LoggerFormat#format(String, Object...)}.
 	 *
 	 * @since 1.0
 	 */

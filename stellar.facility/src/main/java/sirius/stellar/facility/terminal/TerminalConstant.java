@@ -1,15 +1,13 @@
 package sirius.stellar.facility.terminal;
 
-import sirius.stellar.facility.Strings;
-
 /// Represents an ANSI escape code that has an effect in a terminal environment.
 ///
 /// This can be used with the [TerminalConstant#toString] method inside any given
 /// string that is intended to be output to a terminal. For example, it could be used
-/// with the [Strings#format] method if retrieved from [TerminalColor] as follows
+/// with a string formatter method if retrieved from [TerminalColor] as follows
 /// (where `...TerminalColor.*` is statically imported):
 /// ```
-/// Strings.format(
+/// format(
 ///     "{2}Here are some colors, {0}red {2}and {1}blue{2}.",
 ///     RED.foreground().bright(),
 ///     BLUE.foreground().bright(),

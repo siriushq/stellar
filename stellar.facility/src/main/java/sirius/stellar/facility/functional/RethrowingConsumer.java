@@ -4,6 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Consumer;
 
+import static java.text.MessageFormat.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// Represents an operation that accepts a single input argument and returns no result,
@@ -35,7 +36,7 @@ public interface RethrowingConsumer<T> extends Consumer<T> {
 		} catch (Throwable throwable) {
 			thread.setUncaughtExceptionHandler((exceptionThread, exception) -> {
 				String name = exceptionThread.getName();
-				System.err.println(format("Unhandled exception thrown from a RethrowingConsumer, executed on thread '{0}': {1}", name, exception));
+				System.err.println(format("Unhandled exception thrown from a RethrowingConsumer, executed on thread \"{0}\": {1}", name, exception));
 			});
 			throw new RuntimeException(throwable);
 		} finally {

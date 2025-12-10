@@ -1,6 +1,5 @@
 package sirius.stellar.facility.executor;
 
-import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.AbstractExecutorService;

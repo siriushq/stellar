@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.Stream;
 
+import static java.text.MessageFormat.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// Provides a facility for creating and working with [Iterator]s.

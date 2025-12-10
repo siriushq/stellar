@@ -6,7 +6,6 @@ module sirius.stellar.facility {
 
 	requires static sirius.stellar.annotation;
 
-	exports sirius.stellar.facility.exception;
 	exports sirius.stellar.facility.executor;
 	exports sirius.stellar.facility.functional;
 	exports sirius.stellar.facility.stream;

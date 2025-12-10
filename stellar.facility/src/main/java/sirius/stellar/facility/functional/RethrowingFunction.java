@@ -4,6 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Function;
 
+import static java.text.MessageFormat.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// Represents a function that accepts one argument and produces a result,
@@ -35,7 +36,7 @@ public interface RethrowingFunction<T, R> extends Function<T, R> {
 		} catch (Throwable throwable) {
 			thread.setUncaughtExceptionHandler((exceptionThread, exception) -> {
 				String name = exceptionThread.getName();
-				System.err.println(format("Unhandled exception thrown from a RethrowingFunction, executed on thread '{0}': {1}", name, exception));
+				System.err.println(format("Unhandled exception thrown from a RethrowingFunction, executed on thread \"{0}\": {1}", name, exception));
 			});
 			throw new RuntimeException(throwable);
 		} finally {

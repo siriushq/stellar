@@ -11,6 +11,7 @@ import java.util.function.Supplier;
 import static java.lang.Thread.*;
 import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.facility.Throwables.*;
+import static sirius.stellar.logging.LoggerFormat.*;
 
 /// Implementation of [System.Logger] which dispatches to [Logger].
 /// There is a lack of handling for [ResourceBundle]s in this implementation.

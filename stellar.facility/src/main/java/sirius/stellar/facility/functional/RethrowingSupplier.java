@@ -4,6 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Supplier;
 
+import static java.text.MessageFormat.*;
 import static sirius.stellar.facility.Strings.*;
 
 /// Represents a supplier of results.
@@ -38,7 +39,7 @@ public interface RethrowingSupplier<T> extends Supplier<T> {
 		} catch (Throwable throwable) {
 			thread.setUncaughtExceptionHandler((exceptionThread, exception) -> {
 				String name = exceptionThread.getName();
-				System.err.println(format("Unhandled exception thrown from a RethrowingSupplier, executed on thread '{0}': {1}", name, exception));
+				System.err.println(format("Unhandled exception thrown from a RethrowingSupplier, executed on thread \"{0}\": {1}", name, exception));
 			});
 			throw new RuntimeException(throwable);
 		} finally {

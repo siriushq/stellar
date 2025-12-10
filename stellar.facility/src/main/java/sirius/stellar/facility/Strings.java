@@ -36,59 +36,6 @@ public final class Strings {
 	/// @since 1.0
 	public static final String SPACE = " ";
 
-	/// Returns a formatted string using the provided format string and arguments.
-	///
-	/// This method invokes both [MessageFormat] and [String#format], allowing for
-	/// both types of formatting to be applied to the message (as they do not clash
-	/// with each other's syntax - both can ignore extra arguments).
-	///
-	/// @return The provided string, formatted, or `null` if the provided string is `null`,
-	/// or the provided string, if the argument array is `null`.
-	///
-	/// @see Strings#format(Locale, String, Object...)
-	/// @since 1.0
-	@Nullable
-	@Contract("null, _ -> null; _, null -> param1; !null, !null -> new")
-	public static String format(@Nullable String string, Object @Nullable... arguments) {
-		if (string == null) return null;
-		if (arguments == null) return string;
-
-		return Optional.of(string)
-				.map(MessageFormat::new)
-				.map(format -> format.format(arguments))
-				.map(message -> String.format(message, arguments))
-				.orElseThrow(IllegalStateException::new);
-	}
-
-	/// Returns a formatted string using the provided format string and arguments.
-	///
-	/// This method invokes both [MessageFormat] and [#format], allowing for both types
-	/// of formatting to be applied to the message (as they do not clash with each
-	/// other's syntax).
-	///
-	/// @param locale Locale for [MessageFormat#MessageFormat(String,Locale)] and
-	/// [String#format(Locale,String,Object...)] to accept. If null is provided,
-	/// [Locale#ENGLISH] is used as a fallback.
-	///
-	/// @return The provided string, formatted, or `null` if the provided string is `null`,
-	/// or the provided string, if the argument array is `null`.
-	///
-	/// @see Strings#format(String, Object...)
-	/// @since 1.0
-	@Nullable
-	@Contract("_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new")
-	public static String format(@Nullable Locale locale, @Nullable String string, Object @Nullable... arguments) {
-		if (string == null) return null;
-		if (arguments == null) return string;
-
-		Locale effectiveLocale = (locale == null) ? Locale.ENGLISH : locale;
-		return Optional.of(string)
-				.map(pattern -> new MessageFormat(pattern, effectiveLocale))
-				.map(format -> format.format(arguments))
-				.map(message -> String.format(effectiveLocale, message, arguments))
-				.orElseThrow(IllegalStateException::new);
-	}
-
 	/// Returns a shuffled string using the provided [RandomGenerator] instance.
 	///
 	/// @see SecureRandom#SecureRandom()
