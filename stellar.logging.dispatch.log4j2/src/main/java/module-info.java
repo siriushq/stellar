@@ -1,5 +1,6 @@
 import org.jspecify.annotations.NullMarked;
 import sirius.stellar.logging.dispatch.log4j2x.Log4j2ContextFactory;
+import sirius.stellar.logging.dispatch.log4j2x.Log4j2Provider;
 
 @NullMarked
 module sirius.stellar.logging.log4j2x {
@@ -13,4 +14,5 @@ module sirius.stellar.logging.log4j2x {
 	exports sirius.stellar.logging.dispatch.log4j2x;
 
 	provides org.apache.logging.log4j.spi.LoggerContextFactory with Log4j2ContextFactory;
+	provides org.apache.logging.log4j.spi.Provider with Log4j2Provider;
 }

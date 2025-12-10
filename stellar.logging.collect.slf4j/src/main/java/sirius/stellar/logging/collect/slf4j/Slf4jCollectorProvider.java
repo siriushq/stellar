@@ -7,7 +7,7 @@ import sirius.stellar.logging.collect.Collector;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class Slf4jCollectorFactory implements Collector.Provider {
+public final class Slf4jCollectorProvider implements Collector.Provider {
 
 	@Override
 	public Collector create() {

@@ -21,6 +21,6 @@ public final class AppLogProvider implements io.avaje.applog.AppLog.Provider {
 
 	@Override
 	public System.Logger getLogger(String name, ResourceBundle bundle) {
-		return loggers.computeIfAbsent(name, Jsr379Dispatcher::new);
+		return loggers.computeIfAbsent(name, __ -> new Jsr379Dispatcher(name, bundle));
 	}
 }

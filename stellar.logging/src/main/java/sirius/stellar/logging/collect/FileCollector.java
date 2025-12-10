@@ -4,7 +4,6 @@ import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.LoggerMessage;
 
 import java.io.IOException;
-import java.io.Serial;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -24,9 +23,6 @@ import static sirius.stellar.logging.Logger.*;
 
 /// Implementation of [Collector] that prints to log files.
 final class FileCollector implements Collector {
-
-	@Serial
-	private static final long serialVersionUID = 4479392734705305030L;
 
 	private final Path path;
 	private final Duration duration;

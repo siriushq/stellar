@@ -17,8 +17,6 @@
 ///         Logger.collector(Collector.console());
 ///         Logger.severity(ERROR.severity());
 ///
-///         //
-///
 ///         // use the statically accessible methods for logging
 ///         Logger.information("Hello, world!");
 ///
@@ -37,7 +35,7 @@
 ///         var log4j2 = org.apache.logging.log4j.LogManager.getLogger(Main.class);
 ///         log4j2.info("Hello from Log4J2!");
 ///
-///         var jul = java.util.logging.Logger.getLogger(Main.class);
+///         var jul = java.util.logging.Logger.getLogger("org.example.Main");
 ///         jul.info("Hello from java.util.logging!");
 ///
 ///         var jcl = org.apache.commons.logging.LogFactory.getLog(Main.class);
@@ -46,7 +44,7 @@
 ///         var jboss = org.jboss.logging.Logger.getLogger(Main.class);
 ///         jboss.info("Hello from JBoss!");
 ///
-///         var jsr379 = System.getLogger(Main.class);
+///         var jsr379 = System.getLogger("org.example.Main");
 ///         jsr379.log(System.Logger.Level.INFO, "Hello from System.Logger!");
 ///
 ///         org.tinylog.Logger.info("Hello from tinylog!");

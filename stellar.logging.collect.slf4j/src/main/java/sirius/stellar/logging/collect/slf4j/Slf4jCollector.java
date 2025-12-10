@@ -5,7 +5,6 @@ import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.collect.Collector;
 
-import java.io.Serial;
 import java.util.HashMap;
 
 /// Implementation of [Collector] that delegates to SLF4J.
@@ -20,7 +19,7 @@ import java.util.HashMap;
 ///   that the collector is invoked from (managed by the executor in [Logger])
 /// - a slight delay may be experienced in timestamps, as the underlying SLF4J
 ///   implementation will compute the timestamp, and the level mapping.
-/// - [Slf4jCollectorFactory] will create an instance of this collector
+/// - [Slf4jCollectorProvider] will create an instance of this collector
 ///   automatically from the static initialization in [Logger], provided this
 ///   collector is on the module path.
 ///
@@ -28,7 +27,7 @@ import java.util.HashMap;
 /// - you do not want to use an SLF4J logging backend
 /// - you have the SLF4J dispatcher on the classpath, which itself is a logging
 /// backend which intercepts SLF4J calls - having both the dispatcher and the
-/// collector on the module path will lead to an infinite loop / deadlock.
+/// collector on the module path will lead to a [StackOverflowError].
 ///
 /// ---------------------------------
 /// | [LoggerLevel]   | `org.slf4j` |
@@ -46,9 +45,6 @@ import java.util.HashMap;
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
 public record Slf4jCollector(HashMap<String, org.slf4j.Logger> loggers) implements Collector {
-
-	@Serial
-	private static final long serialVersionUID = 4175820898924806606L;
 
 	public Slf4jCollector() {
 		this(new HashMap<>());

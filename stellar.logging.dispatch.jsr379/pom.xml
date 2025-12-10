@@ -17,8 +17,13 @@
         <dependency>
             <groupId>sirius.stellar</groupId>
             <artifactId>stellar-logging</artifactId>
-            <version>${project.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>sirius.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>

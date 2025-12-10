@@ -1,12 +1,12 @@
 package sirius.stellar.logging.dispatch.jsr379x;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
 
-import java.io.ObjectStreamException;
-import java.io.Serial;
 import java.time.Instant;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import static java.lang.Thread.*;
 import static sirius.stellar.facility.Strings.*;
@@ -18,7 +18,11 @@ import static sirius.stellar.facility.Throwables.*;
 /// @param name The name of the logger.
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public record Jsr379Dispatcher(String name) implements System.Logger {
+public record Jsr379Dispatcher(String name, @Nullable ResourceBundle bundle) implements System.Logger {
+
+	public Jsr379Dispatcher(String name) {
+		this(name, null);
+	}
 
 	@Override
 	public String getName() {
@@ -31,15 +35,55 @@ public record Jsr379Dispatcher(String name) implements System.Logger {
 	}
 
 	@Override
-	public void log(Level level, ResourceBundle bundle, String text, Throwable throwable) {
+	public void log(Level level, String text) {
 		if (!isLoggable(level)) return;
+		log(level, this.bundle, text);
+	}
+
+	@Override
+	public void log(Level level, Supplier<String> textSupplier) {
+		if (!isLoggable(level)) return;
+		log(level, this.bundle, textSupplier.get());
+	}
+
+	@Override
+	public void log(Level level, Object object) {
+		if (!isLoggable(level)) return;
+		this.log(level, this.bundle, object.toString());
+	}
+
+	@Override
+	public void log(Level level, String text, Throwable throwable) {
+		if (!isLoggable(level)) return;
+		this.log(level, this.bundle, text, throwable);
+	}
+
+	@Override
+	public void log(Level level, Supplier<String> textSupplier, Throwable throwable) {
+		if (!isLoggable(level)) return;
+		log(level, this.bundle, textSupplier.get(), throwable);
+	}
+
+	@Override
+	public void log(Level level, String text, Object... arguments) {
+		if (!isLoggable(level)) return;
+		this.log(level, this.bundle, text, arguments);
+	}
+
+	@Override
+	public void log(Level level, @Nullable ResourceBundle bundle, String text, @Nullable Throwable throwable) {
+		if (!isLoggable(level)) return;
+		if (bundle != null && bundle.containsKey(text)) text = bundle.getString(text);
 		if (throwable != null) text += "\n" + stacktrace(throwable);
+
 		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, text);
 	}
 
 	@Override
-	public void log(Level level, ResourceBundle bundle, String text, Object... arguments) {
+	public void log(Level level, @Nullable ResourceBundle bundle, String text, Object... arguments) {
 		if (!isLoggable(level)) return;
+		if (bundle != null && bundle.containsKey(text)) text = bundle.getString(text);
+
 		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, format(text, arguments));
 	}
 
@@ -54,10 +98,5 @@ public record Jsr379Dispatcher(String name) implements System.Logger {
 			case DEBUG -> LoggerLevel.DEBUGGING;
 			case OFF -> LoggerLevel.OFF;
 		};
-	}
-
-	@Serial
-	private Object readResolve() throws ObjectStreamException {
-		return System.getLogger(this.name);
 	}
 }

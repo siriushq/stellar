@@ -2,6 +2,7 @@ package sirius.stellar.logging.dispatch.jsr379x;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /// Implementation of [System.LoggerFinder] used for obtaining instances of [Jsr379Dispatcher].
 ///
@@ -14,5 +15,10 @@ public final class Jsr379Finder extends System.LoggerFinder {
 	@Override
 	public System.Logger getLogger(String name, Module module) {
 		return loggers.computeIfAbsent(name, Jsr379Dispatcher::new);
+	}
+
+	@Override
+	public System.Logger getLocalizedLogger(String name, ResourceBundle bundle, Module module) {
+		return loggers.computeIfAbsent(name, __ -> new Jsr379Dispatcher(name, bundle));
 	}
 }
