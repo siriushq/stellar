@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>sirius.stellar</groupId>
+        <groupId>org.siriushq.stellar</groupId>
         <artifactId>stellar</artifactId>
         <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
@@ -55,6 +55,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

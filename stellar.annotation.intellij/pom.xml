@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>sirius.stellar</groupId>
+        <groupId>org.siriushq.stellar</groupId>
         <artifactId>stellar</artifactId>
         <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
@@ -25,6 +25,17 @@
 		</dependency>
 	</dependencies>
 
+	<repositories>
+		<repository>
+			<id>jetbrains-releases</id>
+			<url>https://www.jetbrains.com/intellij-repository/releases/</url>
+		</repository>
+		<repository>
+			<id>jetbrains-dependencies</id>
+			<url>https://cache-redirector.jetbrains.com/intellij-dependencies</url>
+		</repository>
+	</repositories>
+
 	<build>
         <plugins>
             <plugin>
@@ -42,6 +53,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

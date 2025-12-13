@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>sirius.stellar</groupId>
+        <groupId>org.siriushq.stellar</groupId>
         <artifactId>stellar</artifactId>
         <version>1.0-RC1</version>
         <relativePath>../pom.xml</relativePath>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>sirius.stellar</groupId>
+            <groupId>org.siriushq.stellar</groupId>
             <artifactId>stellar-logging</artifactId>
         </dependency>
 
@@ -24,7 +24,7 @@
         </dependency>
 
 		<dependency>
-			<groupId>sirius.stellar</groupId>
+			<groupId>org.siriushq.stellar</groupId>
 			<artifactId>stellar-lifecycle-testing</artifactId>
 			<scope>test</scope>
 		</dependency>

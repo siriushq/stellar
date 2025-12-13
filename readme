@@ -6,47 +6,33 @@ Rendered source documentation is available in the "target" directory for any
 given module after building. https://stellar.sirius.cam houses the handbook.
 
 <!> The handbook is currently not public.
-<!> 1.0-RC1 has not yet been published.
+<!> 1.0-RC1 has not yet been published to Maven Central.
 
 including
 =========
 
-Releases and release-candidates are published to our repository.
-Start by adding this to your project.
-
-	pom.xml ====================================
-	<repositories>
-		<repository>
-			<id>sirius</id>
-			<url>https://maven.sirius.cam/</url>
-		</repository>
-	</repositories>
-	============================================
-
 A bill-of-materials is provided to control dependency versions.
-Directly add `stellar-bom` (or use `stellar` to also use our build lifecycle).
 
-	pom.xml ========================================
+	pom.xml ===========================================
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>sirius.stellar</groupId>
-				<artifactId>stellar</artifactId>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-bom</artifactId>
 				<version>1.0-RC1</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	================================================
+	===================================================
 
-Finally, register (& require) any dependencies you need.
-You should exclude the versions when using `dependencyManagement`.
-For example, to use `stellar-logging`:
+Register (& require) any dependencies you need. You should exclude the versions
+when using `dependencyManagement` (the above BOM declaration), e.g.:
 
 	pom.xml ====================================
 	<dependency>
-		<groupId>sirius.stellar</groupId>
+		<groupId>org.siriushq.stellar</groupId>
 		<artifactId>stellar-logging</artifactId>
 	</dependency>
 	============================================

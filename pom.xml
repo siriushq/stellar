@@ -1,18 +1,33 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>sirius.stellar</groupId>
+	<groupId>org.siriushq.stellar</groupId>
 	<artifactId>stellar</artifactId>
 	<version>1.0-RC1</version>
 	<packaging>pom</packaging>
 
 	<name>Stellar</name>
+	<description>stellar libraries (see stellar.sirius.cam)</description>
 	<url>https://stellar.sirius.cam</url>
 
 	<organization>
 		<name>@siriushq</name>
 		<url>https://www.sirius.cam</url>
 	</organization>
+
+	<developers>
+		<developer>
+			<name>${project.organization.name}</name>
+			<url>${project.organization.url}</url>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:siriushq/stellar.git</connection>
+		<developerConnection>scm:git:git@github.com:siriushq/stellar.git</developerConnection>
+		<url>https://github.com/siriushq/stellar</url>
+		<tag>master</tag>
+	</scm>
 
 	<licenses>
 		<license>
@@ -21,9 +36,14 @@
 		</license>
 	</licenses>
 
-	<modules>
-		<module>stellar.bom</module>
+	<properties>
+		<java.version.main>21</java.version.main>
+		<java.version.test>21</java.version.test>
 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
 		<module>stellar.tuple</module>
 		<module>stellar.facility</module>
 
@@ -47,7 +67,7 @@
 		<module>stellar.jsr305</module>
 
 		<module>stellar.esthree</module>
-<!--		<module>stellar.esthree.mock</module>-->
+<!--		<module>stellar.esthree.server</module>-->
 
 		<module>stellar.configuration</module>
 		<module>stellar.configuration.testing</module>
@@ -62,15 +82,8 @@
 		<module>stellar.lifecycle.javadoc</module>
 		<module>stellar.lifecycle.testing</module>
 		<module>stellar.lifecycle.spi</module>
+
 	</modules>
-
-	<properties>
-		<java.version.main>21</java.version.main>
-		<java.version.test>21</java.version.test>
-
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -121,13 +134,175 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>sirius.stellar</groupId>
-				<artifactId>stellar-bom</artifactId>
-				<version>${project.version}</version>
 
-				<type>pom</type>
-				<scope>import</scope>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-tuple</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-facility</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-annotation</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-annotation-intellij</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-bundle</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-slf4j-collector</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-applog</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-jboss</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-jcl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-jsr379</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-jul</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-kwik</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-log4j</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-log4j2</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-minlog</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-slf4j</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-tinylog</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-jsr305</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-esthree</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-esthree-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-testing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-inject</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-yaml</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-toml</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-jshell</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-serialization-msgpack</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-serialization-msgpack-jsonb</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-lifecycle-javadoc</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-lifecycle-testing</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-lifecycle-spi</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -140,39 +315,30 @@
 		</dependency>
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>https://maven-central.storage.googleapis.com/</url>
-		</repository>
-		<repository>
-			<id>apache-central</id>
-			<url>https://repo.maven.apache.org/maven2/</url>
-		</repository>
-		<repository>
-			<id>jetbrains-releases</id>
-			<url>https://www.jetbrains.com/intellij-repository/releases/</url>
-		</repository>
-		<repository>
-			<id>jetbrains-dependencies</id>
-			<url>https://cache-redirector.jetbrains.com/intellij-dependencies</url>
-		</repository>
-		<repository>
-			<id>jitpack</id>
-			<url>https://jitpack.io/</url>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>sirius</id>
-			<url>https://maven.sirius.cam/</url>
-		</repository>
-	</distributionManagement>
-
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+			</plugin>
+		</plugins>
+
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.sonatype.central</groupId>
+					<artifactId>central-publishing-maven-plugin</artifactId>
+					<version>0.9.0</version>
+					<extensions>true</extensions>
+
+					<configuration>
+						<publishingServerId>central</publishingServerId>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -235,6 +401,7 @@
 						<execution>
 							<phase>package</phase>
 							<goals>
+								<goal>jar</goal>
 								<goal>javadoc</goal>
 							</goals>
 						</execution>
