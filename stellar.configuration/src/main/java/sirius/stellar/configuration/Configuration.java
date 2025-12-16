@@ -27,9 +27,12 @@ import static java.util.stream.Collectors.*;
 ///
 /// ### Reloader discovery
 /// Similarly to the above, [ConfigurationReloader] implementations are wired and used to dispatch
-/// reload events and cause the [ConfigurationProvider]s to be re-invoked, reading new values.
+/// reload events and cause the [ConfigurationProvider]s to be re-invoked, reading new values:
 ///
-/// This module provides the fail-safe [SignalConfigurationReloader] (`SIGHUP`) implementation.
+/// 1. [PropertiesConfigurationReloader], a default implementation for reloading upon change of the
+///    same `.properties` files as the above provider.
+/// 2. [SignalConfigurationReloader], a fail-safe `SIGHUP` binding that allows a POSIX signal to be
+///    sent to the process to invoke a configuration reload.
 ///
 /// ### Usage
 /// The methods provided to access key/value pairs in the configuration are designed to be
@@ -49,7 +52,6 @@ public final class Configuration {
 	static { load(); }
 
 	/// Initializes the constant configuration map and wire all reloaders.
-	/// This method is separate from the static initializer block for testability.
 	static void load() {
 		try {
 			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
@@ -76,9 +78,12 @@ public final class Configuration {
 		bindings = synchronizedSet(bindings);
 	}
 
-	/// Visitor for [ConfigurationProvider]s by their dependencies, topological sorting via depth-first search.
+	/// Visitor for [ConfigurationProvider]s by their dependencies, recursively
+	/// topological sorting via depth-first search.
+	///
 	/// @see ConfigurationProvider#preceding()
-	static <T extends ConfigurationProvider> void visit(T found, Map<Class<?>, T> all, Set<T> visiting) {
+	static <T extends ConfigurationProvider>
+	void visit(T found, Map<Class<?>, T> all, Set<T> visiting) {
 		if (!visiting.add(found)) return;
 
 		for (Class<? extends ConfigurationProvider> dependency : found.preceding()) {
@@ -86,6 +91,7 @@ public final class Configuration {
 			if (t == null) continue;
 			visit(t, all, visiting);
 		}
+
 		providers.add(found);
 	}
 
