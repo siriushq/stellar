@@ -8,4 +8,6 @@ module sirius.stellar.esthree {
 	requires org.jspecify;
 
 	exports sirius.stellar.esthree;
+
+	uses sirius.stellar.esthree.Esthree.Builder;
 }

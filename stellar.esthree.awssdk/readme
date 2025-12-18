@@ -1,0 +1,9 @@
+siriushq/stellar.esthree.awssdk
+===============================
+
+Implementation of [siriushq/stellar.esthree] API that can be dropped-in to the
+module-path, and uses AWS SDK v2 as an implementation, rather than the optimized
+default implementation, as an "opt-out" system.
+
+The presence of this artifact on the class-path or module-path will cause it
+to be automatically registered (service loaded).

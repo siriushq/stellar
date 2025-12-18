@@ -3,8 +3,6 @@ package sirius.stellar.esthree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-//import java.io.Serial;
-
 import static java.text.MessageFormat.*;
 
 /// Abstraction of errors thrown by S3, providing statically accessible methods
@@ -15,9 +13,8 @@ import static java.text.MessageFormat.*;
 /// response is missing the field associated with that method (e.g. [#code()]).
 ///
 /// @see <a href="https://tiny.cc/aws_s3_error_responses">AWS Reference</a>
-public final class EsthreeException extends IllegalStateException {
+public class EsthreeException extends IllegalStateException {
 
-//	@Serial
 	private static final long serialVersionUID = -2991968104967447357L;
 
 	private final String code;
@@ -27,7 +24,7 @@ public final class EsthreeException extends IllegalStateException {
 	private final String request;
 	private final String host;
 
-	private EsthreeException(String code, String message, String resource, String request, String host) {
+	protected EsthreeException(String code, String message, String resource, String request, String host) {
 		super(format("{0}: {1}", code, message));
 
 		this.code = code;
@@ -38,7 +35,7 @@ public final class EsthreeException extends IllegalStateException {
 		this.host = host;
 	}
 
-	private EsthreeException(Throwable throwable, String code, String message, String resource, String request, String host) {
+	protected EsthreeException(Throwable throwable, String code, String message, String resource, String request, String host) {
 		super(throwable);
 
 		this.code = code;

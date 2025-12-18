@@ -67,6 +67,7 @@
 		<module>stellar.jsr305</module>
 
 		<module>stellar.esthree</module>
+		<module>stellar.esthree.awssdk</module>
 <!--		<module>stellar.esthree.server</module>-->
 
 		<module>stellar.configuration</module>

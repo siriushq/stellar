@@ -8,6 +8,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
@@ -101,7 +102,16 @@ public interface Esthree extends AutoCloseable {
 
 	/// Return a builder to construct [Esthree] instances with.
 	static Builder builder() {
-		return new DEsthreeBuilder();
+		try {
+			ServiceLoader<Esthree.Builder> loader = ServiceLoader.load(Esthree.Builder.class);
+			for (Esthree.Builder builder : loader) {
+				if (builder instanceof DEsthreeBuilder) continue;
+				return builder;
+			}
+			return new DEsthreeBuilder();
+		} catch (Throwable throwable) {
+			throw new IllegalStateException("Failed wiring alternate Esthree implementation", throwable);
+		}
 	}
 
 	/// @see Esthree
