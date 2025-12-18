@@ -57,8 +57,7 @@ final class DEsthreeBuilder implements Esthree.Builder {
 
 	@Override
 	public Esthree.Builder region(String region) {
-		if (this.endpointOverride)
-			return this;
+		if (this.endpointOverride) return this;
 		this.endpoint = "https://s3." + region + ".amazonaws.com";
 		this.region = region;
 		return this;
@@ -98,8 +97,10 @@ final class DEsthreeBuilder implements Esthree.Builder {
 
 	@Override
 	public Esthree build() {
-		if (this.accessKey == null || this.accessKey.isEmpty() || this.secretKey == null || this.secretKey.isEmpty())
-			throw new IllegalStateException("No credentials provided to Esthree Builder");
+		if (this.accessKey == null
+			|| this.accessKey.isEmpty()
+			|| this.secretKey == null
+			|| this.secretKey.isEmpty()) throw new IllegalStateException("No credentials provided to Esthree Builder");
 
 		EsthreeSigner signer = EsthreeSigner.create(this.accessKey, this.secretKey, this.region);
 		this.httpClientBuilder.baseUrl(this.endpoint);
@@ -116,7 +117,14 @@ final class DEsthreeBuilder implements Esthree.Builder {
 			ThreadLocal<DocumentBuilder> documentBuilder = withInitial(() -> documentBuilder(factory));
 			ThreadLocal<Transformer> transformer = withInitial(() -> transformer(TransformerFactory.newInstance()));
 
-			return new DEsthree(signer, this.httpClientBuilder.build(), documentBuilder, transformer, this.region, this.endpoint, this.endpointVirtual);
+			return new DEsthree(
+					signer,
+					this.httpClientBuilder.build(),
+					documentBuilder,
+					transformer,
+					this.region,
+					this.endpoint,
+					this.endpointVirtual);
 		} catch (ParserConfigurationException exception) {
 			throw new IllegalStateException("Failed to configure javax.xml DocumentBuilderFactory in Esthree Builder", exception);
 		}
