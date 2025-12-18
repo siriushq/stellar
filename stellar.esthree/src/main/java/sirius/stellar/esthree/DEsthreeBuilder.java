@@ -106,16 +106,21 @@ final class DEsthreeBuilder implements Esthree.Builder {
 		this.httpClientBuilder.baseUrl(this.endpoint);
 
 		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
-			factory.setXIncludeAware(false);
-			factory.setExpandEntityReferences(false);
+			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newDefaultInstance();
+			documentFactory.setXIncludeAware(false);
+			documentFactory.setExpandEntityReferences(false);
 
-			factory.setFeature(FEATURE_SECURE_PROCESSING, true);
-			factory.setAttribute(ACCESS_EXTERNAL_DTD, "");
-			factory.setAttribute(ACCESS_EXTERNAL_SCHEMA, "");
+			documentFactory.setFeature(FEATURE_SECURE_PROCESSING, true);
+			documentFactory.setAttribute(ACCESS_EXTERNAL_DTD, "");
+			documentFactory.setAttribute(ACCESS_EXTERNAL_SCHEMA, "");
 
-			ThreadLocal<DocumentBuilder> documentBuilder = withInitial(() -> documentBuilder(factory));
-			ThreadLocal<Transformer> transformer = withInitial(() -> transformer(TransformerFactory.newInstance()));
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			transformerFactory.setFeature(FEATURE_SECURE_PROCESSING, true);
+			transformerFactory.setAttribute(ACCESS_EXTERNAL_DTD, "");
+			transformerFactory.setAttribute(ACCESS_EXTERNAL_STYLESHEET, "");
+
+			ThreadLocal<DocumentBuilder> documentBuilder = withInitial(() -> documentBuilder(documentFactory));
+			ThreadLocal<Transformer> transformer = withInitial(() -> transformer(transformerFactory));
 
 			return new DEsthree(
 					signer,
@@ -127,6 +132,8 @@ final class DEsthreeBuilder implements Esthree.Builder {
 					this.endpointVirtual);
 		} catch (ParserConfigurationException exception) {
 			throw new IllegalStateException("Failed to configure javax.xml DocumentBuilderFactory in Esthree Builder", exception);
+		} catch (TransformerConfigurationException exception) {
+			throw new IllegalStateException("Failed to configure javax.xml TransformerFactory in Esthree Builder", exception);
 		}
 	}
 }
