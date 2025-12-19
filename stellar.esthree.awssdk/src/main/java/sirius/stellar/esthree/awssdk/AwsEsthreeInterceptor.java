@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.Consumer;
 
+import static java.util.concurrent.TimeUnit.*;
 import static software.amazon.awssdk.http.Header.*;
 
 /// Interceptor for requests made by AWS SDK v2, to collect metrics.
@@ -74,7 +75,7 @@ final class AwsEsthreeInterceptor
 		Long start = attributes.getAttribute(TRACKER);
 		if (start == null) return;
 
-		long micros = (System.nanoTime() - start) / 1_000;
+		long micros = NANOSECONDS.toMicros(System.nanoTime() - start);
 		this.totalMicros.add(micros);
 		this.maxMicros.accumulateAndGet(micros, Math::max);
 
