@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.*;
 ///
 /// ### Templates
 /// In any given module on the module-path, a `META-INF/MANIFEST.MF` file can contain the
-/// `sirius.stellar.configuration: ` main manifest attribute to specify what resources
+/// `sirius_stellar_configuration: ` main manifest attribute to specify what resources
 /// (e.g. files in a given JAR) are to be extracted as configuration templates, if those
 /// files do not already exist.
 ///
@@ -27,7 +27,7 @@ import static java.util.stream.Collectors.*;
 /// Multiple resources can be declared, separated with a semicolon (`;`) delimiter, e.g.:
 /// ```
 /// Manifest-Version: 1.0
-/// sirius.stellar.configuration: META-INF/example.properties;META-INF/example2.properties
+/// sirius_stellar_configuration: META-INF/example.properties;META-INF/example2.properties
 /// ```
 ///
 /// ### Loading
@@ -63,7 +63,7 @@ public interface FileConfigurationProvider extends ConfigurationProvider {
 			String paths = manifest.getMainAttributes()
 					.entrySet()
 					.stream()
-					.filter(entry -> entry.getKey().equals("sirius.stellar.configuration"))
+					.filter(entry -> entry.getKey().equals("sirius_stellar_configuration"))
 					.findFirst()
 					.map(Map.Entry::getValue)
 					.map(String::valueOf)
