@@ -23,7 +23,6 @@ import static java.util.stream.Collectors.*;
 import static javax.lang.model.SourceVersion.*;
 import static javax.lang.model.element.ElementKind.*;
 import static javax.tools.StandardLocation.*;
-import static sirius.stellar.facility.Strings.*;
 import static sirius.stellar.lifecycle.spi.APContext.*;
 
 @SupportedAnnotationTypes({

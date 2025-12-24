@@ -32,10 +32,6 @@
 			<optional>true</optional>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-facility</artifactId>
-		</dependency>
 	</dependencies>
 
     <build>
@@ -63,40 +59,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-
-				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<filters>
-						<filter>
-							<artifact>*:*</artifact>
-							<excludes>
-								<exclude>org/jspecify/**</exclude>
-								<exclude>module-info.class</exclude>
-								<exclude>META-INF/versions/**</exclude>
-							</excludes>
-						</filter>
-					</filters>
-					<transformers>
-						<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-							<manifestEntries>
-								<Automatic-Module-Name>sirius.stellar.lifecycle.spi</Automatic-Module-Name>
-							</manifestEntries>
-						</transformer>
-					</transformers>
-				</configuration>
-
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
         </plugins>
     </build>
