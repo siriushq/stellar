@@ -8,12 +8,13 @@ import software.amazon.awssdk.core.interceptor.ExecutionAttributes;
 import software.amazon.awssdk.core.interceptor.ExecutionInterceptor;
 import software.amazon.awssdk.http.SdkHttpResponse;
 
+import java.util.StringJoiner;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.Consumer;
 
-import static java.util.concurrent.TimeUnit.*;
-import static software.amazon.awssdk.http.Header.*;
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static software.amazon.awssdk.http.Header.CONTENT_LENGTH;
 
 /// Interceptor for requests made by AWS SDK v2, to collect metrics.
 ///
@@ -121,5 +122,17 @@ final class AwsEsthreeInterceptor
 	public long avgMicros() {
 		long count = this.totalCount.sum();
 		return (count == 0) ? 0 : (this.totalMicros.sum() / count);
+	}
+
+	@Override
+	public String toString() {
+		return new StringJoiner(" ")
+			.add("totalCount:" + this.totalCount())
+			.add("errorCount:" + this.errorCount())
+			.add("responseBytes:" + this.responseBytes())
+			.add("totalMicros:" + this.totalMicros())
+			.add("avgMicros:" + this.avgMicros())
+			.add("maxMicros:" + this.maxMicros())
+			.toString();
 	}
 }
