@@ -23,9 +23,8 @@ public enum LoggerLevel {
 	INFORMATION(0, "Information"),
 	WARNING(1, "Warning"),
 	ERROR(2, "Error"),
-
-	STACKTRACE(3, "Stacktrace"),
-	DEBUGGING(4, "Debugging"),
+	DIAGNOSIS(3, "Diagnosis"),
+	TRACING(4, "Tracing"),
 	CONFIGURATION(5, "Configuration"),
 
 	ALL(Integer.MAX_VALUE, "All");
