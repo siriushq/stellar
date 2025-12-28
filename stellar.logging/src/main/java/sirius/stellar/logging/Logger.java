@@ -77,7 +77,7 @@ public final class Logger {
 			throw new IllegalStateException("Failed to wire logging collectors", error);
 		}
 
-		getRuntime().addShutdownHook(Thread.ofPlatform().unstarted(() -> {
+		getRuntime().addShutdownHook(new Thread(() -> {
 			try {
 				for (Future<?> future : futures) future.get(60, SECONDS);
 
