@@ -6,7 +6,7 @@ import sirius.stellar.facility.Throwables;
 import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.collect.Collector;
 import sirius.stellar.logging.dispatch.Dispatcher;
-import sirius.stellar.logging.format.Formatter;
+import sirius.stellar.logging.format.LogFormatter;
 import sirius.stellar.logging.supplier.ObjectSupplier;
 import sirius.stellar.logging.supplier.ThrowableSupplier;
 
@@ -19,6 +19,7 @@ import static java.lang.Runtime.*;
 import static java.lang.StackWalker.Option.*;
 import static java.lang.Thread.*;
 import static java.util.Collections.*;
+import static java.util.Locale.*;
 import static java.util.concurrent.Executors.*;
 import static java.util.concurrent.TimeUnit.*;
 
@@ -54,7 +55,7 @@ public final class Logger {
 
 	private static final ExecutorService virtual = newVirtualThreadPerTaskExecutor();
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
-	private static final Formatter formatter = Formatter.create();
+	private static final LogFormatter formatter = LogFormatter.create();
 
 	private static Set<Collector> collectors = new HashSet<>();
 	private static Set<Future<?>> futures = new HashSet<>();
@@ -176,12 +177,14 @@ public final class Logger {
 	/// Returns the provided string, formatted, or `null` if the provided string
 	/// is `null`, or if the argument array is `null`.
 	///
-	/// @see Formatter
+	/// @see LogFormatter
 	/// @see #format(Locale, String, Object...)
 	/// @since 1.0
 	@Nullable
 	@Contract("null, _ -> null; _, null -> param1; !null, !null -> new")
 	public static String format(@Nullable String string, Object @Nullable ... arguments) {
+		if (string == null) return null;
+		if (arguments == null) return string;
 		return formatter.formatString(string, arguments);
 	}
 
@@ -189,14 +192,17 @@ public final class Logger {
 	/// is `null`, or if the argument array is `null`.
 	///
 	/// @param locale Locale to use for formatting, or if `null` is provided,
-	/// [Locale#ENGLISH] is used as a fallback.
+	/// the [#format(String, Object...)] is delegated to instead.
 	///
-	/// @see Formatter
+	/// @see LogFormatter
 	/// @see #format(String, Object...)
 	/// @since 1.0
 	@Nullable
 	@Contract("_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new")
 	public static String format(@Nullable Locale locale, @Nullable String string, Object @Nullable ... arguments) {
+		if (locale == null) return format(string, arguments);
+		if (string == null) return null;
+		if (arguments == null) return string;
 		return formatter.formatString(locale, string, arguments);
 	}
 	//#endregion
