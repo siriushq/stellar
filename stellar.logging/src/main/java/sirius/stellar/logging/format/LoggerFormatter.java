@@ -9,11 +9,11 @@ import java.util.ServiceLoader;
 /// Represents a string formatter, used by the [Logger#format] public API.
 /// This SPI allows for another implementation to be provided, if desired.
 ///
-/// @see CombinedLogFormatter
+/// @see CombinedLoggerFormatter
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public interface LogFormatter {
+public interface LoggerFormatter {
 
 	/// Returns the provided string, formatted.
 	/// Implementations of this method should never `throw`.
@@ -29,19 +29,19 @@ public interface LogFormatter {
 	/// @since 1.0
 	String formatString(Locale locale, String string, Object[] arguments);
 
-	/// Obtain a [LogFormatter] instance, service-loading the first alternative
+	/// Obtain a [LoggerFormatter] instance, service-loading the first alternative
 	/// implementation found on the class-path/module-path, if one is available.
 	///
 	/// @see Logger#format
 	@Internal
-	static LogFormatter create() {
+	static LoggerFormatter create() {
 		try {
-			ServiceLoader<LogFormatter> loader = ServiceLoader.load(LogFormatter.class);
-			for (LogFormatter formatter : loader) {
-				if (formatter instanceof CombinedLogFormatter) continue;
+			ServiceLoader<LoggerFormatter> loader = ServiceLoader.load(LoggerFormatter.class);
+			for (LoggerFormatter formatter : loader) {
+				if (formatter instanceof CombinedLoggerFormatter) continue;
 				return formatter;
 			}
-			return new CombinedLogFormatter();
+			return new CombinedLoggerFormatter();
 		} catch (Throwable throwable) {
 			throw new IllegalStateException("Failed wiring alternate logger formatter", throwable);
 		}

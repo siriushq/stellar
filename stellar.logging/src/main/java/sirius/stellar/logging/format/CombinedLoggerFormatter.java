@@ -5,10 +5,10 @@ import java.util.*;
 
 import static java.util.Locale.Category.*;
 
-/// The default implementation of [LogFormatter], combining invocation of both
+/// The default implementation of [LoggerFormatter], combining invocation of both
 /// [String#format] and [MessageFormat] in order to allow both, non-clashing
 /// syntax, to be used for format strings, as efficiently as possible.
-final class CombinedLogFormatter implements LogFormatter {
+final class CombinedLoggerFormatter implements LoggerFormatter {
 
 	@Override
 	public String formatString(String string, Object[] arguments) {

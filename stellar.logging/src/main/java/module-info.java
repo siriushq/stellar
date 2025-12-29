@@ -17,7 +17,7 @@ module sirius.stellar.logging {
 	exports sirius.stellar.logging.format;
 	exports sirius.stellar.logging;
 
-	uses sirius.stellar.logging.format.LogFormatter;
+	uses sirius.stellar.logging.format.LoggerFormatter;
 	uses sirius.stellar.logging.dispatch.Dispatcher.Provider;
 	uses sirius.stellar.logging.collect.Collector.Provider;
 }

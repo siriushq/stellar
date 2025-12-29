@@ -6,7 +6,7 @@ import sirius.stellar.facility.Throwables;
 import sirius.stellar.facility.executor.SynchronousExecutorService;
 import sirius.stellar.logging.collect.Collector;
 import sirius.stellar.logging.dispatch.Dispatcher;
-import sirius.stellar.logging.format.LogFormatter;
+import sirius.stellar.logging.format.LoggerFormatter;
 import sirius.stellar.logging.supplier.ObjectSupplier;
 import sirius.stellar.logging.supplier.ThrowableSupplier;
 
@@ -55,7 +55,7 @@ public final class Logger {
 
 	private static final ExecutorService virtual = newVirtualThreadPerTaskExecutor();
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
-	private static final LogFormatter formatter = LogFormatter.create();
+	private static final LoggerFormatter formatter = LoggerFormatter.create();
 
 	private static Set<Collector> collectors = new HashSet<>();
 	private static Set<Future<?>> futures = new HashSet<>();
@@ -177,7 +177,7 @@ public final class Logger {
 	/// Returns the provided string, formatted, or `null` if the provided string
 	/// is `null`, or if the argument array is `null`.
 	///
-	/// @see LogFormatter
+	/// @see LoggerFormatter
 	/// @see #format(Locale, String, Object...)
 	/// @since 1.0
 	@Nullable
@@ -194,7 +194,7 @@ public final class Logger {
 	/// @param locale Locale to use for formatting, or if `null` is provided,
 	/// the [#format(String, Object...)] is delegated to instead.
 	///
-	/// @see LogFormatter
+	/// @see LoggerFormatter
 	/// @see #format(String, Object...)
 	/// @since 1.0
 	@Nullable
