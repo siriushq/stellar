@@ -85,6 +85,7 @@
 		<module>stellar.lifecycle.spi</module>
 
 	</modules>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -394,8 +395,10 @@
 					<configuration>
 						<quiet>true</quiet>
 						<verbose>false</verbose>
+
 						<failOnError>true</failOnError>
 						<doclint>all,-missing</doclint>
+						<show>package</show>
 					</configuration>
 
 					<executions>

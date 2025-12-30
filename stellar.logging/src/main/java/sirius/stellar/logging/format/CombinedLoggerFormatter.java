@@ -5,9 +5,9 @@ import java.util.*;
 
 import static java.util.Locale.Category.*;
 
-/// The default implementation of [LoggerFormatter], combining invocation of both
-/// [String#format] and [MessageFormat] in order to allow both, non-clashing
-/// syntax, to be used for format strings, as efficiently as possible.
+/// The default implementation of [LoggerFormatter], combining an invocation of
+/// both [String#format] and [MessageFormat], in order to allow both with their
+/// non-clashing syntax, for interpolation, as efficiently as possible.
 final class CombinedLoggerFormatter implements LoggerFormatter {
 
 	@Override

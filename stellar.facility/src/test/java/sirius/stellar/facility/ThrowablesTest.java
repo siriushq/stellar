@@ -96,17 +96,4 @@ final class ThrowablesTest {
         assertThat(list).hasSize(3);
     }
     //#endregion
-
-    //#region stacktrace(Throwable)
-    @Test @DisplayName("stacktrace(Throwable) outputs a stacktrace and is null-safe")
-    void stacktraceOutputsAStacktraceAndIsNullSafe() {
-        var throwable = new Throwable();
-
-        var a = Throwables.stacktrace(null);
-        var b = Throwables.stacktrace(throwable);
-
-        assertThat(a).isEqualTo("null");
-        assertThat(b).startsWith("java.lang.Throwable");
-    }
-    //#endregion
 }

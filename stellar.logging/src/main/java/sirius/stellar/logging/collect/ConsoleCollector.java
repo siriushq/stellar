@@ -51,8 +51,8 @@ final class ConsoleCollector implements Collector {
 			switch (message.level()) {
 				case ALL, INFORMATION -> BLUE.foreground().bright() + message.level().display();
 				case WARNING -> YELLOW.foreground().bright() + message.level().display();
-				case ERROR, STACKTRACE -> RED.foreground().bright() + message.level().display();
-				case DEBUGGING, CONFIGURATION -> MAGENTA.foreground().bright() + message.level().display();
+				case ERROR, TRACING -> RED.foreground().bright() + message.level().display();
+				case DIAGNOSIS, CONFIGURATION -> MAGENTA.foreground().bright() + message.level().display();
 				case OFF -> message.level().display();
 			},
 			message.thread(),

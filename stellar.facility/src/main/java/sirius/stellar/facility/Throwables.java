@@ -67,38 +67,4 @@ public final class Throwables {
 		}
 		return causes.stream();
 	}
-
-	/// Returns a stacktrace string for the provided throwable.
-	/// The string is composed of [Throwable#toString()] and then data previously recorded
-	/// by [Throwable#fillInStackTrace()]. The format of this information depends on the
-	/// implementation, but the following example may be regarded as typical:
-	///
-	/// ```
-	/// HighLevelException: MidLevelException: LowLevelException
-	///     at Junk.a(Junk.java:13)
-	///     at Junk.main(Junk.java:4)
-	/// Caused by: MidLevelException: LowLevelException
-	///     at Junk.c(Junk.java:23)
-	///     at Junk.b(Junk.java:17)
-	///     at Junk.a(Junk.java:11)
-	///     ... 1 more
-	/// Caused by: LowLevelException
-	///     at Junk.e(Junk.java:30)
-	///     at Junk.d(Junk.java:27)
-	///     at Junk.c(Junk.java:21)
-	///     ... 3 more
-	/// ```
-	///
-	/// @return The stacktrace or the string `"null"` if the provided throwable is null.
-	/// @see Throwable#printStackTrace() Read the Throwable#printStackTrace() method for insight.
-	/// @since 1.0
-	@Contract("_ -> new")
-	public static String stacktrace(@Nullable Throwable throwable) {
-		if (throwable == null) return "null";
-		StringWriter writer = new StringWriter();
-		try (PrintWriter printWriter = new PrintWriter(writer)) {
-			throwable.printStackTrace(printWriter);
-			return writer.toString();
-		}
-	}
 }
