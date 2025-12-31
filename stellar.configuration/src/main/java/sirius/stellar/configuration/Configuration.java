@@ -13,33 +13,39 @@ import static java.util.stream.Collectors.*;
 /// This class is the main entry-point for the configuration system.
 ///
 /// ### Value discovery
-/// Implementations of the service provider interface [ConfigurationProvider] are automagically
-/// discovered on the module path and loaded by this class in order to instantiate configuration.
+/// Implementations of the service provider interface [ConfigurationProvider]
+/// are automagically discovered on the module path and loaded by this class
+/// in order to instantiate configuration.
 ///
-/// This module provides three default implementations, which are loaded automatically overriding
-/// each other, in the guaranteed order specified below:
+/// This module provides 3 default implementations that load automatically,
+/// overriding each other, in the guaranteed order specified below:
 ///
-/// 1. [PropertiesConfigurationProvider], which loads all `.properties` files from the filesystem
-///    relative to the working directory of the application, first placing authored template files
-///    from any module on the module path.
+/// 1. [PropertiesConfigurationProvider], which loads all `.properties` files
+///    from the filesystem relative to the working directory of the application,
+///    first placing authored template files from any module on the module path.
 /// 2. [EnvironmentConfigurationProvider], which loads from [System#getenv()].
 /// 3. [SystemConfigurationProvider], which loads from [System#getProperties()].
 ///
 /// ### Reloader discovery
-/// Similarly to the above, [ConfigurationReloader] implementations are wired and used to dispatch
-/// reload events and cause the [ConfigurationProvider]s to be re-invoked, reading new values:
+/// Similarly to the above, [ConfigurationReloader] implementations are wired
+/// and used to dispatch reload events and cause the [ConfigurationProvider]s
+/// to be re-invoked, reading new values:
 ///
-/// 1. [PropertiesConfigurationReloader], a default implementation for reloading upon change of the
-///    same `.properties` files as the above provider.
-/// 2. [SignalConfigurationReloader], a fail-safe `SIGHUP` binding that allows a POSIX signal to be
-///    sent to the process to invoke a configuration reload.
+/// 1. [PropertiesConfigurationReloader], a default implementation for reloading
+///    upon change of the same `.properties` files as the above provider.
+/// 2. [SignalConfigurationReloader], a fail-safe `SIGHUP` binding that allows a
+///    POSIX signal to be sent to the process to invoke a configuration reload.
 ///
 /// ### Usage
-/// The methods provided to access key/value pairs in the configuration are designed to be
-/// statically-imported across an application, invoked as such: `println(property("EXAMPLE"))`.
+/// The methods provided to access key/value pairs in the configuration are
+/// designed to be statically-imported across an application, invoked as such:
 ///
-/// The values returned can be assumed to be stable. Configuration reloading is available, but only
-/// using explicit binding methods such as `propertyBinding("EXAMPLE", value -> println(value))`.
+///     `println(property("EXAMPLE"))`.
+///
+/// The values returned can be assumed to be stable. Configuration reloading
+/// is available, but only using explicit binding methods such as:
+///
+///     `propertyBinding("EXAMPLE", it -> println(it))`.
 ///
 /// @since 1.0
 public final class Configuration {
@@ -48,10 +54,10 @@ public final class Configuration {
 	static List<ConfigurationProvider> providers = new LinkedList<>();
 	static Set<ConfigurationBinding<?>> bindings = new HashSet<>();
 
-	/// Static initializer block which automatically runs [Configuration#load()].
 	static { load(); }
 
 	/// Initializes the constant configuration map and wire all reloaders.
+	/// This is automatically run by a static-initializer block.
 	static void load() {
 		try {
 			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
@@ -79,7 +85,7 @@ public final class Configuration {
 	}
 
 	/// Visitor for [ConfigurationProvider]s by their dependencies, recursively
-	/// topological sorting via depth-first search.
+	/// topological sorting via a depth-first search.
 	///
 	/// @see ConfigurationProvider#preceding()
 	static <T extends ConfigurationProvider>
@@ -128,8 +134,8 @@ public final class Configuration {
 		return property(key, "");
 	}
 
-	/// Returns the value of the provided configuration key as a [String] if available,
-	/// otherwise returning the provided fallback value.
+	/// Returns the value of the provided configuration key as a [String]
+	/// if available, otherwise returning the provided fallback value.
 	/// @since 1.0
 	public static String property(String key, String defaultValue) {
 		return configuration.getOrDefault(key, defaultValue);
@@ -143,8 +149,8 @@ public final class Configuration {
 
 	/// Binds to the value of the provided configuration key as a [String].
 	///
-	/// The provided [Consumer] will be run first with the initial value, as returned by
-	/// [#property(String)], and it will be re-run for any configuration reloads.
+	/// The provided [Consumer] will be run first with the initial value, as returned
+	/// by [#property(String)], and it will be re-run for any configuration reloads.
 	///
 	/// @since 1.0
 	public static void propertyBinding(String key, Consumer<String> binding) {
@@ -163,8 +169,8 @@ public final class Configuration {
 		return parseBoolean(value);
 	}
 
-	/// Returns the value of the provided configuration key as a `boolean` if available,
-	/// otherwise returning the provided fallback value.
+	/// Returns the value of the provided configuration key as a `boolean`
+	/// if available, otherwise returning the provided fallback value.
 	/// @since 1.0
 	public static boolean propertyBoolean(String key, boolean defaultValue) {
 		String value = configuration.get(key);
@@ -195,8 +201,8 @@ public final class Configuration {
 		return parseInt(value);
 	}
 
-	/// Returns the value of the provided configuration key as an `int` if available,
-	/// otherwise returning the provided fallback value.
+	/// Returns the value of the provided configuration key as an `int`
+	/// if available, otherwise returning the provided fallback value.
 	/// @throws NumberFormatException failed to parse the set value
 	/// @since 1.0
 	public static int propertyInteger(String key, int defaultValue) {
@@ -228,8 +234,8 @@ public final class Configuration {
 		return parseLong(value);
 	}
 
-	/// Returns the value of the provided configuration key as a `long` if available,
-	/// otherwise returning the provided fallback value.
+	/// Returns the value of the provided configuration key as a `long`
+	/// if available, otherwise returning the provided fallback value.
 	/// @throws NumberFormatException failed to parse the set value
 	/// @since 1.0
 	public static long propertyLong(String key, long defaultValue) {
@@ -251,26 +257,28 @@ public final class Configuration {
 	//#endregion
 
 	//#region mapped properties
-	/// Returns the value of the provided configuration key as `T` based on the provided
-	/// mapping function that should return `T` from a [String] input.
+	/// Returns the value of the provided configuration key as `T` based on the
+	/// provided mapping function that should return `T` from a [String] input.
 	///
 	/// For example, `propertyAs("EXAMPLE_BIGINTEGER", BigInteger::parseInt)`.
 	/// @throws IllegalStateException if the configuration key is not set
 	/// @since 1.0
-	public static <T> T propertyAs(String key, Function<String, T> mapper) {
+	public static <T>
+	T propertyAs(String key, Function<String, T> mapper) {
 		String value = configuration.get(key);
 		if (value == null || value.isBlank()) throw new IllegalStateException();
 		return mapper.apply(value);
 	}
 
-	/// Binds to the value of the provided configuration key, using the provided mapping
-	/// function, just like [#propertyAs].
+	/// Binds to the value of the provided configuration key, using the provided
+	/// mapping function, just like [#propertyAs].
 	///
 	/// The provided [Consumer] will be run first with the initial value, as returned by
 	/// [#propertyAs], and it will be re-run for any configuration reloads.
 	///
 	/// @since 1.0
-	public static <T> void propertyBindingAs(String key, Function<String, T> mapper, Consumer<T> binding) {
+	public static <T>
+	void propertyBindingAs(String key, Function<String, T> mapper, Consumer<T> binding) {
 		binding.accept(propertyAs(key, mapper));
 		bindings.add(new ConfigurationBinding<>(key, mapper, binding));
 	}
