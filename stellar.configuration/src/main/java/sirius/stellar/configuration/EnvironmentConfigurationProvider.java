@@ -13,4 +13,9 @@ public final class EnvironmentConfigurationProvider implements ConfigurationProv
 	public Map<String, String> get() {
 		return System.getenv();
 	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return EnvironmentConfigurationProvider.class;
+	}
 }

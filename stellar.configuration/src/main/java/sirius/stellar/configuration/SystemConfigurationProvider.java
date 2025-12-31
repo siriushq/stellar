@@ -27,4 +27,9 @@ public final class SystemConfigurationProvider implements ConfigurationProvider 
 	public Set<Class<? extends ConfigurationProvider>> preceding() {
 		return Set.of(EnvironmentConfigurationProvider.class);
 	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return SystemConfigurationProvider.class;
+	}
 }

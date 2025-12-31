@@ -3,6 +3,7 @@ package sirius.stellar.configuration.yaml;
 import io.avaje.spi.ServiceProvider;
 import org.yaml.snakeyaml.Yaml;
 import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationProvider;
 import sirius.stellar.configuration.FileConfigurationProvider;
 
 import java.io.IOException;
@@ -56,6 +57,11 @@ public final class YamlConfigurationProvider implements FileConfigurationProvide
 	@Override
 	public Set<String> extensions() {
 		return Set.of(".yml", ".yaml");
+	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return YamlConfigurationProvider.class;
 	}
 
 	/// Recursively flattens a YAML tree to a topological, period delimited [Map].

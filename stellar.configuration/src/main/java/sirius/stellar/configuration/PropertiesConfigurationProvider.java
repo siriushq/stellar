@@ -36,4 +36,9 @@ public final class PropertiesConfigurationProvider implements FileConfigurationP
 	public Set<String> extensions() {
 		return Set.of(".properties");
 	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return PropertiesConfigurationProvider.class;
+	}
 }

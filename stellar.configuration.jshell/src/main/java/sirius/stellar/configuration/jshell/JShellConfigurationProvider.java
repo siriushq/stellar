@@ -5,6 +5,7 @@ import jdk.jshell.JShell;
 import jdk.jshell.SnippetEvent;
 import jdk.jshell.execution.LocalExecutionControlProvider;
 import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationProvider;
 import sirius.stellar.configuration.FileConfigurationProvider;
 
 import java.io.IOException;
@@ -73,6 +74,11 @@ public final class JShellConfigurationProvider implements FileConfigurationProvi
 	@Override
 	public Set<String> extensions() {
 		return Set.of(".jsh", ".jshell");
+	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return JShellConfigurationProvider.class;
 	}
 
 	/// Evaluate the provided expression, providing error handling and feedback.

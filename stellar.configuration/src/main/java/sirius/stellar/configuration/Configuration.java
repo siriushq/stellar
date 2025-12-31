@@ -63,7 +63,7 @@ public final class Configuration {
 			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
 					.stream()
 					.map(ServiceLoader.Provider::get)
-					.collect(toMap(Object::getClass, provider -> provider));
+					.collect(toMap(ConfigurationProvider::clazz, it -> it));
 			Set<ConfigurationProvider> visiting = new HashSet<>();
 
 			for (ConfigurationProvider found : all.values()) visit(found, all, visiting);

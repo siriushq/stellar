@@ -4,6 +4,7 @@ import io.avaje.spi.ServiceProvider;
 import org.tomlj.Toml;
 import org.tomlj.TomlArray;
 import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationProvider;
 import sirius.stellar.configuration.FileConfigurationProvider;
 
 import java.io.IOException;
@@ -48,6 +49,11 @@ public final class TomlConfigurationProvider implements FileConfigurationProvide
 	@Override
 	public Set<String> extensions() {
 		return Set.of(".toml");
+	}
+
+	@Override
+	public Class<? extends ConfigurationProvider> clazz() {
+		return TomlConfigurationProvider.class;
 	}
 
 	/// Deserializes a TOML value from the provided [Object].
