@@ -28,8 +28,11 @@ import static java.util.concurrent.TimeUnit.*;
 /// @see Configuration
 public abstract class FileConfigurationReloader implements ConfigurationReloader, Runnable {
 
-	private @Nullable WatchService watcher;
-	private @Nullable ScheduledExecutorService scheduler;
+	@Nullable
+	private WatchService watcher;
+
+	@Nullable
+	private ScheduledExecutorService scheduler;
 
 	/// A set of file extensions that can be recognized, in the current working directory,
 	/// by this provider. Each string must begin with a period, e.g. `".properties"`.
