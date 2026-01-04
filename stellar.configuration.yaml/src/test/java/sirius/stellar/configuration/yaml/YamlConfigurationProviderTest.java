@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static java.nio.file.Files.*;
-import static java.text.MessageFormat.*;
-import static org.assertj.core.api.SoftAssertions.*;
+import static java.text.MessageFormat.format;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.*;
 
 final class YamlConfigurationProviderTest extends AbstractConfigurationTest {

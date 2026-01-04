@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.tuple.Couple.*;
+import static sirius.stellar.tuple.Couple.immutableCouple;
+import static sirius.stellar.tuple.Couple.mutableCouple;
 
 final class CoupleTest {
 

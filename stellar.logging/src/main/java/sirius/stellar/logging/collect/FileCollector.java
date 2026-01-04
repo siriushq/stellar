@@ -16,10 +16,10 @@ import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static java.nio.charset.StandardCharsets.*;
-import static java.time.Instant.*;
-import static java.util.stream.Collectors.*;
-import static sirius.stellar.logging.Logger.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.time.Instant.now;
+import static java.util.stream.Collectors.joining;
+import static sirius.stellar.logging.Logger.task;
 
 /// Implementation of [Collector] that prints to log files.
 final class FileCollector implements Collector {

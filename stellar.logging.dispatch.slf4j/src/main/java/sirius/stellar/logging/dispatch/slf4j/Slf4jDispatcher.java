@@ -8,7 +8,7 @@ import java.io.ObjectStreamException;
 import java.io.Serial;
 import java.time.Instant;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.slf4j.Logger] which dispatches to [Logger].
 ///

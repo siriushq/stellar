@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static java.nio.file.Files.*;
-import static org.assertj.core.api.SoftAssertions.*;
-import static sirius.stellar.configuration.Configuration.*;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static sirius.stellar.configuration.Configuration.property;
 
 final class ConfigurationProviderTest extends AbstractConfigurationTest {
 

@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
-import static java.util.concurrent.CompletableFuture.*;
 import static java.util.concurrent.CompletableFuture.runAsync;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /// Implementation of [Esthree] that delegates to the AWS SDK v2.
 /// @see AwsEsthreeBuilder

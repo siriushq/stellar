@@ -12,9 +12,9 @@ import java.util.function.*;
 import java.util.regex.Pattern;
 import java.util.stream.*;
 
-import static sirius.stellar.facility.stream.TerminatingDoubleStream.*;
-import static sirius.stellar.facility.stream.TerminatingIntStream.*;
-import static sirius.stellar.facility.stream.TerminatingLongStream.*;
+import static sirius.stellar.facility.stream.TerminatingDoubleStream.terminalDoubleStream;
+import static sirius.stellar.facility.stream.TerminatingIntStream.terminalIntStream;
+import static sirius.stellar.facility.stream.TerminatingLongStream.terminalLongStream;
 
 /// Implementation of [Stream] which will automatically close when a terminal operation
 /// is executed. While the majority of [Stream]s do not have to be (and should not be)

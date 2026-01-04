@@ -5,7 +5,7 @@ import io.avaje.spi.ServiceProvider;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 /// Implementation of [ConfigurationProvider] returning [System#getProperties()].
 /// @see Configuration

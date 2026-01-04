@@ -13,7 +13,8 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toMap;
 
 /// Implementation of [FileConfigurationProvider] for `.toml` files.
 /// Uses the [org.tomlj] library for parsing.

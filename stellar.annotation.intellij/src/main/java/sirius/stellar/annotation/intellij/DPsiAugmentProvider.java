@@ -7,8 +7,8 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.text.MessageFormat.*;
-import static java.util.Collections.*;
+import static java.text.MessageFormat.format;
+import static java.util.Collections.emptyList;
 
 /// Implementation of [PsiAugmentProvider] for augmenting any methods annotated
 /// with annotations from `sirius.stellar.annotation`.

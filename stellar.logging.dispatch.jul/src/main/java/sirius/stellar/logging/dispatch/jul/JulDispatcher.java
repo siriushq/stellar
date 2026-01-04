@@ -9,7 +9,7 @@ import java.io.Serial;
 import java.text.MessageFormat;
 import java.util.Map;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [java.util.logging.Handler] which dispatches to [Logger].
 ///

@@ -2,12 +2,11 @@ package sirius.stellar.logging;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.Throwables;
-import sirius.stellar.logging.collect.Collector;
 
 import java.util.Locale;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 final class LoggerTest {
 

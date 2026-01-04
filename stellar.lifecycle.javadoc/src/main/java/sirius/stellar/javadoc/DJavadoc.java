@@ -13,8 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
-import static java.nio.charset.StandardCharsets.*;
-import static java.nio.file.Files.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.newInputStream;
 
 /// Domain implementation of [Javadoc].
 final class DJavadoc implements Javadoc {

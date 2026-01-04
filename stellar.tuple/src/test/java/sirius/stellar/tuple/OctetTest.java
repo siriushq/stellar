@@ -3,8 +3,10 @@ package sirius.stellar.tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.tuple.Octet.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static sirius.stellar.tuple.Octet.immutableOctet;
+import static sirius.stellar.tuple.Octet.mutableOctet;
 
 final class OctetTest {
 

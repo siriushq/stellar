@@ -19,7 +19,7 @@ import java.nio.charset.*;
 import java.time.Instant;
 import java.util.Map;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 import static sirius.stellar.serialization.msgpack.MessagePack.Code.EXT_TIMESTAMP;
 
 /// MessagePack deserializer that converts binary data into Java objects.

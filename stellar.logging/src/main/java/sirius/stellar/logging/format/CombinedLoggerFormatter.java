@@ -1,9 +1,11 @@
 package sirius.stellar.logging.format;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Formatter;
+import java.util.IllegalFormatException;
+import java.util.Locale;
 
-import static java.util.Locale.Category.*;
+import static java.util.Locale.Category.FORMAT;
 
 /// The default implementation of [LoggerFormatter], combining an invocation of
 /// both [String#format] and [MessageFormat], in order to allow both with their

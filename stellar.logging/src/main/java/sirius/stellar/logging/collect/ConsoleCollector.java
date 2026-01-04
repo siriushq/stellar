@@ -11,10 +11,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.currentThread;
 import static sirius.stellar.facility.terminal.TerminalColor.*;
-import static sirius.stellar.logging.Logger.*;
-import static sirius.stellar.logging.LoggerLevel.*;
+import static sirius.stellar.logging.Logger.dispatch;
+import static sirius.stellar.logging.Logger.format;
+import static sirius.stellar.logging.LoggerLevel.ERROR;
+import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
 /// Implementation of [Collector] that prints to [System#out].
 ///

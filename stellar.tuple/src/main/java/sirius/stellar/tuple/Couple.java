@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static java.text.MessageFormat.*;
+import static java.text.MessageFormat.format;
 
 /// A tuple consisting of two elements (coupled together).
 /// This class is non-sealed and may be extended for use as an abstraction.

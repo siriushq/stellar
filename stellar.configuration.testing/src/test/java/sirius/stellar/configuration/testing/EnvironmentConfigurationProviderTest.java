@@ -7,8 +7,8 @@ import java.lang.reflect.InaccessibleObjectException;
 import java.math.BigInteger;
 import java.util.Map;
 
-import static java.lang.System.*;
-import static org.assertj.core.api.SoftAssertions.*;
+import static java.lang.System.err;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.*;
 
 final class EnvironmentConfigurationProviderTest extends AbstractConfigurationTest {

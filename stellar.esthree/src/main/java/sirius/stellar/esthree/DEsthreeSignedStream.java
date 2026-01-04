@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringJoiner;
 
-import static java.nio.charset.StandardCharsets.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /// Wraps an InputStream and signs it chunk by chunk using AWS Signature V4.
 /// @see <a href="https://tiny.cc/aws_sigv4">AWS Reference</a>

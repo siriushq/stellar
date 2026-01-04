@@ -2,8 +2,8 @@
 package sirius.stellar.serialization.msgpack.value;
 
 import sirius.stellar.serialization.msgpack.MessageFormat;
-import sirius.stellar.serialization.msgpack.exception.MessageIntegerOverflowException;
 import sirius.stellar.serialization.msgpack.MessagePacker;
+import sirius.stellar.serialization.msgpack.exception.MessageIntegerOverflowException;
 import sirius.stellar.serialization.msgpack.exception.MessageStringCodingException;
 import sirius.stellar.serialization.msgpack.exception.MessageTypeCastException;
 import sirius.stellar.serialization.msgpack.value.implementation.DImmutableBigIntegerValue;
@@ -15,16 +15,10 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static java.nio.charset.StandardCharsets.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Variable
         implements Value

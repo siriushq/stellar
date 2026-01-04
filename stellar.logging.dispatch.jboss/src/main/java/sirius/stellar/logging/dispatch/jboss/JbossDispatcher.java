@@ -6,8 +6,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.text.MessageFormat;
 import java.time.Instant;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.jboss.logging.Logger] which delegates to [Logger].
 ///

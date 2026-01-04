@@ -15,7 +15,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import static sirius.stellar.serialization.msgpack.MessagePack.*;
+import static sirius.stellar.serialization.msgpack.MessagePack.newDefaultPacker;
+import static sirius.stellar.serialization.msgpack.MessagePack.newDefaultUnpacker;
 
 /// Implementation of [JsonStream] for MessagePack.
 /// A usage exemplar for explicit usage is as follows:

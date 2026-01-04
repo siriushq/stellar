@@ -4,8 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Consumer;
 
-import static java.text.MessageFormat.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.format;
 
 /// Represents an operation that accepts a single input argument and returns no result,
 /// but may throw a [Throwable] which is automatically caught and rethrown,

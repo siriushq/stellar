@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
 
 /// Implementation of [FileConfigurationProvider] for `.yml`/`.yaml` files.
 /// Uses the [org.yaml.snakeyaml] library for parsing.

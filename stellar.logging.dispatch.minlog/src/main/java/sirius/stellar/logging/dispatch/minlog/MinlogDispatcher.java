@@ -8,8 +8,7 @@ import java.io.ObjectStreamException;
 import java.io.Serial;
 import java.time.Instant;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [com.esotericsoftware.minlog.Log.Logger] which dispatches to [Logger].
 ///

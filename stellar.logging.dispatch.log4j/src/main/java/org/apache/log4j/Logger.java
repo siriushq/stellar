@@ -5,8 +5,7 @@ import sirius.stellar.logging.LoggerLevel;
 
 import java.time.Instant;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Shadow class for `org.apache.log4j.Logger`.
 ///

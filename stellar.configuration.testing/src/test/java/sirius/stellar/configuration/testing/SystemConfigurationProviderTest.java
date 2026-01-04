@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigInteger;
 import java.util.Map;
 
-import static org.assertj.core.api.SoftAssertions.*;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.*;
 
 final class SystemConfigurationProviderTest extends AbstractConfigurationTest {

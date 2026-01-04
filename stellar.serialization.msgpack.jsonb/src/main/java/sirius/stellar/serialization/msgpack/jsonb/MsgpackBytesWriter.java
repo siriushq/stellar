@@ -4,7 +4,7 @@ import io.avaje.json.stream.BufferedJsonWriter;
 import io.avaje.json.stream.BytesJsonWriter;
 import sirius.stellar.serialization.msgpack.MessageBufferPacker;
 
-import static sirius.stellar.serialization.msgpack.MessagePack.*;
+import static sirius.stellar.serialization.msgpack.MessagePack.newDefaultBufferPacker;
 
 /// Implementation of [BufferedJsonWriter] for MessagePack.
 final class MsgpackBytesWriter extends MsgpackWriter implements BytesJsonWriter {

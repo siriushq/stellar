@@ -9,8 +9,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Shadow class for `org.apache.log4j.Category`.
 ///

@@ -8,7 +8,7 @@ import java.io.ObjectStreamException;
 import java.io.Serial;
 import java.time.Instant;
 
-import static java.lang.Thread.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.apache.commons.logging.Log] which dispatches to [Logger].
 ///

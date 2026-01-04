@@ -4,7 +4,7 @@ package sirius.stellar.serialization.msgpack.buffer;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * MessageBufferOutput adapter for {@link OutputStream}.

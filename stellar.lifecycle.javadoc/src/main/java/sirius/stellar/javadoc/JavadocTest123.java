@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.*;
-import static org.eclipse.jdt.core.JavaCore.*;
-import static org.eclipse.jdt.core.dom.AST.*;
-import static org.eclipse.jdt.core.dom.ASTParser.*;
+import static java.util.stream.Collectors.joining;
+import static org.eclipse.jdt.core.JavaCore.latestSupportedJavaVersion;
+import static org.eclipse.jdt.core.dom.AST.getJLSLatest;
+import static org.eclipse.jdt.core.dom.ASTParser.K_COMPILATION_UNIT;
 
 public final class JavadocTest123 {
 

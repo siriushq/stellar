@@ -20,8 +20,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static java.util.Spliterators.*;
-import static java.util.concurrent.CompletableFuture.*;
+import static java.util.Spliterators.spliteratorUnknownSize;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /// A paginator implementation for [Document], reading into `T` using a conversion function.
 /// This utilizes [Iterator] and provides [#stream()] to obtain a [Stream] view of it.

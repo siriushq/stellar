@@ -18,12 +18,13 @@ import java.io.Writer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Objects.*;
-import static java.util.stream.Collectors.*;
-import static javax.lang.model.SourceVersion.*;
-import static javax.lang.model.element.ElementKind.*;
-import static javax.tools.StandardLocation.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
+import static javax.lang.model.SourceVersion.RELEASE_11;
+import static javax.lang.model.SourceVersion.latestSupported;
+import static javax.lang.model.element.ElementKind.CLASS;
+import static javax.tools.StandardLocation.CLASS_OUTPUT;
 import static sirius.stellar.lifecycle.spi.APContext.*;
 
 @SupportedAnnotationTypes({

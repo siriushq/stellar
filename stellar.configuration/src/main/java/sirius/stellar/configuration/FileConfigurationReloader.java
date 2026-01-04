@@ -35,8 +35,11 @@ public abstract class FileConfigurationReloader implements ConfigurationReloader
 	@Nullable
 	private ScheduledExecutorService scheduler;
 
-	/// A set of file extensions that can be recognized, in the current working directory,
-	/// by this provider. Each string must begin with a period, e.g. `".properties"`.
+	/// Set of file extensions that can be recognized, from the current working
+	/// directory, by this provider.
+	///
+	/// Each string must begin with a period, e.g. `".properties"`.
+	/// For example, `return Set.of(".properties")`.
 	///
 	/// @since 1.0
 	protected abstract Set<String> extensions();

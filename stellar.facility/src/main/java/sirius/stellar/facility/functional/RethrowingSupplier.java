@@ -4,8 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Supplier;
 
-import static java.text.MessageFormat.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.format;
 
 /// Represents a supplier of results.
 /// There is no requirement that a new or distinct result be returned each

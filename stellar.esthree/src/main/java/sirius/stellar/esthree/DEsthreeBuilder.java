@@ -10,12 +10,13 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
-import static java.lang.System.*;
-import static java.lang.ThreadLocal.*;
-import static java.nio.charset.StandardCharsets.*;
+import static java.lang.System.getProperty;
+import static java.lang.System.getenv;
+import static java.lang.ThreadLocal.withInitial;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static javax.xml.XMLConstants.*;
-import static javax.xml.transform.OutputKeys.*;
-import static sirius.stellar.esthree.Esthree.Region.*;
+import static javax.xml.transform.OutputKeys.ENCODING;
+import static sirius.stellar.esthree.Esthree.Region.US_EAST_1;
 
 /// Domain implementation of [Esthree.Builder].
 final class DEsthreeBuilder implements Esthree.Builder {

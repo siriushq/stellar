@@ -3,7 +3,7 @@ package sirius.stellar.logging;
 import java.time.Instant;
 import java.util.Date;
 
-import static java.text.MessageFormat.*;
+import static java.text.MessageFormat.format;
 
 /// Represents a message emitted by [Logger]. This is [Comparable],
 /// lexicographically comparing the messages by [#time] for sorting.

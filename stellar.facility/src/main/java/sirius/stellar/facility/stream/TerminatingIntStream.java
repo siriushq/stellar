@@ -11,9 +11,9 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static sirius.stellar.facility.stream.TerminatingDoubleStream.*;
-import static sirius.stellar.facility.stream.TerminatingLongStream.*;
-import static sirius.stellar.facility.stream.TerminatingStream.*;
+import static sirius.stellar.facility.stream.TerminatingDoubleStream.terminalDoubleStream;
+import static sirius.stellar.facility.stream.TerminatingLongStream.terminalLongStream;
+import static sirius.stellar.facility.stream.TerminatingStream.terminalStream;
 
 /// Implementation of [IntStream] which will automatically close
 /// when a terminal operation is executed.

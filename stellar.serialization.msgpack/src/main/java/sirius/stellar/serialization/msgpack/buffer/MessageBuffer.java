@@ -10,7 +10,7 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * MessageBuffer class is an abstraction of memory with fast methods to serialize and deserialize primitive values

@@ -4,11 +4,13 @@ import org.jspecify.annotations.Nullable;
 import sirius.stellar.annotation.Internal;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.DoubleConsumer;
+import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-import static java.text.MessageFormat.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.format;
 
 /// Provides a facility for creating and working with [Iterator]s.
 ///

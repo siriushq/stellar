@@ -4,8 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.logging.Logger.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static sirius.stellar.logging.Logger.collector;
+import static sirius.stellar.logging.Logger.synchronous;
 
 final class Log4j2DispatcherTest {
 

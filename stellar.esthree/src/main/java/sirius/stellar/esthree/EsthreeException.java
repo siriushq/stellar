@@ -3,7 +3,7 @@ package sirius.stellar.esthree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import static java.text.MessageFormat.*;
+import static java.text.MessageFormat.format;
 
 /// Abstraction of errors thrown by S3, providing statically accessible methods
 /// for asserting if a given response is an error, and creating an instance

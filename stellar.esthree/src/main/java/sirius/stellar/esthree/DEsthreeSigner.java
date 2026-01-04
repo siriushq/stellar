@@ -16,8 +16,8 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static java.nio.charset.StandardCharsets.*;
-import static java.time.ZoneOffset.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.time.ZoneOffset.UTC;
 
 /// Domain implementation of [EsthreeSigner].
 final class DEsthreeSigner implements EsthreeSigner {

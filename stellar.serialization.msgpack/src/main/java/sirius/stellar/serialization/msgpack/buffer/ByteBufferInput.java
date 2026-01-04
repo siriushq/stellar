@@ -3,7 +3,7 @@ package sirius.stellar.serialization.msgpack.buffer;
 
 import java.nio.ByteBuffer;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * {@link MessageBufferInput} adapter for {@link ByteBuffer}

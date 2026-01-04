@@ -1,9 +1,12 @@
 package sirius.stellar.annotation;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /// Marks the public API provided by the marked element as having low maturity,
 /// and may change without notice. This does not refer to the quality of the

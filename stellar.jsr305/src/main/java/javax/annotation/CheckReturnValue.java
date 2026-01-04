@@ -1,13 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause AND CC-BY-2.5
 package javax.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import javax.annotation.meta.When;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 

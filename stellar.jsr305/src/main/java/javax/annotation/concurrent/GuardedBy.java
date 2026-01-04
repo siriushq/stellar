@@ -3,7 +3,8 @@ package javax.annotation.concurrent;
 
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
 
 /// The field or method to which this annotation is applied can only be accessed when holding a particular lock, which
 /// may be a built-in (synchronization) lock, or may be an explicit [java.util.concurrent.locks.Lock].

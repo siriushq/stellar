@@ -13,10 +13,10 @@ import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static java.lang.Runtime.*;
-import static java.util.Collections.*;
-import static java.util.concurrent.Executors.*;
-import static java.util.concurrent.TimeUnit.*;
+import static java.lang.Runtime.getRuntime;
+import static java.util.Collections.synchronizedSet;
+import static java.util.concurrent.Executors.newVirtualThreadPerTaskExecutor;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /// This class is the main entry-point for the logging system.
 /// By default, no collectors are registered.

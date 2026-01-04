@@ -11,14 +11,17 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.lang.Runtime.*;
-import static java.lang.System.*;
-import static java.lang.Thread.*;
-import static java.lang.foreign.Linker.*;
-import static java.lang.foreign.MemorySegment.*;
-import static java.lang.foreign.ValueLayout.*;
-import static java.util.concurrent.Executors.*;
-import static java.util.concurrent.TimeUnit.*;
+import static java.lang.Runtime.getRuntime;
+import static java.lang.System.err;
+import static java.lang.System.getProperty;
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.onSpinWait;
+import static java.lang.foreign.Linker.nativeLinker;
+import static java.lang.foreign.MemorySegment.NULL;
+import static java.lang.foreign.ValueLayout.ADDRESS;
+import static java.lang.foreign.ValueLayout.JAVA_INT;
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /// Implementation of [ConfigurationReloader] binding to `SIGHUP` via the
 /// POSIX APIs using the Foreign Function and Memory API (on Java >23).

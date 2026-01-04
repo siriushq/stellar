@@ -4,8 +4,7 @@ import sirius.stellar.annotation.Contract;
 
 import java.util.function.Predicate;
 
-import static java.text.MessageFormat.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.format;
 
 /// Represents a predicate (boolean-valued function) of one argument, that may throw
 /// a [Throwable] which is automatically caught and rethrown, providing a temporary

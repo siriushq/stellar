@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.jar.Manifest;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 
 /// Extension of [ConfigurationProvider] for making file-based configuration implementations.
 ///

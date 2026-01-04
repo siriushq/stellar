@@ -6,8 +6,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.io.Serial;
 import java.time.Instant;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.apache.logging.log4j.spi.AbstractLogger] which dispatches to [Logger].
 ///

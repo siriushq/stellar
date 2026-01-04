@@ -3,14 +3,14 @@ package sirius.stellar.serialization.msgpack.jsonb;
 import io.avaje.jsonb.Jsonb;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.facility.Strings;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import static org.assertj.core.api.Assertions.*;
-import static sirius.stellar.serialization.msgpack.MessagePack.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static sirius.stellar.serialization.msgpack.MessagePack.newDefaultBufferPacker;
+import static sirius.stellar.serialization.msgpack.MessagePack.newDefaultUnpacker;
 
 final class MsgpackAdapterTest {
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
 package sirius.stellar.serialization.msgpack.buffer;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 /**
  * MessageBufferInput adapter for byte arrays

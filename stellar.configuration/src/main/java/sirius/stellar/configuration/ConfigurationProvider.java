@@ -5,7 +5,7 @@ import io.avaje.spi.Service;
 import java.util.Map;
 import java.util.Set;
 
-import static java.util.Collections.*;
+import static java.util.Collections.emptySet;
 
 /// Represents a source of key-value configuration data to be loaded by
 /// [Configuration] on the first attempt to access any configuration keys.

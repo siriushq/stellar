@@ -13,17 +13,18 @@ import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.lang.Runtime.*;
-import static java.lang.System.*;
-import static java.lang.Thread.*;
-import static java.net.HttpURLConnection.*;
-import static java.time.temporal.ChronoUnit.*;
-import static java.util.concurrent.Executors.*;
-import static java.util.stream.Collectors.*;
-import static java.util.stream.IntStream.*;
+import static java.lang.Runtime.getRuntime;
+import static java.lang.System.err;
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.onSpinWait;
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
+import static java.time.temporal.ChronoUnit.HOURS;
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.SoftAssertions.*;
-import static sirius.stellar.esthree.Esthree.Region.*;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static sirius.stellar.esthree.Esthree.Region.US_EAST_2;
 
 @TestMethodOrder(OrderAnnotation.class)
 final class EsthreeTest {

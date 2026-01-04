@@ -2,8 +2,7 @@ package sirius.stellar.facility.functional;
 
 import sirius.stellar.annotation.Contract;
 
-import static java.text.MessageFormat.*;
-import static sirius.stellar.facility.Strings.*;
+import static java.text.MessageFormat.format;
 
 /// Represents an operation, that does not return a result, but may throw a
 /// [Throwable] which is automatically caught and rethrown, providing a temporary

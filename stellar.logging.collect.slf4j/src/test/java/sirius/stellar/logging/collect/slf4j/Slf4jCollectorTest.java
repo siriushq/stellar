@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.slf4j.event.Level.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.slf4j.event.Level.INFO;
 import static sirius.stellar.logging.Logger.*;
-import static sirius.stellar.logging.LoggerLevel.*;
+import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
 final class Slf4jCollectorTest {
 

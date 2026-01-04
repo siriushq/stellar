@@ -7,8 +7,7 @@ import sirius.stellar.logging.LoggerLevel;
 import java.time.Instant;
 import java.util.Locale;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.tinylog.provider.LoggingProvider] which dispatches to [Logger].
 ///

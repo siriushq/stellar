@@ -9,8 +9,7 @@ import java.time.Instant;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static java.lang.Thread.*;
-import static sirius.stellar.facility.Throwables.*;
+import static java.lang.Thread.currentThread;
 
 /// Implementation of [tech.kwik.core.log.Logger] which delegates to [Logger].
 /// This should be instantiated manually for use and provided to these methods or similar:

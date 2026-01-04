@@ -4,11 +4,11 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static java.lang.Boolean.*;
-import static java.lang.Integer.*;
-import static java.lang.Long.*;
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 import static java.util.Collections.*;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 /// This class is the main entry-point for the configuration system.
 ///

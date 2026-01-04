@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toMap;
 
 /// Implementation of [FileConfigurationProvider] for `.properties` files.
 ///

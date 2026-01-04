@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /// Marks the provided element as being for internal use only and may change
 /// without any notice, or possibly produce unwanted/unexpected behavior.

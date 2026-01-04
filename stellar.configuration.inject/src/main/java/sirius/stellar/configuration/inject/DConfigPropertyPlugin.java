@@ -5,7 +5,8 @@ import io.avaje.spi.ServiceProvider;
 
 import java.util.Optional;
 
-import static sirius.stellar.configuration.Configuration.*;
+import static sirius.stellar.configuration.Configuration.configurationMap;
+import static sirius.stellar.configuration.Configuration.propertyOptional;
 
 /// Implementation of `avaje-inject` [ConfigPropertyPlugin], provided when the optional dependency
 /// is available on the module path.

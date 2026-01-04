@@ -3,7 +3,8 @@ package sirius.stellar.configuration;
 import io.avaje.spi.ServiceProvider;
 import sun.misc.Signal;
 
-import static java.lang.System.*;
+import static java.lang.System.err;
+import static java.lang.System.getProperty;
 
 /// Implementation of [ConfigurationReloader] binding to `SIGHUP` via the
 /// `sun.misc.Signal` and `sun.misc.SignalHandler` API.

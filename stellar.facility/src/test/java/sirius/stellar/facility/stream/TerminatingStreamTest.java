@@ -2,14 +2,12 @@ package sirius.stellar.facility.stream;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.mock;
-import static sirius.stellar.facility.stream.TerminatingStream.*;
+import static sirius.stellar.facility.stream.TerminatingStream.terminalStream;
 
 final class TerminatingStreamTest {
 
