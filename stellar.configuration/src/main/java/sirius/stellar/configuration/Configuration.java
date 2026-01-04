@@ -8,6 +8,7 @@ import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.util.Collections.*;
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 /// This class is the main entry-point for the configuration system.
@@ -63,7 +64,7 @@ public final class Configuration {
 			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
 					.stream()
 					.map(ServiceLoader.Provider::get)
-					.collect(toMap(ConfigurationProvider::clazz, it -> it));
+					.collect(toMap(ConfigurationProvider::clazz, identity()));
 			Set<ConfigurationProvider> visiting = new HashSet<>();
 
 			for (ConfigurationProvider found : all.values()) visit(found, all, visiting);
