@@ -14,7 +14,7 @@ import java.util.Set;
 public final class YamlConfigurationReloader extends FileConfigurationReloader {
 
 	@Override
-	public Set<String> extensions() {
+	protected Set<String> extensions() {
 		return Set.of(".yml", ".yaml");
 	}
 }

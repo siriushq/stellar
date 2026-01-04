@@ -12,7 +12,7 @@ import java.util.Set;
 public final class PropertiesConfigurationReloader extends FileConfigurationReloader {
 
 	@Override
-	public Set<String> extensions() {
+	protected Set<String> extensions() {
 		return Set.of(".properties");
 	}
 }

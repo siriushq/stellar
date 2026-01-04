@@ -14,7 +14,7 @@ import java.util.Set;
 public final class JShellConfigurationReloader extends FileConfigurationReloader {
 
 	@Override
-	public Set<String> extensions() {
+	protected Set<String> extensions() {
 		return Set.of(".jsh", ".jshell");
 	}
 }
