@@ -38,16 +38,20 @@ import java.util.stream.Stream;
 /// @see sirius.stellar.esthree
 public interface Esthree extends AutoCloseable {
 
-	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal operation is executed.
-	/// This will lazily load the listing recursively using AWS pagination.
+	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal
+	/// operation is executed. This will lazily load the listing,
+	/// recursively using AWS pagination.
 	///
-	/// A [Stream] is used to prevent extraneous requests being made, as a contract to define that
-	/// the [Bucket]s should only be consumed once. If such iterating view is unsuitable,
-	/// [Stream#collect] or `Stream#toList` (Java >16) can be used to obtain a persistent view.
+	/// A [Stream] is used to prevent extraneous requests being made, as a
+	/// contract to define that the [Bucket]s should only be consumed once.
 	///
-	/// This is a paginated view. If `ContinuationToken` is continually returned by S3 with every
-	/// request, it is very possible that the [Stream] will take a long time to completely iterate
-	/// every page; S3 is considered a trusted host, but this could be used as an attack vector.
+	/// If such iterating view is unsuitable [Stream#collect] or `Stream#toList`
+	/// (on Java >16) can be used to obtain a persistent view.
+	///
+	/// This is a paginated view. If `ContinuationToken` is continually returned
+	/// by S3 with every request, it is very possible that the [Stream] will
+	/// take forever (or, a long time) to completely iterate every page; S3 is
+	/// considered a trusted host, but this could be used as an attack vector.
 	///
 	/// @throws EsthreeException if the request failed
 	Stream<Bucket> buckets();
