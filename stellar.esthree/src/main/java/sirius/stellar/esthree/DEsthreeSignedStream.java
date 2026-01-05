@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringJoiner;
 
+import static java.lang.System.arraycopy;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /// Wraps an InputStream and signs it chunk by chunk using AWS Signature V4.
@@ -47,7 +48,7 @@ final class DEsthreeSignedStream extends InputStream {
 			if (this.bufferPosition >= this.bufferLimit && this.refillBuffer()) break;
 
 			int copy = Math.min(length, this.bufferLimit - this.bufferPosition);
-			System.arraycopy(this.buffer, this.bufferPosition, buffer, offset, copy);
+			arraycopy(this.buffer, this.bufferPosition, buffer, offset, copy);
 
 			this.bufferPosition += copy;
 			offset += copy;
@@ -62,8 +63,8 @@ final class DEsthreeSignedStream extends InputStream {
 		return this.bufferLimit - this.bufferPosition;
 	}
 
-	/// Read some bytes from [#source] and allocate buffer, with space for chunk size & signature.
-	/// Returns `true` if EOF is reached, otherwise `false` for successful buffer refilling.
+	/// Read some bytes from [#source] & allocate buffer, with space for chunk size & signature.
+	/// @return `true` if EOF is reached, `false` for successful buffer refilling.
 	private boolean refillBuffer() throws IOException {
 		byte[] chunk = new byte[16 * 1024];
 
@@ -76,7 +77,7 @@ final class DEsthreeSignedStream extends InputStream {
 		}
 
 		byte[] actual = new byte[read];
-		System.arraycopy(chunk, 0, actual, 0, read);
+		arraycopy(chunk, 0, actual, 0, read);
 
 		this.buffer = this.buildChunk(actual);
 		this.bufferPosition = 0;
@@ -107,9 +108,9 @@ final class DEsthreeSignedStream extends InputStream {
 		byte[] footer = "\r\n".getBytes(UTF_8);
 
 		byte[] result = new byte[header.length + payload.length + footer.length];
-		System.arraycopy(header, 0, result, 0, header.length);
-		System.arraycopy(payload, 0, result, header.length, payload.length);
-		System.arraycopy(footer, 0, result, (header.length + payload.length), footer.length);
+		arraycopy(header, 0, result, 0, header.length);
+		arraycopy(payload, 0, result, header.length, payload.length);
+		arraycopy(footer, 0, result, (header.length + payload.length), footer.length);
 
 		return result;
 	}

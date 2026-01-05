@@ -23,8 +23,9 @@ import java.util.stream.StreamSupport;
 import static java.util.Spliterators.spliteratorUnknownSize;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
-/// A paginator implementation for [Document], reading into `T` using a conversion function.
-/// This utilizes [Iterator] and provides [#stream()] to obtain a [Stream] view of it.
+/// A paginator implementation for [Document], which reads (converts) into
+/// `T` using a conversion function. This utilizes [Iterator] and provides
+/// [#stream()] to obtain a [Stream] view of it.
 final class DEsthreePaginator<T> implements Iterator<T> {
 
 	private final ThreadLocal<DocumentBuilder> parser;
@@ -33,8 +34,8 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	private final String continuation;
 	private final HttpClientRequest request;
 
-	private final Function<Document, Integer> measurer;
-	private final BiFunction<Document, Integer, T> reader;
+	private final DEsthreePaginatorMeasurer measurer;
+	private final DEsthreePaginatorReader<T> reader;
 
 	/// The previous response body, used for retrieving the next continuation.
 	private Document previous;
@@ -45,20 +46,23 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	/// The size of the list returned in the previous response.
 	private int size;
 
-	/// Instantiate this paginator, with the provided field name for obtaining continuation tokens
-	/// (e.g. `ContinuationToken` or `NextContinuationToken`) from the provided [Document], using
-	/// the provided function that converts each [Document] response to `T` instances.
+	/// Instantiate this paginator, with the provided field name for obtaining
+	/// continuation tokens (e.g. `ContinuationToken`, `NextContinuationToken`)
+	/// from the provided [Document], using the provided function that converts
+	/// each [Document] response to `T` instances.
 	///
-	/// @param parser Thread-local [DocumentBuilder] used for parsing XML body responses.
+	/// @param parser Thread-local [DocumentBuilder], parses XML body responses.
 	/// @param signer [EsthreeSigner] used for signing request body content.
 	///
-	/// @param continuation Field name used for obtaining continuation tokens from the root of a
-	/// [Document], e.g. `ContinuationToken` or `NextContinuationToken`.
-	/// @param request Request builder to append a `continuation-token` query parameter to.
+	/// @param continuation Field name used for obtaining continuation tokens
+	/// from the root of a given [Document] (e.g. the names mentioned above).
 	///
-	/// @param measurer Function for measuring how many elements are in a response body list.
-	/// @param reader Function for reading the next element from the response body list.
-	DEsthreePaginator(ThreadLocal<DocumentBuilder> parser, EsthreeSigner signer, String continuation, HttpClientRequest request, Function<Document, Integer> measurer, BiFunction<Document, Integer, T> reader) {
+	/// @param request Request builder to reuse, appending `continuation-token`
+	/// (and `max-...` for limiting) query parameters (to a cloned variant).
+	///
+	/// @see DEsthreePaginatorMeasurer
+	/// @see DEsthreePaginatorReader
+	DEsthreePaginator(ThreadLocal<DocumentBuilder> parser, EsthreeSigner signer, String continuation, HttpClientRequest request, DEsthreePaginatorMeasurer measurer, DEsthreePaginatorReader<T> reader) {
 		this.parser = parser;
 		this.signer = signer;
 
@@ -127,12 +131,14 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 		request.queryParam("max-buckets", "1000");
 		if (token != null) request.queryParam("continuation-token", token.getTextContent());
 
-		this.signer.sign("GET", request, BodyContent.of(new byte[0]));
-		return request.GET();
+		try (EsthreeSigner signer = this.signer.acquire()) {
+			signer.sign("GET", request, BodyContent.of(new byte[0]));
+			return request.GET();
+		}
 	}
 
-	/// Obtain the next body from the provided [InputStream] (to retrieve from [#nextResponse]).
-	/// @return The first element from the newly read body.
+	/// Returns the first element, from reading the provided new [InputStream]
+	/// (which can first be obtained by invoking [#nextResponse]).
 	private T nextBody(InputStream stream) throws SAXException, IOException {
 		this.previous = this.parser.get().parse(stream);
 		if (EsthreeException.detected(this.previous)) throw EsthreeException.of(this.previous);
@@ -160,8 +166,9 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 	}
 }
 
-/// Wraps the given [DEsthreePaginator] (which is an `[Iterator] of `T`), and returns an
-/// [Iterator] of [CompletableFuture] of `T`, using [DEsthreePaginator#nextFuture()] method.
+/// Wraps the given [DEsthreePaginator] (which is an `[Iterator] of `T`),
+/// and returns an [Iterator] of [CompletableFuture]s of `T`, using the
+/// [DEsthreePaginator#nextFuture()] method (for [Iterator#next()]).
 final class DEsthreePaginatorFuture<T> implements Iterator<CompletableFuture<T>> {
 
 	private final DEsthreePaginator<T> delegate;
@@ -179,4 +186,18 @@ final class DEsthreePaginatorFuture<T> implements Iterator<CompletableFuture<T>>
 	public CompletableFuture<T> next() {
 		return this.delegate.nextFuture();
 	}
+}
+
+/// Function for measuring how many elements are in a response body list.
+/// @see DEsthreePaginator#DEsthreePaginator
+@FunctionalInterface
+interface DEsthreePaginatorMeasurer extends Function<Document, Integer> {
+	Integer apply(Document document);
+}
+
+/// Function for reading the next element, as `T`, from the response body list.
+/// @see DEsthreePaginator#DEsthreePaginator
+@FunctionalInterface
+interface DEsthreePaginatorReader<T> extends BiFunction<Document, Integer, T> {
+	T apply(Document document, Integer integer);
 }
