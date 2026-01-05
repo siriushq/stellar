@@ -136,10 +136,8 @@ final class DEsthree implements Esthree {
 			request.body(BodyContent.of("application/xml", this.write(document)));
 		}
 
-		try (EsthreeSigner signer = this.signer.acquire()) {
-			signer.sign("PUT", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
-			return request.PUT();
-		}
+		this.signer.sign("PUT", request, request.bodyContent().orElse(BodyContent.of(new byte[0])));
+		return request.PUT();
 	}
 	//#endregion
 
@@ -167,10 +165,8 @@ final class DEsthree implements Esthree {
 		HttpClientRequest request = this.client.request();
 		this.endpoint(request, name);
 
-		try (EsthreeSigner signer = this.signer.acquire()) {
-			signer.sign("DELETE", request, BodyContent.of(new byte[0]));
-			return request.DELETE();
-		}
+		this.signer.sign("DELETE", request, BodyContent.of(new byte[0]));
+		return request.DELETE();
 	}
 	//#endregion
 
@@ -210,10 +206,8 @@ final class DEsthree implements Esthree {
 		HttpClientRequest request = this.client.request();
 		this.endpoint(request, name);
 
-		try (EsthreeSigner signer = this.signer.acquire()) {
-			signer.sign("HEAD", request, BodyContent.of(new byte[0]));
-			return request.HEAD();
-		}
+		this.signer.sign("HEAD", request, BodyContent.of(new byte[0]));
+		return request.HEAD();
 	}
 	//#endregion
 
@@ -261,6 +255,13 @@ final class DEsthree implements Esthree {
 	@Override
 	public HttpClient httpClient() {
 		return this.client;
+	}
+
+	@Override
+	public void release() {
+		this.parser.remove();
+		this.transformer.remove();
+		this.signer.release();
 	}
 
 	@Override

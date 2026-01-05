@@ -13,12 +13,15 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
-/// Service client for accessing S3. \
-/// This can be created using the static [#builder()] method, and is [AutoCloseable].
+/// Service client for accessing S3.
 ///
-/// It is recommended that one instance is shared across an application, as the client is fully
-/// thread-safe (and virtual threads are used to support multithreaded execution on JVM >21, or
-/// [CompletableFuture]-based methods can be used if virtual threads are unavailable).
+/// This can be created using the static [#builder()] method.
+/// Relinquish acquired resources with [#release()] & [#close()].
+///
+/// It is recommended that one instance is shared across an application, as
+/// the client is fully thread-safe (and virtual threads are used to support
+/// multithreaded execution on JVM >21, or [CompletableFuture]-based methods
+/// can be used if virtual threads are unavailable).
 ///
 /// ```
 /// Esthree esthree = Esthree.builder()
@@ -99,6 +102,23 @@ public interface Esthree extends AutoCloseable {
 	default HttpClient.Metrics metrics(boolean reset) {
 		return this.httpClient().metrics(reset);
 	}
+
+	/// Release thread-local resources for only the current thread
+	/// (the thread which is used to invoke/call this method).
+	///
+	/// This should be used when the client is no longer needed on the caller
+	/// thread, or the memory should be freed, and it is more performant for
+	/// re-initialization to occur later on, even if using the same thread.
+	void release();
+
+	/// Close this resource, relinquishing underlying resources.
+	///
+	/// This method cannot release thread-local resources created during the
+	/// lifetime of the client, [#release()] should be used for that if the
+	/// threads invoking this client are expected to be long-lived.
+	///
+	/// @see AutoCloseable#close()
+	void close();
 
 	/// Return a builder to construct [Esthree] instances with.
 	static Builder builder() {

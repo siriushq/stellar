@@ -7,28 +7,16 @@ import java.io.InputStream;
 
 /// Abstraction to sign requests using AWS Signature V4.
 /// This can be created using the static [#create] method.
-public interface EsthreeSigner extends AutoCloseable {
-
-	/// Acquire the signer for the current thread.
-	///
-	/// If this method is not called before attempting to use the signer,
-	/// operations can be expected to throw a [IllegalStateException].
-	///
-	/// @throws IllegalStateException failure in cryptographic primitive
-	/// @see #close()
-	EsthreeSigner acquire();
+public interface EsthreeSigner {
 
 	/// Release any resources held by this signer for the current thread.
 	///
 	/// If this method is left uncalled, these resources will still be cleaned
 	/// up automatically when the thread is destroyed.
 	///
-	/// This does not follow the same semantics as the `close` name suggests,
-	/// another call to [#acquire()] can allow you to continue to reuse this
-	/// signer instance.
-	///
-	/// @see #acquire()
-	void close();
+	/// This should be used when it is known that the signer will not be used
+	/// for the rest of the lifetime of the given thread.
+	void release();
 
 	/// Sign a request with a fully known body (i.e. String, byte[]).
 	///
@@ -36,7 +24,6 @@ public interface EsthreeSigner extends AutoCloseable {
 	/// be provided to this method to calculate the SHA256 hash for the empty body.
 	///
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
-	/// @throws IllegalStateException did not call [#acquire()]
 	/// @see BodyContent
 	void sign(String method, HttpClientRequest request, BodyContent body);
 
@@ -46,7 +33,6 @@ public interface EsthreeSigner extends AutoCloseable {
 	/// chunks as they are read.
 	///
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
-	/// @throws IllegalStateException did not call [#acquire()]
 	InputStream sign(String method, HttpClientRequest request, InputStream stream);
 
 	/// Create an instance of [EsthreeSigner].

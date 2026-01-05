@@ -131,10 +131,8 @@ final class DEsthreePaginator<T> implements Iterator<T> {
 		request.queryParam("max-buckets", "1000");
 		if (token != null) request.queryParam("continuation-token", token.getTextContent());
 
-		try (EsthreeSigner signer = this.signer.acquire()) {
-			signer.sign("GET", request, BodyContent.of(new byte[0]));
-			return request.GET();
-		}
+		this.signer.sign("GET", request, BodyContent.of(new byte[0]));
+		return request.GET();
 	}
 
 	/// Returns the first element, from reading the provided new [InputStream]

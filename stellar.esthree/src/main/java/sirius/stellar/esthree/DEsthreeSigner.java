@@ -2,7 +2,6 @@ package sirius.stellar.esthree;
 
 import io.avaje.http.client.BodyContent;
 import io.avaje.http.client.HttpClientRequest;
-import org.jspecify.annotations.Nullable;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -11,54 +10,78 @@ import java.net.URI;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import static java.lang.ThreadLocal.withInitial;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.security.Security.getProviders;
 import static java.time.ZoneOffset.UTC;
 import static java.util.Locale.US;
 
 /// Domain implementation of [EsthreeSigner].
 final class DEsthreeSigner implements EsthreeSigner {
 
+	/// `java.security` standard name for [MessageDigest] SHA256 algorithm.
+	private static final String DIGEST_ALGORITHM = "SHA-256";
+
+	/// `java.security` standard name for [Mac] HMAC-SHA256 algorithm.
+	private static final String MAC_ALGORITHM = "HmacSHA256";
+
+	/// Security provider to use for creating instances of [MessageDigest].
+	private static final Provider DIGEST_PROVIDER =
+			getProviders("MessageDigest." + DIGEST_ALGORITHM)[0];
+
+	/// Security provider to use for creating instances of [Mac].
+	private static final Provider MAC_PROVIDER =
+			getProviders("Mac." + MAC_ALGORITHM)[0];
+
 	private final String accessKey;
 	private final String secretKey;
 	private final String region;
 
 	private final DateTimeFormatter formatter;
-	private final ThreadLocal<@Nullable MessageDigest> sha256;
-	private final ThreadLocal<@Nullable Mac> hmacSha256;
+	private final ThreadLocal<MessageDigest> sha256;
+	private final ThreadLocal<Mac> hmacSha256;
 
 	DEsthreeSigner(String accessKey, String secretKey, String region) {
 		this.accessKey = accessKey;
 		this.secretKey = secretKey;
 		this.region = region;
 
-		this.sha256 = new ThreadLocal<>();
-		this.hmacSha256 = new ThreadLocal<>();
+		this.sha256 = withInitial(this::acquireSha256);
+		this.hmacSha256 = withInitial(this::acquireHmacSha256);
 
 		this.formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
 				.withLocale(US)
 				.withZone(UTC);
 	}
 
-	@Override
-	public EsthreeSigner acquire() {
+	/// Creates a [MessageDigest] with the static [#PROVIDER] and [#SHA_256]
+	/// algorithm, for thread-local instantiation.
+	private MessageDigest acquireSha256() {
 		try {
-			if (this.sha256.get() != null && this.hmacSha256.get() != null) return this;
-
-			this.sha256.set(MessageDigest.getInstance("SHA-256"));
-			this.hmacSha256.set(Mac.getInstance("HmacSHA256"));
-			return this;
+			return MessageDigest.getInstance(DIGEST_ALGORITHM, DIGEST_PROVIDER);
 		} catch (NoSuchAlgorithmException exception) {
-			throw new IllegalStateException("Failed to obtain security provider for Esthree Signer", exception);
+			throw new IllegalStateException("Failed to obtain `MessageDigest` for Esthree Signer", exception);
+		}
+	}
+
+	/// Creates a [Mac] with the static [#PROVIDER] and [#HMAC_SHA_256]
+	/// algorithm, for thread-local instantiation.
+	private Mac acquireHmacSha256() {
+		try {
+			return Mac.getInstance(MAC_ALGORITHM, MAC_PROVIDER);
+		} catch (NoSuchAlgorithmException exception) {
+			throw new IllegalStateException("Failed to obtain `Mac` for Esthree Signer", exception);
 		}
 	}
 
 	@Override
-	public void close() {
+	public void release() {
 		this.sha256.remove();
 		this.hmacSha256.remove();
 	}
@@ -136,19 +159,15 @@ final class DEsthreeSigner implements EsthreeSigner {
 
 	/// Generate a SHA256 digest for the provided input.
 	byte[] sha256(byte[] input) {
-		MessageDigest sha256 = this.sha256.get();
-		if (sha256 == null) throw new IllegalStateException();
-		return sha256.digest(input);
+		return this.sha256.get().digest(input);
 	}
 
 	/// Generate a HMAC with the provided key for the provided payload.
 	byte[] hmac(byte[] key, String data) {
 		try {
-			Mac hmacSha256 = this.hmacSha256.get();
-			if (hmacSha256 == null) throw new IllegalStateException();
-
-			hmacSha256.init(new SecretKeySpec(key, "HmacSHA256"));
-			return hmacSha256.doFinal(data.getBytes(UTF_8));
+			Mac mac = this.hmacSha256.get();
+			mac.init(new SecretKeySpec(key, "HmacSHA256"));
+			return mac.doFinal(data.getBytes(UTF_8));
 		} catch (InvalidKeyException exception) {
 			throw new IllegalStateException("Invalid key during HMAC SHA256 signing in Esthree Signer", exception);
 		}
