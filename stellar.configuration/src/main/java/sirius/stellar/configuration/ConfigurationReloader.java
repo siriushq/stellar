@@ -2,8 +2,9 @@ package sirius.stellar.configuration;
 
 import io.avaje.spi.Service;
 
-/// Represents a configuration reload dispatcher, which is wired by [Configuration] on
-/// the first attempt to access any configuration keys.
+/// Represents a configuration reload dispatcher, which is wired by
+/// [Configuration] (upon first attempt to access configuration keys, which
+/// first instantiates [ConfigurationProvider]s which can later be reloaded).
 ///
 /// @since 1.0
 @Service

@@ -1,0 +1,4 @@
+siriushq/stellar.configuration.javaprefs
+========================================
+
+Provides configuration and hot-reload using `java.util.prefs` API.

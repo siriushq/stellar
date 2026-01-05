@@ -28,9 +28,9 @@ import static java.util.stream.Collectors.toMap;
 /// 3. [SystemConfigurationProvider], which loads from [System#getProperties()].
 ///
 /// ### Reloader discovery
-/// Similarly to the above, [ConfigurationReloader] implementations are wired
-/// and used to dispatch reload events and cause the [ConfigurationProvider]s
-/// to be re-invoked, reading new values:
+/// Similarly to the above, [ConfigurationReloader] implementations are wired,
+/// always after providers, and used to dispatch reload events and cause the
+/// [ConfigurationProvider]s to be re-invoked, reading new values:
 ///
 /// 1. [PropertiesConfigurationReloader], a default implementation for reloading
 ///    upon change of the same `.properties` files as the above provider.
