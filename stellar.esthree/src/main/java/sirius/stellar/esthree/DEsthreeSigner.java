@@ -18,6 +18,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.ZoneOffset.UTC;
+import static java.util.Locale.US;
 
 /// Domain implementation of [EsthreeSigner].
 final class DEsthreeSigner implements EsthreeSigner {
@@ -39,7 +40,10 @@ final class DEsthreeSigner implements EsthreeSigner {
 		this.region = region;
 
 		try {
-			this.formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'").withZone(UTC);
+			this.formatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
+					.withLocale(US)
+					.withZone(UTC);
+
 			this.sha256 = MessageDigest.getInstance("SHA-256");
 			this.hmacSha256 = Mac.getInstance("HmacSHA256");
 
