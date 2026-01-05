@@ -3,7 +3,6 @@ package sirius.stellar.facility;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.*;

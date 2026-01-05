@@ -3,8 +3,6 @@ package javax.annotation.concurrent;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /// The class to which this annotation is applied is not thread-safe. This

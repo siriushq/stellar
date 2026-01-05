@@ -4,10 +4,7 @@ import org.jspecify.annotations.Nullable;
 import sirius.stellar.annotation.Contract;
 
 import java.security.SecureRandom;
-import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.Locale;
-import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 /// Provides a facility for modifying and examining [String]s.

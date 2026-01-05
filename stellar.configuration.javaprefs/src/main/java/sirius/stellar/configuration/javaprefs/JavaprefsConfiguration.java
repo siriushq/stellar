@@ -6,7 +6,6 @@ import sirius.stellar.configuration.Configuration;
 import sirius.stellar.configuration.ConfigurationProvider;
 import sirius.stellar.configuration.ConfigurationReloader;
 
-import java.time.Year;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.prefs.BackingStoreException;

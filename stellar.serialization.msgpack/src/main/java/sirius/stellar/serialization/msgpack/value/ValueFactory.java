@@ -2,7 +2,6 @@
 package sirius.stellar.serialization.msgpack.value;
 
 import sirius.stellar.serialization.msgpack.value.implementation.*;
-import sirius.stellar.serialization.msgpack.value.implementation.DImmutableBinaryValue;
 
 import java.math.BigInteger;
 import java.time.Instant;

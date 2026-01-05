@@ -3,8 +3,6 @@ package sirius.stellar.facility;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.annotation.Contract;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Stream;

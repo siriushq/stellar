@@ -12,7 +12,6 @@ import static java.lang.Thread.*;
 import static java.time.Instant.*;
 import static sirius.stellar.logging.Logger.*;
 import static sirius.stellar.logging.LoggerLevel.*;
-import static sirius.stellar.logging.LoggerLevel.WARNING;
 
 /// This class encapsulates all statically-accessible logging functions from the
 /// context of the public [Logger] class. They should be called against it,
