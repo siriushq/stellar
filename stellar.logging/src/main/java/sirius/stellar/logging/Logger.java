@@ -96,39 +96,24 @@ public final class Logger extends LoggerMethods {
 		futures = synchronizedSet(futures);
 	}
 
-	/// Dispatches a message (for use when implementing dispatchers, not for
-	/// application logging).
+	/// Dispatch (enqueue) the provided message.
 	///
-	/// @param thread The name of the thread this message was dispatched from.
-	/// This should never be the identifier of the thread [Thread#threadId()].
+	/// @see LoggerMessage#builder() (creating a message)
+	/// @see LoggerMethods (application logging)
 	///
-	/// @param name The original caller that caused this dispatch. This is
-	/// retrieved quickly with each call using [StackWalker#getCallerClass()].
-	///
-	/// @param arguments Arguments to use for string interpolation / formatting.
-	/// [Logger#format(String, Object...)] is used, if non-null and non-empty.
-	///
-	/// If making a dispatcher for another logger/facade, which has a specific,
-	/// known/documented style of interpolation, this should not be used (and,
-	/// `null` or acceptably an empty array passed instead).
-	public static void dispatch(Instant time, LoggerLevel level, String thread, String name,
-								@Nullable String text, Object @Nullable ... arguments) {
+	/// @since 1.0
+	public static void dispatch(LoggerMessage message) {
 		if (executor.isShutdown() || executor.isTerminated()) return;
 		futures.add(executor.submit(() -> {
-			if (!enabled(level)) return;
-			if (text == null || text.isBlank() || text.equals("null")) return;
-
-			LoggerMessage message = LoggerMessage.builder()
-					.time(time)
-					.level(level)
-					.thread(thread)
-					.name(name)
-					.text((arguments == null || arguments.length == 0) ? text : format(text, arguments))
-					.build();
-
+			if (!enabled(message.level())) return;
+			if (message.text().isBlank() || message.text().equals("null")) return;
 			for (Collector collector : collectors) collector.collect(message);
 		}));
 	}
+
+	@Deprecated
+	public static void dispatch(Instant time, LoggerLevel level, String thread, String name,
+								@Nullable String text, Object @Nullable ... arguments) {}
 
 	//#region #severity and #enabled*
 	/// Set the severity of the logger to the provided value.
@@ -227,45 +212,6 @@ public final class Logger extends LoggerMethods {
 		if (string == null) return null;
 		if (arguments == null) return string;
 		return formatter.formatString(locale, string, arguments);
-	}
-	//#endregion
-
-	//#region #traceback
-	/// Returns a stacktrace string for the provided throwable.
-	/// This method must not be confused with logging methods ([LoggerMethods]).
-	///
-	/// The string is composed of [Throwable#toString()] and then data
-	/// previously recorded by [Throwable#fillInStackTrace()].
-	///
-	/// The format of this information depends on the implementation, but the
-	/// following example may be regarded as typical:
-	///
-	/// ```
-	/// HighLevelException: MidLevelException: LowLevelException
-	///     at Junk.a(Junk.java:13)
-	///     at Junk.main(Junk.java:4)
-	/// Caused by: MidLevelException: LowLevelException
-	///     at Junk.c(Junk.java:23)
-	///     at Junk.b(Junk.java:17)
-	///     at Junk.a(Junk.java:11)
-	///     ... 1 more
-	/// Caused by: LowLevelException
-	///     at Junk.e(Junk.java:30)
-	///     at Junk.d(Junk.java:27)
-	///     at Junk.c(Junk.java:21)
-	///     ... 3 more
-	/// ```
-	///
-	/// @see Throwable#printStackTrace()
-	/// @since 1.0
-	@Contract("_ -> new")
-	public static String traceback(@Nullable Throwable throwable) {
-		if (throwable == null) return "null";
-		StringWriter writer = new StringWriter();
-		try (PrintWriter printWriter = new PrintWriter(writer)) {
-			throwable.printStackTrace(printWriter);
-			return writer.toString();
-		}
 	}
 	//#endregion
 

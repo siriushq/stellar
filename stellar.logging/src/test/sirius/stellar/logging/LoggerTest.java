@@ -100,17 +100,4 @@ final class LoggerTest {
         assertThat(result).isEqualTo("Foobar costs 123.456,789");
     }
     //#endregion
-
-    //#region traceback(Throwable)
-    @Test @DisplayName("traceback(Throwable) outputs a stacktrace and is null-safe")
-    void traceback() {
-        var throwable = new Throwable();
-
-        var a = Logger.traceback(null);
-        var b = Logger.traceback(throwable);
-
-        assertThat(a).isEqualTo("null");
-        assertThat(b).startsWith("java.lang.Throwable");
-    }
-    //#endregion
 }
