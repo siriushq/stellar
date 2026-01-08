@@ -12,8 +12,7 @@ import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 import static java.lang.Thread.currentThread;
 import static java.time.Instant.now;
 import static sirius.stellar.logging.Logger.*;
-import static sirius.stellar.logging.LoggerLevel.INFORMATION;
-import static sirius.stellar.logging.LoggerLevel.WARNING;
+import static sirius.stellar.logging.LoggerLevel.*;
 
 /// This class encapsulates all statically-accessible logging functions from
 /// the context of the public [Logger] class. They should be called against it,
@@ -83,6 +82,7 @@ sealed abstract class LoggerMethods permits Logger {
 
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 
+	// (other regions are clones replacing /(?i)information/g)
 	//#region Logging [information*]
 	/// @see LoggerMethods (details of this method)
 	/// @since 1.0
@@ -604,6 +604,1066 @@ sealed abstract class LoggerMethods permits Logger {
 		if (!enabled(WARNING)) return;
 		LoggerMessage.builder()
 				.level(WARNING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(message.get()))
+				.throwable(supplier.get())
+				.dispatch();
+	}
+	//#endregion
+
+	//#region Logging [error*]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Object object) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(object))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, Object argument) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, Object argument1, Object argument2) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, Object... arguments) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [error*, Lambda]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(@Nullable ObjectSupplier supplier) {
+		if (!enabled(ERROR)) return;
+		if (supplier == null) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(supplier.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, @Nullable ObjectSupplier argument) {
+		if (!enabled(ERROR)) return;
+		if (argument == null) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
+		if (!enabled(ERROR)) return;
+		if (argument1 == null || argument2 == null) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
+		if (!enabled(ERROR)) return;
+		if (argument1 == null || argument2 == null || argument3 == null) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get(), argument3.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(String text, ObjectSupplier @Nullable... arguments) {
+		if (!enabled(ERROR)) return;
+		if (arguments == null) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, Arrays.stream(arguments)
+					.map(Supplier::get)
+					.toArray()))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [error*, Throwable]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable, String text) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable, String text, Object argument) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable, String text, Object argument1, Object argument2) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(Throwable throwable, String text, Object... arguments) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.throwable(throwable)
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [error*, ThrowableSupplier]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(ThrowableSupplier supplier) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(supplier.get())
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void error(ThrowableSupplier supplier, ObjectSupplier message) {
+		if (!enabled(ERROR)) return;
+		LoggerMessage.builder()
+				.level(ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(message.get()))
+				.throwable(supplier.get())
+				.dispatch();
+	}
+	//#endregion
+
+	//#region Logging [diagnosis*]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Object object) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(object))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, Object argument) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, Object argument1, Object argument2) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, Object... arguments) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [diagnosis*, Lambda]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(@Nullable ObjectSupplier supplier) {
+		if (!enabled(DIAGNOSIS)) return;
+		if (supplier == null) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(supplier.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, @Nullable ObjectSupplier argument) {
+		if (!enabled(DIAGNOSIS)) return;
+		if (argument == null) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
+		if (!enabled(DIAGNOSIS)) return;
+		if (argument1 == null || argument2 == null) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
+		if (!enabled(DIAGNOSIS)) return;
+		if (argument1 == null || argument2 == null || argument3 == null) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get(), argument3.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(String text, ObjectSupplier @Nullable... arguments) {
+		if (!enabled(DIAGNOSIS)) return;
+		if (arguments == null) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, Arrays.stream(arguments)
+					.map(Supplier::get)
+					.toArray()))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [diagnosis*, Throwable]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable, String text) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable, String text, Object argument) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable, String text, Object argument1, Object argument2) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(Throwable throwable, String text, Object... arguments) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.throwable(throwable)
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [diagnosis*, ThrowableSupplier]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(ThrowableSupplier supplier) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(supplier.get())
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void diagnosis(ThrowableSupplier supplier, ObjectSupplier message) {
+		if (!enabled(DIAGNOSIS)) return;
+		LoggerMessage.builder()
+				.level(DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(message.get()))
+				.throwable(supplier.get())
+				.dispatch();
+	}
+	//#endregion
+
+	//#region Logging [tracing*]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Object object) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(object))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, Object argument) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, Object argument1, Object argument2) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, Object... arguments) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [tracing*, Lambda]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(@Nullable ObjectSupplier supplier) {
+		if (!enabled(TRACING)) return;
+		if (supplier == null) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(supplier.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, @Nullable ObjectSupplier argument) {
+		if (!enabled(TRACING)) return;
+		if (argument == null) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
+		if (!enabled(TRACING)) return;
+		if (argument1 == null || argument2 == null) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
+		if (!enabled(TRACING)) return;
+		if (argument1 == null || argument2 == null || argument3 == null) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get(), argument3.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(String text, ObjectSupplier @Nullable... arguments) {
+		if (!enabled(TRACING)) return;
+		if (arguments == null) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, Arrays.stream(arguments)
+					.map(Supplier::get)
+					.toArray()))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [tracing*, Throwable]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable, String text) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable, String text, Object argument) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable, String text, Object argument1, Object argument2) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(Throwable throwable, String text, Object... arguments) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.throwable(throwable)
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [tracing*, ThrowableSupplier]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(ThrowableSupplier supplier) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(supplier.get())
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void tracing(ThrowableSupplier supplier, ObjectSupplier message) {
+		if (!enabled(TRACING)) return;
+		LoggerMessage.builder()
+				.level(TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(message.get()))
+				.throwable(supplier.get())
+				.dispatch();
+	}
+	//#endregion
+
+	//#region Logging [configuration*]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Object object) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(object))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, Object argument) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, Object argument1, Object argument2) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, Object... arguments) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [configuration*, Lambda]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(@Nullable ObjectSupplier supplier) {
+		if (!enabled(CONFIGURATION)) return;
+		if (supplier == null) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(String.valueOf(supplier.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, @Nullable ObjectSupplier argument) {
+		if (!enabled(CONFIGURATION)) return;
+		if (argument == null) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2) {
+		if (!enabled(CONFIGURATION)) return;
+		if (argument1 == null || argument2 == null) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, @Nullable ObjectSupplier argument1, @Nullable ObjectSupplier argument2, @Nullable ObjectSupplier argument3) {
+		if (!enabled(CONFIGURATION)) return;
+		if (argument1 == null || argument2 == null || argument3 == null) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1.get(), argument2.get(), argument3.get()))
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(String text, ObjectSupplier @Nullable... arguments) {
+		if (!enabled(CONFIGURATION)) return;
+		if (arguments == null) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, Arrays.stream(arguments)
+					.map(Supplier::get)
+					.toArray()))
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [configuration*, Throwable]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable, String text) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable, String text, Object argument) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable, String text, Object argument1, Object argument2) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable, String text, Object argument1, Object argument2, Object argument3) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, argument1, argument2, argument3))
+				.throwable(throwable)
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(Throwable throwable, String text, Object... arguments) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.text(format(text, arguments))
+				.throwable(throwable)
+				.dispatch();
+	}
+	//#endregion
+	//#region Logging [configuration*, ThrowableSupplier]
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(ThrowableSupplier supplier) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(walker.getCallerClass().getName())
+				.throwable(supplier.get())
+				.dispatch();
+	}
+
+	/// @see LoggerMethods (details of this method)
+	/// @since 1.0
+	public static void configuration(ThrowableSupplier supplier, ObjectSupplier message) {
+		if (!enabled(CONFIGURATION)) return;
+		LoggerMessage.builder()
+				.level(CONFIGURATION)
 				.time(Instant.now())
 				.thread(currentThread().getName())
 				.name(walker.getCallerClass().getName())
