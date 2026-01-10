@@ -13,8 +13,8 @@
     <name>Stellar :: Logging :: Log4j 1x Dispatcher</name>
 
 	<properties>
-		<java.version.main>11</java.version.main>
-		<java.version.test>11</java.version.test>
+		<java.version.main>17</java.version.main>
+		<java.version.test>17</java.version.test>
 	</properties>
 
     <dependencies>
@@ -22,6 +22,12 @@
             <groupId>org.siriushq.stellar</groupId>
             <artifactId>stellar-logging</artifactId>
         </dependency>
+
+		<dependency>
+			<groupId>ch.qos.reload4j</groupId>
+			<artifactId>reload4j</artifactId>
+			<version>1.2.26</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.siriushq.stellar</groupId>

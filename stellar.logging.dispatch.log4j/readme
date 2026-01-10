@@ -1,4 +1,5 @@
 siriushq/stellar.logging.dispatch.log4j
 =======================================
 
-Log4j 1.x dispatcher for the logging system (clean room implementation).
+Log4j 1.x dispatcher for the logging system.
+Uses Reload4j (under Apache-2.0).
