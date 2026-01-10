@@ -48,6 +48,7 @@ public final class DPsiAugmentProvider extends PsiAugmentProvider {
 	@SuppressWarnings("unchecked")
 	private <T extends PsiElement>
 	void augmentContract(List<T> augments, PsiMethod method, PsiAnnotation annotation) {
+		if (!annotation.isPhysical()) return;
 		if (!CONTRACT.equals(annotation.getQualifiedName())) return;
 
 		PsiAnnotationMemberValue value = annotation.findAttributeValue("value");
@@ -68,6 +69,7 @@ public final class DPsiAugmentProvider extends PsiAugmentProvider {
 	@SuppressWarnings("unchecked")
 	private <T extends PsiElement>
 	void augmentInternal(List<T> augments, PsiMethod method, PsiAnnotation annotation) {
+		if (!annotation.isPhysical()) return;
 		if (!INTERNAL.equals(annotation.getQualifiedName())) return;
 
 		PsiElementFactory factory = PsiElementFactory.getInstance(method.getProject());
@@ -83,6 +85,7 @@ public final class DPsiAugmentProvider extends PsiAugmentProvider {
 	@SuppressWarnings("unchecked")
 	private <T extends PsiElement>
 	void augmentExperimental(List<T> augments, PsiMethod method, PsiAnnotation annotation) {
+		if (!annotation.isPhysical()) return;
 		if (!EXPERIMENTAL.equals(annotation.getQualifiedName())) return;
 
 		PsiElementFactory factory = PsiElementFactory.getInstance(method.getProject());
