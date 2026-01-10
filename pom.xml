@@ -76,6 +76,7 @@
 		<module>stellar.configuration.yaml</module>
 		<module>stellar.configuration.toml</module>
 		<module>stellar.configuration.jshell</module>
+		<module>stellar.configuration.javaprefs</module>
 
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
