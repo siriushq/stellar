@@ -134,6 +134,11 @@ final class AwsEsthree implements Esthree {
 	}
 
 	@Override
+	public void release() {
+		assert true;
+	}
+
+	@Override
 	public void close() {
 		this.delegate.close();
 	}
