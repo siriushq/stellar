@@ -11,6 +11,6 @@ public final class JulDispatcherFactory implements Dispatcher.Provider {
 
 	@Override
 	public Dispatcher create() {
-		return new JulDispatcher(this);
+		return new JulDispatcher();
 	}
 }

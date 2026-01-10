@@ -2,6 +2,7 @@ package sirius.stellar.logging.dispatch.jboss;
 
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
 import java.text.MessageFormat;
 import java.time.Instant;
@@ -22,15 +23,27 @@ public final class JbossDispatcher extends org.jboss.logging.Logger {
 	protected void doLog(org.jboss.logging.Logger.Level level, String name, Object object, Object[] arguments, Throwable throwable) {
 		if (!isEnabled(level)) return;
 		String text = String.valueOf(object);
-		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.getName(), MessageFormat.format(text, arguments));
+		LoggerMessage.builder()
+				.level(convert(level))
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.getName())
+				.text(MessageFormat.format(text, arguments))
+				.throwable(throwable)
+				.dispatch();
 	}
 
 	@Override
 	protected void doLogf(org.jboss.logging.Logger.Level level, String name, String text, Object[] arguments, Throwable throwable) {
 		if (!isEnabled(level)) return;
-		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.getName(), String.format(String.valueOf(text), arguments));
+		LoggerMessage.builder()
+				.level(convert(level))
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.getName())
+				.text(String.format(String.valueOf(text), arguments))
+				.throwable(throwable)
+				.dispatch();
 	}
 
 	@Override
@@ -44,8 +57,8 @@ public final class JbossDispatcher extends org.jboss.logging.Logger {
 			case FATAL, ERROR -> LoggerLevel.ERROR;
 			case WARN -> LoggerLevel.WARNING;
         	case INFO -> LoggerLevel.INFORMATION;
-        	case DEBUG -> LoggerLevel.DEBUGGING;
-			case TRACE -> LoggerLevel.STACKTRACE;
+        	case DEBUG -> LoggerLevel.DIAGNOSIS;
+			case TRACE -> LoggerLevel.TRACING;
 		};
 	}
 }

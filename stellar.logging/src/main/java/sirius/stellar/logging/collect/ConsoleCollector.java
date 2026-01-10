@@ -2,46 +2,42 @@ package sirius.stellar.logging.collect;
 
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
+import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
 
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
-import java.util.function.Consumer;
 
 import static java.lang.Thread.currentThread;
 import static sirius.stellar.facility.terminal.TerminalColor.*;
-import static sirius.stellar.logging.Logger.dispatch;
 import static sirius.stellar.logging.Logger.format;
 import static sirius.stellar.logging.LoggerLevel.ERROR;
 import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
-/// Implementation of [Collector] that prints to [System#out].
-///
-/// Only one instance of this class should ever be created as when creating
-/// an instance, the [System#setOut(PrintStream)] method as well as
-/// the [System#setErr(PrintStream)] method should be called.
+/// Implementation of [Collector] that prints to a given [PrintStream],
+/// and optionally can override [System#out] and [System#err].
 final class ConsoleCollector implements Collector {
 
 	private final PrintStream stream;
 
-	/// Returns an instance of this collector for the provided [PrintStream].
+	/// Instantiate this collector for the provided [PrintStream].
+	/// @see #overriding(PrintStream)
 	ConsoleCollector(PrintStream stream) {
 		this.stream = stream;
 	}
 
-	/// Returns an instance of this collector for the provided [PrintStream], overriding
-	/// [System#out] (`stdout`) and [System#err] (`stderr`) with a stream that dispatches
-	/// further writes to [Logger] at appropriate logger levels.
+	/// Instantiate this collector for the provided [PrintStream], overriding
+	/// [System#out] (`stdout`) and [System#err] (`stderr`) with streams that
+	/// dispatch further writes to [Logger].
 	///
-	/// This can only be called once across the application lifecycle.
-	/// @param stream the stream to collect to, e.g. [System#err]
-	static ConsoleCollector overriding(PrintStream stream) {
-		ConsoleCollector collector = new ConsoleCollector(stream);
-		System.setOut(new DelegatePrintStream(text -> dispatch(Instant.now(), INFORMATION, currentThread().getName(), "stdout", text)));
-		System.setErr(new DelegatePrintStream(text -> dispatch(Instant.now(), ERROR, currentThread().getName(), "stderr", text)));
+	/// This should only be called once across the application lifecycle.
+	/// @see #ConsoleCollector(PrintStream)
+	static Collector overriding(PrintStream stream) {
+		Collector collector = new ConsoleCollector(stream);
+		System.setOut(new DispatchingPrintStream(INFORMATION, "stdout"));
+		System.setErr(new DispatchingPrintStream(ERROR, "stderr"));
 		return collector;
 	}
 
@@ -74,19 +70,39 @@ final class ConsoleCollector implements Collector {
 	}
 }
 
-/// Implementation of [PrintStream] intended to replace [System#out]/[System#err].
+/// Implementation of [PrintStream] intended to replace both [System#out]
+/// and [System#err], dispatching to the [Logger] instead. Note that:
 ///
-/// [PrintStream#println()] is replaced with a no-op as empty log messages are discarded anyway.
-/// [PrintStream#print] and [PrintStream#append] methods will perform the equivalent of `println`.
-/// [PrintStream#format] methods will perform the equivalent of [PrintStream#printf].
-/// [PrintStream#write] methods are not implemented at all, and are completely discarded.
-final class DelegatePrintStream extends PrintStream {
+/// - [PrintStream#println()] is replaced with a no-op, as empty
+///   logging messages are discarded anyway.
+/// - [PrintStream#print] & [PrintStream#append] methods will perform the
+///   equivalent of `println`.
+/// - [PrintStream#format] methods will perform the equivalent of
+///   [PrintStream#printf].
+/// - [PrintStream#write] methods are not implemented at all,
+///   and are completely discarded.
+final class DispatchingPrintStream extends PrintStream {
 
-	private final Consumer<String> dispatcher;
+	private final LoggerLevel level;
+	private final String name;
 
-	DelegatePrintStream(Consumer<String> dispatcher) {
-		super(OutputStream.nullOutputStream());
-		this.dispatcher = dispatcher;
+	/// Create a dispatching stream that will log to the provided level,
+	/// with the provided logger name as an alias.
+	DispatchingPrintStream(LoggerLevel level, String name) {
+		super(nullOutputStream());
+		this.level = level;
+		this.name = name;
+	}
+
+	/// Dispatch the provided text at [#level].
+	private void dispatch(String text) {
+		LoggerMessage.builder()
+				.level(this.level)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(text)
+				.dispatch();
 	}
 
 	//#region println* [delegates to print*]
@@ -162,13 +178,13 @@ final class DelegatePrintStream extends PrintStream {
 	//#region format*
 	@Override
 	public PrintStream format(@Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Logger.format(String.valueOf(text), arguments));
+		this.dispatch(Logger.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
 	public PrintStream format(Locale locale, @Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Logger.format(locale, String.valueOf(text), arguments));
+		this.dispatch(Logger.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
 	//#endregion [
@@ -176,60 +192,60 @@ final class DelegatePrintStream extends PrintStream {
 	//#region printf*
 	@Override
 	public PrintStream printf(@Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Logger.format(String.valueOf(text), arguments));
+		this.dispatch(Logger.format(String.valueOf(text), arguments));
 		return this;
 	}
 
 	@Override
 	public PrintStream printf(Locale locale, @Nullable String text, Object... arguments) {
-		this.dispatcher.accept(Logger.format(locale, String.valueOf(text), arguments));
+		this.dispatch(Logger.format(locale, String.valueOf(text), arguments));
 		return this;
 	}
 	//#endregion
 	//#region print*
 	@Override
 	public void print(boolean b) {
-		this.dispatcher.accept(String.valueOf(b));
+		this.dispatch(String.valueOf(b));
 	}
 
 	@Override
 	public void print(char c) {
-		this.dispatcher.accept(String.valueOf(c));
+		this.dispatch(String.valueOf(c));
 	}
 
 	@Override
 	public void print(int i) {
-		this.dispatcher.accept(String.valueOf(i));
+		this.dispatch(String.valueOf(i));
 	}
 
 	@Override
 	public void print(long l) {
-		this.dispatcher.accept(String.valueOf(l));
+		this.dispatch(String.valueOf(l));
 	}
 
 	@Override
 	public void print(float f) {
-		this.dispatcher.accept(String.valueOf(f));
+		this.dispatch(String.valueOf(f));
 	}
 
 	@Override
 	public void print(double d) {
-		this.dispatcher.accept(String.valueOf(d));
+		this.dispatch(String.valueOf(d));
 	}
 
 	@Override
 	public void print(char[] text) {
-		this.dispatcher.accept(String.valueOf(text));
+		this.dispatch(String.valueOf(text));
 	}
 
 	@Override
 	public void print(@Nullable String text) {
-		this.dispatcher.accept(String.valueOf(text));
+		this.dispatch(String.valueOf(text));
 	}
 
 	@Override
 	public void print(@Nullable Object object) {
-		this.dispatcher.accept(String.valueOf(object));
+		this.dispatch(String.valueOf(object));
 	}
 	//#endregion
 }

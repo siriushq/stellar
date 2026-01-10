@@ -3,6 +3,7 @@ package sirius.stellar.logging.dispatch.jsr379x;
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
 import java.time.Instant;
 import java.util.ResourceBundle;
@@ -72,17 +73,27 @@ public record Jsr379Dispatcher(String name, @Nullable ResourceBundle bundle) imp
 	public void log(Level level, @Nullable ResourceBundle bundle, String text, @Nullable Throwable throwable) {
 		if (!isLoggable(level)) return;
 		if (bundle != null && bundle.containsKey(text)) text = bundle.getString(text);
-		if (throwable != null) text += "\n" + stacktrace(throwable);
-
-		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, text);
+		LoggerMessage.builder()
+				.level(convert(level))
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
 	}
 
 	@Override
 	public void log(Level level, @Nullable ResourceBundle bundle, String text, Object... arguments) {
 		if (!isLoggable(level)) return;
 		if (bundle != null && bundle.containsKey(text)) text = bundle.getString(text);
-
-		Logger.dispatch(Instant.now(), convert(level), currentThread().getName(), this.name, Logger.format(text, arguments));
+		LoggerMessage.builder()
+				.level(convert(level))
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(Logger.format(text, arguments))
+				.dispatch();
 	}
 
 	/// Converts the provided level to a [LoggerLevel].
@@ -92,8 +103,8 @@ public record Jsr379Dispatcher(String name, @Nullable ResourceBundle bundle) imp
 			case INFO -> LoggerLevel.INFORMATION;
 			case WARNING -> LoggerLevel.WARNING;
 			case ERROR -> LoggerLevel.ERROR;
-			case TRACE -> LoggerLevel.STACKTRACE;
-			case DEBUG -> LoggerLevel.DEBUGGING;
+			case TRACE -> LoggerLevel.TRACING;
+			case DEBUG -> LoggerLevel.DIAGNOSIS;
 			case OFF -> LoggerLevel.OFF;
 		};
 	}

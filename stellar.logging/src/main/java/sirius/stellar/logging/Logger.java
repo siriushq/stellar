@@ -111,10 +111,6 @@ public final class Logger extends LoggerMethods {
 		}));
 	}
 
-	@Deprecated
-	public static void dispatch(Instant time, LoggerLevel level, String thread, String name,
-								@Nullable String text, Object @Nullable ... arguments) {}
-
 	//#region #severity and #enabled*
 	/// Set the severity of the logger to the provided value.
 	/// If the severity of a message is above this value, it will not be emitted.

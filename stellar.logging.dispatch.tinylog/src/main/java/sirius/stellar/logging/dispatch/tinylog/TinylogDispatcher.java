@@ -3,6 +3,7 @@ package sirius.stellar.logging.dispatch.tinylog;
 import org.tinylog.format.AdvancedMessageFormatter;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
 import java.time.Instant;
 import java.util.Locale;
@@ -13,7 +14,8 @@ import static java.lang.Thread.currentThread;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class TinylogDispatcher implements org.tinylog.provider.LoggingProvider {
+public final class TinylogDispatcher
+		implements org.tinylog.provider.LoggingProvider {
 
 	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
 
@@ -43,7 +45,12 @@ public final class TinylogDispatcher implements org.tinylog.provider.LoggingProv
 	public void log(int depth, String tag, org.tinylog.Level level, Throwable throwable, org.tinylog.format.MessageFormatter formatter, Object o, Object... objects) {
 		if (level == null) return;
 		if (!isEnabled(depth, tag, level)) return;
-		String caller = String.valueOf(walker.walk(stream -> stream.limit(depth + 1).toList()).get(depth).getClassName());
+
+		int limit = (depth + 1);
+		String caller = walker.walk(stream -> stream.limit(limit)
+				.toList())
+				.get(depth)
+				.getClassName();
 		this.log(caller, tag, level, throwable, formatter, o, objects);
 	}
 
@@ -53,12 +60,19 @@ public final class TinylogDispatcher implements org.tinylog.provider.LoggingProv
 		if (!Logger.enabled(this.convert(level))) return;
 		if (formatter == null) formatter = new AdvancedMessageFormatter(Locale.getDefault(), true);
 
-		String message = String.valueOf(o);
-		if (objects != null) message = formatter.format(message, objects);
+		String text = String.valueOf(o);
+		if (objects != null) text = formatter.format(text, objects);
 
-		if (tag != null && !tag.isEmpty() && !tag.isBlank()) message = "[" + tag + "] " + message;
-		if (throwable != null) message += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), this.convert(level), currentThread().getName(), caller, message);
+		if (tag != null && !tag.isBlank()) text = "[" + tag + "] " + text;
+
+		LoggerMessage.builder()
+				.level(this.convert(level))
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name((caller != null) ? caller : "org.tinylog")
+				.text(text)
+				.throwable(throwable)
+				.dispatch();
 	}
 
 	/// Converts the provided level to a [LoggerLevel].
@@ -67,9 +81,9 @@ public final class TinylogDispatcher implements org.tinylog.provider.LoggingProv
 			case INFO -> LoggerLevel.INFORMATION;
 			case WARN -> LoggerLevel.WARNING;
 			case ERROR -> LoggerLevel.ERROR;
-			case TRACE -> LoggerLevel.STACKTRACE;
-			case DEBUG -> LoggerLevel.DEBUGGING;
-			default -> null;
+			case TRACE -> LoggerLevel.TRACING;
+			case DEBUG -> LoggerLevel.DIAGNOSIS;
+			default -> LoggerLevel.OFF;
 		};
 	}
 

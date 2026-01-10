@@ -1,11 +1,9 @@
 package sirius.stellar.logging.dispatch.jcl;
 
-import sirius.stellar.facility.Throwables;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
-import java.io.ObjectStreamException;
-import java.io.Serial;
 import java.time.Instant;
 
 import static java.lang.Thread.currentThread;
@@ -22,15 +20,10 @@ public final class JclDispatcher implements org.apache.commons.logging.Log {
 		this.name = name;
 	}
 
-	@Serial
-	private Object readResolve() throws ObjectStreamException {
-		return JclDispatcherFactory.getInstance().getInstance(this.name);
-	}
-
 	//#region is*Enabled
 	@Override
 	public boolean isDebugEnabled() {
-		return Logger.enabled(LoggerLevel.DEBUGGING);
+		return Logger.enabled(LoggerLevel.DIAGNOSIS);
 	}
 
 	@Override
@@ -50,7 +43,7 @@ public final class JclDispatcher implements org.apache.commons.logging.Log {
 
 	@Override
 	public boolean isTraceEnabled() {
-		return Logger.enabled(LoggerLevel.STACKTRACE);
+		return Logger.enabled(LoggerLevel.TRACING);
 	}
 
 	@Override
@@ -63,78 +56,156 @@ public final class JclDispatcher implements org.apache.commons.logging.Log {
 	@Override
 	public void trace(Object message) {
 		if (!isTraceEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void trace(Object message, Throwable throwable) {
 		if (!isTraceEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.STACKTRACE, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.TRACING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 	//#region debug*
 	@Override
 	public void debug(Object message) {
 		if (!isDebugEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void debug(Object message, Throwable throwable) {
 		if (!isDebugEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.DEBUGGING, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.DIAGNOSIS)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 	//#region info*
 	@Override
 	public void info(Object message) {
 		if (!isInfoEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.INFORMATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void info(Object message, Throwable throwable) {
 		if (!isInfoEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.INFORMATION)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 	//#region warn*
 	@Override
 	public void warn(Object message) {
 		if (!isWarnEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.WARNING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void warn(Object message, Throwable throwable) {
 		if (!isWarnEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.WARNING, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.WARNING)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 	//#region error*
 	@Override
 	public void error(Object message) {
 		if (!isErrorEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void error(Object message, Throwable throwable) {
 		if (!isErrorEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 	//#region fatal*
 	@Override
 	public void fatal(Object message) {
 		if (!isFatalEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString());
+		LoggerMessage.builder()
+				.level(LoggerLevel.ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.dispatch();
 	}
 
 	@Override
 	public void fatal(Object message, Throwable throwable) {
 		if (!isFatalEnabled()) return;
-		Logger.dispatch(Instant.now(), LoggerLevel.ERROR, currentThread().getName(), this.name, message.toString() + "\n" + Throwables.stacktrace(throwable));
+		LoggerMessage.builder()
+				.level(LoggerLevel.ERROR)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(this.name)
+				.text(String.valueOf(message))
+				.throwable(throwable)
+				.dispatch();
 	}
 	//#endregion
 }

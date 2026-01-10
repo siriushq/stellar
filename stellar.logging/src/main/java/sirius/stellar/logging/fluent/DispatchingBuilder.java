@@ -80,7 +80,9 @@ public final class DispatchingBuilder implements Builder {
 	}
 
 	@Override
-	public Builder throwable(Throwable throwable) {
+	public Builder throwable(@Nullable Throwable throwable) {
+		if (throwable == null) return this;
+
 		if (this.text == null) this.text = "";
 		this.text += "\n" + traceback(throwable);
 		return this;

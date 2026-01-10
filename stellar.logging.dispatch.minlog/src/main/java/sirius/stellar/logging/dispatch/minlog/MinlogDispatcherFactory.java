@@ -11,6 +11,6 @@ public final class MinlogDispatcherFactory implements Dispatcher.Provider {
 
 	@Override
 	public Dispatcher create() {
-		return new MinlogDispatcher(this);
+		return new MinlogDispatcher();
 	}
 }

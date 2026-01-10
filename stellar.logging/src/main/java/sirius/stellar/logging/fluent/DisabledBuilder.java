@@ -1,5 +1,6 @@
 package sirius.stellar.logging.fluent;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.LoggerMessage.Builder;
@@ -45,7 +46,7 @@ final class DisabledBuilder implements Builder {
 	}
 
 	@Override
-	public Builder throwable(Throwable throwable) {
+	public Builder throwable(@Nullable Throwable throwable) {
 		return this;
 	}
 }

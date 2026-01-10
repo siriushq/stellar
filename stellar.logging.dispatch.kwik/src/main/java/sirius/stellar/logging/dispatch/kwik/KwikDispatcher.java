@@ -2,7 +2,7 @@ package sirius.stellar.logging.dispatch.kwik;
 
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
-import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -10,6 +10,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.Thread.currentThread;
+import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
 /// Implementation of [tech.kwik.core.log.Logger] which delegates to [Logger].
 /// This should be instantiated manually for use and provided to these methods or similar:
@@ -31,7 +32,13 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	protected void log(@Nullable String text) {
 		try {
 			this.lock.lock();
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
+			LoggerMessage.builder()
+					.level(INFORMATION)
+					.time(Instant.now())
+					.thread(currentThread().getName())
+					.name("tech.kwik")
+					.text(String.valueOf(text))
+					.dispatch();
 		} finally {
 			this.lock.unlock();
 		}
@@ -41,8 +48,14 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	protected void log(@Nullable String text, @Nullable Throwable throwable) {
 		try {
 			this.lock.lock();
-			if (throwable != null) text += "\n" + stacktrace(throwable);
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
+			LoggerMessage.builder()
+					.level(INFORMATION)
+					.time(Instant.now())
+					.thread(currentThread().getName())
+					.name("tech.kwik")
+					.text(String.valueOf(text))
+					.throwable(throwable)
+					.dispatch();
 		} finally {
 			this.lock.unlock();
 		}
@@ -52,9 +65,16 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	protected void logWithHexDump(@Nullable String text, byte[] data, int length) {
 		try {
 			this.lock.lock();
+			if (text == null) text = "";
 			text += "\n" + this.byteToHexBlock(data, length);
 
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
+			LoggerMessage.builder()
+					.level(INFORMATION)
+					.time(Instant.now())
+					.thread(currentThread().getName())
+					.name("tech.kwik")
+					.text(text)
+					.dispatch();
 		} finally {
 			this.lock.unlock();
 		}
@@ -64,9 +84,16 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 	protected void logWithHexDump(@Nullable String text, @Nullable ByteBuffer data, int offset, int length) {
 		try {
 			this.lock.lock();
+			if (text == null) text = "";
 			text += "\n" + this.byteToHexBlock(data, offset, length);
 
-			Logger.dispatch(Instant.now(), LoggerLevel.INFORMATION, currentThread().getName(), "tech.kwik", text);
+			LoggerMessage.builder()
+					.level(INFORMATION)
+					.time(Instant.now())
+					.thread(currentThread().getName())
+					.name("tech.kwik")
+					.text(text)
+					.dispatch();
 		} finally {
 			this.lock.unlock();
 		}

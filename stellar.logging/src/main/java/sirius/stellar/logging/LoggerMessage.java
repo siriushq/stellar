@@ -1,12 +1,12 @@
 package sirius.stellar.logging;
 
+import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.fluent.DispatchingBuilder;
 
 import java.time.Instant;
 import java.util.Date;
 
 import static java.text.MessageFormat.format;
-import static sirius.stellar.logging.Logger.enabled;
 
 /// Represents a message emitted by [Logger]. This is [Comparable],
 /// lexicographically comparing the messages by [#time] for sorting.
@@ -60,7 +60,7 @@ public record LoggerMessage(
 		Builder name(String name);
 
 		Builder text(String text);
-		Builder throwable(Throwable throwable);
+		Builder throwable(@Nullable Throwable throwable);
 
 		/// Modify the level of this builder. This may disable the underlying
 		/// builder if the provided level is disabled, releasing all built data

@@ -2,30 +2,23 @@ package sirius.stellar.logging.dispatch.minlog;
 
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.dispatch.Dispatcher;
 
-import java.io.ObjectStreamException;
-import java.io.Serial;
 import java.time.Instant;
 
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 import static java.lang.Thread.currentThread;
 
 /// Implementation of [com.esotericsoftware.minlog.Log.Logger] which dispatches to [Logger].
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class MinlogDispatcher extends com.esotericsoftware.minlog.Log.Logger implements Dispatcher {
+public final class MinlogDispatcher
+		extends com.esotericsoftware.minlog.Log.Logger
+		implements Dispatcher {
 
-	@Serial
-	private static final long serialVersionUID = 2065320453211284579L;
-
-	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
-
-	private transient final Provider provider;
-
-	MinlogDispatcher(Dispatcher.Provider provider) {
-		this.provider = provider;
-	}
+	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 
 	@Override
 	public void wire() {
@@ -33,25 +26,29 @@ public final class MinlogDispatcher extends com.esotericsoftware.minlog.Log.Logg
 	}
 
 	@Override
-	public void log(int level, String category, String message, Throwable throwable) {
-		LoggerLevel loggerLevel = switch (level) {
-			case 1 -> LoggerLevel.STACKTRACE;
-			case 2 -> LoggerLevel.DEBUGGING;
+	public void log(int level, String category, String text, Throwable throwable) {
+		LoggerLevel converted = switch (level) {
+			case 1 -> LoggerLevel.TRACING;
+			case 2 -> LoggerLevel.DIAGNOSIS;
 			case 3 -> LoggerLevel.INFORMATION;
 			case 4 -> LoggerLevel.WARNING;
 			case 5 -> LoggerLevel.ERROR;
 			default -> null;
 		};
-		if (loggerLevel == null) return;
-		if (!Logger.enabled(loggerLevel)) return;
+		if (converted == null) return;
+		if (!Logger.enabled(converted)) return;
 
-		if (throwable != null) message += "\n" + stacktrace(throwable);
-		String caller = String.valueOf(walker.walk(stream -> stream.limit(3).toList()).get(2).getClassName());
-		Logger.dispatch(Instant.now(), loggerLevel, currentThread().getName(), caller, message);
-	}
-
-	@Serial
-	private Object readResolve() throws ObjectStreamException {
-		return this.provider.create();
+		String caller = walker.walk(stream -> stream.limit(3)
+				.toList())
+				.get(2)
+				.getClassName();
+		LoggerMessage.builder()
+				.level(converted)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name((caller != null) ? caller : "com.esotericsoftware.minlog")
+				.text(String.valueOf(text))
+				.throwable(throwable)
+				.dispatch();
 	}
 }

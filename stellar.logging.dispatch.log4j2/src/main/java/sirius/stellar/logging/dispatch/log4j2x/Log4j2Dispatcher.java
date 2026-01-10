@@ -2,6 +2,7 @@ package sirius.stellar.logging.dispatch.log4j2x;
 
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
+import sirius.stellar.logging.LoggerMessage;
 
 import java.io.Serial;
 import java.time.Instant;
@@ -12,7 +13,8 @@ import static java.lang.Thread.currentThread;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
-public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.AbstractLogger {
+public final class Log4j2Dispatcher
+		extends org.apache.logging.log4j.spi.AbstractLogger {
 
 	@Serial
 	private static final long serialVersionUID = 2981067707921701559L;
@@ -27,17 +29,35 @@ public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.Abstrac
 
 	/// Converts the provided level to a [LoggerLevel].
 	private static LoggerLevel convert(org.apache.logging.log4j.Level level) {
-		if (level == org.apache.logging.log4j.Level.ALL) return LoggerLevel.ALL;
+		return switch (level) {
+			case org.apache.logging.log4j.Level it
+			when it == org.apache.logging.log4j.Level.ALL
+			-> LoggerLevel.ALL;
 
-		if (level == org.apache.logging.log4j.Level.INFO) return LoggerLevel.INFORMATION;
-		if (level == org.apache.logging.log4j.Level.WARN) return LoggerLevel.WARNING;
-		if (level == org.apache.logging.log4j.Level.ERROR) return LoggerLevel.ERROR;
-		if (level == org.apache.logging.log4j.Level.FATAL) return LoggerLevel.ERROR;
+			case org.apache.logging.log4j.Level it
+			when it == org.apache.logging.log4j.Level.INFO
+			-> LoggerLevel.INFORMATION;
 
-		if (level == org.apache.logging.log4j.Level.TRACE) return LoggerLevel.STACKTRACE;
-		if (level == org.apache.logging.log4j.Level.DEBUG) return LoggerLevel.DEBUGGING;
+			case org.apache.logging.log4j.Level it
+			when it == org.apache.logging.log4j.Level.WARN
+			-> LoggerLevel.WARNING;
 
-		return LoggerLevel.OFF;
+			case org.apache.logging.log4j.Level it
+			when
+				it == org.apache.logging.log4j.Level.ERROR ||
+				it == org.apache.logging.log4j.Level.FATAL
+			-> LoggerLevel.ERROR;
+
+			case org.apache.logging.log4j.Level it
+			when it == org.apache.logging.log4j.Level.TRACE
+			-> LoggerLevel.TRACING;
+
+			case org.apache.logging.log4j.Level it
+			when it == org.apache.logging.log4j.Level.DEBUG
+			-> LoggerLevel.DIAGNOSIS;
+
+			default -> LoggerLevel.OFF;
+		};
 	}
 
 	//#region isEnabled*
@@ -124,12 +144,20 @@ public final class Log4j2Dispatcher extends org.apache.logging.log4j.spi.Abstrac
 
 	@Override
 	public void logMessage(String caller, org.apache.logging.log4j.Level level, org.apache.logging.log4j.Marker marker, org.apache.logging.log4j.message.Message message, Throwable throwable) {
-		LoggerLevel loggerLevel = convert(level);
-		if (!Logger.enabled(loggerLevel)) return;
+		LoggerLevel converted = convert(level);
+		if (!Logger.enabled(converted) || message == null) return;
+
 		String text = message.getFormattedMessage();
 		if (marker != null) text = "[" + marker.getName() + "] " + text;
-		if (throwable != null) text += "\n" + stacktrace(throwable);
-		Logger.dispatch(Instant.now(), loggerLevel, currentThread().getName(), caller, text);
+
+		LoggerMessage.builder()
+				.level(converted)
+				.time(Instant.now())
+				.thread(currentThread().getName())
+				.name(caller)
+				.text(String.valueOf(text))
+				.throwable(throwable)
+				.dispatch();
 	}
 
 	@Override

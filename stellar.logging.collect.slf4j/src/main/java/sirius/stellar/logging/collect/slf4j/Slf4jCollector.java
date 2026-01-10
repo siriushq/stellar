@@ -57,8 +57,8 @@ public record Slf4jCollector(HashMap<String, org.slf4j.Logger> loggers) implemen
 					case ALL, INFORMATION -> org.slf4j.event.Level.INFO;
 					case WARNING -> org.slf4j.event.Level.WARN;
 					case ERROR -> org.slf4j.event.Level.ERROR;
-					case STACKTRACE -> org.slf4j.event.Level.TRACE;
-					case DEBUGGING, CONFIGURATION, OFF -> org.slf4j.event.Level.DEBUG;
+					case TRACING -> org.slf4j.event.Level.TRACE;
+					case DIAGNOSIS, CONFIGURATION, OFF -> org.slf4j.event.Level.DEBUG;
 				})
 				.setMessage(message.text())
 				.log();
