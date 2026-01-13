@@ -141,13 +141,18 @@ public interface Esthree extends AutoCloseable {
 	/// @see Esthree
 	interface Builder {
 
-		/// Configure the endpoint with which the client should communicate. \
-		/// The default endpoint is `s3.<region>.amazonaws.com` and `true` virtual-hosted addressing style. \
-		/// If using a third-party S3 implementation, disable virtual-hosted addressing unless supported.
+		/// Configure the endpoint with which the client should communicate.
 		///
-		/// If this is not specified, the client will attempt to identify the endpoint automatically
-		/// using the `aws.endpointUrl` Java property and `AWS_ENDPOINT_URL` environment variable.
-		/// If those are set, `false` virtual-hosted addressing becomes the default.
+		/// The default endpoint is `s3.<region>.amazonaws.com` and
+		/// `true` virtual-hosted addressing style.
+		///
+		/// If using a third-party S3 implementation, disable virtual-hosted
+		/// addressing unless supported.
+		///
+		/// If this is not specified, the client will attempt to identify the
+		/// endpoint automatically using the `aws.endpointUrl` Java property
+		/// and `AWS_ENDPOINT_URL` environment variable. If those are found,
+		/// `false` virtual-hosted addressing becomes the default.
 		///
 		/// @see #region
 		Builder endpoint(String endpoint, boolean virtual);
@@ -159,10 +164,11 @@ public interface Esthree extends AutoCloseable {
 
 		/// Configure the region with which the client should communicate.
 		///
-		/// If this is not specified, the client will attempt to identify the endpoint automatically
-		/// using the `aws.region` Java property and `AWS_REGION` environment variable.
+		/// If this is not specified, the client will attempt to identify the
+		/// endpoint automatically using the `aws.region` Java property
+		/// and `AWS_REGION` environment variable.
 		///
-		/// Otherwise, a default of {@link Region#US_EAST_1} is chosen.
+		/// Otherwise, a default of [Esthree.Region#US_EAST_1] is chosen.
 		Builder region(String region);
 
 		/// @see #region(String)
@@ -172,8 +178,9 @@ public interface Esthree extends AutoCloseable {
 
 		/// Configure the credentials with which the client should authenticate.
 		///
-		/// If this is not specified, the client will attempt to identify the endpoint automatically using the
-		/// `aws.accessKeyId/aws.secretAccessKey` Java properties, and `AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY`
+		/// If this is not specified, the client will attempt to identify the
+		/// endpoint automatically using `aws.accessKeyId/aws.secretAccessKey`
+		/// Java properties and `AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY`
 		/// environment variables.
 		Builder credentials(String accessKey, String secretKey);
 
@@ -182,11 +189,11 @@ public interface Esthree extends AutoCloseable {
 		HttpClient.Builder httpClientBuilder();
 
 		/// Build and return the client (which is an [AutoCloseable]).
-		/// @throws IllegalStateException Method fails if no credentials were provided.
+		/// @throws IllegalStateException no credentials were provided
 		Esthree build();
 	}
 
-	/// Enumerator for valid AWS regions that can be provided to [Esthree.Builder#region].
+	/// Enumeration of valid AWS regions.
 	/// This is provided only for convenience.
 	enum Region {
 		AF_SOUTH_1("af-south-1"),
