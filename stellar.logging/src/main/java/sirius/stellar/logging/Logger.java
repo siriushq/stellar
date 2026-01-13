@@ -122,7 +122,8 @@ public final class Logger extends LoggerMethods {
 		severity = value;
 	}
 
-	/// Returns whether the severity of the logger allows for the provided level to be logged.
+	/// Returns whether the severity of the logger allows for the provided
+	/// level to be logged.
 	///
 	/// @see Logger#enabled(int)
 	/// @since 1.0
@@ -130,8 +131,11 @@ public final class Logger extends LoggerMethods {
 		return level.severity() <= severity;
 	}
 
-	/// Returns whether the severity of the logger allows for the provided integer value level to be logged.
-	/// Prefer to use the enumerator based method where possible. This is provided as a convenience method only.
+	/// Returns whether the severity of the logger allows for the provided level
+	/// (as an integer value) to be logged.
+	///
+	/// Prefer to use the enumeration based method where possible.
+	/// This is provided as a convenience method only.
 	///
 	/// @see Logger#enabled(LoggerLevel)
 	/// @see LoggerLevel#severity()
