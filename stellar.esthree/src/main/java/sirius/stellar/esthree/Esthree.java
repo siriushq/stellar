@@ -38,6 +38,7 @@ import java.util.stream.Stream;
 /// @see sirius.stellar.esthree
 public interface Esthree extends AutoCloseable {
 
+	//#region buckets*
 	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal
 	/// operation is executed. This will lazily load the listing,
 	/// recursively using AWS pagination.
@@ -67,7 +68,9 @@ public interface Esthree extends AutoCloseable {
 	/// [Future]-based variant of [#buckets(String)].
 	/// @throws EsthreeException if the request failed
 	Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix);
+	//#endregion
 
+	//#region createBucket*
 	/// Create a bucket with the provided name.
 	/// @throws EsthreeException if the request failed
 	void createBucket(String name);
@@ -75,7 +78,9 @@ public interface Esthree extends AutoCloseable {
 	/// [Future] based variant of [#createBucket(String)].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> createBucketFuture(String name);
+	//#endregion createBucket*
 
+	//#region deleteBucket*
 	/// Delete a bucket with the provided name.
 	/// @throws EsthreeException if the request failed
 	void deleteBucket(String name);
@@ -83,7 +88,9 @@ public interface Esthree extends AutoCloseable {
 	/// [Future] based variant of [#deleteBucket(String)].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> deleteBucketFuture(String name);
+	//#endregion
 
+	//#region existsBucket
 	/// Return whether a bucket with the provided name exists.
 	/// @throws EsthreeException if the request failed
 	boolean existsBucket(String name);
@@ -91,6 +98,7 @@ public interface Esthree extends AutoCloseable {
 	/// [Future] based variant of [#existsBucket(String)].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Boolean> existsBucketFuture(String name);
+	//#endregion
 
 	/// Access the underlying [HttpClient]. Most people should never use this method.
 	HttpClient httpClient();
