@@ -29,7 +29,7 @@ Goals
 	- `ListBuckets`: [sirius.stellar.esthree.Esthree#buckets]
 
 	- `ListObjectsV2`: unimplemented
-	- `GetObject`: unimplemented
+	- `GetObject`: [sirius.stellar.esthree.Esthree#getPayload]
 	- `PutObject`: [sirius.stellar.esthree.Esthree#putPayload]
 	- `DeleteObject`: [sirius.stellar.esthree.Esthree#deletePayload]
 	- `DeleteObjects`: unimplemented

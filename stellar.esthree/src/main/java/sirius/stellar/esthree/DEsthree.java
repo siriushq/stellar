@@ -13,8 +13,11 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
@@ -241,6 +244,57 @@ final class DEsthree implements Esthree {
 		InputStream stream = this.signer.sign("PUT", request, payload.stream(), payload.size());
 		request.body(stream);
 		return request.PUT();
+	}
+	//#endregion
+
+	//#region getPayload
+	@Override
+	public EsthreePayload getPayload(String bucket, String key) {
+		try {
+			HttpResponse<InputStream> response = this.getPayloadResponse(bucket, key)
+					.asInputStream();
+			return getPayloadParse(response);
+		} catch (HttpException exception) {
+			this.errorResponse(exception.bodyAsBytes());
+			throw EsthreeException.of(exception);
+		}
+	}
+
+	@Override
+    public CompletableFuture<EsthreePayload> getPayloadFuture(String bucket, String key) {
+		return this.getPayloadResponse(bucket, key)
+				.async()
+				.asInputStream()
+				.thenApply(this::getPayloadParse);
+	}
+
+	/// Execute the AWS `GetObject` method and return the associated [HttpClientResponse].
+	/// Used by [#getPayload] and [#getPayload].
+	private HttpClientResponse getPayloadResponse(String bucket, String key) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, bucket);
+		request.path(key);
+
+		this.signer.sign("GET", request, BodyContent.of(new byte[0]));
+		return request.GET();
+	}
+
+	/// Parse a [HttpClientResponse] (as returned by [#getPayloadResponse])
+	/// to a viewer instance of [EsthreePayload] for the response values.
+	private EsthreePayload getPayloadParse(HttpResponse<InputStream> response) {
+		HttpHeaders headers = response.headers();
+		InputStream stream = response.body();
+
+		String type = headers.firstValue("Content-Type").orElse("");
+		long size = headers.firstValueAsLong("Content-Length").orElse(-1);
+
+		Optional<String> optional = headers.firstValue("x-amz-content-sha256");
+		if (optional.isPresent()) {
+			String hash = optional.get();
+			return EsthreePayload.create(type, size, hash, stream);
+		}
+
+		return EsthreePayload.create(type, size, stream);
 	}
 	//#endregion
 

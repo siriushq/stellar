@@ -16,6 +16,7 @@ import static java.text.MessageFormat.format;
 public class EsthreeException extends IllegalStateException {
 
 	private static final long serialVersionUID = -2991968104967447357L;
+	private static final String EMPTY = "";
 
 	private final String code;
 	private final String message;
@@ -106,9 +107,15 @@ public class EsthreeException extends IllegalStateException {
 		);
 	}
 
+	/// Create an instance of [EsthreeException] wrapping the provided cause
+	/// exception. Use if no error response document was returned.
+	static <T extends Throwable> EsthreeException of(T exception) {
+		return new EsthreeException(exception, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY);
+	}
+
 	/// Return the [String] text content of the element tag name in the provided [Document].
 	private static String element(Document document, String name) {
 		Node node = document.getElementsByTagName(name).item(0);
-		return (node == null) ? "" : node.getTextContent();
+		return (node == null) ? EMPTY : node.getTextContent();
 	}
 }

@@ -112,6 +112,16 @@ public interface Esthree extends AutoCloseable {
 	CompletableFuture<Void> putPayloadFuture(String bucket, String key, EsthreePayload payload);
 	//#endregion
 
+	//#region getPayload*
+	/// Stream an object with the provided key, from a bucket provided by name.
+	/// @throws EsthreeException if the request failed
+	EsthreePayload getPayload(String bucket, String key);
+
+	/// [Future] based variant of [#getPayload].
+	/// @throws EsthreeException if the request failed
+	CompletableFuture<EsthreePayload> getPayloadFuture(String bucket, String key);
+	//#endregion
+
 	//#region existsPayload*
 	/// Return whether an object with the provided key exists
 	/// in a bucket provided by name.

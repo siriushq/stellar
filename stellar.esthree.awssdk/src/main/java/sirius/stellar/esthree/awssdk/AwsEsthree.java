@@ -3,12 +3,9 @@ package sirius.stellar.esthree.awssdk;
 import io.avaje.http.client.HttpClient;
 import sirius.stellar.esthree.Esthree;
 import sirius.stellar.esthree.EsthreePayload;
-import sirius.stellar.esthree.EsthreeSigner;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.ChecksumAlgorithm;
-import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
-import software.amazon.awssdk.services.s3.model.NoSuchBucketException;
-import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -142,6 +139,37 @@ final class AwsEsthree implements Esthree {
     @Override
     public CompletableFuture<Void> putPayloadFuture(String bucket, String key, EsthreePayload payload) {
         return runAsync(() -> putPayload(bucket, key, payload));
+    }
+	//#endregion
+
+	//#region getPayload
+	@Override
+	public EsthreePayload getPayload(String bucket, String key) {
+		try {
+			ResponseInputStream<GetObjectResponse> response = this.delegate.getObject(builder -> {
+				builder.bucket(bucket);
+				builder.key(key);
+			});
+			GetObjectResponse headers = response.response();
+
+			String checksum = headers.checksumSHA256();
+			if (checksum != null && !checksum.isEmpty()) {
+				String type = headers.contentType();
+				long size = headers.contentLength();
+				return EsthreePayload.create(type, size, checksum, response);
+			}
+
+			String type = headers.contentType();
+			long size = headers.contentLength();
+			return EsthreePayload.create(type, size, response);
+		} catch (S3Exception exception) {
+			throw new AwsEsthreeException(exception);
+		}
+	}
+
+    @Override
+    public CompletableFuture<EsthreePayload> getPayloadFuture(String bucket, String key) {
+        return supplyAsync(() -> getPayload(bucket, key));
     }
 	//#endregion
 
