@@ -2,7 +2,10 @@ package sirius.stellar.esthree.awssdk;
 
 import io.avaje.http.client.HttpClient;
 import sirius.stellar.esthree.Esthree;
+import sirius.stellar.esthree.EsthreePayload;
+import sirius.stellar.esthree.EsthreeSigner;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.ChecksumAlgorithm;
 import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
 import software.amazon.awssdk.services.s3.model.NoSuchBucketException;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -13,6 +16,7 @@ import java.util.stream.Stream;
 
 import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
+import static software.amazon.awssdk.core.sync.RequestBody.fromInputStream;
 
 /// Implementation of [Esthree] that delegates to the AWS SDK v2.
 /// @see AwsEsthreeBuilder
@@ -111,6 +115,88 @@ final class AwsEsthree implements Esthree {
     @Override
     public CompletableFuture<Boolean> existsBucketFuture(String name) {
         return supplyAsync(() -> existsBucket(name));
+    }
+	//#endregion
+
+	//#region putPayload
+	@Override
+	public void putPayload(String bucket, String key, EsthreePayload payload) {
+		try {
+			this.delegate.putObject(builder -> {
+				builder.bucket(bucket);
+				builder.key(key);
+
+				builder.contentLength(payload.size());
+				builder.contentType(payload.type());
+
+				switch (payload.checksum().type()) {
+				case EsthreeSigner.Checksum.CRC32:
+					builder.checksumAlgorithm(ChecksumAlgorithm.CRC32);
+					builder.checksumCRC32(payload.checksum().value());
+					break;
+				case EsthreeSigner.Checksum.CRC32C:
+					builder.checksumAlgorithm(ChecksumAlgorithm.CRC32_C);
+					builder.checksumCRC32C(payload.checksum().value());
+					break;
+				case EsthreeSigner.Checksum.SHA1:
+					builder.checksumAlgorithm(ChecksumAlgorithm.SHA1);
+					builder.checksumSHA1(payload.checksum().value());
+					break;
+				case EsthreeSigner.Checksum.SHA256:
+					builder.checksumAlgorithm(ChecksumAlgorithm.SHA256);
+					builder.checksumSHA256(payload.checksum().value());
+					break;
+				}
+			}, fromInputStream(payload.stream(), payload.size()));
+		} catch (S3Exception exception) {
+			throw new AwsEsthreeException(exception);
+		}
+	}
+
+    @Override
+    public CompletableFuture<Void> putPayloadFuture(String bucket, String key, EsthreePayload payload) {
+        return runAsync(() -> putPayload(bucket, key, payload));
+    }
+	//#endregion
+
+	//#region existsPayload
+	@Override
+	public boolean existsPayload(String bucket, String key) {
+		try {
+			this.delegate.headObject(builder -> {
+				builder.bucket(bucket);
+				builder.key(key);
+			});
+			return true;
+		} catch (NoSuchBucketException exception) {
+			return false;
+		} catch (S3Exception exception) {
+			throw new AwsEsthreeException(exception);
+		}
+	}
+
+    @Override
+    public CompletableFuture<Boolean> existsPayloadFuture(String bucket, String key) {
+        return supplyAsync(() -> existsPayload(bucket, key));
+    }
+	//#endregion
+
+	//#region deletePayload
+	@Override
+	public void deletePayload(String bucket, String key) {
+		try {
+			this.delegate.deleteObject(builder -> {
+				builder.bucket(bucket);
+				builder.key(key);
+			});
+		} catch (S3Exception exception) {
+			throw new AwsEsthreeException(exception);
+		}
+	}
+
+    @Override
+    public CompletableFuture<Void> deletePayloadFuture(String bucket, String key) {
+        return runAsync(() -> deletePayload(bucket, key));
     }
 	//#endregion
 

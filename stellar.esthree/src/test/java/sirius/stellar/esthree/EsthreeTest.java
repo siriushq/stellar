@@ -25,6 +25,7 @@ import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.esthree.Esthree.Region.US_EAST_2;
+import static sirius.stellar.esthree.EsthreeMime.TEXT_PLAIN;
 
 @TestMethodOrder(OrderAnnotation.class)
 final class EsthreeTest {
@@ -100,6 +101,48 @@ final class EsthreeTest {
 	}
 
 	@Test @Order(5)
+	@DisplayName("Esthree successfully checks non-existence of object")
+	void checkPayloadNonExistence() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			assertThat(esthree.existsPayload("example-123", "readme.txt")).isFalse();
+			assertThat(esthree.existsPayloadFuture("example-123-future", "readme.txt").get()).isFalse();
+		});
+	}
+
+	@Test @Order(6)
+	@DisplayName("Esthree successfully puts an object")
+	void putPayload() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			var payload = EsthreePayload.create(TEXT_PLAIN, "Hello, world!");
+
+			esthree.putPayload("example-123", "readme.txt", payload);
+			esthree.putPayloadFuture("example-123-future", "readme.txt", payload).get();
+		});
+	}
+
+	@Test @Order(7)
+	@DisplayName("Esthree successfully checks existence of object")
+	void checkPayloadExistence() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			assertThat(esthree.existsPayload("example-123", "readme.txt")).isTrue();
+			assertThat(esthree.existsPayloadFuture("example-123-future", "readme.txt").get()).isTrue();
+		});
+	}
+
+	@Test @Order(8)
+	@DisplayName("Esthree successfully deletes an object")
+	void deletePayload() {
+		if (unavailable()) return;
+		assertThatNoException().isThrownBy(() -> {
+			esthree.deletePayload("example-123", "readme.txt");
+			esthree.deletePayloadFuture("example-123-future", "readme.txt").get();
+		});
+	}
+
+	@Test @Order(9)
 	@DisplayName("Esthree successfully deletes bucket")
 	void deleteBucket() {
 		if (unavailable()) return;
@@ -109,7 +152,7 @@ final class EsthreeTest {
 		});
 	}
 
-	@Test @Order(6)
+	@Test @Order(10)
 	@DisplayName("Esthree successfully checks non-existence of bucket")
 	void checksBucketNonExistence() {
 		if (unavailable()) return;
@@ -119,7 +162,7 @@ final class EsthreeTest {
 		});
 	}
 
-	@Test @Order(7)
+	@Test @Order(11)
 	@DisplayName("Esthree successfully mass-creates 2000 buckets in parallel")
 	void createBuckets() {
 		if (unavailable()) return;
@@ -142,7 +185,7 @@ final class EsthreeTest {
 		});
 	}
 
-	@Test @Order(8)
+	@Test @Order(12)
 	@DisplayName("Esthree successfully lists 2000 buckets with pagination and prefix limiting")
 	void listBuckets() {
 		if (unavailable()) return;
@@ -161,7 +204,7 @@ final class EsthreeTest {
 		});
 	}
 
-	@Test @Order(9)
+	@Test @Order(13)
 	@DisplayName("Esthree successfully mass-deletes 2000 buckets in parallel")
 	void deleteBuckets() {
 		if (unavailable()) return;
@@ -184,7 +227,7 @@ final class EsthreeTest {
 		});
 	}
 
-	@Test @Order(10)
+	@Test @Order(14)
 	@DisplayName("Esthree does not expose credentials in stacktrace")
 	void doesNotExposeCredentialsStacktrace() {
 		if (unavailable()) return;

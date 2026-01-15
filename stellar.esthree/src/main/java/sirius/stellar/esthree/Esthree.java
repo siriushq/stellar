@@ -2,7 +2,9 @@ package sirius.stellar.esthree;
 
 import io.avaje.http.client.HttpClient;
 
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -75,7 +77,7 @@ public interface Esthree extends AutoCloseable {
 	/// @throws EsthreeException if the request failed
 	void createBucket(String name);
 
-	/// [Future] based variant of [#createBucket(String)].
+	/// [Future] based variant of [#createBucket].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> createBucketFuture(String name);
 	//#endregion createBucket*
@@ -85,7 +87,7 @@ public interface Esthree extends AutoCloseable {
 	/// @throws EsthreeException if the request failed
 	void deleteBucket(String name);
 
-	/// [Future] based variant of [#deleteBucket(String)].
+	/// [Future] based variant of [#deleteBucket].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Void> deleteBucketFuture(String name);
 	//#endregion
@@ -95,9 +97,40 @@ public interface Esthree extends AutoCloseable {
 	/// @throws EsthreeException if the request failed
 	boolean existsBucket(String name);
 
-	/// [Future] based variant of [#existsBucket(String)].
+	/// [Future] based variant of [#existsBucket].
 	/// @throws EsthreeException if the request failed
 	CompletableFuture<Boolean> existsBucketFuture(String name);
+	//#endregion
+
+	//#region putPayload*
+	/// Upload an object with the provided key, to a bucket provided by name.
+	/// @throws EsthreeException if the request failed
+	void putPayload(String bucket, String key, EsthreePayload payload);
+
+	/// [Future] based variant of [#putPayload].
+	/// @throws EsthreeException if the request failed
+	CompletableFuture<Void> putPayloadFuture(String bucket, String key, EsthreePayload payload);
+	//#endregion
+
+	//#region existsPayload*
+	/// Return whether an object with the provided key exists
+	/// in a bucket provided by name.
+	/// @throws EsthreeException if the request failed
+	boolean existsPayload(String bucket, String key);
+
+	/// [Future] based variant of [#existsPayload].
+	/// @throws EsthreeException if the request failed
+	CompletableFuture<Boolean> existsPayloadFuture(String bucket, String key);
+	//#endregion
+
+	//#region deletePayload*
+	/// Delete an object with the provided key, from a bucket provided by name.
+	/// @throws EsthreeException if the request failed
+	void deletePayload(String bucket, String key);
+
+	/// [Future] based variant of [#deletePayload].
+	/// @throws EsthreeException if the request failed
+	CompletableFuture<Void> deletePayloadFuture(String bucket, String key);
 	//#endregion
 
 	/// Access the underlying [HttpClient]. Most people should never use this method.

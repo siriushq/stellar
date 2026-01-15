@@ -87,6 +87,13 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
+	public void sign(String method, HttpClientRequest request, Checksum checksum) {
+		// TODO
+		String now = this.formatter.format(Instant.now());
+		this.sign(method, request, hash, now);
+	}
+
+	@Override
 	public void sign(String method, HttpClientRequest request, BodyContent body) {
 		String hash = hex(sha256(body.content()));
 		String now = this.formatter.format(Instant.now());
@@ -94,10 +101,11 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
-	public InputStream sign(String method, HttpClientRequest request, InputStream stream) {
+	public InputStream sign(String method, HttpClientRequest request, InputStream stream, long size) {
 		String hash = "STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
 		String now = this.formatter.format(Instant.now());
 
+		request.header("Content-Length", size);
 		String candidate = this.sign(method, request, hash, now);
 		return new DEsthreeSignedStream(stream, this, now, this.region, candidate);
 	}
@@ -191,5 +199,27 @@ final class DEsthreeSigner implements EsthreeSigner {
 			return first.compareTo(second);
 		});
 		return String.join("&", parameters);
+	}
+}
+
+/// Domain implementation of [EsthreeSigner.Checksum].
+final class DEsthreeSignerChecksum implements EsthreeSigner.Checksum {
+
+	private final String type;
+	private final String value;
+
+	DEsthreeSignerChecksum(String type, String value) {
+		this.type = type;
+		this.value = value;
+	}
+
+	@Override
+	public String type() {
+		return this.type;
+	}
+
+	@Override
+	public String value() {
+		return this.value;
 	}
 }

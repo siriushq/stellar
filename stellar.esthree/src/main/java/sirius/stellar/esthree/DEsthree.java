@@ -12,10 +12,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
@@ -211,6 +208,110 @@ final class DEsthree implements Esthree {
 	}
 	//#endregion
 
+	//#region putPayload
+	@Override
+	public void putPayload(String bucket, String key, EsthreePayload payload) {
+		byte[] body = this.putPayloadResponse(bucket, key, payload)
+				.asByteArray()
+				.body();
+		this.errorResponse(body);
+	}
+
+	@Override
+    public CompletableFuture<Void> putPayloadFuture(String bucket, String key, EsthreePayload payload) {
+		return this.putPayloadResponse(bucket, key, payload)
+				.async()
+				.asByteArray()
+				.thenApply(HttpResponse::body)
+				.thenAccept(this::errorResponse);
+	}
+
+	/// Execute the AWS `PutObject` method and return the associated [HttpClientResponse].
+	/// Used by [#putPayload] and [#putPayloadFuture].
+	private HttpClientResponse putPayloadResponse(String bucket, String key, EsthreePayload payload) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, bucket);
+		request.path(key);
+
+		InputStream stream = this.signer.sign("PUT", request, payload.stream(), payload.size());
+		request.body(stream);
+		return request.PUT();
+	}
+	//#endregion
+
+	//#region existsPayload
+	@Override
+	public boolean existsPayload(String bucket, String key) {
+		try {
+			HttpResponse<byte[]> response = this.existsPayloadResponse(bucket, key)
+					.asByteArray();
+			this.errorResponse(response.body());
+			return response.statusCode() == 200;
+		} catch (HttpException exception) {
+			this.errorResponse(exception.bodyAsBytes());
+			return false;
+		}
+	}
+
+	@Override
+	public CompletableFuture<Boolean> existsPayloadFuture(String bucket, String key) {
+		return this.existsPayloadResponse(bucket, key)
+				.async()
+				.asByteArray()
+				.thenApply(response -> {
+					this.errorResponse(response.body());
+					return (response.statusCode() == 200);
+				})
+				.exceptionally(throwable -> {
+					if (!(throwable instanceof HttpException)) return false;
+					HttpException exception = (HttpException) throwable;
+					this.errorResponse(exception.bodyAsBytes());
+					return false;
+				});
+	}
+
+	/// Execute the AWS `HeadObject` method and return the associated [HttpClientResponse].
+	/// Used by [#existsPayload] and [#existsPayloadFuture].
+	private HttpClientResponse existsPayloadResponse(String bucket, String key) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, bucket);
+		request.path(key);
+
+		this.signer.sign("HEAD", request, BodyContent.of(new byte[0]));
+		return request.HEAD();
+	}
+	//#endregion
+
+	//#region deletePayload
+	@Override
+	public void deletePayload(String bucket, String key) {
+		byte[] body = this.deletePayloadResponse(bucket, key)
+				.asByteArray()
+				.body();
+		this.errorResponse(body);
+	}
+
+	@Override
+    public CompletableFuture<Void> deletePayloadFuture(String bucket, String key) {
+		return this.deletePayloadResponse(bucket, key)
+				.async()
+				.asByteArray()
+				.thenApply(HttpResponse::body)
+				.thenAccept(this::errorResponse);
+	}
+
+	/// Execute the AWS `PutObject` method and return the associated [HttpClientResponse].
+	/// Used by [#putPayload] and [#putPayloadFuture].
+	private HttpClientResponse deletePayloadResponse(String bucket, String key) {
+		HttpClientRequest request = this.client.request();
+		this.endpoint(request, bucket);
+		request.path(key);
+
+		this.signer.sign("DELETE", request, BodyContent.of(new byte[0]));
+		return request.DELETE();
+	}
+	//#endregion
+
 	/// Write the provided document to a [String].
 	///
 	/// This buffers the entire contents of the document in-memory, as [HttpRequest.BodyPublisher]
@@ -225,8 +326,11 @@ final class DEsthree implements Esthree {
 		}
 	}
 
-	/// Set the endpoint of the provided [HttpClientRequest] for bucket operations.
-	/// This will either use virtual-host based or path based addressing, depending on [#endpointVirtual].
+	/// Set the endpoint of the provided [HttpClientRequest] for operations
+	/// relating to a bucket.
+	///
+	/// This will either use virtual-host based or path based addressing,
+	/// depending on [#endpointVirtual].
 	private void endpoint(HttpClientRequest request, String bucket) {
 		request.url(UrlBuilder.of(this.endpoint)
 				.path(bucket)

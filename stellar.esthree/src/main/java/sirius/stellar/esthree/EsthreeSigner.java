@@ -4,6 +4,7 @@ import io.avaje.http.client.BodyContent;
 import io.avaje.http.client.HttpClientRequest;
 
 import java.io.InputStream;
+import java.net.http.HttpRequest.BodyPublisher;
 
 /// Abstraction to sign requests using AWS Signature V4.
 /// This can be created using the static [#create] method.
@@ -30,10 +31,16 @@ public interface EsthreeSigner {
 	/// Sign a request for streaming (chunked) payloads.
 	///
 	/// This returns a wrapped version of the provided stream which signs
-	/// chunks as they are read.
+	/// chunks, using SHA256 checksums, as they are read, and attaches required
+	/// headers to the provided request.
 	///
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
-	InputStream sign(String method, HttpClientRequest request, InputStream stream);
+	/// @param size The known size of the provided stream.
+	InputStream sign(String method, HttpClientRequest request, InputStream stream, long size);
+
+	/// Sign a request with only a known checksum.
+	/// @param method The HTTP method that will be used (e.g. GET, PUT).
+	void sign(String method, HttpClientRequest request, Checksum checksum);
 
 	/// Create an instance of [EsthreeSigner].
 	///
@@ -46,5 +53,33 @@ public interface EsthreeSigner {
 	/// [Esthree.Region] based variant of [#create(String, String, String)].
 	static EsthreeSigner create(String accessKey, String secretKey, Esthree.Region region) {
 		return create(accessKey, secretKey, region.toString());
+	}
+
+	/// Represents a checksum attribute for any S3 requests.
+	/// Known constants are statically exposed by string [#type], e.g [#SHA1].
+	///
+	/// To calculate a checksum, only SHA256 is supported with [#NONE] used in
+	/// tandem with the automatic chunk-by-chunk stream signing.
+	interface Checksum {
+		String CRC32 = "crc32";
+		String CRC32C = "crc32c";
+		String SHA1 = "sha1";
+		String SHA256 = "sha256";
+
+		/// A representation of "no checksum". This is typically used in
+		/// tandem with [#sign(String, HttpClientRequest, InputStream, long)].
+		Checksum NONE = of("", "");
+
+		/// Returns the type of this checksum, by S3 header name suffix.
+		String type();
+
+		/// Returns the raw checksum, or if this checksum [#type] is
+		/// [#NONE], an empty string.
+		String value();
+
+		/// Provide a checksum of the provided type.
+		static Checksum of(String type, String value) {
+			return new DEsthreeSignerChecksum(type, value);
+		}
 	}
 }
