@@ -129,23 +129,9 @@ final class AwsEsthree implements Esthree {
 				builder.contentLength(payload.size());
 				builder.contentType(payload.type());
 
-				switch (payload.checksum().type()) {
-				case EsthreeSigner.Checksum.CRC32:
-					builder.checksumAlgorithm(ChecksumAlgorithm.CRC32);
-					builder.checksumCRC32(payload.checksum().value());
-					break;
-				case EsthreeSigner.Checksum.CRC32C:
-					builder.checksumAlgorithm(ChecksumAlgorithm.CRC32_C);
-					builder.checksumCRC32C(payload.checksum().value());
-					break;
-				case EsthreeSigner.Checksum.SHA1:
-					builder.checksumAlgorithm(ChecksumAlgorithm.SHA1);
-					builder.checksumSHA1(payload.checksum().value());
-					break;
-				case EsthreeSigner.Checksum.SHA256:
+				if (!payload.hash().isEmpty()) {
 					builder.checksumAlgorithm(ChecksumAlgorithm.SHA256);
-					builder.checksumSHA256(payload.checksum().value());
-					break;
+					builder.checksumSHA256(payload.hash());
 				}
 			}, fromInputStream(payload.stream(), payload.size()));
 		} catch (S3Exception exception) {

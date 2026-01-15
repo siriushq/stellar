@@ -87,8 +87,8 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
-	public void sign(String method, HttpClientRequest request, Checksum checksum) {
-		// TODO
+	public void sign(String method, HttpClientRequest request, String hash) {
+		if (hash.isEmpty()) throw new IllegalStateException();
 		String now = this.formatter.format(Instant.now());
 		this.sign(method, request, hash, now);
 	}
@@ -199,27 +199,5 @@ final class DEsthreeSigner implements EsthreeSigner {
 			return first.compareTo(second);
 		});
 		return String.join("&", parameters);
-	}
-}
-
-/// Domain implementation of [EsthreeSigner.Checksum].
-final class DEsthreeSignerChecksum implements EsthreeSigner.Checksum {
-
-	private final String type;
-	private final String value;
-
-	DEsthreeSignerChecksum(String type, String value) {
-		this.type = type;
-		this.value = value;
-	}
-
-	@Override
-	public String type() {
-		return this.type;
-	}
-
-	@Override
-	public String value() {
-		return this.value;
 	}
 }

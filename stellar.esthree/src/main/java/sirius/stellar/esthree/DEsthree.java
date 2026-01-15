@@ -233,6 +233,11 @@ final class DEsthree implements Esthree {
 		this.endpoint(request, bucket);
 		request.path(key);
 
+		if (!payload.hash().isEmpty()) {
+			this.signer.sign("PUT", request, payload.hash());
+			request.body(payload.stream());
+			return request.PUT();
+		}
 		InputStream stream = this.signer.sign("PUT", request, payload.stream(), payload.size());
 		request.body(stream);
 		return request.PUT();
