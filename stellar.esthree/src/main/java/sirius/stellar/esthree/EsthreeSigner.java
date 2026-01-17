@@ -28,14 +28,17 @@ public interface EsthreeSigner {
 	/// @see BodyContent
 	void sign(String method, HttpClientRequest request, BodyContent body);
 
-	/// Sign a request for streaming (chunked) payloads.
+	/// Sign a request for streaming (chunked) payloads, and attach it.
 	///
-	/// This returns a wrapped version of the provided stream which signs
-	/// chunks, using SHA256 checksums, as they are read, and attaches required
-	/// headers to the provided request.
+	/// This creates a wrapped version of the provided stream which signs
+	/// chunks calculating SHA256 checksums, as bytes are read.
+	///
+	/// Then, it attaches required headers to the provided request, and adds
+	/// a publisher for the final result, so it can be sent.
 	///
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
-	InputStream sign(String method, HttpClientRequest request, InputStream stream);
+	/// @param size The known size of the provided stream.
+	void sign(String method, HttpClientRequest request, InputStream stream, long size);
 
 	/// Sign a request with only a known SHA256 checksum.
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).

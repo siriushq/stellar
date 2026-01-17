@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.StringJoiner;
 
+import static java.lang.Math.min;
 import static java.lang.System.arraycopy;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -47,7 +48,7 @@ final class DEsthreeSignedStream extends InputStream {
 		while (length > 0) {
 			if (this.bufferPosition >= this.bufferLimit && this.refillBuffer()) break;
 
-			int copy = Math.min(length, this.bufferLimit - this.bufferPosition);
+			int copy = min(length, this.bufferLimit - this.bufferPosition);
 			arraycopy(this.buffer, this.bufferPosition, buffer, offset, copy);
 
 			this.bufferPosition += copy;
@@ -113,5 +114,41 @@ final class DEsthreeSignedStream extends InputStream {
 		arraycopy(footer, 0, result, (header.length + payload.length), footer.length);
 
 		return result;
+	}
+
+	/// Measure how large the size of the provided source (size of a stream),
+	/// will be after signing that stream with this signer.
+	///
+	/// @implNote Magic values:
+	/// - `chunkSize` is the chunk buffer size, in [#refillBuffer]
+	/// - `prefixSize` is the chunk prefix size, `header` in [#buildChunk]
+	/// - `signatureSize` is the size of a hexadecimal-encoded HMAC SHA-256
+	/// - `terminalSize` is the size of the final chunk size number
+	///   (hexadecimal-encoded), sent in [#refillBuffer]
+	/// - `clrfSize` is the number of bytes in UTF-8 `\r\n`
+	static long measure(long source) {
+		int chunkSize = (16 * 1024);
+		int prefixSize = ";chunk-signature=".getBytes(UTF_8).length;
+
+		int signatureSize = 64;
+		int terminalSize = 1;
+		int clrfSize = "\r\n".getBytes(UTF_8).length;
+
+		long total = 0;
+		while (source > 0) {
+			int payload = (int) min(chunkSize, source);
+
+			total += Integer.toHexString(payload).getBytes(UTF_8).length;
+			total += prefixSize + signatureSize + clrfSize;
+
+			total += payload;
+			total += clrfSize;
+
+			source -= payload;
+		}
+		total += terminalSize;
+		total += prefixSize + signatureSize + clrfSize;
+		total += clrfSize;
+		return total;
 	}
 }

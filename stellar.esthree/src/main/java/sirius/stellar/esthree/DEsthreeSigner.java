@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.StringJoiner;
 
 import static java.lang.ThreadLocal.withInitial;
+import static java.net.http.HttpRequest.BodyPublishers.fromPublisher;
+import static java.net.http.HttpRequest.BodyPublishers.ofInputStream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.security.Security.getProviders;
 import static java.time.ZoneOffset.UTC;
@@ -101,12 +103,13 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
-	public InputStream sign(String method, HttpClientRequest request, InputStream stream) {
+	public void sign(String method, HttpClientRequest request, InputStream stream, long size) {
 		String hash = "STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
 		String now = this.formatter.format(Instant.now());
 
 		String candidate = this.sign(method, request, hash, now);
-		return new DEsthreeSignedStream(stream, this, now, this.region, candidate);
+		InputStream signed = new DEsthreeSignedStream(stream, this, now, this.region, candidate);
+		request.body(fromPublisher(ofInputStream(() -> signed), size));
 	}
 
 	/// Sign the provided request with the provided payload hash & date.
