@@ -101,11 +101,10 @@ final class DEsthreeSigner implements EsthreeSigner {
 	}
 
 	@Override
-	public InputStream sign(String method, HttpClientRequest request, InputStream stream, long size) {
+	public InputStream sign(String method, HttpClientRequest request, InputStream stream) {
 		String hash = "STREAMING-AWS4-HMAC-SHA256-PAYLOAD";
 		String now = this.formatter.format(Instant.now());
 
-		request.header("Content-Length", size);
 		String candidate = this.sign(method, request, hash, now);
 		return new DEsthreeSignedStream(stream, this, now, this.region, candidate);
 	}

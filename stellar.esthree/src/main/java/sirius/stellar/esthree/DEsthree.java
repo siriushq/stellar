@@ -241,8 +241,8 @@ final class DEsthree implements Esthree {
 			request.body(payload.stream());
 			return request.PUT();
 		}
-		InputStream stream = this.signer.sign("PUT", request, payload.stream(), payload.size());
-		request.body(stream);
+		InputStream stream = this.signer.sign("PUT", request, payload.stream());
+		request.body(new DEsthreeSignedPublisher(stream, payload.size()));
 		return request.PUT();
 	}
 	//#endregion

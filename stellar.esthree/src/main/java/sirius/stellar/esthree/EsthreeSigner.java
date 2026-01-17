@@ -35,8 +35,7 @@ public interface EsthreeSigner {
 	/// headers to the provided request.
 	///
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
-	/// @param size The known size of the provided stream.
-	InputStream sign(String method, HttpClientRequest request, InputStream stream, long size);
+	InputStream sign(String method, HttpClientRequest request, InputStream stream);
 
 	/// Sign a request with only a known SHA256 checksum.
 	/// @param method The HTTP method that will be used (e.g. GET, PUT).
