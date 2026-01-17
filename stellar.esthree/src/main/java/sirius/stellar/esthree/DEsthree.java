@@ -21,6 +21,8 @@ import java.util.OptionalLong;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
+import static java.net.http.HttpRequest.BodyPublishers.fromPublisher;
+import static java.net.http.HttpRequest.BodyPublishers.ofInputStream;
 import static sirius.stellar.esthree.Esthree.Region.US_EAST_1;
 
 /// Domain implementation of [Esthree].
@@ -241,8 +243,11 @@ final class DEsthree implements Esthree {
 			request.body(payload.stream());
 			return request.PUT();
 		}
+
 		InputStream stream = this.signer.sign("PUT", request, payload.stream());
-		request.body(new DEsthreeSignedPublisher(stream, payload.size()));
+		long size = payload.size();
+
+		request.body(fromPublisher(ofInputStream(() -> stream), size));
 		return request.PUT();
 	}
 	//#endregion
