@@ -45,7 +45,7 @@ public interface EsthreePayload {
 
 	/// Instantiate a payload populated with the provided data, sans-checksum.
 	/// An SHA256 checksum will be calculated automatically.
-	/// @see #create(CharSequence, long, String, InputStream).
+	/// @see #create(CharSequence, long, String, InputStream)
 	static EsthreePayload create(CharSequence type, ByteBuffer buffer) {
 		byte[] bytes = new byte[buffer.remaining()];
 		buffer.asReadOnlyBuffer().get(bytes);
@@ -54,7 +54,7 @@ public interface EsthreePayload {
 
 	/// Instantiate a payload populated with the provided data, sans-checksum.
 	/// An SHA256 checksum will be calculated automatically.
-	/// @see #create(CharSequence, long, String, InputStream).
+	/// @see #create(CharSequence, long, String, InputStream)
 	static EsthreePayload create(CharSequence type, CharSequence characters) {
 		return create(type, characters.toString().getBytes());
 	}
