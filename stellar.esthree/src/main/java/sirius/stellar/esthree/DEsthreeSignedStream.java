@@ -20,6 +20,7 @@ final class DEsthreeSignedStream extends InputStream {
 
 	private byte[] previous;
 	private byte[] buffer;
+	private boolean finished;
 
 	private int bufferPosition = 0;
 	private int bufferLimit = 0;
@@ -32,6 +33,7 @@ final class DEsthreeSignedStream extends InputStream {
 
 		this.signingKey = signer.signingKey(date.substring(0, 8));
 		this.previous = signer.hmac(this.signingKey, candidate);
+		this.finished = false;
 
 		this.buffer = new byte[0];
 	}
@@ -68,13 +70,15 @@ final class DEsthreeSignedStream extends InputStream {
 	/// @return `true` if EOF is reached, `false` for successful buffer refilling.
 	private boolean refillBuffer() throws IOException {
 		byte[] chunk = new byte[16 * 1024];
+		if (this.finished) return (this.bufferPosition >= this.bufferLimit);
 
 		int read = this.source.read(chunk);
 		if (read == -1) {
 			this.buffer = this.buildChunk(new byte[0]);
 			this.bufferPosition = 0;
 			this.bufferLimit = this.buffer.length;
-			return (this.bufferLimit == 0);
+			this.finished = true;
+			return false;
 		}
 
 		byte[] actual = new byte[read];
