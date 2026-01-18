@@ -23,6 +23,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.security.Security.getProviders;
 import static java.time.ZoneOffset.UTC;
 import static java.util.Locale.US;
+import static sirius.stellar.esthree.DEsthreeSignedStream.measure;
 
 /// Domain implementation of [EsthreeSigner].
 final class DEsthreeSigner implements EsthreeSigner {
@@ -109,7 +110,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 
 		String candidate = this.sign(method, request, hash, now);
 		InputStream signed = new DEsthreeSignedStream(stream, this, now, this.region, candidate);
-		request.body(fromPublisher(ofInputStream(() -> signed), size));
+		request.body(fromPublisher(ofInputStream(() -> signed), measure(size)));
 	}
 
 	/// Sign the provided request with the provided payload hash & date.
