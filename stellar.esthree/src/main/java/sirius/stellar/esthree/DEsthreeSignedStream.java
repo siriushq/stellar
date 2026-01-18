@@ -129,30 +129,30 @@ final class DEsthreeSignedStream extends InputStream {
 	/// - `signatureSize` is the size of a hexadecimal-encoded HMAC SHA-256
 	/// - `terminalSize` is the size of the final chunk size number
 	///   (hexadecimal-encoded), sent in [#refillBuffer]
-	/// - `clrfSize` is the number of bytes in UTF-8 `\r\n`
+	/// - `crlfSize` is the number of bytes in UTF-8 `\r\n`
 	static long measure(long source) {
 		int chunkSize = (16 * 1024);
 		int prefixSize = ";chunk-signature=".getBytes(UTF_8).length;
 
 		int signatureSize = 64;
 		int terminalSize = 1;
-		int clrfSize = "\r\n".getBytes(UTF_8).length;
+		int crlfSize = "\r\n".getBytes(UTF_8).length;
 
 		long total = 0;
 		while (source > 0) {
 			int payload = (int) min(chunkSize, source);
 
 			total += Integer.toHexString(payload).getBytes(UTF_8).length;
-			total += prefixSize + signatureSize + clrfSize;
+			total += prefixSize + signatureSize + crlfSize;
 
 			total += payload;
-			total += clrfSize;
+			total += crlfSize;
 
 			source -= payload;
 		}
 		total += terminalSize;
-		total += prefixSize + signatureSize + clrfSize;
-		total += clrfSize;
+		total += prefixSize + signatureSize + crlfSize;
+		total += crlfSize;
 		return total;
 	}
 }
