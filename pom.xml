@@ -55,7 +55,11 @@
 		<module>stellar.logging.collect.slf4j</module>
 		<module>stellar.logging.collect.file</module>
 		<module>stellar.logging.collect.console</module>
+
 		<module>stellar.logging.collect.json</module>
+		<module>stellar.logging.collect.json.console</module>
+		<module>stellar.logging.collect.json.file</module>
+
 		<module>stellar.logging.collect.csv</module>
 		<module>stellar.logging.collect.csv.console</module>
 		<module>stellar.logging.collect.csv.file</module>

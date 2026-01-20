@@ -9,13 +9,23 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-logging-json-collector</artifactId>
-    <name>Stellar :: Logging :: JSON Collector</name>
+    <artifactId>stellar-logging-json-console-collector</artifactId>
+    <name>Stellar :: Logging :: JSON Console Collector</name>
 
     <dependencies>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
             <artifactId>stellar-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-logging-json-collector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-logging-console-collector</artifactId>
+			<optional>true</optional>
         </dependency>
 
 		<dependency>

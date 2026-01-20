@@ -5,13 +5,12 @@ import sirius.stellar.logging.LoggerMessage;
 import static java.lang.ThreadLocal.withInitial;
 
 /// Base class for JSON (JavaScript Object Notation) logging technique.
-sealed abstract class JsonAbstractTechnique
-		permits JsonFileTechnique, JsonConsoleTechnique {
+public abstract class JsonAbstractTechnique {
 
 	private final ThreadLocal<StringBuilder> builder;
 	private final char[] hex;
 
-	JsonAbstractTechnique() {
+	public JsonAbstractTechnique() {
 		this.builder = withInitial(() -> new StringBuilder(128));
 		this.hex = "0123456789abcdef".toCharArray();
 	}

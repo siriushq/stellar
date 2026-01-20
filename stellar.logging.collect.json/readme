@@ -1,13 +1,12 @@
 siriushq/stellar.logging.collect.json
 =====================================
 
-JSON (JavaScript Object Notation) collector for the logging system.
-By default, this module does nothing.
+JSON (JavaScript Object Notation) writer for making collectors of this format,
+for the logging system. By default, this module does nothing, and should never
+be depended on directly.
 
-This module implements the SPIs of the following modules:
-- [siriushq/stellar.logging.collect.console]
-- [siriushq/stellar.logging.collect.file]
+The following modules are available, which leverage (and transitively pull)
+this module for writing this format to different destinations:
 
-The presence of this artifact in tandem with any (one or both) of those, on the
-class-path or module-path, will cause it to be automatically registered
-(service loaded).
+- [siriushq/stellar.logging.collect.json.console]
+- [siriushq/stellar.logging.collect.json.file]

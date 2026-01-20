@@ -1,7 +1,8 @@
-package sirius.stellar.logging.collect.json;
+package sirius.stellar.logging.collect.json.console;
 
 import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.collect.console.ConsoleTechnique;
+import sirius.stellar.logging.collect.json.JsonAbstractTechnique;
 
 import java.io.PrintStream;
 

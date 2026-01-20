@@ -1,0 +1,8 @@
+siriushq/stellar.logging.collect.json.file
+==========================================
+
+JSON (JavaScript Object Notation) technique for the file collector.
+This module implements the SPI of [siriushq/stellar.logging.collect.file].
+
+The presence of this artifact in tandem with that, on the class-path or
+module-path, will cause it to be automatically registered (service loaded).
