@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import static java.net.http.HttpRequest.BodyPublishers.fromPublisher;
-import static sirius.stellar.esthree.Esthree.Region.US_EAST_1;
+import static sirius.stellar.esthree.EsthreeRegion.US_EAST_1;
 
 /// Domain implementation of [Esthree].
 final class DEsthree implements Esthree {

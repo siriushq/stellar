@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static sirius.stellar.esthree.Esthree.Region.US_EAST_2;
+import static sirius.stellar.esthree.EsthreeRegion.US_EAST_2;
 import static sirius.stellar.esthree.EsthreeMime.TEXT_PLAIN;
 
 @TestMethodOrder(OrderAnnotation.class)

@@ -14,7 +14,7 @@ public interface EsthreeBucket {
 	/// The AWS region where the bucket is located.
 	/// @throws NoSuchElementException if field is missing from response
 	/// @throws IllegalStateException failed to parse response region
-	Esthree.Region region();
+	EsthreeRegion region();
 
 	/// Date the bucket was created (some bucket changes can update this).
 	/// @throws NoSuchElementException if field is missing from response

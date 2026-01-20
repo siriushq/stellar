@@ -1,7 +1,7 @@
 package sirius.stellar.esthree.awssdk;
 
-import sirius.stellar.esthree.Esthree;
 import sirius.stellar.esthree.EsthreeBucket;
+import sirius.stellar.esthree.EsthreeRegion;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -24,8 +24,8 @@ final class AwsEsthreeBucket implements EsthreeBucket {
 	}
 
 	@Override
-	public Esthree.Region region() {
-		Optional<Esthree.Region> region = Esthree.Region.from(this.delegate.bucketRegion());
+	public EsthreeRegion region() {
+		Optional<EsthreeRegion> region = EsthreeRegion.from(this.delegate.bucketRegion());
 		return region.orElseThrow(() -> new IllegalStateException("Unknown region '" + region + "'"));
 	}
 

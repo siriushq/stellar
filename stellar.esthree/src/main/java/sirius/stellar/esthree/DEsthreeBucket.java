@@ -2,7 +2,6 @@ package sirius.stellar.esthree;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import sirius.stellar.esthree.Esthree.Region;
 
 import java.time.Instant;
 import java.util.NoSuchElementException;
@@ -25,8 +24,8 @@ final class DEsthreeBucket implements EsthreeBucket {
 	}
 
 	@Override
-	public Region region() {
-		Optional<Region> region = Region.from(this.element("BucketRegion"));
+	public EsthreeRegion region() {
+		Optional<EsthreeRegion> region = EsthreeRegion.from(this.element("BucketRegion"));
 		return region.orElseThrow(() -> new IllegalStateException("Unknown region '" + region + "'"));
 	}
 

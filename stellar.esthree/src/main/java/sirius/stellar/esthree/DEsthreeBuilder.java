@@ -16,7 +16,7 @@ import static java.lang.ThreadLocal.withInitial;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static javax.xml.XMLConstants.*;
 import static javax.xml.transform.OutputKeys.ENCODING;
-import static sirius.stellar.esthree.Esthree.Region.US_EAST_1;
+import static sirius.stellar.esthree.EsthreeRegion.US_EAST_1;
 
 /// Domain implementation of [Esthree.Builder].
 final class DEsthreeBuilder implements Esthree.Builder {
