@@ -1,6 +1,7 @@
-package sirius.stellar.logging.collect.csv;
+package sirius.stellar.logging.collect.csv.file;
 
 import sirius.stellar.logging.LoggerMessage;
+import sirius.stellar.logging.collect.csv.CsvAbstractTechnique;
 import sirius.stellar.logging.collect.file.FileTechnique;
 
 /// Implementation of [FileTechnique] for CSV (Comma-Separated Values) logging.

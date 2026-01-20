@@ -1,0 +1,8 @@
+siriushq/stellar.logging.collect.csv.console
+============================================
+
+CSV (Comma-Separated Values) technique for the console collector.
+This module implements the SPI of [siriushq/stellar.logging.collect.console].
+
+The presence of this artifact in tandem with that, on the class-path or
+module-path, will cause it to be automatically registered (service loaded).

@@ -9,13 +9,23 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-logging-csv-collector</artifactId>
-    <name>Stellar :: Logging :: CSV Collector</name>
+    <artifactId>stellar-logging-csv-console-collector</artifactId>
+    <name>Stellar :: Logging :: CSV Console Collector</name>
 
     <dependencies>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
             <artifactId>stellar-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-logging-csv-collector</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-logging-console-collector</artifactId>
+			<optional>true</optional>
         </dependency>
 
 		<dependency>

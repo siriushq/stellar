@@ -1,7 +1,8 @@
-package sirius.stellar.logging.collect.csv;
+package sirius.stellar.logging.collect.csv.console;
 
 import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.collect.console.ConsoleTechnique;
+import sirius.stellar.logging.collect.csv.CsvAbstractTechnique;
 
 import java.io.PrintStream;
 

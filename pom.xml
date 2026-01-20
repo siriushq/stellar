@@ -51,11 +51,15 @@
 		<module>stellar.annotation.intellij</module>
 
 		<module>stellar.logging</module>
+
 		<module>stellar.logging.collect.slf4j</module>
 		<module>stellar.logging.collect.file</module>
 		<module>stellar.logging.collect.console</module>
 		<module>stellar.logging.collect.json</module>
 		<module>stellar.logging.collect.csv</module>
+		<module>stellar.logging.collect.csv.console</module>
+		<module>stellar.logging.collect.csv.file</module>
+
 		<module>stellar.logging.dispatch.applog</module>
 		<module>stellar.logging.dispatch.jboss</module>
 		<module>stellar.logging.dispatch.jcl</module>

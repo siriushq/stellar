@@ -8,8 +8,7 @@ import java.util.StringJoiner;
 import static java.util.stream.Collectors.joining;
 
 /// Base class for CSV (Comma-Separated Values) logging technique.
-sealed abstract class CsvAbstractTechnique
-	permits CsvFileTechnique, CsvConsoleTechnique {
+public abstract class CsvAbstractTechnique {
 
 	/// Return a CSV formatted version of the provided message.
 	protected String format(LoggerMessage message) {
