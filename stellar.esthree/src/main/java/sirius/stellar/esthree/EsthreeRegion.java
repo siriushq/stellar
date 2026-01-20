@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /// Enumeration of valid AWS regions. This is only provided for convenience.
-public enum EsthreeRegion {
+public enum EsthreeRegion implements CharSequence {
 
 	AF_SOUTH_1("af-south-1"),
 	AP_EAST_1("ap-east-1"),
@@ -88,5 +88,20 @@ public enum EsthreeRegion {
 	@Override
 	public String toString() {
 		return this.identifier;
+	}
+
+	@Override
+	public int length() {
+		return this.identifier.length();
+	}
+
+	@Override
+	public char charAt(int index) {
+		return this.identifier.charAt(index);
+	}
+
+	@Override
+	public CharSequence subSequence(int start, int end) {
+		return this.identifier.subSequence(start, end);
 	}
 }

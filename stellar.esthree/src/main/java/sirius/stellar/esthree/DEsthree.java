@@ -123,7 +123,7 @@ final class DEsthree implements Esthree {
 		HttpClientRequest request = this.client.request();
 		this.endpoint(request, name);
 
-		if (!this.region.equals(US_EAST_1.toString())) {
+		if (!this.region.contentEquals(US_EAST_1)) {
 			Document document = this.parser.get().newDocument();
 			Element root = document.createElementNS(XMLNS, "CreateBucketConfiguration");
 
