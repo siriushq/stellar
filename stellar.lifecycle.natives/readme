@@ -1,0 +1,49 @@
+siriushq/stellar.lifecycle.natives
+==================================
+
+A tool for consuming native libraries from the build process of a JVM library,
+utilizing annotation processing to generate lookup stubs.
+
+This must be combined with the accompanying build plugins for artifact
+generation, to provide the actual libraries themselves.
+
+Uses jstachio (under BSD-3-Clause) and avaje-prisms (under Apache-2.0).
+
+usage
+=====
+
+First, annotate a package statement:
+
+	package-info.java ==============================
+	@Natives("opencv")
+	package org.example;
+
+	import sirius.stellar.lifecycle.natives.Natives;
+	================================================
+
+The name of the library is used to locate it, where the artifact on the
+module-path (or class-path) containing the native library, is to be created
+by an accompanying build tool.
+
+Then, use the generated lookup stub:
+
+	Example.java ==============================================
+	var arena = Arena.ofConfined();
+	var opencv = OpencvLookup.with(arena);
+
+	try {
+		var linker = nativeLinker();
+
+		var symbol = opencv.lookup("cvGetVersionString")
+				.orElseThrow(UnsatisfiedLinkError::new);
+		var descriptor = FunctionDescriptor.of(ADDRESS);
+		var handle = linker.downcallHandle(symbol, descriptor);
+
+		var result = (MemorySegment) handle.invokeExact();
+		var version = result.getString(0);
+		println(version);
+	} finally {
+		arena.close();
+		lookup.close();
+	}
+	===========================================================

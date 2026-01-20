@@ -1,0 +1,19 @@
+siriushq/stellar.lifecycle.natives.maven
+========================================
+
+Maven build plugin for generation of native classifier artifacts.
+
+This plugin can automatically fetch from a remote source, or the local
+filesystem, and caches using a hash file (SHA-* or MD5), if provided.
+
+Per classifier name, one artifact is generated, which contains any number of
+named binaries, where classifier names are platform targets.
+
+usage
+=====
+
+Check [/src/test/resources/my-project.pom] for an example.
+This demonstrates downloading and embedding the OpenCV library.
+
+Then, see the readme of [siriushq/stellar.lifecycle.natives] for
+information about how to utilize the embedded library.

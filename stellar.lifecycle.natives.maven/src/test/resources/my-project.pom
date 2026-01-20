@@ -1,0 +1,28 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.example</groupId>
+	<artifactId>example</artifactId>
+	<version>1.0-RC1</version>
+	<packaging>jar</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-lifecycle-natives-maven</artifactId>
+
+				<configuration>
+					<binaries>
+						<binary>
+							<name>opencv</name>
+							<classifier>linux-x86-64</classifier>
+							<fetch>file:///${project.basedir}/src/test/resources/my-binary.so</fetch>
+							<hash>f891e045138bc54eba2730fef06169b2662a0058</hash>
+						</binary>
+					</binaries>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
