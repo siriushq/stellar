@@ -52,6 +52,10 @@
 
 		<module>stellar.logging</module>
 		<module>stellar.logging.collect.slf4j</module>
+		<module>stellar.logging.collect.file</module>
+		<module>stellar.logging.collect.console</module>
+		<module>stellar.logging.collect.json</module>
+		<module>stellar.logging.collect.csv</module>
 		<module>stellar.logging.dispatch.applog</module>
 		<module>stellar.logging.dispatch.jboss</module>
 		<module>stellar.logging.dispatch.jcl</module>
@@ -167,15 +171,30 @@
 				<artifactId>stellar-logging</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
-			<dependency>
-				<groupId>org.siriushq.stellar</groupId>
-				<artifactId>stellar-logging-bundle</artifactId>
-				<version>1.0-RC1</version>
-			</dependency>
 
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-logging-slf4j-collector</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-console-collector</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-file-collector</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-csv-collector</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-logging-json-collector</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 
