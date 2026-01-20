@@ -1,0 +1,10 @@
+siriushq/stellar.logging.collect.file
+=====================================
+
+File collector for the logging system.
+
+- This module logs in plain-text format, rolling twice a day.
+- This module exposes an SPI for replacing the output format.
+
+The presence of this artifact on the class-path or module-path will cause it
+to be automatically registered (service loaded).

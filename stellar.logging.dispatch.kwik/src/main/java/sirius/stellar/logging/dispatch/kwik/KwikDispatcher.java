@@ -30,8 +30,8 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	@Override
 	protected void log(@Nullable String text) {
+		this.lock.lock();
 		try {
-			this.lock.lock();
 			LoggerMessage.builder()
 					.level(INFORMATION)
 					.time(Instant.now())
@@ -46,8 +46,8 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	@Override
 	protected void log(@Nullable String text, @Nullable Throwable throwable) {
+		this.lock.lock();
 		try {
-			this.lock.lock();
 			LoggerMessage.builder()
 					.level(INFORMATION)
 					.time(Instant.now())
@@ -63,8 +63,8 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	@Override
 	protected void logWithHexDump(@Nullable String text, byte[] data, int length) {
+		this.lock.lock();
 		try {
-			this.lock.lock();
 			if (text == null) text = "";
 			text += "\n" + this.byteToHexBlock(data, length);
 
@@ -82,8 +82,8 @@ public final class KwikDispatcher extends tech.kwik.core.log.BaseLogger {
 
 	@Override
 	protected void logWithHexDump(@Nullable String text, @Nullable ByteBuffer data, int offset, int length) {
+		this.lock.lock();
 		try {
-			this.lock.lock();
 			if (text == null) text = "";
 			text += "\n" + this.byteToHexBlock(data, offset, length);
 

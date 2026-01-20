@@ -1,0 +1,12 @@
+siriushq/stellar.logging.collect.console
+========================================
+
+Console collector for the logging system.
+
+- This module logs to `stderr` by default.
+- This module redirects both `System#out` & `System#err` to dispatch
+  to the logging system (therefore it is also a dispatcher).
+- This module exposes an SPI for replacing the output format & destination.
+
+The presence of this artifact on the class-path or module-path will cause it
+to be automatically registered (service loaded).

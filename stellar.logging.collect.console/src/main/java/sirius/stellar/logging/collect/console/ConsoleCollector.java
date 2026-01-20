@@ -1,106 +1,41 @@
-package sirius.stellar.logging.collect;
+package sirius.stellar.logging.collect.console;
 
 import org.jspecify.annotations.Nullable;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
+import sirius.stellar.logging.spi.LoggerCollector;
 
 import java.io.PrintStream;
-import java.io.StringWriter;
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
+import java.util.ServiceLoader;
 
 import static java.lang.Thread.currentThread;
-import static java.time.ZoneOffset.UTC;
-import static java.util.Locale.US;
-import static sirius.stellar.facility.terminal.TerminalColor.*;
-import static sirius.stellar.logging.Logger.format;
 import static sirius.stellar.logging.LoggerLevel.ERROR;
 import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
-/// Implementation of [Collector] that prints to a given [PrintStream],
-/// and optionally can override [System#out] and [System#err].
-final class ConsoleCollector implements Collector {
+/// Implementation of [LoggerCollector] for logging to the console.
+///
+/// @see ConsoleTechnique
+/// @since 1.0
+public final class ConsoleCollector implements LoggerCollector {
 
-	private final PrintStream stream;
-	private final DateTimeFormatter formatter;
+	private final ConsoleTechnique technique;
 
-	/// Instantiate this collector for the provided [PrintStream].
-	/// @see #overriding(PrintStream)
-	ConsoleCollector(PrintStream stream) {
-		this.stream = stream;
-		this.formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-				.withLocale(US)
-				.withZone(UTC);
-	}
-
-	/// Instantiate this collector for the provided [PrintStream], overriding
-	/// [System#out] (`stdout`) and [System#err] (`stderr`) with streams that
-	/// dispatch further writes to [Logger].
-	///
-	/// This should only be called once across the application lifecycle.
-	/// @see #ConsoleCollector(PrintStream)
-	static Collector overriding(PrintStream stream) {
-		Collector collector = new ConsoleCollector(stream);
+	public ConsoleCollector() {
+		this.technique = ServiceLoader.load(ConsoleTechnique.class)
+				.findFirst()
+				.orElseGet(HumanConsoleTechnique::new);
 		System.setOut(new DispatchingPrintStream(INFORMATION, "stdout"));
 		System.setErr(new DispatchingPrintStream(ERROR, "stderr"));
-		return collector;
 	}
 
 	@Override
 	public void collect(LoggerMessage message) {
-		StringBuilder builder = new StringBuilder(128);
-
-		builder.append(BLACK.foreground().bright());
-		builder.append("[");
-
-		builder.append(WHITE.foreground().dark());
-		builder.append(this.formatter.format(message.time()));
-
-		builder.append(BLACK.foreground().bright());
-		builder.append(" | ");
-
-		builder.append(display(message.level()));
-		builder.append(BLACK.foreground().bright());
-		builder.append(" | ");
-
-		builder.append(WHITE.foreground().dark());
-		builder.append(message.thread());
-
-		builder.append(BLACK.foreground().bright());
-		builder.append(" | ");
-
-		builder.append(WHITE.foreground().dark());
-		builder.append(message.name());
-
-		builder.append(BLACK.foreground().bright());
-		builder.append("] ");
-
-		builder.append(WHITE.foreground().bright());
-		builder.append(message.text());
-		builder.append(DEFAULT.foreground().bright());
-
-		this.stream.println(builder);
-	}
-
-	/// Returns [LoggerLevel#display()] with a suitable color escape code
-	/// prepended to the string depending on the level.
-	private String display(LoggerLevel level) {
-		String display = level.display();
-		return switch (level) {
-			case INFORMATION -> BLUE.foreground().bright() + display;
-			case WARNING -> YELLOW.foreground().bright() + display;
-			case ERROR, TRACING -> RED.foreground().bright() + display;
-			case DIAGNOSIS, CONFIGURATION -> MAGENTA.foreground().bright() + display;
-			default -> display;
-		};
-	}
-
-	@Override
-	public String toString() {
-		return format("ConsoleCollector[stream={0}]", this.stream.toString());
+		String formatted = this.technique.format(message);
+		PrintStream destination = this.technique.destination();
+		destination.println(formatted);
 	}
 }
 

@@ -1,10 +1,7 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.logging.collect.Collector;
-import sirius.stellar.logging.collect.slf4j.Slf4jCollectorProvider;
 
 @NullMarked
 module sirius.stellar.logging.collect.slf4j {
-
 	requires org.jspecify;
 	requires org.slf4j;
 
@@ -13,5 +10,6 @@ module sirius.stellar.logging.collect.slf4j {
 
 	exports sirius.stellar.logging.collect.slf4j;
 
-	provides Collector.Provider with Slf4jCollectorProvider;
+	provides sirius.stellar.logging.spi.LoggerExtension
+		with sirius.stellar.logging.collect.slf4j.Slf4jCollector;
 }

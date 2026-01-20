@@ -7,6 +7,7 @@ package sirius.stellar.logging.dispatch;
 ///
 /// @author Mahied Maruf (mechite)
 /// @since 1.0
+@Deprecated
 public interface Dispatcher {
 
 	/// Run when a dispatcher is wired.

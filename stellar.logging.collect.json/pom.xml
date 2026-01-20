@@ -9,22 +9,24 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-logging</artifactId>
-    <name>Stellar :: Logging</name>
-
-	<properties>
-		<java.version.main>17</java.version.main>
-		<java.version.test>17</java.version.test>
-	</properties>
+    <artifactId>stellar-logging-json-collector</artifactId>
+    <name>Stellar :: Logging :: JSON Collector</name>
 
     <dependencies>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
-            <artifactId>stellar-facility</artifactId>
+            <artifactId>stellar-logging</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-logging-console-collector</artifactId>
+			<optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
-            <artifactId>stellar-annotation</artifactId>
+            <artifactId>stellar-logging-file-collector</artifactId>
+			<optional>true</optional>
         </dependency>
 
 		<dependency>
@@ -43,26 +45,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-
-				<executions>
-					<execution>
-						<id>compile-java21</id>
-
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-
-						<configuration>
-							<release>21</release>
-							<multiReleaseOutput>true</multiReleaseOutput>
-
-							<compileSourceRoots>
-								<root>${project.basedir}/src/main/java21</root>
-							</compileSourceRoots>
-						</configuration>
-					</execution>
-				</executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

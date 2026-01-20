@@ -29,8 +29,9 @@ public interface LoggerFormatter {
 	/// @since 1.0
 	String formatString(Locale locale, String string, Object[] arguments);
 
-	/// Obtain a [LoggerFormatter] instance, service-loading the first alternative
-	/// implementation found on the class-path/module-path, if one is available.
+	/// Obtain a [LoggerFormatter] instance, service-loading the first
+	/// alternative implementation found on the class-path/module-path,
+	/// if one is available.
 	///
 	/// @see Logger#format
 	@Internal
