@@ -46,6 +46,23 @@
 
 				<executions>
 					<execution>
+						<id>compile-java16</id>
+
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+
+						<configuration>
+							<release>16</release>
+							<multiReleaseOutput>true</multiReleaseOutput>
+
+							<compileSourceRoots>
+								<root>${project.basedir}/src/main/java16</root>
+							</compileSourceRoots>
+						</configuration>
+					</execution>
+					<execution>
 						<id>compile-java23</id>
 
 						<phase>compile</phase>
