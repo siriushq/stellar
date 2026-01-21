@@ -55,10 +55,8 @@ public final class DEsthreeServer implements EsthreeServer {
 			}
 
 			arguments = Stream.concat(Stream.of(this.binary.toAbsolutePath().toString()), arguments.stream()).toList();
-			Logger.information(arguments);
 			ProcessBuilder builder = new ProcessBuilder(arguments);
 			builder.environment().putAll(environment);
-			Logger.information(environment);
 
 			this.process = builder.start();
 			this.handle = this.process.toHandle();
@@ -80,26 +78,6 @@ public final class DEsthreeServer implements EsthreeServer {
 				String name = "sirius.stellar.esthree.server";
 
 				Logger.dispatch(message.time(), message.mappedLevel(), thread, name, message.message());
-//				Map<String, Object> object = mapper.fromJsonObject(line);
-//
-//				String time = object.get("time").toString();
-//				String message = object.get("message").toString();
-//				String name = "sirius.stellar.esthree.server.DEsthreeServer";
-//
-//				LoggerLevel level = switch (object.get("level").toString()) {
-//					case "ERROR", "FATAL" -> ERROR;
-//					case "WARNING" -> WARNING;
-//					case "INFO" -> INFORMATION;
-//					case "DEBUG" -> DEBUGGING;
-//					default -> INFORMATION;
-//				};
-//
-//				object.remove("level");
-//				object.remove("time");
-//				object.remove("message");
-//				message += object;
-//
-//				Logger.dispatch(Instant.parse(time), level, "EsthreeServer-" + this.process.pid(), name, message);
 			}
 			Logger.information("Successfully closed EsthreeServer with code {0,number,integer}.", this.process.waitFor());
 		} catch (IOException | InterruptedException exception) {
@@ -233,7 +211,9 @@ final class DEsthreeServerBuilder implements EsthreeServer.Builder {
 
 	@Override
 	public EsthreeServer build() {
-		Stream<String> volumes = (this.temporary != null) ? Stream.of(this.temporary.toAbsolutePath().toString()) : this.volumes.stream();
+		Stream<String> volumes = (this.temporary != null)
+				? Stream.of(this.temporary.toAbsolutePath().toString())
+				: this.volumes.stream();
 		List<String> arguments = Stream.concat(this.arguments.stream(), volumes).toList();
 		return new DEsthreeServer(this.environment, arguments, this.temporary);
 	}
