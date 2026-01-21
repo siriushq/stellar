@@ -2,13 +2,8 @@ package sirius.stellar.esthree;
 
 import io.avaje.http.client.HttpClient;
 
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.ByteBuffer;
-import java.time.Instant;
-import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
@@ -41,12 +36,13 @@ import java.util.stream.Stream;
 public interface Esthree extends AutoCloseable {
 
 	//#region buckets*
-	/// Returns a [Stream] of [Bucket]s, which iterates pages when a terminal
-	/// operation is executed. This will lazily load the listing,
+	/// Returns a [Stream] of [EsthreeBucket]s, which iterates pages when a
+	/// terminal operation is executed. This will lazily load the listing
 	/// recursively using AWS pagination.
 	///
 	/// A [Stream] is used to prevent extraneous requests being made, as a
-	/// contract to define that the [Bucket]s should only be consumed once.
+	/// contract to define that the [EsthreeBucket]s should only
+	/// be consumed once.
 	///
 	/// If such iterating view is unsuitable [Stream#collect] or `Stream#toList`
 	/// (on Java >16) can be used to obtain a persistent view.
@@ -57,19 +53,19 @@ public interface Esthree extends AutoCloseable {
 	/// considered a trusted host, but this could be used as an attack vector.
 	///
 	/// @throws EsthreeException if the request failed
-	Stream<Bucket> buckets();
+	Stream<EsthreeBucket> buckets();
 
 	/// [Future]-based variant of [#buckets()].
 	/// @throws EsthreeException if the request failed
-	Stream<CompletableFuture<Bucket>> bucketsFuture();
+	Stream<CompletableFuture<EsthreeBucket>> bucketsFuture();
 
 	/// [#buckets()], efficiently limiting results with the provided prefix string.
 	/// @throws EsthreeException if the request failed
-	Stream<Bucket> buckets(String prefix);
+	Stream<EsthreeBucket> buckets(String prefix);
 
 	/// [Future]-based variant of [#buckets(String)].
 	/// @throws EsthreeException if the request failed
-	Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix);
+	Stream<CompletableFuture<EsthreeBucket>> bucketsFuture(String prefix);
 	//#endregion
 
 	//#region createBucket*
@@ -330,27 +326,5 @@ public interface Esthree extends AutoCloseable {
 		public String toString() {
 			return this.identifier;
 		}
-	}
-
-	/// Represents an S3 bucket, as returned by e.g. `ListBuckets`.
-	interface Bucket {
-
-		/// The Amazon Resource Name (ARN) of the S3 bucket.
-		/// @throws NoSuchElementException if field is missing from response
-		String arn();
-
-		/// The AWS region where the bucket is located.
-		/// @throws NoSuchElementException if field is missing from response
-		/// @throws IllegalStateException failed to parse response region
-		Region region();
-
-		/// Date the bucket was created (some bucket changes can update this).
-		/// @throws NoSuchElementException if field is missing from response
-		/// @throws DateTimeParseException failure to parse response timestamp
-		Instant creation();
-
-		/// The name of the bucket.
-		/// @throws NoSuchElementException if field is missing from response
-		String name();
 	}
 }

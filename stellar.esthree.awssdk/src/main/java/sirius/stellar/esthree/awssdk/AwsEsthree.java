@@ -2,6 +2,7 @@ package sirius.stellar.esthree.awssdk;
 
 import io.avaje.http.client.HttpClient;
 import sirius.stellar.esthree.Esthree;
+import sirius.stellar.esthree.EsthreeBucket;
 import sirius.stellar.esthree.EsthreePayload;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -29,7 +30,7 @@ final class AwsEsthree implements Esthree {
 
 	//#region buckets*
 	@Override
-	public Stream<Bucket> buckets() {
+	public Stream<EsthreeBucket> buckets() {
 		try {
 			return this.delegate.listBucketsPaginator()
 					.stream()
@@ -42,12 +43,12 @@ final class AwsEsthree implements Esthree {
 	}
 
 	@Override
-	public Stream<CompletableFuture<Bucket>> bucketsFuture() {
+	public Stream<CompletableFuture<EsthreeBucket>> bucketsFuture() {
 		return buckets().map(CompletableFuture::completedFuture);
 	}
 
 	@Override
-	public Stream<Bucket> buckets(String prefix) {
+	public Stream<EsthreeBucket> buckets(String prefix) {
 		try {
 			return this.delegate.listBuckets(builder -> builder.prefix(prefix))
 					.buckets()
@@ -59,7 +60,7 @@ final class AwsEsthree implements Esthree {
 	}
 
 	@Override
-	public Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix) {
+	public Stream<CompletableFuture<EsthreeBucket>> bucketsFuture(String prefix) {
 		return buckets(prefix).map(CompletableFuture::completedFuture);
 	}
 	//#endregion

@@ -198,7 +198,7 @@ final class EsthreeTest {
 
 			assertThat(esthree.buckets("example-")
 					.filter(bucket -> bucket.creation().isAfter(yesterday))
-					.map(Esthree.Bucket::name)
+					.map(EsthreeBucket::name)
 					.collect(toList()))
 					.containsExactlyInAnyOrderElementsOf(expected);
 		});

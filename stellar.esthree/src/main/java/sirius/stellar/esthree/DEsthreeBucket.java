@@ -8,9 +8,9 @@ import java.time.Instant;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-/// Domain implementation of [Esthree.Bucket] wrapping an [Element]
+/// Domain implementation of [EsthreeBucket] wrapping an [Element]
 /// response from bucket-related methods, such as AWS `ListBuckets`.
-final class DEsthreeBucket implements Esthree.Bucket {
+final class DEsthreeBucket implements EsthreeBucket {
 
 	private final Element bucket;
 

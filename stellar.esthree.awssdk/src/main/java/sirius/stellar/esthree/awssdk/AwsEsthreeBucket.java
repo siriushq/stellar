@@ -1,15 +1,16 @@
 package sirius.stellar.esthree.awssdk;
 
 import sirius.stellar.esthree.Esthree;
+import sirius.stellar.esthree.EsthreeBucket;
 
 import java.time.Instant;
 import java.util.Optional;
 
-/// Implementation of [Esthree.Bucket] delegating to AWS SDK v2,
+/// Implementation of [EsthreeBucket] delegating to AWS SDK v2,
 /// wrapping a [software.amazon.awssdk.services.s3.model.Bucket].
 ///
 /// @see AwsEsthreeBuilder
-final class AwsEsthreeBucket implements Esthree.Bucket {
+final class AwsEsthreeBucket implements EsthreeBucket {
 
 	private final software.amazon.awssdk.services.s3.model.Bucket delegate;
 

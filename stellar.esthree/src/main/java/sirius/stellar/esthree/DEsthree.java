@@ -17,12 +17,10 @@ import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Optional;
-import java.util.OptionalLong;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import static java.net.http.HttpRequest.BodyPublishers.fromPublisher;
-import static java.net.http.HttpRequest.BodyPublishers.ofInputStream;
 import static sirius.stellar.esthree.Esthree.Region.US_EAST_1;
 
 /// Domain implementation of [Esthree].
@@ -56,24 +54,24 @@ final class DEsthree implements Esthree {
 
 	//#region buckets*
 	@Override
-	public Stream<Bucket> buckets() {
+	public Stream<EsthreeBucket> buckets() {
 		return this.bucketsPaginator(this.client.request()).stream();
 	}
 
 	@Override
-	public Stream<CompletableFuture<Bucket>> bucketsFuture() {
+	public Stream<CompletableFuture<EsthreeBucket>> bucketsFuture() {
 		return this.bucketsPaginator(this.client.request()).streamFuture();
 	}
 
 	@Override
-	public Stream<Bucket> buckets(String prefix) {
+	public Stream<EsthreeBucket> buckets(String prefix) {
 		HttpClientRequest request = this.client.request();
 		request.queryParam("prefix", prefix);
 		return this.bucketsPaginator(request).stream();
 	}
 
 	@Override
-	public Stream<CompletableFuture<Bucket>> bucketsFuture(String prefix) {
+	public Stream<CompletableFuture<EsthreeBucket>> bucketsFuture(String prefix) {
 		HttpClientRequest request = this.client.request();
 		request.queryParam("prefix", prefix);
 		return this.bucketsPaginator(request).streamFuture();
@@ -81,7 +79,7 @@ final class DEsthree implements Esthree {
 
 	/// Return a paginator used to execute the AWS `ListBuckets` method.
 	/// Used by [#buckets] and [#bucketsFuture].
-	private DEsthreePaginator<Bucket> bucketsPaginator(HttpClientRequest request) {
+	private DEsthreePaginator<EsthreeBucket> bucketsPaginator(HttpClientRequest request) {
 		String continuation = "ContinuationToken";
 		return new DEsthreePaginator<>(this.parser, this.signer, continuation, request, document -> {
 			NodeList bucketsTags = document.getElementsByTagName("Buckets");
