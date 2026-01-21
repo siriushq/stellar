@@ -89,7 +89,7 @@ final class DEsthree implements Esthree {
 			return buckets.getChildNodes().getLength();
 		}, (document, index) -> {
 			NodeList bucketsTags = document.getElementsByTagName("Buckets");
-			if (bucketsTags.getLength() == 0) throw new IllegalStateException();//TODO
+			if (bucketsTags.getLength() == 0) throw new IllegalStateException();
 
 			Node buckets = bucketsTags.item(0);
 			Node bucket = buckets.getChildNodes().item(index);
