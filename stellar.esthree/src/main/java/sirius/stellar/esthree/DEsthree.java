@@ -372,10 +372,11 @@ final class DEsthree implements Esthree {
 	//#endregion
 
 	/// Write the provided document to a [String].
+	/// This buffers the entire contents of the document in-memory.
 	///
-	/// This buffers the entire contents of the document in-memory, as [HttpRequest.BodyPublisher]
-	/// provides no facility for streaming from `javax.xml`, without instantiating another thread
-	/// (which would be a heavier operation).
+	/// [HttpRequest.BodyPublisher] provides no facility for streaming from
+	/// `javax.xml` (which utilizes [OutputStream]s) without instantiating
+	/// another thread (which would be a heavier operation in this case).
 	private String write(Document document) {
 		try (Writer writer = new StringWriter()) {
 			this.transformer.get().transform(new DOMSource(document), new StreamResult(writer));
@@ -402,7 +403,7 @@ final class DEsthree implements Esthree {
 	}
 
 	/// Assert that the provided body does not contain an error response.
-	/// Throws [EsthreeException] if an error is found, using the contents of the response.
+	/// @throws EsthreeException error is found (wraps response contents)
 	private void errorResponse(byte[] body) {
 		try {
 			if (body.length == 0) return;
