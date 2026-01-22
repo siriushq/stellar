@@ -45,6 +45,7 @@
 
 	<modules>
 		<module>stellar.tuple</module>
+		<module>stellar.ansicsi</module>
 		<module>stellar.facility</module>
 
 		<module>stellar.annotation</module>

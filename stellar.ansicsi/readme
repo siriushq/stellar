@@ -1,0 +1,7 @@
+siriushq/stellar.ansicsi
+========================
+
+A library exporting ANSI (American National Standards Institute) standard
+CSI (Control Sequence Introducer) constants & utilities related to their use.
+
+This allows for console coloring, formatting, manipulation, etc.
