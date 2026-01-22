@@ -6,9 +6,6 @@ import static sirius.stellar.ansicsi.Terminal.GRAPHIC;
 /// Enumeration of font/formatting sequences that can be rendered in a terminal.
 /// These constants are exposed as public API on the namespace of [Terminal].
 ///
-/// - [#RESET] (widely supported):
-///     Resets/clears all styles and colors.
-///
 /// - [#BOLD] (widely supported):
 ///     Makes text bolder or, generally, increased in intensity.
 ///     Implementation of this style depends on the platform.
@@ -53,10 +50,9 @@ import static sirius.stellar.ansicsi.Terminal.GRAPHIC;
 ///     Makes text over-lined.
 ///
 /// @see Terminal
-interface TerminalStyle {
+public interface TerminalStyle {
 
 	String
-	RESET = ESCAPE + 0 + GRAPHIC,
 	BOLD = ESCAPE + 1 + GRAPHIC,
 	FAINT = ESCAPE + 2 + GRAPHIC,
 	ITALIC = ESCAPE + 3 + GRAPHIC,

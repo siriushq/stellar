@@ -34,7 +34,7 @@ import static sirius.stellar.ansicsi.Terminal.ESCAPE;
 ///     Currently, this is the only [Isoluminant] color available.
 ///
 /// @see Terminal
-interface TerminalColor {
+public interface TerminalColor {
 
 	Anisoluminant
 	BLACK = new Anisoluminant(30, 90, 40, 100),
