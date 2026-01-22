@@ -4,6 +4,8 @@ import sirius.stellar.logging.LoggerMessage;
 import sirius.stellar.logging.collect.csv.CsvAbstractTechnique;
 import sirius.stellar.logging.collect.file.FileTechnique;
 
+import static java.lang.System.lineSeparator;
+
 /// Implementation of [FileTechnique] for CSV (Comma-Separated Values) logging.
 public final class CsvFileTechnique
 		extends CsvAbstractTechnique
@@ -16,7 +18,7 @@ public final class CsvFileTechnique
 
 	@Override
 	public String header() {
-		return "\"time\",\"level\",\"thread\",\"name\",\"text\"\n";
+		return "\"time\",\"level\",\"thread\",\"name\",\"text\"" + lineSeparator();
 	}
 
 	@Override

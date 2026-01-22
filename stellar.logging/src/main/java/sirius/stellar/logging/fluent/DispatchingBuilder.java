@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Instant;
 
+import static java.lang.System.lineSeparator;
 import static java.util.Objects.requireNonNull;
 
 /// Default implementation of [Builder].
@@ -84,7 +85,7 @@ public final class DispatchingBuilder implements Builder {
 		if (throwable == null) return this;
 
 		if (this.text == null) this.text = "";
-		this.text += "\n" + traceback(throwable);
+		this.text += lineSeparator() + traceback(throwable);
 		return this;
 	}
 

@@ -5,6 +5,7 @@ import sirius.stellar.logging.LoggerMessage;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+import static java.lang.System.lineSeparator;
 import static java.util.stream.Collectors.joining;
 
 /// Base class for CSV (Comma-Separated Values) logging technique.
@@ -12,7 +13,7 @@ public abstract class CsvAbstractTechnique {
 
 	/// Return a CSV formatted version of the provided message.
 	protected String format(LoggerMessage message) {
-		StringJoiner joiner = new StringJoiner("\",\"", "\"", "\"\n");
+		StringJoiner joiner = new StringJoiner("\",\"", "\"", "\"" + lineSeparator());
 		joiner.add(message.time().toString())
 			  .add(message.level().toString())
 			  .add(message.thread())

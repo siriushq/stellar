@@ -12,8 +12,7 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.Preferences;
 
-import static java.lang.System.err;
-import static java.lang.System.out;
+import static java.lang.System.*;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
@@ -54,7 +53,7 @@ public final class JavaprefsConfiguration
 				.entrySet()
 				.stream()
 				.map(it -> it.getKey() + "=" + it.getValue())
-				.collect(joining("\n")));
+				.collect(joining(lineSeparator())));
 			break;
 		case 1:
 			String key = arguments[0];

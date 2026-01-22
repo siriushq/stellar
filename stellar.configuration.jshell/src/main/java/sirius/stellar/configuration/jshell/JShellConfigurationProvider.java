@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
+import static java.lang.System.lineSeparator;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.UUID.randomUUID;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -89,7 +90,7 @@ public final class JShellConfigurationProvider implements FileConfigurationProvi
 
 			String diagnostics = shell.diagnostics(event.snippet())
 					.map(diag -> diag.getMessage(Locale.getDefault()))
-					.collect(joining("\n"));
+					.collect(joining(lineSeparator()));
 			throw new IllegalStateException(diagnostics, event.exception());
 		}
 	}

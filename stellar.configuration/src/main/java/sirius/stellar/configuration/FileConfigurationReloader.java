@@ -60,7 +60,7 @@ public abstract class FileConfigurationReloader implements ConfigurationReloader
 					? "java.nio.file.WatchService/java.nio.file.FileSystem#newWatchService"
 					: "java.util.concurrent.ScheduledExecutorService#scheduleWithFixedDelay";
 			String extensions = join(", ", this.extensions());
-			err.printf("%s unavailable, ignoring changes to %s\n", missing, extensions);
+			err.printf("%s unavailable, ignoring changes to %s%n", missing, extensions);
 		}
 	}
 

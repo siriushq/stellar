@@ -60,7 +60,7 @@ final class EsthreeTest {
 		} catch (SSLException exception) {
 			return false;
 		} catch (IOException exception) {
-			err.printf("Failed to connect to mock S3 server, skipping test (%s)\n", exception);
+			err.printf("Failed to connect to mock S3 server, skipping test (%s)%n", exception);
 			return true;
 		}
 	}
@@ -181,7 +181,7 @@ final class EsthreeTest {
 				err.printf("\rcreated %s buckets...", counter.get());
 				onSpinWait();
 			}
-			err.printf("\rcreation complete...%s\n", " ".repeat(20));
+			err.printf("\rcreation complete...%s%n", " ".repeat(20));
 		});
 	}
 
@@ -223,7 +223,7 @@ final class EsthreeTest {
 				err.printf("\rdeleted %s buckets...", counter.get());
 				onSpinWait();
 			}
-			err.printf("\rdeleting complete...%s\n", " ".repeat(20));
+			err.printf("\rdeleting complete...%s%n", " ".repeat(20));
 		});
 	}
 

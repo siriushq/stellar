@@ -2,6 +2,7 @@ package sirius.stellar.logging.collect.json;
 
 import sirius.stellar.logging.LoggerMessage;
 
+import static java.lang.System.lineSeparator;
 import static java.lang.ThreadLocal.withInitial;
 
 /// Base class for JSON (JavaScript Object Notation) logging technique.
@@ -36,7 +37,8 @@ public abstract class JsonAbstractTechnique {
 		builder.append(",\"message\":");
 		this.json(builder, message.text());
 
-		builder.append("}\n");
+		builder.append("}");
+		builder.append(lineSeparator());
 		return builder.toString();
 	}
 

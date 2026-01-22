@@ -53,7 +53,7 @@ final class EnvironmentConfigurationProviderTest extends AbstractConfigurationTe
 			writable.putAll(entries);
 			return true;
 		} catch (NoSuchFieldException | IllegalAccessException | InaccessibleObjectException exception) {
-			err.printf("Failed to override System#getenv, skipping test (%s)\n", exception);
+			err.printf("Failed to override System#getenv, skipping test (%s)%n", exception);
 			return false;
 		}
 	}
