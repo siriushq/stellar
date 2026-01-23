@@ -1,0 +1,9 @@
+siriushq/stellar.ansicsi.windows
+================================
+
+Extension to [siriushq/stellar.ansicsi] which automatically sets the
+`ENABLE_VIRTUAL_TERMINAL_PROCESSING` output mode on stdout & stderr,
+and the output codepage to CP65001 (UTF-8).
+
+This allows for printing of UTF-8 characters, and enables the
+functioning of ANSI CSI codes on Windows 10+.
