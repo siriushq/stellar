@@ -9,12 +9,28 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-ansicsi-windows</artifactId>
+	<artifactId>stellar-ansicsi-windows</artifactId>
     <name>Stellar :: ANSI CSI :: Windows</name>
 
 	<properties>
 		<java.version.main>11</java.version.main>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.siriushq.stellar</groupId>
+			<artifactId>stellar-ansicsi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.jnr</groupId>
+			<artifactId>jnr-ffi</artifactId>
+			<version>2.2.18</version>
+
+			<optional>true</optional>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
     <build>
         <plugins>
@@ -25,6 +41,26 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+
+				<executions>
+					<execution>
+						<id>compile-java23</id>
+
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+
+						<configuration>
+							<release>23</release>
+							<multiReleaseOutput>true</multiReleaseOutput>
+
+							<compileSourceRoots>
+								<root>${project.basedir}/src/main/java23</root>
+							</compileSourceRoots>
+						</configuration>
+					</execution>
+				</executions>
             </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

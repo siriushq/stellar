@@ -45,8 +45,10 @@
 
 	<modules>
 		<module>stellar.tuple</module>
-		<module>stellar.ansicsi</module>
 		<module>stellar.facility</module>
+
+		<module>stellar.ansicsi</module>
+		<module>stellar.ansicsi.windows</module>
 
 		<module>stellar.annotation</module>
 		<module>stellar.annotation.intellij</module>
@@ -159,6 +161,17 @@
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-facility</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-ansicsi</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-ansicsi-windows</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 
