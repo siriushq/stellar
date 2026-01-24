@@ -30,7 +30,9 @@ public final class Terminal
 	implements TerminalColor, TerminalStyle {
 
 	/// Represents the CSI used to initiate ANSI escape sequences.
-	public static final String ESCAPE = "\u001B[";
+	/// @implNote This is intentionally non-`final` to force-trigger
+	/// the static-initializer block of the [Terminal] class.
+	static String ESCAPE = "\u001B[";
 
 	/// Represents a CSI terminator for SGR (Select Graphic Rendition) commands.
 	public static final String GRAPHIC = "m";
