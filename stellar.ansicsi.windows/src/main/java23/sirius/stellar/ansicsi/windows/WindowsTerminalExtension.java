@@ -6,6 +6,7 @@ import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.util.Optional;
 
+import static java.lang.System.getProperty;
 import static java.lang.foreign.Linker.nativeLinker;
 import static java.lang.foreign.SymbolLookup.libraryLookup;
 import static java.lang.foreign.ValueLayout.ADDRESS;
@@ -72,8 +73,16 @@ public final class WindowsTerminalExtension
 		return this.linker.downcallHandle(segment.get(), descriptor);
 	}
 
+	/// Shortcut for checking if the current operating system is Windows.
+	private static boolean windows() {
+		return getProperty("os.name", "")
+				.toLowerCase()
+				.contains("win");
+	}
+
 	@Override
 	public void wire() throws Throwable {
+		if (!windows()) return;
 		try (this.arena) {
 			this.SetConsoleOutputCP.invoke(CP_UTF8);
 

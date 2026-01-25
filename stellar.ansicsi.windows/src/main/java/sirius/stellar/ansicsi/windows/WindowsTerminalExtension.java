@@ -5,6 +5,7 @@ import jnr.ffi.Pointer;
 import jnr.ffi.byref.IntByReference;
 import sirius.stellar.ansicsi.TerminalExtension;
 
+import static java.lang.System.getProperty;
 import static java.util.Objects.requireNonNull;
 
 /// Implementation of [TerminalExtension] which automatically sets the
@@ -39,6 +40,7 @@ public final class WindowsTerminalExtension
 
 	@Override
 	public void wire() {
+		if (!windows()) return;
 		if (this.kernel32.SetConsoleOutputCP(CP_UTF8) == 0) fail();
 
 		Pointer stdout = this.kernel32.GetStdHandle(STD_OUTPUT_HANDLE);
@@ -62,6 +64,13 @@ public final class WindowsTerminalExtension
 	/// Shortcut for throw an exception, for use only in [#wire].
 	private static void fail() {
 		throw new IllegalStateException("kernel32 invocation failed");
+	}
+
+	/// Shortcut for checking if the current operating system is Windows.
+	private static boolean windows() {
+		return getProperty("os.name", "")
+				.toLowerCase()
+				.contains("win");
 	}
 
 	/// Header definition of the required portions of the `kernel32` library.
