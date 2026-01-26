@@ -5,6 +5,7 @@ import sirius.stellar.ansicsi.TerminalExtension;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 import static java.lang.System.getProperty;
 import static java.lang.foreign.Linker.nativeLinker;
@@ -22,55 +23,33 @@ public final class WindowsTerminalExtension
 
 	private static final int
 		// https://learn.microsoft.com/windows/console/getstdhandle
-		STD_OUTPUT_HANDLE = -11,
-		STD_ERROR_HANDLE = -12,
-
+		STD_OUTPUT_HANDLE = -11, STD_ERROR_HANDLE = -12,
 		// https://learn.microsoft.com/windows/console/high-level-console-modes
 		ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004,
-
 		// https://learn.microsoft.com/windows/win32/intl/code-page-identifiers
 		CP_UTF8 = 65001;
 
-	private static final FunctionDescriptor
+	private static final BiFunction<Linker, SymbolLookup, MethodHandle>
 		// https://learn.microsoft.com/windows/console/setconsoleoutputcp
-		SetConsoleOutputCP_DESCRIPTOR = FunctionDescriptor.of(JAVA_INT, JAVA_INT),
-
+		SetConsoleOutputCP_FINDER = downcall("SetConsoleOutputCP", JAVA_INT, JAVA_INT),
 		// https://learn.microsoft.com/windows/console/getstdhandle
-		GetStdHandle_DESCRIPTOR = FunctionDescriptor.of(ADDRESS, JAVA_INT),
-
+		GetStdHandle_FINDER = downcall("GetStdHandle", ADDRESS, JAVA_INT),
 		// https://learn.microsoft.com/windows/console/getconsolemode
-		GetConsoleMode_DESCRIPTOR = FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS),
-
+		GetConsoleMode_FINDER = downcall("GetConsoleMode", JAVA_INT, ADDRESS, ADDRESS),
 		// https://learn.microsoft.com/windows/console/setconsolemode
-		SetConsoleMode_DESCRIPTOR = FunctionDescriptor.of(JAVA_INT, ADDRESS, JAVA_INT);
+		SetConsoleMode_FINDER = downcall("SetConsoleMode", JAVA_INT, ADDRESS, JAVA_INT);
 
-	private final Arena arena;
-	private final Linker linker;
-	private final SymbolLookup lookup;
-
-	private final MethodHandle
-		SetConsoleOutputCP,
-		GetStdHandle,
-		GetConsoleMode,
-		SetConsoleMode;
-
-	public WindowsTerminalExtension() {
-		this.arena = Arena.ofShared();
-
-		this.linker = nativeLinker();
-		this.lookup = libraryLookup("kernel32", this.arena);
-
-		this.SetConsoleOutputCP = this.lookup("SetConsoleOutputCP", SetConsoleOutputCP_DESCRIPTOR);
-		this.GetStdHandle = this.lookup("GetStdHandle", GetStdHandle_DESCRIPTOR);
-		this.GetConsoleMode = this.lookup("GetConsoleMode", GetConsoleMode_DESCRIPTOR);
-		this.SetConsoleMode = this.lookup("SetConsoleMode", SetConsoleMode_DESCRIPTOR);
-	}
-
-	/// Create a downcall handle for invoking the function provided by name.
-	private MethodHandle lookup(String name, FunctionDescriptor descriptor) {
-		Optional<MemorySegment> segment = this.lookup.find(name);
-		if (segment.isEmpty()) throw new IllegalStateException("No kernel32::" + name);
-		return this.linker.downcallHandle(segment.get(), descriptor);
+	/// Generate a finder function which, when provided with a [Linker] and
+	/// [SymbolLookup], will return a [MethodHandle] for a given function,
+	/// described when invoking this method.
+	private static BiFunction<Linker, SymbolLookup, MethodHandle>
+	downcall(String name, MemoryLayout result, MemoryLayout... arguments) {
+		return (linker, lookup) -> {
+			FunctionDescriptor descriptor = FunctionDescriptor.of(result, arguments);
+			Optional<MemorySegment> segment = lookup.find(name);
+			if (segment.isEmpty()) throw new IllegalStateException("No kernel32::" + name);
+			return linker.downcallHandle(segment.get(), descriptor);
+		};
 	}
 
 	/// Shortcut for checking if the current operating system is Windows.
@@ -83,23 +62,32 @@ public final class WindowsTerminalExtension
 	@Override
 	public void wire() throws Throwable {
 		if (!windows()) return;
-		try (this.arena) {
-			this.SetConsoleOutputCP.invoke(CP_UTF8);
+		try (Arena arena = Arena.ofConfined()) {
+			Linker linker = nativeLinker();
+			SymbolLookup lookup = libraryLookup("kernel32", arena);
+
+			MethodHandle
+				SetConsoleOutputCP = SetConsoleOutputCP_FINDER.apply(linker, lookup),
+				GetStdHandle = GetStdHandle_FINDER.apply(linker, lookup),
+				GetConsoleMode = GetConsoleMode_FINDER.apply(linker, lookup),
+				SetConsoleMode = SetConsoleMode_FINDER.apply(linker, lookup);
+
+			SetConsoleOutputCP.invoke(CP_UTF8);
 
 			MemorySegment
-				stdout = (MemorySegment) this.GetStdHandle.invoke(STD_OUTPUT_HANDLE),
-				stderr = (MemorySegment) this.GetStdHandle.invoke(STD_ERROR_HANDLE);
+				stdout = (MemorySegment) GetStdHandle.invoke(STD_OUTPUT_HANDLE),
+				stderr = (MemorySegment) GetStdHandle.invoke(STD_ERROR_HANDLE);
 
-			MemorySegment found = this.arena.allocate(JAVA_INT);
+			MemorySegment found = arena.allocate(JAVA_INT);
 			int updated;
 
-			this.GetConsoleMode.invoke(stdout, found);
+			GetConsoleMode.invoke(stdout, found);
 			updated = found.get(JAVA_INT, 0) | ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-			this.SetConsoleMode.invoke(stdout, updated);
+			SetConsoleMode.invoke(stdout, updated);
 
-			this.GetConsoleMode.invoke(stderr, found);
+			GetConsoleMode.invoke(stderr, found);
 			updated = found.get(JAVA_INT, 0) | ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-			this.SetConsoleMode.invoke(stderr, updated);
+			SetConsoleMode.invoke(stderr, updated);
 		}
 	}
 }
