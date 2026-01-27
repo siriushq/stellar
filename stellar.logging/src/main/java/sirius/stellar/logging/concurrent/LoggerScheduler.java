@@ -6,6 +6,7 @@ import sirius.stellar.logging.Logger;
 import java.util.ServiceLoader;
 import java.util.concurrent.ScheduledExecutorService;
 
+import static java.util.ServiceLoader.load;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.stream.Collectors.joining;
 
@@ -25,7 +26,7 @@ public interface LoggerScheduler
 	@Internal
 	static LoggerScheduler create() {
 		try {
-			ServiceLoader<LoggerScheduler> loader = ServiceLoader.load(LoggerScheduler.class);
+			ServiceLoader<LoggerScheduler> loader = load(LoggerScheduler.class);
 			for (LoggerScheduler scheduler : loader) {
 				if (scheduler instanceof DefaultLoggerScheduler) continue;
 				return scheduler;

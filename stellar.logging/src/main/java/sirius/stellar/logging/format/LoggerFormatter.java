@@ -6,6 +6,8 @@ import sirius.stellar.logging.Logger;
 import java.util.Locale;
 import java.util.ServiceLoader;
 
+import static java.util.ServiceLoader.load;
+
 /// Represents a string formatter, used by the [Logger#format] public API.
 /// This SPI allows for another implementation to be provided, if desired.
 ///
@@ -37,7 +39,7 @@ public interface LoggerFormatter {
 	@Internal
 	static LoggerFormatter create() {
 		try {
-			ServiceLoader<LoggerFormatter> loader = ServiceLoader.load(LoggerFormatter.class);
+			ServiceLoader<LoggerFormatter> loader = load(LoggerFormatter.class);
 			for (LoggerFormatter formatter : loader) {
 				if (formatter instanceof CombinedLoggerFormatter) continue;
 				return formatter;

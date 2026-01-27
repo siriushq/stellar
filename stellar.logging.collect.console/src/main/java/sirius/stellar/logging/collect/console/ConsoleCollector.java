@@ -9,9 +9,9 @@ import sirius.stellar.logging.spi.LoggerCollector;
 import java.io.PrintStream;
 import java.time.Instant;
 import java.util.Locale;
-import java.util.ServiceLoader;
 
 import static java.lang.Thread.currentThread;
+import static java.util.ServiceLoader.load;
 import static sirius.stellar.logging.LoggerLevel.ERROR;
 import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
@@ -24,7 +24,7 @@ public final class ConsoleCollector implements LoggerCollector {
 	private final ConsoleTechnique technique;
 
 	public ConsoleCollector() {
-		this.technique = ServiceLoader.load(ConsoleTechnique.class)
+		this.technique = load(ConsoleTechnique.class)
 				.findFirst()
 				.orElseGet(HumanConsoleTechnique::new);
 		System.setOut(new DispatchingPrintStream(INFORMATION, "stdout"));

@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.time.Instant.now;
+import static java.util.ServiceLoader.load;
 import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.joining;
 
@@ -42,7 +43,7 @@ public final class FileCollector implements LoggerCollector {
 	private Instant rolled;
 
 	public FileCollector() {
-		this.technique = ServiceLoader.load(FileTechnique.class)
+		this.technique = load(FileTechnique.class)
 				.findFirst()
 				.orElseGet(PlainFileTechnique::new);
 

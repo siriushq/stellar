@@ -17,6 +17,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.Runtime.getRuntime;
+import static java.util.ServiceLoader.load;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 /// This class is the main entry-point for the logging system.
@@ -50,7 +51,7 @@ public final class Logger extends LoggerMethods {
 
 	static {
 		try {
-			ServiceLoader<LoggerExtension> loader = ServiceLoader.load(LoggerExtension.class);
+			ServiceLoader<LoggerExtension> loader = load(LoggerExtension.class);
 			for (LoggerExtension extension : loader) extension.wire();
 		} catch (Throwable throwable) {
 			throw new IllegalStateException("Failed to wire logger extensions", throwable);
@@ -150,7 +151,8 @@ public final class Logger extends LoggerMethods {
 	/// @since 1.0
 	@Nullable
 	@Contract("null, _ -> null; _, null -> param1; !null, !null -> new")
-	public static String format(@Nullable String string, Object @Nullable ... arguments) {
+	public static String
+	format(@Nullable String string, Object @Nullable ... arguments) {
 		if (string == null) return null;
 		if (arguments == null) return string;
 		return formatter.formatString(string, arguments);
@@ -167,7 +169,8 @@ public final class Logger extends LoggerMethods {
 	/// @since 1.0
 	@Nullable
 	@Contract("_, null, _ -> null; _, _, null -> param2; _, !null, !null -> new")
-	public static String format(@Nullable Locale locale, @Nullable String string, Object @Nullable ... arguments) {
+	public static String
+	format(@Nullable Locale locale, @Nullable String string, Object @Nullable ... arguments) {
 		if (locale == null) return format(string, arguments);
 		if (string == null) return null;
 		if (arguments == null) return string;

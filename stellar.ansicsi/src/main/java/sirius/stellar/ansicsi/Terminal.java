@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.io.StringWriter;
 import java.util.ServiceLoader;
 
+import static java.util.ServiceLoader.load;
+
 /// This class is the entry-point for exports of ANSI (American National
 /// Standards Institute) standard CSI (Control Sequence Introducer) constants
 /// & utilities related to their use.
@@ -46,7 +48,7 @@ public final class Terminal
 
 	static {
 		try {
-			ServiceLoader<TerminalExtension> loader = ServiceLoader.load(TerminalExtension.class);
+			ServiceLoader<TerminalExtension> loader = load(TerminalExtension.class);
 			for (TerminalExtension extension : loader) extension.wire();
 		} catch (Throwable throwable) {
 			throw new IllegalStateException("Failed to wire ANSI CSI terminal extensions", throwable);

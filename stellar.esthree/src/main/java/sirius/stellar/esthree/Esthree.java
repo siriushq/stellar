@@ -8,6 +8,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
+import static java.util.ServiceLoader.load;
+
 /// Service client for accessing S3.
 ///
 /// This can be created using the static [#builder()] method.
@@ -172,7 +174,7 @@ public interface Esthree extends AutoCloseable {
 	/// Return a builder to construct [Esthree] instances with.
 	static Builder builder() {
 		try {
-			ServiceLoader<Esthree.Builder> loader = ServiceLoader.load(Esthree.Builder.class);
+			ServiceLoader<Esthree.Builder> loader = load(Esthree.Builder.class);
 			for (Esthree.Builder builder : loader) {
 				if (builder instanceof DEsthreeBuilder) continue;
 				return builder;
