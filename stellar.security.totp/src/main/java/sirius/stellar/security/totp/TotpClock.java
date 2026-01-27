@@ -8,6 +8,7 @@ import java.time.Clock;
 /// stateful [java.time.Clock] (which this is a reduced wrapper of).
 ///
 /// @see Totp.Builder#clock
+@FunctionalInterface
 public interface TotpClock {
 
 	/// Returns the time of this clock ("the current time") in epoch

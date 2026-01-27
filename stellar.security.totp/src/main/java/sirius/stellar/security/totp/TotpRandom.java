@@ -9,6 +9,7 @@ import java.util.Random;
 /// which is unavailable on older (<17) class libraries.
 ///
 /// @see Totp.Builder#random
+@FunctionalInterface
 public interface TotpRandom {
 
 	/// Generate random bytes and place them into the provided buffer.
