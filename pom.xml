@@ -53,6 +53,8 @@
 		<module>stellar.annotation</module>
 		<module>stellar.annotation.intellij</module>
 
+		<module>stellar.security.totp</module>
+
 		<module>stellar.logging</module>
 
 		<module>stellar.logging.collect.slf4j</module>
@@ -183,6 +185,12 @@
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-annotation-intellij</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-security-totp</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 
