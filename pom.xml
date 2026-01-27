@@ -95,6 +95,7 @@
 		<module>stellar.configuration.jshell</module>
 		<module>stellar.configuration.javaprefs</module>
 
+		<module>stellar.serialization.base32</module>
 		<module>stellar.serialization.msgpack</module>
 		<module>stellar.serialization.msgpack.jsonb</module>
 
@@ -330,6 +331,11 @@
 				<version>1.0-RC1</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-serialization-base32</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-serialization-msgpack</artifactId>
