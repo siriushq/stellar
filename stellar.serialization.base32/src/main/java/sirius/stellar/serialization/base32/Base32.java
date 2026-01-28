@@ -1,15 +1,17 @@
 package sirius.stellar.serialization.base32;
 
-import org.jspecify.annotations.Nullable;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.ByteBuffer;
-
-import static java.lang.Math.ceil;
-
 /// This interface consists exclusively of static methods for encoding and
 /// decoding payloads in the RFC 4648 Base32 encoding scheme.
+///
+/// {@snippet lang = "java":
+/// byte[] payload = "Hello, world!".getBytes();
+///
+/// char[] encoded = Base32.encode(payload);
+/// println(encoded);
+///
+/// byte[] decoded = Base32.decode(encoded);
+/// println(decoded);
+/// }
 public interface Base32 {
 
 	/// Lookup table that represents a [Base32] alphabet, A-Z followed by 2-7.
@@ -46,13 +48,16 @@ public interface Base32 {
 		23, 24, 25, -1, -1, -1, -1, -1
 	};
 
-	/// Encode the provided input, writing to an [Appendable] reference.
-	/// If the provided reference is `null`, nothing will be written.
-	static void encode(byte[] input, @Nullable Appendable output) {
-		if (output == null) return;
+	/// Encode the provided input to the provided output buffer.
+	/// @return The number of bytes written, or a calculation for the number
+	/// that need to be written, if the provided output buffer size is `0`.
+	static int encode(byte[] input, char[] output) {
+		if (output.length == 0) return (input.length * 8 + 4) / 5;
+		if (input.length == 0) return 0;
 
 		int buffer = 0;
 		int remaining = 0;
+		int written = 0;
 
 		for (byte b : input) {
 			buffer = (buffer << 8) | (b & 0xFF);
@@ -60,21 +65,43 @@ public interface Base32 {
 
 			while (remaining >= 5) {
 				remaining -= 5;
-				char digit = ALPHABET[(buffer >> remaining) & 0x1F];
-				append(output, digit);
+
+				output[written] = ALPHABET[(buffer >> remaining) & 0x1F];
+				written++;
 			}
 		}
 
 		if (remaining > 0) {
 			remaining = 5 - remaining;
-			char digit = ALPHABET[(buffer << remaining) & 0x1F];
-			append(output, digit);
+
+			output[written] = ALPHABET[(buffer << remaining) & 0x1F];
+			written++;
 		}
+
+		while (written < output.length) {
+			output[written] = '=';
+			written++;
+		}
+
+		return written;
+	}
+
+	/// Encode the provided input to a new `char[]`.
+	static char[] encode(byte[] input) {
+		int size = encode(input, new char[0]);
+		char[] buffer = new char[size];
+
+		encode(input, buffer);
+		return buffer;
 	}
 
 	/// Decodes the provided input into the provided output buffer.
-	/// @return The number of bytes written.
+	/// @return The number of bytes written, or a calculation for the number
+	/// that need to be written, if the provided output buffer size is `0`.
 	static int decode(char[] input, byte[] output) {
+		if (output.length == 0) return (input.length * 5) / 8;
+		if (input.length == 0) return 0;
+
 		int buffer = 0;
 		int remaining = 0;
 		int written = 0;
@@ -90,42 +117,20 @@ public interface Base32 {
 
 			if (remaining >= 8) {
 				remaining -= 8;
-				output[written++] = (byte) (buffer >> remaining);
+				output[written] = (byte) ((buffer >> remaining) & 0xFF);
+				written++;
 			}
 		}
 
 		return written;
 	}
 
-	/// Encode the provided input to a new [String].
-	static String encode(byte[] input) {
-		int size = (int) ceil(input.length * 8 / 5d);
-		StringBuilder builder = new StringBuilder(size);
-
-		encode(input, builder);
-		return builder.toString();
-	}
-
 	/// Decodes the provided input into a new `byte[]`.
-	/// @return [ByteBuffer] view of the new array.
-	static ByteBuffer decode(char[] input) {
-		byte[] buffer = new byte[input.length];
-		int written = decode(input, buffer);
-		return ByteBuffer.wrap(buffer, 0, written);
-	}
+	static byte[] decode(char[] input) {
+		int size = decode(input, new byte[0]);
+		byte[] buffer = new byte[size];
 
-	/// Decodes the provided input into a new `byte[]`.
-	/// @return [ByteBuffer] view of the new array.
-	static ByteBuffer decode(String input) {
-		return decode(input.toCharArray());
-	}
-
-	/// Append `char`s to [Appendable] references without checked exceptions.
-	private static void append(Appendable appendable, char c) {
-		try {
-			appendable.append(c);
-		} catch (IOException exception) {
-			throw new UncheckedIOException(exception);
-		}
+		decode(input, buffer);
+		return buffer;
 	}
 }
