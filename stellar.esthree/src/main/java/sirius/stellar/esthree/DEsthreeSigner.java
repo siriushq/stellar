@@ -177,7 +177,7 @@ final class DEsthreeSigner implements EsthreeSigner {
 	byte[] hmac(byte[] key, String data) {
 		try {
 			Mac mac = this.hmacSha256.get();
-			mac.init(new SecretKeySpec(key, "HmacSHA256"));
+			mac.init(new SecretKeySpec(key, MAC_ALGORITHM));
 			return mac.doFinal(data.getBytes(UTF_8));
 		} catch (InvalidKeyException exception) {
 			throw new IllegalStateException("Invalid key during HMAC SHA256 signing in Esthree Signer", exception);
