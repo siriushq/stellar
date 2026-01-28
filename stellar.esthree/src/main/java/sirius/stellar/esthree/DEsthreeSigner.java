@@ -63,8 +63,8 @@ final class DEsthreeSigner implements EsthreeSigner {
 				.withZone(UTC);
 	}
 
-	/// Creates a [MessageDigest] with the static [#PROVIDER] and [#SHA_256]
-	/// algorithm, for thread-local instantiation.
+	/// Creates a [MessageDigest] with the static [#DIGEST_PROVIDER] and
+	/// [#DIGEST_ALGORITHM], for thread-local instantiation.
 	private MessageDigest acquireSha256() {
 		try {
 			return MessageDigest.getInstance(DIGEST_ALGORITHM, DIGEST_PROVIDER);
@@ -73,8 +73,8 @@ final class DEsthreeSigner implements EsthreeSigner {
 		}
 	}
 
-	/// Creates a [Mac] with the static [#PROVIDER] and [#HMAC_SHA_256]
-	/// algorithm, for thread-local instantiation.
+	/// Creates a [Mac] with the static [#MAC_PROVIDER] and
+	/// [#MAC_ALGORITHM], for thread-local instantiation.
 	private Mac acquireHmacSha256() {
 		try {
 			return Mac.getInstance(MAC_ALGORITHM, MAC_PROVIDER);
