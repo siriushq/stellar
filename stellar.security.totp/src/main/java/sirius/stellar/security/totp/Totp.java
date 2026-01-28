@@ -13,9 +13,7 @@ import static java.util.ServiceLoader.load;
 ///
 /// Essentially, [#secret] & [#valid] tend to be used in server
 /// applications and [#code] & [#remaining] by authenticators.
-///
 /// This can be created using the static [#builder()] method.
-/// Relinquish acquired resources with [#close()].
 ///
 /// The default implementation of this client is fully thread-safe
 /// and also accounts for network latency / clock drift.
@@ -42,6 +40,18 @@ public interface Totp {
 	/// Returns in milliseconds how long a generated [#code] on the
 	/// current clock has remaining.
 	long remaining();
+
+	/// Release thread-local resources for only the current thread
+	/// (the thread which is used to invoke/call this method).
+	///
+	/// This should be used when the client is no longer needed on the caller
+	/// thread, or the memory should be freed, and it is more performant for
+	/// re-initialization to occur later on, even if using the same thread.
+	///
+	/// Cryptographic primitives are otherwise allocated for the lifetime
+	/// of every thread that uses the operations of this class, even if
+	/// instances are out-of-scope.
+	void release();
 
 	/// Return a builder to construct [Totp] instances with.
 	static Builder builder() {

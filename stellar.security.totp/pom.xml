@@ -20,6 +20,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.siriushq.stellar</groupId>
+			<artifactId>stellar-serialization-base32</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.siriushq.stellar</groupId>
 			<artifactId>stellar-lifecycle-testing</artifactId>
 			<scope>test</scope>
 		</dependency>

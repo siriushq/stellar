@@ -1,23 +1,47 @@
 package sirius.stellar.security.totp;
 
+import sirius.stellar.serialization.base32.Base32;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.ByteBuffer;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+
+import static java.lang.ThreadLocal.withInitial;
+import static java.security.Security.getProviders;
+
 /// Domain implementation of [Totp].
 final class DTotp implements Totp {
+
+	/// `java.security` standard name for [Mac] HMAC-SHA1 algorithm.
+	private static final String MAC_ALGORITHM = "HmacSHA1";
+
+	/// Security provider to use for creating instances of [Mac].
+	private static final Provider MAC_PROVIDER =
+			getProviders("Mac." + MAC_ALGORITHM)[0];
 
 	private final TotpRandom random;
 	private final TotpClock clock;
 	private final long step;
 
+	private final ThreadLocal<Mac> hmacSha1;
+
 	DTotp(TotpRandom random, TotpClock clock, long step) {
 		this.random = random;
 		this.clock = clock;
 		this.step = step;
+
+		this.hmacSha1 = withInitial(this::acquireHmacSha1);
 	}
 
 	@Override
 	public String secret() {
 		byte[] buffer = new byte[10];
 		this.random.next(buffer);
-		return base32(buffer);
+
+		return new String(Base32.encode(buffer));
 	}
 
 	@Override
@@ -41,55 +65,45 @@ final class DTotp implements Totp {
 		return this.step - (this.clock.epoch() % this.step);
 	}
 
-//private int generate(String secret, long interval) {
-//	try {
-//		byte[] key = decodeBase32(secret);
-//		byte[] data = ByteBuffer.allocate(8).putLong(interval).array();
-//
-//		Mac mac = Mac.getInstance(ALGORITHM);
-//		mac.init(new SecretKeySpec(key, ALGORITHM));
-//		byte[] hash = mac.doFinal(data);
-//
-//		int offset = hash[hash.length - 1] & 0xF;
-//		int binary = ((hash[offset] & 0x7F) << 24) |
-//				((hash[offset + 1] & 0xFF) << 16) |
-//				((hash[offset + 2] & 0xFF) << 8) |
-//				(hash[offset + 3] & 0xFF);
-//
-//		return binary % 1_000_000;
-//	} catch (GeneralSecurityException e) {
-//		throw new IllegalStateException("HmacSHA1 not supported on this JVM", e);
-//	}
-//}
-//
-//private String base32(byte[] data) {
-//	StringBuilder sb = new StringBuilder();
-//	int buffer = 0, bitsLeft = 0;
-//	for (byte b : data) {
-//		buffer = (buffer << 8) | (b & 0xFF);
-//		bitsLeft += 8;
-//		while (bitsLeft >= 5) {
-//			sb.append(ALPHABET.charAt((buffer >> (bitsLeft - 5)) & 0x1F));
-//			bitsLeft -= 5;
-//		}
-//	}
-//	if (bitsLeft > 0) sb.append(ALPHABET.charAt((buffer << (5 - bitsLeft)) & 0x1F));
-//	return sb.toString();
-//}
-//
-//private byte[] decodeBase32(String secret) {
-//	byte[] out = new byte[(secret.length() * 5) / 8];
-//	int buffer = 0, bitsLeft = 0, index = 0;
-//	for (char c : secret.toCharArray()) {
-//		int val = ALPHABET.indexOf(Character.toUpperCase(c));
-//		if (val < 0) continue;
-//		buffer = (buffer << 5) | val;
-//		bitsLeft += 5;
-//		if (bitsLeft >= 8) {
-//			out[index++] = (byte) (buffer >> (bitsLeft - 8));
-//			bitsLeft -= 8;
-//		}
-//	}
-//	return out;
-//}
+	@Override
+	public void release() {
+		this.hmacSha1.remove();
+	}
+
+	/// Creates a [Mac] with the static [#PROVIDER] and [#MAC_ALGORITHM]
+	/// algorithm, for thread-local instantiation.
+	private Mac acquireHmacSha1() {
+		try {
+			return Mac.getInstance(MAC_ALGORITHM, MAC_PROVIDER);
+		} catch (NoSuchAlgorithmException exception) {
+			throw new IllegalStateException("Failed to obtain Mac", exception);
+		}
+	}
+
+	/// Perform RFC 6238 TOTP generation using RFC 4226 dynamic truncation.
+	/// @param secret Base32-encoded entropy used as the HMAC key.
+	/// @param interval The discrete time-step counter.
+	/// @return 6-digit code (in range 0 to 999999).
+	private int generate(String secret, long interval) {
+		try {
+			byte[] key = Base32.decode(secret.toCharArray());
+			byte[] data = ByteBuffer.allocate(8)
+					.putLong(interval)
+					.array();
+
+			Mac mac = this.hmacSha1.get();
+			mac.init(new SecretKeySpec(key, MAC_ALGORITHM));
+			byte[] hmac = mac.doFinal(data);
+
+			int offset = hmac[hmac.length - 1] & 0xF;
+			int code = ((hmac[offset] & 0x7F) << 24)
+				| ((hmac[offset + 1] & 0xFF) << 16)
+				| ((hmac[offset + 2] & 0xFF) << 8)
+				| (hmac[offset + 3] & 0xFF);
+
+			return code % 1_000_000;
+		} catch (InvalidKeyException exception) {
+			throw new IllegalStateException(exception);
+		}
+	}
 }
