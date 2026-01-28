@@ -21,7 +21,7 @@ public interface Base32 {
 		'2', '3', '4', '5', '6', '7'
 	};
 
-	/// Inverse ASCII lookup table for [Base32] characters, for ASCII 0-95.
+	/// Inverse ASCII lookup table for [Base32] characters, for ASCII 0-127.
 	byte[] ASCII = {
 		// 0-31 (control characters)
 		-1, -1, -1, -1, -1, -1, -1, -1,
@@ -44,6 +44,14 @@ public interface Base32 {
 		7, 8, 9, 10, 11, 12, 13, 14,
 
 		// 80-95 ('P' - 'Z')
+		15, 16, 17, 18, 19, 20, 21, 22,
+		23, 24, 25, -1, -1, -1, -1, -1,
+
+		// 96-111 ('`', 'a' - 'o')
+		-1, 0, 1, 2, 3, 4, 5, 6,
+		7, 8, 9, 10, 11, 12, 13, 14,
+
+		// 112-127 ('p' - 'z')
 		15, 16, 17, 18, 19, 20, 21, 22,
 		23, 24, 25, -1, -1, -1, -1, -1
 	};
