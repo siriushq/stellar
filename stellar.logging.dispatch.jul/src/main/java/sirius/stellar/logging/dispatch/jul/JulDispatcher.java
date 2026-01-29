@@ -2,13 +2,12 @@ package sirius.stellar.logging.dispatch.jul;
 
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
-import sirius.stellar.logging.LoggerMessage;
-import sirius.stellar.logging.dispatch.Dispatcher;
+import sirius.stellar.logging.spi.LoggerDispatcher;
 
-import java.text.MessageFormat;
 import java.util.Map;
 
 import static java.lang.Thread.currentThread;
+import static java.text.MessageFormat.format;
 
 /// Implementation of [java.util.logging.Handler] which dispatches to [Logger].
 ///
@@ -28,13 +27,13 @@ import static java.lang.Thread.currentThread;
 /// @since 1.0
 public final class JulDispatcher
 		extends java.util.logging.Handler
-		implements Dispatcher {
+		implements LoggerDispatcher {
 
-	private static final java.util.logging.LogManager manager =
-			java.util.logging.LogManager.getLogManager();
+	private static final java.util.logging.LogManager
+		manager = java.util.logging.LogManager.getLogManager();
 
-	private static final Map<java.util.logging.Level, LoggerLevel> conversions =
-		Map.of(
+	private static final Map<java.util.logging.Level, LoggerLevel>
+		conversions = Map.of(
 			java.util.logging.Level.FINEST, LoggerLevel.TRACING,
 			java.util.logging.Level.FINER, LoggerLevel.DIAGNOSIS,
 			java.util.logging.Level.FINE, LoggerLevel.DIAGNOSIS,
@@ -46,7 +45,8 @@ public final class JulDispatcher
 
 	@Override
 	public void wire() {
-		manager.getLogger("").addHandler(this);
+		java.util.logging.Logger root = manager.getLogger("");
+		root.addHandler(this);
 	}
 
 	@Override
@@ -57,13 +57,13 @@ public final class JulDispatcher
 		LoggerLevel level = conversions.get(original);
 		if (level == null) return;
 
-		LoggerMessage.builder()
-				.level(level)
-				.time(record.getInstant())
-				.thread(currentThread().getName())
-				.name(record.getSourceClassName())
-				.text(MessageFormat.format(record.getMessage(), record.getParameters()))
-				.dispatch();
+		message()
+			.level(level)
+			.time(record.getInstant())
+			.thread(currentThread().getName())
+			.name(record.getSourceClassName())
+			.text(format(record.getMessage(), record.getParameters()))
+			.dispatch();
 	}
 
 	@Override

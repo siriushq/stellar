@@ -1,6 +1,4 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.logging.dispatch.Dispatcher;
-import sirius.stellar.logging.dispatch.jul.JulDispatcherFactory;
 
 @NullMarked
 module sirius.stellar.logging.jul {
@@ -13,5 +11,6 @@ module sirius.stellar.logging.jul {
 
 	exports sirius.stellar.logging.dispatch.jul;
 
-	provides Dispatcher.Provider with JulDispatcherFactory;
+	provides sirius.stellar.logging.spi.LoggerExtension
+		with sirius.stellar.logging.dispatch.jul.JulDispatcher;
 }

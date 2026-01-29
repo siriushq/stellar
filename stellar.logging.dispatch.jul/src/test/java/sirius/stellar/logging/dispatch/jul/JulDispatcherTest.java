@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static sirius.stellar.logging.Logger.collector;
-import static sirius.stellar.logging.Logger.synchronous;
 
 final class JulDispatcherTest {
 
@@ -14,7 +13,6 @@ final class JulDispatcherTest {
 	void log() {
 		var received = new AtomicBoolean(false);
 		collector(message -> received.set(true));
-		synchronous();
 
         var jul = java.util.logging.Logger.getLogger(this.getClass().getCanonicalName());
         jul.info("Hello from java.util.logging!");
