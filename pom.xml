@@ -455,6 +455,24 @@
 						<failOnError>true</failOnError>
 						<doclint>all,-missing</doclint>
 						<show>package</show>
+
+						<tags>
+							<tag>
+								<name>apiNote</name>
+								<placement>a</placement>
+								<head>API Note:</head>
+							</tag>
+							<tag>
+								<name>implSpec</name>
+								<placement>a</placement>
+								<head>Implementation Specification:</head>
+							</tag>
+							<tag>
+								<name>implNote</name>
+								<placement>a</placement>
+								<head>Implementation Note:</head>
+							</tag>
+						</tags>
 					</configuration>
 
 					<executions>
