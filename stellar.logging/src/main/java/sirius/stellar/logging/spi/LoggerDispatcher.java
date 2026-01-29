@@ -27,7 +27,7 @@ public interface LoggerDispatcher extends LoggerExtension {
 	/// dispatching with a fluent API. This is a convenience method.
 	///
 	/// @since 1.0
-	static LoggerMessage.Builder message() {
+	default LoggerMessage.Builder message() {
 		return LoggerMessage.builder();
 	}
 }
