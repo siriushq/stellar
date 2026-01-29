@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 
 import static java.lang.ThreadLocal.withInitial;
+import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.security.Security.getProviders;
 
 /// Domain implementation of [Totp].
@@ -88,6 +89,7 @@ final class DTotp implements Totp {
 		try {
 			byte[] key = Base32.decode(secret.toCharArray());
 			byte[] data = ByteBuffer.allocate(8)
+					.order(BIG_ENDIAN)
 					.putLong(interval)
 					.array();
 
