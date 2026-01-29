@@ -3,7 +3,7 @@ package sirius.stellar.logging.dispatch.log4j;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
-import sirius.stellar.logging.dispatch.Dispatcher;
+import sirius.stellar.logging.spi.LoggerDispatcher;
 
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -26,33 +26,35 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /// @since 1.0
 public final class Log4jDispatcher
 		extends org.apache.log4j.AppenderSkeleton
-		implements Dispatcher {
+		implements LoggerDispatcher {
 
 	private final AtomicBoolean closed;
 
-	Log4jDispatcher() {
+	public Log4jDispatcher() {
 		this.closed = new AtomicBoolean(false);
 	}
 
 	@Override
 	public void wire() {
-		org.apache.log4j.Logger.getRootLogger().addAppender(this);
+		org.apache.log4j.Logger
+			.getRootLogger()
+			.addAppender(this);
 	}
 
 	@Override
 	protected void append(org.apache.log4j.spi.LoggingEvent event) {
 		if (this.closed.get()) return;
 		Throwable throwable = (event.getThrowableInformation() != null) ?
-				event.getThrowableInformation().getThrowable() :
-				null;
-		LoggerMessage.builder()
-				.level(convert(event.getLevel()))
-				.time(Instant.ofEpochMilli(event.getTimeStamp()))
-				.thread(event.getThreadName())
-				.name(event.getLoggerName())
-				.text(event.getRenderedMessage())
-				.throwable(throwable)
-				.dispatch();
+			event.getThrowableInformation().getThrowable() :
+			null;
+		message()
+			.level(convert(event.getLevel()))
+			.time(Instant.ofEpochMilli(event.getTimeStamp()))
+			.thread(event.getThreadName())
+			.name(event.getLoggerName())
+			.text(event.getRenderedMessage())
+			.throwable(throwable)
+			.dispatch();
 	}
 
 	@Override
