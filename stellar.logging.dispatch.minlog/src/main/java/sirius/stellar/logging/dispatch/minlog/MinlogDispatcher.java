@@ -3,7 +3,7 @@ package sirius.stellar.logging.dispatch.minlog;
 import sirius.stellar.logging.Logger;
 import sirius.stellar.logging.LoggerLevel;
 import sirius.stellar.logging.LoggerMessage;
-import sirius.stellar.logging.dispatch.Dispatcher;
+import sirius.stellar.logging.spi.LoggerDispatcher;
 
 import java.time.Instant;
 
@@ -16,7 +16,7 @@ import static java.lang.Thread.currentThread;
 /// @since 1.0
 public final class MinlogDispatcher
 		extends com.esotericsoftware.minlog.Log.Logger
-		implements Dispatcher {
+		implements LoggerDispatcher {
 
 	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 

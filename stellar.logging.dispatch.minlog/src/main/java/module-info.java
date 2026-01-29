@@ -1,5 +1,3 @@
-import sirius.stellar.logging.dispatch.Dispatcher;
-import sirius.stellar.logging.dispatch.minlog.MinlogDispatcherFactory;
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
@@ -13,5 +11,6 @@ module sirius.stellar.logging.minlog {
 
 	exports sirius.stellar.logging.dispatch.minlog;
 
-	provides Dispatcher.Provider with MinlogDispatcherFactory;
+	provides sirius.stellar.logging.spi.LoggerExtension
+		with sirius.stellar.logging.dispatch.minlog.MinlogDispatcher;
 }
