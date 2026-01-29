@@ -8,6 +8,7 @@ import sirius.stellar.logging.LoggerMessage;
 import java.time.Instant;
 import java.util.Locale;
 
+import static java.lang.StackWalker.Option.RETAIN_CLASS_REFERENCE;
 import static java.lang.Thread.currentThread;
 
 /// Implementation of [org.tinylog.provider.LoggingProvider] which dispatches to [Logger].
@@ -17,7 +18,7 @@ import static java.lang.Thread.currentThread;
 public final class TinylogDispatcher
 		implements org.tinylog.provider.LoggingProvider {
 
-	private static final StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+	private static final StackWalker walker = StackWalker.getInstance(RETAIN_CLASS_REFERENCE);
 
 	@Override
 	public org.tinylog.provider.ContextProvider getContextProvider() {
