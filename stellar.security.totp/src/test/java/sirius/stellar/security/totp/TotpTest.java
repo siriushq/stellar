@@ -3,9 +3,11 @@ package sirius.stellar.security.totp;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import sirius.stellar.serialization.base32.Base32;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -55,26 +57,24 @@ final class TotpTest {
 		long step = 30_000;
 
 		var builder = Totp.builder().step(step);
+		var exact = builder.clock(() -> now).build();
+		var code = exact.code(SECRET);
+
 		return Stream.of(
 			dynamicTest("exact match", () -> {
-				var totp = builder.clock(() -> now).build();
-				int code = totp.code(SECRET);
-				assertThat(totp.valid(SECRET, code)).isTrue();
+				assertThat(exact.valid(SECRET, code)).isTrue();
 			}),
 			dynamicTest("drifting -1 steps", () -> {
-				var totp = builder.clock(() -> now - step).build();
-				int code = totp.code(SECRET);
-				assertThat(totp.valid(SECRET, code)).isTrue();
+				var drifted = builder.clock(() -> now - step).build();
+				assertThat(drifted.valid(SECRET, code)).isTrue();
 			}),
 			dynamicTest("drifting +1 steps", () -> {
-				var totp = builder.clock(() -> now + step).build();
-				int code = totp.code(SECRET);
-				assertThat(totp.valid(SECRET, code)).isTrue();
+				var drifted = builder.clock(() -> now + step).build();
+				assertThat(drifted.valid(SECRET, code)).isTrue();
 			}),
 			dynamicTest("fail drifting -3 steps", () -> {
-				var totp = builder.clock(() -> now - (step * 3)).build();
-				int code = totp.code(SECRET);
-				assertThat(totp.valid(SECRET, code)).isFalse();
+				var drifted = builder.clock(() -> now - (step * 3)).build();
+				assertThat(drifted.valid(SECRET, code)).isFalse();
 			})
 		);
 	}
