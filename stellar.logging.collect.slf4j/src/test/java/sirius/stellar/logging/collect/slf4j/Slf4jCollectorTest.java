@@ -16,22 +16,33 @@ final class Slf4jCollectorTest {
 	void log() {
         var slf4j = TestLoggerFactory.getTestLogger(Slf4jCollectorTest.class);
 
-		synchronous();
 		collector(message -> {
-			assertThat(message.text()).isEqualTo("Hello using SLF4j collector!");
-			assertThat(message.level()).isEqualTo(INFORMATION);
+			var text = message.text();
+			var level = message.level();
+
+			assertThat(text).isEqualTo("Hello using SLF4j collector!");
+			assertThat(level).isEqualTo(INFORMATION);
 		});
 
 		information("Hello using SLF4j collector!");
 
-		assertThat(slf4j.getAllLoggingEvents()).anySatisfy(event -> {
-			assertThat(event.getMessage()).isEqualTo("Hello using SLF4j collector!");
-			assertThat(event.getLevel()).isEqualTo(INFO);
-			assertThat(event.getArguments()).isEmpty();
-			assertThat(event.getThrowable()).isEqualTo(Optional.empty());
-			assertThat(event.getMdc()).isEmpty();
-			assertThat(event.getMarkers()).isEmpty();
-			assertThat(event.getKeyValuePairs()).isEmpty();
+		var events = slf4j.getAllLoggingEvents();
+		assertThat(events).anySatisfy(event -> {
+			var message = event.getMessage();
+			var level = event.getLevel();
+			var arguments = event.getArguments();
+			var throwable = event.getThrowable();
+			var mdc = event.getMdc();
+			var markers = event.getMarkers();
+			var pairs = event.getKeyValuePairs();
+
+			assertThat(message).isEqualTo("Hello using SLF4j collector!");
+			assertThat(level).isEqualTo(INFO);
+			assertThat(arguments).isEmpty();
+			assertThat(throwable).isEqualTo(Optional.empty());
+			assertThat(mdc).isEmpty();
+			assertThat(markers).isEmpty();
+			assertThat(pairs).isEmpty();
 		});
 	}
 }

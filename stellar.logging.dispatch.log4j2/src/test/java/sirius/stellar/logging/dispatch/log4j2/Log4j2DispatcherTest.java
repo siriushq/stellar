@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static sirius.stellar.logging.Logger.collector;
-import static sirius.stellar.logging.Logger.synchronous;
 
 final class Log4j2DispatcherTest {
 
@@ -14,7 +13,6 @@ final class Log4j2DispatcherTest {
 	void log() {
 		var received = new AtomicBoolean(false);
 		collector(message -> received.set(true));
-		synchronous();
 
         var log4j2 = org.apache.logging.log4j.LogManager.getLogger(Log4j2DispatcherTest.class);
         log4j2.info("Hello from Log4J2!");
