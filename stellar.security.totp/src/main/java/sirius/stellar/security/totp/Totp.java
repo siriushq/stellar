@@ -24,8 +24,6 @@ import static java.util.ServiceLoader.load;
 ///         .build();
 /// println(totp.secret());
 /// }
-///
-/// @see sirius.stellar.esthree
 public interface Totp {
 
 	/// Generate a Base32-encoded secret.
