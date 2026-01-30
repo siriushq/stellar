@@ -11,14 +11,14 @@ import sirius.stellar.logging.spi.LoggerExtension;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.*;
 
 import static java.lang.Runtime.getRuntime;
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.onSpinWait;
 import static java.util.ServiceLoader.load;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
+import static java.util.concurrent.Executors.callable;
+import static java.util.concurrent.locks.LockSupport.parkNanos;
 
 /// This class is the main entry-point for the logging system.
 ///
@@ -45,8 +45,8 @@ public final class Logger extends LoggerMethods {
 
 	private static final BlockingDeque<LoggerMessage> deque = new LinkedBlockingDeque<>();
 	private static final Set<LoggerCollector> collectors = ConcurrentHashMap.newKeySet();
-	private static final ReentrantLock collecting = new ReentrantLock();
 
+	private static volatile boolean closing = false;
 	private static int severity = Integer.MAX_VALUE;
 
 	static {
@@ -57,39 +57,62 @@ public final class Logger extends LoggerMethods {
 			throw new IllegalStateException("Failed to wire logger extensions", throwable);
 		}
 
-		scheduler.scheduleWithFixedDelay(Logger::visit, 0L, 0L, NANOSECONDS);
+		scheduler.execute(Logger::poll);
 		getRuntime().addShutdownHook(new Thread(Logger::close));
 	}
 
-	/// Visit the queue for the next message.
-	/// This will block the thread until it is available.
-	private static void visit() {
-		collecting.lock();
+	/// Repeatedly visit the queue, blocking for the next message, then submit
+	/// to all collectors for consumption, until the thread is interrupted.
+	private static void poll() {
+		while (!currentThread().isInterrupted() && !closing) {
+			LoggerMessage message = take();
+			if (message == null) continue;
+
+			try {
+				String text = message.text();
+				if (text.isBlank() || text.equals("null")) continue;
+
+				if (scheduler.parallel()) {
+					scheduler.invokeAll(collectors.stream()
+						.map(it -> callable(() -> it.collect(message)))
+						.toList());
+					continue;
+				}
+
+				collectors.forEach(it -> it.collect(message));
+			} catch (InterruptedException exception) {
+				throw new IllegalStateException("Thread interrupted while collecting", exception);
+			}
+		}
+	}
+
+	/// Retrieve and remove the head of the logging queue.
+	/// This will block until a message is available.
+	@Nullable
+	private static LoggerMessage take() {
 		try {
 			LoggerMessage message = deque.take();
-
-			if (!enabled(message.level())) return;
-			if (message.text().isBlank() || message.text().equals("null")) return;
-
-			for (LoggerCollector collector : collectors) collector.collect(message);
+			if (!enabled(message.level())) return null;
+			return message;
 		} catch (InterruptedException exception) {
-			throw new IllegalStateException("Thread interrupted while collecting", exception);
-		} finally {
-			collecting.unlock();
+			return null;
 		}
 	}
 
 	/// Shut down the logging system. This will wait for all collectors to
 	/// consume their last logs. This is registered as a JVM shutdown hook.
 	private static void close() {
-		collecting.lock();
 		try {
-			for (LoggerCollector collector : collectors) collector.close();
+			closing = true;
+			while (!deque.isEmpty()) {
+				onSpinWait();
+				parkNanos(100L);
+			}
+
 			scheduler.close();
+			collectors.forEach(LoggerCollector::close);
 		} catch (Throwable throwable) {
 			throw new IllegalStateException("Failed to shutdown logger", throwable);
-		} finally {
-			collecting.unlock();
 		}
 	}
 
@@ -102,6 +125,7 @@ public final class Logger extends LoggerMethods {
 	/// @since 1.0
 	public static void dispatch(LoggerMessage message) {
 		try {
+			if (closing) throw new IllegalStateException("Attempt to dispatch message at shutdown");
 			deque.put(message);
 		} catch (InterruptedException exception) {
 			throw new IllegalStateException("Interrupted while dispatching message", exception);

@@ -3,22 +3,29 @@ package sirius.stellar.logging.concurrent;
 import sirius.stellar.annotation.Internal;
 import sirius.stellar.logging.Logger;
 
+import java.util.List;
 import java.util.ServiceLoader;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ExecutorService;
 
 import static java.util.ServiceLoader.load;
-import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.stream.Collectors.joining;
 
-/// [ScheduledExecutorService] used by [Logger] for scheduling logging.
+/// [ExecutorService] used by [Logger] for scheduling logging.
 /// This SPI allows for another implementation to be provided, if desired.
 ///
 /// @implNote By default, a single thread worker is used, and on JVM >21,
-/// a single virtual thread executor.
+/// an executor that creates a virtual thread per task.
 ///
 /// @since 1.0
 public interface LoggerScheduler
-	extends ScheduledExecutorService, AutoCloseable {
+	extends ExecutorService, AutoCloseable {
+
+	/// Whether this scheduler is designed to have tasks fired in parallel,
+	/// that is, to create new tasks for every single log collection rather
+	/// than reduce contention by queuing them.
+	default boolean parallel() {
+		return false;
+	}
 
 	/// Obtain a [LoggerScheduler] instance, service-loading the first
 	/// alternative implementation found on the class-path/module-path,
@@ -43,20 +50,7 @@ public interface LoggerScheduler
 	///
 	/// @throws IllegalStateException interrupted while waiting
 	/// @throws IllegalStateException failed termination
-	@Override
 	default void close() {
-		try {
-			boolean terminated = this.isTerminated();
-			if (!terminated) this.shutdown();
-
-			terminated = this.awaitTermination(Long.MAX_VALUE, NANOSECONDS);
-			if (!terminated) throw new IllegalStateException("Failed termination");
-		} catch (InterruptedException exception) {
-			String unexecuted = this.shutdownNow()
-					.stream()
-					.map(Runnable::toString)
-					.collect(joining(", ", "[", "]"));
-			throw new IllegalStateException("Interrupted " + unexecuted, exception);
-		}
+		this.shutdownNow();
 	}
 }
