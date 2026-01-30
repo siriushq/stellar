@@ -15,6 +15,6 @@ public final class MsgpackAdapterFactory implements JsonStreamFactory {
 
 	@Override
 	public JsonStream create(boolean serializeNulls, boolean serializeEmpty, boolean failOnUnknown) {
-		return new MsgpackAdapter(serializeNulls, serializeEmpty, failOnUnknown);
+		return new MsgpackAdapter(serializeNulls, serializeEmpty, failOnUnknown, false);
 	}
 }

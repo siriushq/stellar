@@ -40,18 +40,22 @@ public class MsgpackAdapter implements JsonStream {
 	private final boolean serializeNulls;
 	private final boolean serializeEmpty;
 	private final boolean failOnUnknown;
+	private final boolean failNonBinary;
 
-	/// No-argument constructor that creates an adapter with default settings
-	/// as outlined below:
+	/// No-argument constructor that can create an adapter with the default
+	/// settings as outlined below (not the same as the defaults when using
+	/// [MsgpackAdapterFactory] and `avaje-jsonb` automatic configuration):
 	///
 	/// - serializeNulls true
 	/// - serializeEmpty true
 	/// - failOnUnknown false
+	/// - failNonBinary true
 	///
-	/// @see MsgpackAdapter#MsgpackAdapter(boolean, boolean, boolean)
+	/// @see MsgpackAdapter#MsgpackAdapter(boolean, boolean, boolean, boolean)
+	/// @see MsgpackAdapterFactory
 	/// @since 1.0
 	public MsgpackAdapter() {
-		this(true, true, false);
+		this(true, true, false, false);
 	}
 
 	/// Constructor that creates an adapter with the provided settings.
@@ -59,13 +63,15 @@ public class MsgpackAdapter implements JsonStream {
 	/// @param serializeNulls Whether to enable the serialization of `null` values.
 	/// @param serializeEmpty Whether to enable the serialization of empty _arrays_.
 	/// @param failOnUnknown Whether to fail when deserializing unknown properties.
+	/// @param failNonBinary Whether to fail [Reader]/[Writer]-based methods.
 	///
 	/// @see MsgpackAdapter#MsgpackAdapter()
 	/// @since 1.0
-	public MsgpackAdapter(boolean serializeNulls, boolean serializeEmpty, boolean failOnUnknown) {
+	public MsgpackAdapter(boolean serializeNulls, boolean serializeEmpty, boolean failOnUnknown, boolean failNonBinary) {
 		this.serializeNulls = serializeNulls;
 		this.serializeEmpty = serializeEmpty;
 		this.failOnUnknown = failOnUnknown;
+		this.failNonBinary = failNonBinary;
 	}
 
 	@Override
@@ -80,6 +86,7 @@ public class MsgpackAdapter implements JsonStream {
 
 	@Override
 	public JsonReader reader(Reader reader) {
+		if (this.failNonBinary) throw new UnsupportedOperationException();
 		return this.reader(new ReaderInputStream(reader));
 	}
 
@@ -90,6 +97,7 @@ public class MsgpackAdapter implements JsonStream {
 
 	@Override
 	public JsonWriter writer(Writer writer) {
+		if (this.failNonBinary) throw new UnsupportedOperationException();
 		return this.writer(new WriterOutputStream(writer));
 	}
 
