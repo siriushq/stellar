@@ -4,8 +4,7 @@ import org.jspecify.annotations.NullMarked;
 module sirius.stellar.logging.collect.console {
 	requires org.jspecify;
 
-	requires static sirius.stellar.logging;
-	requires static sirius.stellar.facility;
+	requires sirius.stellar.logging;
 	requires sirius.stellar.ansicsi;
 
 	exports sirius.stellar.logging.collect.console;

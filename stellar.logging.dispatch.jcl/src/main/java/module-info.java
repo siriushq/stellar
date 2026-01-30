@@ -1,16 +1,14 @@
 import org.jspecify.annotations.NullMarked;
-import sirius.stellar.logging.dispatch.jcl.JclDispatcherFactory;
 
 @NullMarked
 module sirius.stellar.logging.jcl {
-
 	requires org.jspecify;
-	requires sirius.stellar.facility;
-	requires sirius.stellar.logging;
 
+	requires sirius.stellar.logging;
 	requires org.apache.commons.logging;
 
 	exports sirius.stellar.logging.dispatch.jcl;
 
-	provides org.apache.commons.logging.LogFactory with JclDispatcherFactory;
+	provides org.apache.commons.logging.LogFactory
+		with sirius.stellar.logging.dispatch.jcl.JclDispatcherFactory;
 }

@@ -2,11 +2,9 @@ import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 module sirius.stellar.logging.slf4j {
-
 	requires org.jspecify;
-	requires sirius.stellar.facility;
-	requires sirius.stellar.logging;
 
+	requires sirius.stellar.logging;
 	requires org.slf4j;
 
 	exports sirius.stellar.logging.dispatch.slf4j;
