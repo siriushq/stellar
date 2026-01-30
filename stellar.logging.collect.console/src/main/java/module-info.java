@@ -6,6 +6,7 @@ module sirius.stellar.logging.collect.console {
 
 	requires static sirius.stellar.logging;
 	requires static sirius.stellar.facility;
+	requires sirius.stellar.ansicsi;
 
 	exports sirius.stellar.logging.collect.console;
 

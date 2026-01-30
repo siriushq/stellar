@@ -20,11 +20,16 @@
     <dependencies>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
-            <artifactId>stellar-facility</artifactId>
+            <artifactId>stellar-annotation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.siriushq.stellar</groupId>
+            <artifactId>stellar-ansicsi</artifactId>
         </dependency>
         <dependency>
             <groupId>org.siriushq.stellar</groupId>
-            <artifactId>stellar-annotation</artifactId>
+            <artifactId>stellar-ansicsi-windows</artifactId>
         </dependency>
 
 		<dependency>

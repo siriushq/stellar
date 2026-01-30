@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import static java.time.ZoneOffset.UTC;
 import static java.util.Locale.US;
-import static sirius.stellar.facility.terminal.TerminalColor.*;
+import static sirius.stellar.ansicsi.Terminal.*;
 
 /// SPI (Service Provider Interface) for replacing the output destination and
 /// format (the "technique") of [ConsoleCollector].
@@ -76,7 +76,7 @@ final class HumanConsoleTechnique implements ConsoleTechnique {
 
 		builder.append(WHITE.foreground().bright());
 		builder.append(message.text());
-		builder.append(DEFAULT.foreground().bright());
+		builder.append(DEFAULT.foreground());
 
 		return builder.toString();
 	}
