@@ -3,3 +3,7 @@ siriushq/stellar.serialization.msgpack.jsonb
 
 Adapter implementing support for the MessagePack binary format
 to avaje-jsonb (under Apache-2.0).
+
+This adapter is quite inefficient as it uses lazy-evaluation techniques to work
+around the limited API of avaje-jsonb, essentially buffering the entire contents
+that are to be written.

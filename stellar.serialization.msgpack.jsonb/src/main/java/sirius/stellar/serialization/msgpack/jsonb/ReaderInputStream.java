@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
-package sirius.stellar.facility.stream;
+package sirius.stellar.serialization.msgpack.jsonb;
 
 import org.jspecify.annotations.Nullable;
 
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 /// Implementation of [InputStream] wrapping a [Reader].
 /// This is adapted from `org.apache.commons.io.input.ReaderInputStream`.
-public final class ReaderInputStream extends InputStream {
+final class ReaderInputStream extends InputStream {
 
     private final Reader reader;
     private final CharsetEncoder charsetEncoder;
@@ -25,7 +25,7 @@ public final class ReaderInputStream extends InputStream {
     private @Nullable CoderResult lastCoderResult;
     private boolean endOfInput;
 
-    public ReaderInputStream(final Reader reader) {
+    ReaderInputStream(final Reader reader) {
         this.reader = reader;
         this.charsetEncoder = Charset.defaultCharset().newEncoder();
         this.encoderIn = CharBuffer.allocate(8192);

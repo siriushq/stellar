@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause AND Apache-2.0
-package sirius.stellar.facility.stream;
+package sirius.stellar.serialization.msgpack.jsonb;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -12,7 +12,7 @@ import java.nio.charset.CoderResult;
 
 /// Implementation of [OutputStream] wrapping a [Writer].
 /// This is adapted from `org.apache.commons.io.input.WriterOutputStream`.
-public final class WriterOutputStream extends OutputStream {
+final class WriterOutputStream extends OutputStream {
 
     private final Writer writer;
     private final CharsetDecoder decoder;
@@ -20,7 +20,7 @@ public final class WriterOutputStream extends OutputStream {
     private final ByteBuffer decoderIn = ByteBuffer.allocate(128);
     private final CharBuffer decoderOut;
 
-    public WriterOutputStream(Writer writer) {
+    WriterOutputStream(Writer writer) {
         this.writer = writer;
         this.decoder = Charset.defaultCharset().newDecoder();
         this.decoderOut = CharBuffer.allocate(8192);

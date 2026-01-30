@@ -7,8 +7,6 @@ import io.avaje.json.stream.BufferedJsonWriter;
 import io.avaje.json.stream.BytesJsonWriter;
 import io.avaje.json.stream.JsonOutput;
 import io.avaje.json.stream.JsonStream;
-import sirius.stellar.facility.stream.ReaderInputStream;
-import sirius.stellar.facility.stream.WriterOutputStream;
 
 import java.io.InputStream;
 import java.io.OutputStream;

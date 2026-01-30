@@ -20,10 +20,6 @@
     <dependencies>
 		<dependency>
 			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-facility</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
 			<artifactId>stellar-serialization-msgpack</artifactId>
 		</dependency>
 		<dependency>
