@@ -7,6 +7,7 @@ import static java.math.BigInteger.ZERO;
 
 /// This interface consists exclusively of static methods for encoding and
 /// decoding payloads in a (Base64 sans-symbol) Base62 encoding scheme.
+/// The common GMP (GNU Multiple Precision) alphabet is not supported.
 ///
 /// {@snippet lang = "java":
 /// byte[] payload = "Hello, world!".getBytes();

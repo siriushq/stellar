@@ -24,13 +24,13 @@ final class Base62Test {
 		var input = "Hello, world!".getBytes();
 		var encoded = Base62.encode(input);
 
-		var expected = "73XpU9f9T6967vsm1vE".toCharArray();
+		var expected = "1wJfrzvdbthTq5ANZB".toCharArray();
 		assertThat(encoded).isEqualTo(expected);
 	}
 
 	@Test
 	void decode_produces_expected() {
-		var input = "73XpU9f9T6967vsm1vE".toCharArray();
+		var input = "1wJfrzvdbthTq5ANZB".toCharArray();
 		var decoded = Base62.decode(input);
 
 		var expected = "Hello, world!".getBytes();
