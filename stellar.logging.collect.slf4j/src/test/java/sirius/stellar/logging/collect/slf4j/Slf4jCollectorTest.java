@@ -4,10 +4,13 @@ import com.github.valfirst.slf4jtest.TestLoggerFactory;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.concurrent.locks.LockSupport.parkNanos;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.event.Level.INFO;
-import static sirius.stellar.logging.Logger.*;
+import static sirius.stellar.logging.Logger.collector;
+import static sirius.stellar.logging.Logger.information;
 import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
 final class Slf4jCollectorTest {
@@ -15,8 +18,10 @@ final class Slf4jCollectorTest {
 	@Test
 	void log() {
         var slf4j = TestLoggerFactory.getTestLogger(Slf4jCollectorTest.class);
+		var received = new AtomicBoolean(false);
 
 		collector(message -> {
+			received.set(true);
 			var text = message.text();
 			var level = message.level();
 
@@ -25,6 +30,9 @@ final class Slf4jCollectorTest {
 		});
 
 		information("Hello using SLF4j collector!");
+		for (int seconds = 0;
+			 seconds < 10 || !received.get();
+			 seconds++) parkNanos(100L);
 
 		var events = slf4j.getAllLoggingEvents();
 		assertThat(events).anySatisfy(event -> {
