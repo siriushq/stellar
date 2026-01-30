@@ -9,6 +9,5 @@ module sirius.stellar.facility {
 	exports sirius.stellar.facility.executor;
 	exports sirius.stellar.facility.functional;
 	exports sirius.stellar.facility.stream;
-	exports sirius.stellar.facility.terminal;
 	exports sirius.stellar.facility;
 }
