@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.concurrent.locks.LockSupport.parkNanos;
 import static org.assertj.core.api.Assertions.assertThat;
 import static sirius.stellar.logging.Logger.collector;
 
@@ -16,6 +17,10 @@ final class JclDispatcherTest {
 
         var jcl = org.apache.commons.logging.LogFactory.getLog(JclDispatcherTest.class);
         jcl.info("Hello from Jakarta/Apache Commons Logging!");
+
+		for (int seconds = 0;
+			 seconds < 10 || !received.get();
+			 seconds++) parkNanos(100L);
 
 		assertThat(received).isTrue();
 	}
