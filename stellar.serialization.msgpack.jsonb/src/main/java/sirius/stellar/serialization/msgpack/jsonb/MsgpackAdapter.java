@@ -76,6 +76,7 @@ public class MsgpackAdapter implements JsonStream {
 
 	@Override
 	public JsonReader reader(String string) {
+		if (this.failNonBinary) throw new UnsupportedOperationException();
 		return this.reader(string.getBytes());
 	}
 
