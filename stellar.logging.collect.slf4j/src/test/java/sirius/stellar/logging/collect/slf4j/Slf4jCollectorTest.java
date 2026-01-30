@@ -2,55 +2,57 @@ package sirius.stellar.logging.collect.slf4j;
 
 import com.github.valfirst.slf4jtest.TestLoggerFactory;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static java.util.concurrent.locks.LockSupport.parkNanos;
+import static java.lang.Thread.onSpinWait;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.slf4j.event.Level.INFO;
 import static sirius.stellar.logging.Logger.collector;
 import static sirius.stellar.logging.Logger.information;
 import static sirius.stellar.logging.LoggerLevel.INFORMATION;
 
+@Timeout(5)
 final class Slf4jCollectorTest {
 
 	@Test
 	void log() {
         var slf4j = TestLoggerFactory.getTestLogger(Slf4jCollectorTest.class);
 		var received = new AtomicBoolean(false);
+		var text = "Hello using SLF4j collector!";
 
 		collector(message -> {
 			received.set(true);
-			var text = message.text();
-			var level = message.level();
-
-			assertThat(text).isEqualTo("Hello using SLF4j collector!");
-			assertThat(level).isEqualTo(INFORMATION);
+			assertThat(message.text())
+				.isEqualTo(text);
+			assertThat(message.level())
+				.isEqualTo(INFORMATION);
 		});
 
-		information("Hello using SLF4j collector!");
-		for (int seconds = 0;
-			 seconds < 10 || !received.get();
-			 seconds++) parkNanos(100L);
+		information(text);
+		while (!received.get()) onSpinWait();
 
-		var events = slf4j.getAllLoggingEvents();
-		assertThat(events).anySatisfy(event -> {
-			var message = event.getMessage();
-			var level = event.getLevel();
-			var arguments = event.getArguments();
-			var throwable = event.getThrowable();
-			var mdc = event.getMdc();
-			var markers = event.getMarkers();
-			var pairs = event.getKeyValuePairs();
-
-			assertThat(message).isEqualTo("Hello using SLF4j collector!");
-			assertThat(level).isEqualTo(INFO);
-			assertThat(arguments).isEmpty();
-			assertThat(throwable).isEqualTo(Optional.empty());
-			assertThat(mdc).isEmpty();
-			assertThat(markers).isEmpty();
-			assertThat(pairs).isEmpty();
-		});
+		assertThat(slf4j.getAllLoggingEvents())
+			.isNotEmpty()
+			.anySatisfy(event -> {
+				assertThat(event.getMessage())
+					.isEqualTo(text);
+				assertThat(event.getLevel())
+					.isEqualTo(INFO);
+				assertThat(event.getArguments())
+					.isEmpty();
+				assertThat(event.getThrowable())
+					.isEqualTo(Optional.empty());
+				assertThat(event.getMdc())
+					.isEmpty();
+				assertThat(event.getMarkers())
+					.isEmpty();
+				assertThat(event.getKeyValuePairs())
+					.isEmpty();
+			});
 	}
 }
