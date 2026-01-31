@@ -88,6 +88,7 @@
 <!--		<module>stellar.esthree.server</module>-->
 
 		<module>stellar.configuration</module>
+		<module>stellar.configuration.mutator</module>
 		<module>stellar.configuration.testing</module>
 		<module>stellar.configuration.inject</module>
 		<module>stellar.configuration.yaml</module>
@@ -103,7 +104,6 @@
 		<module>stellar.lifecycle.javadoc</module>
 		<module>stellar.lifecycle.testing</module>
 		<module>stellar.lifecycle.spi</module>
-
 	</modules>
 
 	<dependencyManagement>
@@ -304,6 +304,11 @@
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-configuration</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-mutator</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 			<dependency>

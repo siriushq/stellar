@@ -55,11 +55,11 @@ public final class Configuration {
 	static List<ConfigurationProvider> providers = new LinkedList<>();
 	static Set<ConfigurationBinding<?>> bindings = new HashSet<>();
 
-	static { load(); }
+	static { initialize(); }
 
 	/// Initializes the constant configuration map and wire all reloaders.
 	/// This is automatically run by a static-initializer block.
-	static void load() {
+	static void initialize() {
 		try {
 			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
 					.stream()

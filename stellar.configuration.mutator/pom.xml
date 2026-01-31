@@ -9,39 +9,12 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration-jshell</artifactId>
-    <name>Stellar :: Configuration :: JShell</name>
+    <artifactId>stellar-configuration-mutator</artifactId>
+    <name>Stellar :: Configuration :: Mutator</name>
 
 	<properties>
 		<java.version.main>11</java.version.main>
-		<java.version.test>17</java.version.test>
 	</properties>
-
-    <dependencies>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-configuration</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.avaje</groupId>
-			<artifactId>avaje-spi-service</artifactId>
-
-			<optional>true</optional>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-configuration-mutator</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-lifecycle-testing</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 
     <build>
         <plugins>
@@ -49,10 +22,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -64,12 +37,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-
-				<configuration>
-					<argLine>
-						--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
-					</argLine>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

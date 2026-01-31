@@ -2,7 +2,6 @@ package sirius.stellar.configuration.jshell;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.configuration.testing.AbstractConfigurationTest;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,8 +9,9 @@ import java.nio.file.Path;
 import static java.nio.file.Files.*;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.property;
+import static sirius.stellar.configuration.mutator.ConfigurationMutator.reset;
 
-final class JShellConfigurationProviderTest extends AbstractConfigurationTest {
+final class JShellConfigurationProviderTest {
 
 	@Test @DisplayName("JShellConfigurationProvider: all property access methods correctly function")
 	void access() throws IOException {
@@ -22,7 +22,7 @@ final class JShellConfigurationProviderTest extends AbstractConfigurationTest {
 		var file = createFile(path);
 		writeString(file, script);
 
-		this.reset();
+		reset();
 
 		assertSoftly(softly -> {
 			var myKey = property("EXAMPLE_KEY");

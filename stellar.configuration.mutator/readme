@@ -1,0 +1,7 @@
+siriushq/stellar.configuration.mutator
+======================================
+
+Shared testing facility for the development of configuration extensions.
+Use this if you need access to reload the internals of [Configuration], which
+is a protected action in normal cases where configuration files are not being
+created programmatically.

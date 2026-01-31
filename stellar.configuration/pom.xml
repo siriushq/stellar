@@ -24,6 +24,17 @@
 			<optional>true</optional>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.siriushq.stellar</groupId>
+			<artifactId>stellar-configuration-mutator</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.siriushq.stellar</groupId>
+			<artifactId>stellar-lifecycle-testing</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>
@@ -92,6 +103,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+
+				<configuration>
+					<argLine>
+					--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
+					--add-opens java.base/java.util=sirius.stellar.configuration.mutator
+					</argLine>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

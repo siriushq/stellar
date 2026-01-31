@@ -22,12 +22,6 @@
 			<groupId>org.siriushq.stellar</groupId>
 			<artifactId>stellar-configuration</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-lifecycle-testing</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
     <build>
@@ -39,25 +33,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-
-				<executions>
-					<execution>
-						<id>test-compile-java23</id>
-
-						<phase>test-compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-
-						<configuration>
-							<release>23</release>
-
-							<compileSourceRoots>
-								<root>${project.basedir}/src/test/java23</root>
-							</compileSourceRoots>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,13 +45,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-
-				<configuration>
-					<argLine>
-						--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
-						--add-opens java.base/java.util=sirius.stellar.configuration.testing
-					</argLine>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

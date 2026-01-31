@@ -33,7 +33,7 @@
 
 		<dependency>
 			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-configuration-testing</artifactId>
+			<artifactId>stellar-configuration-mutator</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -1,4 +1,4 @@
-package sirius.stellar.configuration.testing;
+package sirius.stellar.configuration;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,8 +8,9 @@ import java.util.Map;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.*;
+import static sirius.stellar.configuration.mutator.ConfigurationMutator.reset;
 
-final class SystemConfigurationProviderTest extends AbstractConfigurationTest {
+final class SystemConfigurationProviderTest {
 
 	@Test @DisplayName("SystemConfigurationProvider: all property access methods correctly function")
 	void access() {
@@ -21,7 +22,7 @@ final class SystemConfigurationProviderTest extends AbstractConfigurationTest {
 			"EXAMPLE_MAPPED", "9999" + Long.MAX_VALUE
 		));
 
-		this.reset();
+		reset();
 
 		var myString = property("EXAMPLE_STRING");
 		var myBoolean = propertyBoolean("EXAMPLE_BOOLEAN");

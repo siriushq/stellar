@@ -2,7 +2,6 @@ package sirius.stellar.configuration.toml;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sirius.stellar.configuration.testing.AbstractConfigurationTest;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,8 +14,9 @@ import static java.nio.file.Files.*;
 import static java.text.MessageFormat.format;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static sirius.stellar.configuration.Configuration.*;
+import static sirius.stellar.configuration.mutator.ConfigurationMutator.reset;
 
-final class TomlConfigurationProviderTest extends AbstractConfigurationTest {
+final class TomlConfigurationProviderTest {
 
 	@Test @DisplayName("TomlConfigurationProvider: all property access methods correctly function")
 	void access() throws IOException {
@@ -42,7 +42,7 @@ final class TomlConfigurationProviderTest extends AbstractConfigurationTest {
 		var file = createFile(path);
 		writeString(file, format(toml.stripIndent(), Long.MAX_VALUE));
 
-		this.reset();
+		reset();
 
 		assertSoftly(softly -> {
 			var myTopLevel = property("example_top_level");
