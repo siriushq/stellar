@@ -1,9 +1,58 @@
 siriushq/stellar.configuration.testing
 ======================================
 
-Test suite for the configuration system, and shared testing facility for
-the development of extensions.
+Library for testing applications or libraries that use `stellar.configuration`.
+This allows for imperatively and declaratively setting configuration values.
 
-Use this if you need access to reload the internals of [Configuration], which
-is a protected action in normal cases where configuration files are not being
-created programmatically.
+This uses [siriushq/stellar.configuration.mutator] (and reflection) and
+should never be used outside of test suites.
+
+It is important to note that no guarantee is made that tests are isolated in
+state, that is, configuration keys can pollute another test if that test never
+sets values for those specific properties.
+
+imperative usage
+================
+
+Before the main `sirius.stellar.configuration.Configuration` class is loaded
+(and the static initialization is run) is the best time to set configuration
+values, i.e., in a static-initializer block:
+
+	import static
+		sirius.stellar.configuration.testing.TestConfigurationState.put;
+
+	final class ExampleTest {
+
+		static {
+			put("MY_KEY", "MY_VALUE");
+			put("MY_KEY2", "MY_VALUE2");
+		}
+	}
+
+Loading before static initialization is not strictly required, but preferred
+as it allows simple cases to continue to function even without reflection.
+
+Reflection is only required when multiple tests are ran in one JVM,
+and can be fragile when running on the module-path.
+
+declarative usage
+=================
+
+When JUnit (and/or stellar.lifecycle.testing) is being used, a method
+marked `@Test` or an entire class of tests, can be annotated with the
+`@TestConfiguration` annotation.
+
+	@TestConfiguration({
+		"MY_KEY", "MY_VALUE"
+	})
+	final class ExampleTest {
+
+		@Test
+		void my_test() {...}
+
+		@Test
+		@TestConfiguration({
+			"MY_KEY", "MY_OVERRIDE"
+		})
+		void my_test_2() {...}
+	}

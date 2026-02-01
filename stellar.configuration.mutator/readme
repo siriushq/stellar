@@ -1,7 +1,10 @@
 siriushq/stellar.configuration.mutator
 ======================================
 
-Shared testing facility for the development of configuration extensions.
-Use this if you need access to reload the internals of [Configuration], which
-is a protected action in normal cases where configuration files are not being
-created programmatically.
+Shared testing utility for the development of configuration extensions for
+`sirius.stellar.configuration.Configuration`, where reloading the state (which
+is intentionally a protected action) is required.
+
+Reflection is intentionally used to maintain the encapsulated contract.
+In normal cases, the SPI (Service Provider Interface) system should be used
+to provide sources of configuration at application startup only.

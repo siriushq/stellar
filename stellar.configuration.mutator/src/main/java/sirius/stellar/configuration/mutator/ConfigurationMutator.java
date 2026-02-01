@@ -9,18 +9,16 @@ import java.util.LinkedList;
 
 import static java.lang.Class.forName;
 
-/// Shared utility class for the testing of developed configuration extensions,
-/// modifying immutable state of `sirius.stellar.configuration.Configuration`.
+/// This interface consists exclusively of static methods for the testing of
+/// developed configuration extensions, and any other purpose where modifying
+/// the immutable state of `sirius.stellar.configuration.Configuration` is
+/// desired. This should never be used in non-testing code.
 ///
-/// This provides lifecycle management to safely reset state between tests.
-/// This should never be used in non-testing code.
+/// @since 1.0
 public interface ConfigurationMutator {
 
 	/// Reset/re-initialize internal state with reflection.
-	///
-	/// Reflection is intentionally used to maintain the encapsulated contract
-	/// of this internal state, while allowing tests to be performed (which need
-	/// to re-run the static initialization of this system).
+	/// @since 1.0
 	static void reset() {
 		try {
 			Class<?> clazz = forName("sirius.stellar.configuration.Configuration");
@@ -43,7 +41,7 @@ public interface ConfigurationMutator {
 		} catch (NoSuchFieldException | NoSuchMethodException
 				 | IllegalAccessException | InvocationTargetException
 				 | ClassNotFoundException exception) {
-			throw new IllegalStateException("Failed reflectively resetting configuration state for test", exception);
+			throw new IllegalStateException("Failed reflective reinitialization", exception);
 		}
 	}
 }
