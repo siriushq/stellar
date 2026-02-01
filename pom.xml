@@ -95,6 +95,7 @@
 		<module>stellar.configuration.toml</module>
 		<module>stellar.configuration.jshell</module>
 		<module>stellar.configuration.javaprefs</module>
+		<module>stellar.configuration.properties</module>
 
 		<module>stellar.serialization.base32</module>
 		<module>stellar.serialization.base62</module>

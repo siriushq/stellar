@@ -18,14 +18,11 @@ import static java.util.stream.Collectors.toMap;
 /// are automagically discovered on the module path and loaded by this class
 /// in order to instantiate configuration.
 ///
-/// This module provides 3 default implementations that load automatically,
+/// This module provides two default implementations that load automatically,
 /// overriding each other, in the guaranteed order specified below:
 ///
-/// 1. [PropertiesConfigurationProvider], which loads all `.properties` files
-///    from the filesystem relative to the working directory of the application,
-///    first placing authored template files from any module on the module path.
-/// 2. [EnvironmentConfigurationProvider], which loads from [System#getenv()].
-/// 3. [SystemConfigurationProvider], which loads from [System#getProperties()].
+/// 1. [EnvironmentConfigurationProvider], which loads from [System#getenv()].
+/// 2. [SystemConfigurationProvider], which loads from [System#getProperties()].
 ///
 /// ### Reloader discovery
 /// Similarly to the above, [ConfigurationReloader] implementations are wired,

@@ -1,4 +1,4 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.properties;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

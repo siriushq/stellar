@@ -1,6 +1,9 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.properties;
 
 import io.avaje.spi.ServiceProvider;
+import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationProvider;
+import sirius.stellar.configuration.FileConfigurationProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +18,8 @@ import static java.util.stream.Collectors.toMap;
 /// @see FileConfigurationProvider
 /// @see Configuration
 @ServiceProvider
-public final class PropertiesConfigurationProvider implements FileConfigurationProvider {
+public final class PropertiesConfigurationProvider
+	implements FileConfigurationProvider {
 
 	@Override
 	public Map<String, String> get(InputStream stream) throws IOException {
@@ -24,11 +28,11 @@ public final class PropertiesConfigurationProvider implements FileConfigurationP
 			properties.load(stream);
 
 			return properties.entrySet()
-					.stream()
-					.collect(toMap(
-						entry -> String.valueOf(entry.getKey()),
-						entry -> String.valueOf(entry.getValue())
-					));
+				.stream()
+				.collect(toMap(
+					entry -> String.valueOf(entry.getKey()),
+					entry -> String.valueOf(entry.getValue())
+				));
 		}
 	}
 

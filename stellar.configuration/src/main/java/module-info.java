@@ -13,13 +13,11 @@ module sirius.stellar.configuration {
 		sirius.stellar.configuration.testing;
 
 	provides sirius.stellar.configuration.ConfigurationProvider with
-		sirius.stellar.configuration.PropertiesConfigurationProvider,
 		sirius.stellar.configuration.EnvironmentConfigurationProvider,
 		sirius.stellar.configuration.SystemConfigurationProvider;
 
 	provides sirius.stellar.configuration.ConfigurationReloader with
-		sirius.stellar.configuration.SignalConfigurationReloader,
-		sirius.stellar.configuration.PropertiesConfigurationReloader;
+		sirius.stellar.configuration.SignalConfigurationReloader;
 
 	uses sirius.stellar.configuration.ConfigurationProvider;
 	uses sirius.stellar.configuration.ConfigurationReloader;
