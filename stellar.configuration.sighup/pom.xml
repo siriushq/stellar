@@ -9,14 +9,20 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration</artifactId>
-    <name>Stellar :: Configuration</name>
+    <artifactId>stellar-configuration-sighup</artifactId>
+    <name>Stellar :: Configuration :: POSIX SIGHUP</name>
 
 	<properties>
 		<java.version.main>11</java.version.main>
+		<java.version.test>17</java.version.test>
 	</properties>
 
     <dependencies>
+		<dependency>
+			<groupId>org.siriushq.stellar</groupId>
+			<artifactId>stellar-configuration</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>io.avaje</groupId>
 			<artifactId>avaje-spi-service</artifactId>
@@ -39,25 +45,17 @@
 
     <build>
         <plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Multi-Release>true</Multi-Release>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
 
 				<executions>
 					<execution>
-						<id>compile-java16</id>
+						<id>compile-java23</id>
 
 						<phase>compile</phase>
 						<goals>
@@ -65,16 +63,16 @@
 						</goals>
 
 						<configuration>
-							<release>16</release>
+							<release>23</release>
 							<multiReleaseOutput>true</multiReleaseOutput>
 
 							<compileSourceRoots>
-								<root>${project.basedir}/src/main/java16</root>
+								<root>${project.basedir}/src/main/java23</root>
 							</compileSourceRoots>
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -89,8 +87,7 @@
 
 				<configuration>
 					<argLine>
-					--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
-					--add-opens java.base/java.util=sirius.stellar.configuration.mutator
+						--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
 					</argLine>
 				</configuration>
 			</plugin>

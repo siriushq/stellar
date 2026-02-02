@@ -1,6 +1,8 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.sighup;
 
 import io.avaje.spi.ServiceProvider;
+import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationReloader;
 import sun.misc.Signal;
 
 import static java.lang.System.err;
@@ -11,7 +13,8 @@ import static java.lang.System.getProperty;
 ///
 /// @see Configuration
 @ServiceProvider
-public final class SignalConfigurationReloader implements ConfigurationReloader {
+public final class SignalConfigurationReloader
+	implements ConfigurationReloader {
 
 	@Override
 	public void wire() {

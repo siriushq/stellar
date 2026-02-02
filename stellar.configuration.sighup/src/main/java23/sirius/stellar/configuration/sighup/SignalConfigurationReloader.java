@@ -1,7 +1,9 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.sighup;
 
 import io.avaje.spi.ServiceProvider;
 import org.jspecify.annotations.Nullable;
+import sirius.stellar.configuration.Configuration;
+import sirius.stellar.configuration.ConfigurationReloader;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;

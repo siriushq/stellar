@@ -1,4 +1,4 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.sighup;
 
 import org.junit.jupiter.api.condition.EnabledForJreRange;
 

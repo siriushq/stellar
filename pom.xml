@@ -94,6 +94,7 @@
 		<module>stellar.configuration.yaml</module>
 		<module>stellar.configuration.toml</module>
 		<module>stellar.configuration.jshell</module>
+		<module>stellar.configuration.sighup</module>
 		<module>stellar.configuration.javaprefs</module>
 		<module>stellar.configuration.properties</module>
 

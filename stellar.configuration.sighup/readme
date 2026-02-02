@@ -1,0 +1,5 @@
+siriushq/stellar.configuration.properties
+=========================================
+
+Provides configuration hot-reload from POSIX `SIGHUP` signals,
+using `sun.misc` API on older JVMs and FFM API on newer JVMs.

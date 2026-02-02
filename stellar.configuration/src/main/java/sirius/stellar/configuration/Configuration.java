@@ -27,12 +27,8 @@ import static java.util.stream.Collectors.toMap;
 /// ### Reloader discovery
 /// Similarly to the above, [ConfigurationReloader] implementations are wired,
 /// always after providers, and used to dispatch reload events and cause the
-/// [ConfigurationProvider]s to be re-invoked, reading new values:
-///
-/// 1. [PropertiesConfigurationReloader], a default implementation for reloading
-///    upon change of the same `.properties` files as the above provider.
-/// 2. [SignalConfigurationReloader], a fail-safe `SIGHUP` binding that allows a
-///    POSIX signal to be sent to the process to invoke a configuration reload.
+/// [ConfigurationProvider]s to be re-invoked, reading new values. No
+/// default reloader implementations are imposed.
 ///
 /// ### Usage
 /// The methods provided to access key/value pairs in the configuration are
