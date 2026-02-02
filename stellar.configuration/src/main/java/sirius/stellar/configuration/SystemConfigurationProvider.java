@@ -10,17 +10,18 @@ import static java.util.stream.Collectors.toMap;
 /// Implementation of [ConfigurationProvider] returning [System#getProperties()].
 /// @see Configuration
 @ServiceProvider
-public final class SystemConfigurationProvider implements ConfigurationProvider {
+public final class SystemConfigurationProvider
+	implements ConfigurationProvider {
 
 	@Override
 	public Map<String, String> get() {
 		return System.getProperties()
-				.entrySet()
-				.stream()
-				.collect(toMap(
-					entry -> String.valueOf(entry.getKey()),
-					entry -> String.valueOf(entry.getValue())
-				));
+			.entrySet()
+			.stream()
+			.collect(toMap(
+				entry -> String.valueOf(entry.getKey()),
+				entry -> String.valueOf(entry.getValue())
+			));
 	}
 
 	@Override

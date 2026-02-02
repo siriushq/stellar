@@ -27,7 +27,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 ///
 /// @see ConfigurationReloader
 /// @see Configuration
-public abstract class FileConfigurationReloader implements ConfigurationReloader {
+public abstract class FileConfigurationReloader
+	implements ConfigurationReloader {
 
 	@Nullable
 	private WatchService watcher;
