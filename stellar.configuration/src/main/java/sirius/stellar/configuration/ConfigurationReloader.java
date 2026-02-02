@@ -14,7 +14,7 @@ public interface ConfigurationReloader {
 	/// This method invocation is not expected to be reversible.
 	///
 	/// @since 1.0
-	void wire() throws Throwable;
+	void wire();
 
 	/// Triggers a configuration reload, to be called by [#wire()] implementations.
 	/// This method should never be overridden.

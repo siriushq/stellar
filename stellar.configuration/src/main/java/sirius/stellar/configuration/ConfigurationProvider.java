@@ -19,7 +19,7 @@ public interface ConfigurationProvider {
 
 	/// Obtain all keys/value configuration data.
 	/// @since 1.0
-	Map<String, String> get() throws Throwable;
+	Map<String, String> get();
 
 	/// Return the type of this configuration provider, used for comparison
 	/// with existing statically provided [#preceding()] providers.

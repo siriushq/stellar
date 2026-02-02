@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.jar.Manifest;
 import java.util.stream.Stream;
 
+import static java.util.Collections.emptyMap;
 import static java.util.stream.Collectors.toList;
 
 /// Extension of [ConfigurationProvider] for making file-based configuration implementations.
@@ -53,39 +54,43 @@ public interface FileConfigurationProvider extends ConfigurationProvider {
 	Set<String> extensions();
 
 	@Override
-	default Map<String, String> get() throws IOException {
-		Map<String, String> all = new HashMap<>();
+	default Map<String, String> get() {
+		try {
+			Map<String, String> all = new HashMap<>();
 
-		for (Module module : ModuleLayer.boot().modules()) {
-			Manifest manifest = manifest(module);
-			if (manifest == null) continue;
+			for (Module module : ModuleLayer.boot().modules()) {
+				Manifest manifest = manifest(module);
+				if (manifest == null) continue;
 
-			String paths = manifest.getMainAttributes()
-					.entrySet()
-					.stream()
-					.filter(entry -> entry.getKey().equals("sirius_stellar_configuration"))
-					.findFirst()
-					.map(Map.Entry::getValue)
-					.map(String::valueOf)
-					.orElse(null);
-			if (paths == null) continue;
+				String paths = manifest.getMainAttributes()
+						.entrySet()
+						.stream()
+						.filter(entry -> entry.getKey().equals("sirius_stellar_configuration"))
+						.findFirst()
+						.map(Map.Entry::getValue)
+						.map(String::valueOf)
+						.orElse(null);
+				if (paths == null) continue;
 
-			for (String value : paths.split(";")) {
-				Path path = Path.of(value);
-				if (Files.exists(path) || !this.extension(path.getFileName().toString())) continue;
+				for (String value : paths.split(";")) {
+					Path path = Path.of(value);
+					if (Files.exists(path) || !this.extension(path.getFileName().toString())) continue;
 
-				InputStream stream = module.getResourceAsStream(value);
-				Files.copy(stream, path.getFileName());
+					InputStream stream = module.getResourceAsStream(value);
+					Files.copy(stream, path.getFileName());
+				}
 			}
-		}
 
-		for (Path path : this.working()) {
-			InputStream stream = Files.newInputStream(path);
-			Map<String, String> result = this.get(stream);
-			all.putAll(result);
-		}
+			for (Path path : this.working()) {
+				InputStream stream = Files.newInputStream(path);
+				Map<String, String> result = this.get(stream);
+				all.putAll(result);
+			}
 
-		return all;
+			return all;
+		} catch (IOException exception) {
+			return emptyMap();
+		}
 	}
 
 	@Override

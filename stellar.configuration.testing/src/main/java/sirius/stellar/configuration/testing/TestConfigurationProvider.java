@@ -5,7 +5,7 @@ import sirius.stellar.configuration.ConfigurationProvider;
 
 import java.util.Map;
 
-import static java.util.Collections.unmodifiableMap;
+import static java.util.Collections.emptyMap;
 import static java.util.Map.copyOf;
 import static sirius.stellar.configuration.testing.TestConfigurationState.configuration;
 
@@ -20,6 +20,8 @@ public final class TestConfigurationProvider implements ConfigurationProvider {
 	public Map<String, String> get() {
 		try {
 			return copyOf(configuration);
+		} catch (Throwable ignored) {
+			return emptyMap();
 		} finally {
 			configuration.clear();
 		}

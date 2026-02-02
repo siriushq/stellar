@@ -46,7 +46,7 @@ public abstract class FileConfigurationReloader
 	protected abstract Set<String> extensions();
 
 	@Override
-	public void wire() throws Throwable {
+	public void wire() {
 		try {
 			this.watcher = FileSystems.getDefault().newWatchService();
 			if (this.watcher == null) throw new UnsupportedOperationException();
@@ -62,6 +62,8 @@ public abstract class FileConfigurationReloader
 					: "java.util.concurrent.ScheduledExecutorService#scheduleWithFixedDelay";
 			String extensions = join(", ", this.extensions());
 			err.printf("%s unavailable, ignoring changes to %s%n", missing, extensions);
+		} catch (IOException exception) {
+			throw new IllegalStateException(exception);
 		}
 	}
 

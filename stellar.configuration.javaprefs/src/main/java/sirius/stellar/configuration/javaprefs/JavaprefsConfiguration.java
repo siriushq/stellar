@@ -13,6 +13,7 @@ import java.util.prefs.PreferenceChangeEvent;
 import java.util.prefs.Preferences;
 
 import static java.lang.System.*;
+import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.joining;
@@ -70,14 +71,22 @@ public final class JavaprefsConfiguration
 	}
 
 	@Override
-	public Map<String, String> get() throws BackingStoreException {
-		if (this.node == null || !this.map.isEmpty()) return unmodifiableMap(this.map);
+	public Map<String, String> get() {
+		if (this.node == null) return emptyMap();
+		if (!this.map.isEmpty()) return unmodifiableMap(this.map);
 
-		for (String key : this.node.keys()) {
-			String value = this.node.get(key, "");
-			this.map.put(key, value);
+		try {
+			String[] keys = this.node.keys();
+
+			for (String key : keys) {
+				String value = this.node.get(key, "");
+				this.map.put(key, value);
+			}
+
+			return unmodifiableMap(this.map);
+		} catch (BackingStoreException exception) {
+			return emptyMap();
 		}
-		return unmodifiableMap(this.map);
 	}
 
 	@Override

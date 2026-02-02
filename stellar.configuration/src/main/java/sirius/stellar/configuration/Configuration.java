@@ -8,6 +8,7 @@ import static java.lang.Boolean.parseBoolean;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.util.Collections.*;
+import static java.util.ServiceLoader.load;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
@@ -53,25 +54,22 @@ public final class Configuration {
 	/// Initializes the constant configuration map and wire all reloaders.
 	/// This is automatically run by a static-initializer block.
 	static void initialize() {
-		try {
-			Map<Class<?>, ConfigurationProvider> all = ServiceLoader.load(ConfigurationProvider.class)
-					.stream()
-					.map(ServiceLoader.Provider::get)
-					.collect(toMap(ConfigurationProvider::clazz, identity()));
-			Set<ConfigurationProvider> visiting = new HashSet<>();
+		Map<Class<?>, ConfigurationProvider> all = load(ConfigurationProvider.class)
+			.stream()
+			.map(ServiceLoader.Provider::get)
+			.collect(toMap(ConfigurationProvider::clazz, identity()));
 
-			for (ConfigurationProvider found : all.values()) visit(found, all, visiting);
-			for (ConfigurationProvider provider : providers) configuration.putAll(provider.get());
-		} catch (Throwable throwable) {
-			throw new IllegalStateException("Failed to wire configuration providers", throwable);
-		}
+		Set<ConfigurationProvider> visiting = new HashSet<>();
+		all.values().forEach(it -> visit(it, all, visiting));
 
-		try {
-			ServiceLoader<ConfigurationReloader> reloaders = ServiceLoader.load(ConfigurationReloader.class);
-			for (ConfigurationReloader reloader : reloaders) reloader.wire();
-		} catch (Throwable throwable) {
-			throw new IllegalStateException("Failed to wire configuration reloaders", throwable);
-		}
+		providers.stream()
+			.map(ConfigurationProvider::get)
+			.forEach(configuration::putAll);
+
+		load(ConfigurationReloader.class)
+			.stream()
+			.map(ServiceLoader.Provider::get)
+			.forEach(ConfigurationReloader::wire);
 
 		configuration = unmodifiableMap(configuration);
 		providers = unmodifiableList(providers);
@@ -98,12 +96,14 @@ public final class Configuration {
 	/// Triggers a configuration reload (for all listeners).
 	/// @see ConfigurationReloader#reload()
 	static void reload() {
-		try {
-			Map<String, String> map = new HashMap<>();
-			for (ConfigurationProvider provider : providers) map.putAll(provider.get());
-			for (ConfigurationBinding<?> binding : bindings) binding.update(map.get(binding.key()));
-		} catch (Throwable throwable) {
-			throw new IllegalStateException("Failed to wire configuration providers for reload", throwable);
+		Map<String, String> map = new HashMap<>();
+		providers.stream()
+				.map(ConfigurationProvider::get)
+				.forEach(map::putAll);
+
+		for (ConfigurationBinding<?> binding : bindings) {
+			String key = binding.key();
+			binding.update(map.get(key));
 		}
 	}
 
