@@ -1,6 +1,9 @@
-package sirius.stellar.configuration;
+package sirius.stellar.configuration.file;
 
 import org.jspecify.annotations.Nullable;
+import sirius.stellar.configuration.ConfigurationProvider;
+import sirius.stellar.configuration.EnvironmentConfigurationProvider;
+import sirius.stellar.configuration.SystemConfigurationProvider;
 
 import java.io.IOException;
 import java.io.InputStream;

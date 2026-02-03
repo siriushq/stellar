@@ -4,7 +4,7 @@ import io.avaje.spi.ServiceProvider;
 import org.yaml.snakeyaml.Yaml;
 import sirius.stellar.configuration.Configuration;
 import sirius.stellar.configuration.ConfigurationProvider;
-import sirius.stellar.configuration.FileConfigurationProvider;
+import sirius.stellar.configuration.file.FileConfigurationProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +35,8 @@ import static java.util.stream.Collectors.joining;
 /// @see FileConfigurationProvider
 /// @see Configuration
 @ServiceProvider
-public final class YamlConfigurationProvider implements FileConfigurationProvider {
+public final class YamlConfigurationProvider
+	implements FileConfigurationProvider {
 
 	private final Yaml yaml;
 

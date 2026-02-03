@@ -5,7 +5,7 @@ import org.tomlj.Toml;
 import org.tomlj.TomlArray;
 import sirius.stellar.configuration.Configuration;
 import sirius.stellar.configuration.ConfigurationProvider;
-import sirius.stellar.configuration.FileConfigurationProvider;
+import sirius.stellar.configuration.file.FileConfigurationProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +35,8 @@ import static java.util.stream.Collectors.toMap;
 /// @see FileConfigurationProvider
 /// @see Configuration
 @ServiceProvider
-public final class TomlConfigurationProvider implements FileConfigurationProvider {
+public final class TomlConfigurationProvider
+	implements FileConfigurationProvider {
 
 	@Override
 	public Map<String, String> get(InputStream stream) throws IOException {

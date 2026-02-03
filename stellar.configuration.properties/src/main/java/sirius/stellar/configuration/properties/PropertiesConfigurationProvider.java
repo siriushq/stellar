@@ -3,7 +3,7 @@ package sirius.stellar.configuration.properties;
 import io.avaje.spi.ServiceProvider;
 import sirius.stellar.configuration.Configuration;
 import sirius.stellar.configuration.ConfigurationProvider;
-import sirius.stellar.configuration.FileConfigurationProvider;
+import sirius.stellar.configuration.file.FileConfigurationProvider;
 
 import java.io.IOException;
 import java.io.InputStream;

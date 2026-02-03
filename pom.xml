@@ -88,6 +88,7 @@
 <!--		<module>stellar.esthree.server</module>-->
 
 		<module>stellar.configuration</module>
+		<module>stellar.configuration.file</module>
 		<module>stellar.configuration.mutator</module>
 		<module>stellar.configuration.testing</module>
 		<module>stellar.configuration.inject</module>
@@ -306,6 +307,11 @@
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-configuration</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-configuration-files</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 			<dependency>

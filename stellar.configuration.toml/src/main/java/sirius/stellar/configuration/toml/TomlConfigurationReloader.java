@@ -2,7 +2,7 @@ package sirius.stellar.configuration.toml;
 
 import io.avaje.spi.ServiceProvider;
 import sirius.stellar.configuration.Configuration;
-import sirius.stellar.configuration.FileConfigurationReloader;
+import sirius.stellar.configuration.file.FileConfigurationReloader;
 
 import java.util.Set;
 

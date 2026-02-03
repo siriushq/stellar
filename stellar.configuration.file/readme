@@ -1,0 +1,5 @@
+siriushq/stellar.configuration.file
+===================================
+
+Library for building file-based extensions for [siriushq/stellar.configuration],
+for reloading upon file changes and providing configuration.

@@ -9,8 +9,8 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>stellar-configuration-properties</artifactId>
-    <name>Stellar :: Configuration :: Properties</name>
+    <artifactId>stellar-configuration-files</artifactId>
+    <name>Stellar :: Configuration :: Files</name>
 
 	<properties>
 		<java.version.main>11</java.version.main>
@@ -21,29 +21,6 @@
 		<dependency>
 			<groupId>org.siriushq.stellar</groupId>
 			<artifactId>stellar-configuration</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-configuration-files</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>io.avaje</groupId>
-			<artifactId>avaje-spi-service</artifactId>
-
-			<optional>true</optional>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-configuration-mutator</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.siriushq.stellar</groupId>
-			<artifactId>stellar-lifecycle-testing</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -68,12 +45,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-
-				<configuration>
-					<argLine>
-						--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
-					</argLine>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

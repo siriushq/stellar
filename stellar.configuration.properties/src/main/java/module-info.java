@@ -3,7 +3,9 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 module sirius.stellar.configuration.properties {
 	requires org.jspecify;
+
 	requires sirius.stellar.configuration;
+	requires sirius.stellar.configuration.file;
 
 	requires static io.avaje.spi;
 
