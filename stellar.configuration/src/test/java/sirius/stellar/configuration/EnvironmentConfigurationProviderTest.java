@@ -15,14 +15,13 @@ final class EnvironmentConfigurationProviderTest {
 
 	@Test @DisplayName("EnvironmentConfigurationProvider: all property access methods correctly function")
 	void access() {
-		if (!environment(Map.of(
+		environment(Map.of(
 			"EXAMPLE_STRING", "Hello, world!",
 			"EXAMPLE_BOOLEAN", "true",
 			"EXAMPLE_INTEGER", "123",
 			"EXAMPLE_LONG", String.valueOf(Long.MAX_VALUE),
 			"EXAMPLE_MAPPED", "9999" + Long.MAX_VALUE
-		))) return;
-
+		));
 		reset();
 
 		var myString = property("EXAMPLE_STRING");
@@ -32,11 +31,16 @@ final class EnvironmentConfigurationProviderTest {
 		var myMapped = propertyAs("EXAMPLE_MAPPED", BigInteger::new);
 
 		assertSoftly(softly -> {
-			softly.assertThat(myString).isEqualTo("Hello, world!");
-			softly.assertThat(myBoolean).isEqualTo(true);
-			softly.assertThat(myInteger).isEqualTo(123);
-			softly.assertThat(myLong).isEqualTo(Long.MAX_VALUE);
-			softly.assertThat(myMapped).isEqualTo(new BigInteger("9999" + Long.MAX_VALUE));
+			softly.assertThat(myString)
+				.isEqualTo("Hello, world!");
+			softly.assertThat(myBoolean)
+				.isEqualTo(true);
+			softly.assertThat(myInteger)
+				.isEqualTo(123);
+			softly.assertThat(myLong)
+				.isEqualTo(Long.MAX_VALUE);
+			softly.assertThat(myMapped)
+				.isEqualTo(new BigInteger("9999" + Long.MAX_VALUE));
 		});
 	}
 }

@@ -14,10 +14,13 @@ final class ConfigurationProviderTest {
 	void preceding() {
 		var key = "EXAMPLE_KEY";
 
-		if (!environment(key, "Hello, from environment variables!")) return;
+		environment(key, "Hello, from environment variables!");
 		System.getProperties().put(key, "Hello, from JVM system properties!");
 
 		reset();
+
+		assertThat(System.getenv(key))
+			.isEqualTo("Hello, from environment variables!");
 
 		assertThat(property(key))
 			.isEqualTo("Hello, from environment variables!");

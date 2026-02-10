@@ -90,7 +90,8 @@
 				<configuration>
 					<argLine>
 					--add-opens sirius.stellar.configuration/sirius.stellar.configuration=ALL-UNNAMED
-					--add-opens java.base/java.util=sirius.stellar.configuration.mutator
+					--add-opens java.base/java.lang=sirius.stellar.configuration
+					--add-opens java.base/java.util=sirius.stellar.configuration
 					</argLine>
 				</configuration>
 			</plugin>
