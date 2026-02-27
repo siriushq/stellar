@@ -24,7 +24,7 @@ import static java.util.ServiceLoader.load;
 public interface Ksuid {
 
 	/// Generates a new random identifier. All implementations must
-	/// delegate [#toString] to the [Identifier#string] method.
+	/// delegate [Object#toString] to the [Identifier#string] method.
 	Identifier identifier();
 
 	/// Parses the provided string input as an identifier.
