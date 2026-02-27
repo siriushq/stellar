@@ -54,6 +54,7 @@
 		<module>stellar.annotation.intellij</module>
 
 		<module>stellar.security.totp</module>
+		<module>stellar.security.ksuid</module>
 
 		<module>stellar.logging</module>
 
@@ -196,6 +197,11 @@
 			<dependency>
 				<groupId>org.siriushq.stellar</groupId>
 				<artifactId>stellar-security-totp</artifactId>
+				<version>1.0-RC1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.siriushq.stellar</groupId>
+				<artifactId>stellar-security-ksuid</artifactId>
 				<version>1.0-RC1</version>
 			</dependency>
 
