@@ -6,7 +6,6 @@ Rendered source documentation is available in the "target" directory for any
 given module after building. https://stellar.sirius.cam houses the handbook.
 
 <!> The handbook is currently not public.
-<!> 1.0-RC1 has not yet been published to Maven Central.
 
 including
 =========

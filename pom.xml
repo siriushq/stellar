@@ -41,6 +41,7 @@
 		<java.version.test>21</java.version.test>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.outputTimestamp>2026-02-27T09:41:00Z</project.build.outputTimestamp>
 	</properties>
 
 	<modules>
