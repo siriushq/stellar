@@ -9,8 +9,8 @@
 	</parent>
 
 	<packaging>jar</packaging>
-	<artifactId>stellar-serialization-base64</artifactId>
-	<name>Stellar :: Serialization :: Base64</name>
+	<artifactId>stellar-serialization-base62</artifactId>
+	<name>Stellar :: Serialization :: Base62</name>
 
 	<properties>
 		<java.version.main>11</java.version.main>
